@@ -1,0 +1,8 @@
+package wewe.fuding.db;
+
+import android.content.Context;
+
+public class DataManager {
+	private Context context;
+	
+}
