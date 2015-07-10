@@ -4,10 +4,13 @@
 # 데이터베이스 사용을 위한 부분
 from __future__ import with_statement
 from contextlib import closing
+
 # all the imports
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
      abort, render_template, flash
+from jinja2 import Template
+
 
 # configuration
 DATABASE = '/tmp/flaskr.db'
@@ -25,6 +28,35 @@ app.config.from_object(__name__)
 # app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
+#------------------------------------------------------------------------------------------
+
+@app.route('/')
+def index_page():
+    return "This is puding server's index page"
+
+@app.route('/test')
+def show_entries():
+    cur = g.db.execute('select title, text from entries order by id desc')
+    entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+    template_name = 'test.html'
+
+    return render_template(template_name, entries=entries)
+
+
+@app.route('/user/login')
+def user_login():
+    return "user_login"
+
+@app.route('/user/logout')
+def user_logout():
+    return "user_logout"
+
+
+
+
+
+
+#------------------------------------------------------------------------------------------
 # db 접근이 쉬워지도록 도와주는 부분이다.
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
@@ -32,11 +64,22 @@ def connect_db():
 # 데이터베이스를 초기화 시키는 init_db 함수
 def init_db():
     with closing(connect_db()) as db:
-        with app.open_resource('schema.sql') as f:
+        with app.open_resource('/Users/ayoung/git/fuding_wewe/fuding_server/fuding_s/static/schema.sql') as f:
             db.cursor().executescript(f.read())
         db.commit()
 
+# request 실행되기 전에 호출되는 함수
+@app.before_request
+def before_request():
+    g.db = connect_db()
 
+@app.teardown_request
+def teardown_request(exception):
+    g.db.close()
+
+
+
+#------------------------------------------------------------------------------------------
 # 단독서버로 실행되는 어플리케이션을 위한 서버 실행 코드 
 if __name__ == '__main__':
     app.run()
