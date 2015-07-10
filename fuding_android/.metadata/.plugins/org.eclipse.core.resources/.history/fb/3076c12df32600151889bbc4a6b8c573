@@ -1,0 +1,11 @@
+package wewe.fuding.domain;
+
+public class Text {
+	private int textNum;
+	private int recipeNum;
+
+	public Text() {
+		super();
+	}
+
+}

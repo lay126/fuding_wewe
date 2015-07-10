@@ -1,0 +1,8 @@
+package snippet;
+
+public class Snippet {
+	public static void main(String[] args) {
+		/Users/jeongyeoeun/Documents/programming/CodeCamp2015/fuding_wewe/fuding_android/FudingAndroid/libs/android-support-v13.jar
+	}
+}
+
