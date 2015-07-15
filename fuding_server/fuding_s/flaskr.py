@@ -80,13 +80,13 @@ def teardown_request(exception):
 
 #------------------------------------------------------------------------------------------
 # 단독서버로 실행되는 어플리케이션을 위한 서버 실행 코드 
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+    # app.run()
 
 # 가상 서버에서 돌릴 때에는 다음과 같이 run host를 지정한다.
 # 지금 지정된 IP는 TOAST CLOUD 주소.
-# if __name__ == '__main__':
-    # app.run(host='0.0.0.0')
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port="121212")
 
 
 
