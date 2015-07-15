@@ -84,8 +84,8 @@ def teardown_request(exception):
 # if __name__ == '__main__':
 #     app.run()
 
-가상 서버에서 돌릴 때에는 다음과 같이 run host를 지정한다.
-지금 지정된 IP는 TOAST CLOUD 주소.
+# 가상 서버에서 돌릴 때에는 다음과 같이 run host를 지정한다.
+# 지금 지정된 IP는 TOAST CLOUD 주소.
 if __name__ == '__main__':
     app.run(host='119.205.252.224')
 
