@@ -5,6 +5,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="/Users/jeongyeoeun/Documents/개발정리도큐먼트/CodeCamp2015/naveroauthlib-4.1.3.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
