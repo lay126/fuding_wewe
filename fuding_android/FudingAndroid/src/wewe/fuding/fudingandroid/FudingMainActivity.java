@@ -1,33 +1,17 @@
 package wewe.fuding.fudingandroid;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.CursorWrapper;
-import android.net.NetworkInfo.State;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.CallLog.Calls;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.CursorAdapter;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -72,7 +56,6 @@ public class FudingMainActivity extends FragmentActivity {
 
 		setContentView(R.layout.activity_fuding_main);
 
-		super.onCreate(savedInstanceState);
 		me = this;
 		Log.d(TAG, "onCreate");
 
@@ -83,16 +66,16 @@ public class FudingMainActivity extends FragmentActivity {
 		profile_layout = (RelativeLayout) findViewById(R.id.profile_layout);
 
 //		// 상단 탭 안에 들어가는 이미지
-//		friend_btn = (ImageView) findViewById(R.id.img_main_friend);
-//		recent_btn = (ImageView) findViewById(R.id.img_main_recent);
-//		search_btn = (ImageView) findViewById(R.id.img_main_search);
-//		setting_btn = (ImageView) findViewById(R.id.img_main_setting);
+//		newsfeed_btn = (ImageView) findViewById(R.id.img_main_friend);
+//		addpost_btn = (ImageView) findViewById(R.id.img_main_recent);
+//		alarm_btn = (ImageView) findViewById(R.id.img_main_search);
+//		profile_btn = (ImageView) findViewById(R.id.img_main_setting);
 
 //		// 클릭됬을 때 하단에 보이는 바
-//		friend_bottom = (View) findViewById(R.id.btn_friend_bottom_bar);
-//		recent_bottom = (View) findViewById(R.id.btn_recent_bottom_bar);
-//		search_bottom = (View) findViewById(R.id.btn_search_bottom_bar);
-//		setting_bottom = (View) findViewById(R.id.btn_setting_bottom_bar);
+//		newsfeed_bottom = (View) findViewById(R.id.btn_friend_bottom_bar);
+//		addpost_bottom = (View) findViewById(R.id.btn_recent_bottom_bar);
+//		alarm_bottom = (View) findViewById(R.id.btn_search_bottom_bar);
+//		profile_bottom = (View) findViewById(R.id.btn_setting_bottom_bar);
 //
 		newsfeed_textView = (TextView) findViewById(R.id.newsfeed_text);
 		addpost_textView = (TextView) findViewById(R.id.addpost_text);
@@ -156,17 +139,17 @@ public class FudingMainActivity extends FragmentActivity {
 		Log.d(TAG, "getIntent() : " + getIntent());
 
 		// 받아온 인텐트에 fragment항목이 있을 경우 해당 항목대로 이동
-		String fragment = getIntent().getStringExtra("fragment");
-		if (fragment != null) {
-			if ("friend".equals(fragment))
-				mViewPager.setCurrentItem(0);
-			else if ("recent".equals(fragment))
-				mViewPager.setCurrentItem(1);
-			else if ("search".equals(fragment))
-				mViewPager.setCurrentItem(2);
-			else if ("setting".equals(fragment))
-				mViewPager.setCurrentItem(3);
-		}
+//		String fragment = getIntent().getStringExtra("fragment");
+//		if (fragment != null) {
+//			if ("friend".equals(fragment))
+//				mViewPager.setCurrentItem(0);
+//			else if ("recent".equals(fragment))
+//				mViewPager.setCurrentItem(1);
+//			else if ("search".equals(fragment))
+//				mViewPager.setCurrentItem(2);
+//			else if ("setting".equals(fragment))
+//				mViewPager.setCurrentItem(3);
+//		}
 	}
 
 	@Override

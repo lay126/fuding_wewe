@@ -30,6 +30,20 @@ public class Fragment_Alarm extends Fragment {
 
 		View v;
 		v = inflater.inflate(R.layout.fragment_alarm, container, false);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		init(v);
 		return v;
 
@@ -56,7 +70,7 @@ public class Fragment_Alarm extends Fragment {
 	}
 
 	private void init(View v) {
-
+		
 	}
 }
 

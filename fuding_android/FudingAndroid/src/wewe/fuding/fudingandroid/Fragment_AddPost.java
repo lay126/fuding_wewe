@@ -1,5 +1,6 @@
 package wewe.fuding.fudingandroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,6 +31,16 @@ public class Fragment_AddPost extends Fragment {
 
 		View v;
 		v = inflater.inflate(R.layout.fragment_addposting, container, false);
+		
+		Intent resultIntent = new Intent(activity, FudingMainActivity.class);
+
+		resultIntent.putExtra("fragment", "search");
+		resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // 이미 생성된 Activity가 있으면 그것을 그대로 사용하고 onCreate 대신 onNewIntent가 호출된다.
+
+		startActivity(resultIntent);
+		
+		
+		
 		init(v);
 		return v;
 
