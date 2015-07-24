@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 public class Fragment_AddPost extends Fragment {
 	public static final String TAG = Fragment_AddPost.class.getSimpleName(); 
@@ -30,7 +31,14 @@ public class Fragment_AddPost extends Fragment {
 
 		View v;
 		v = inflater.inflate(R.layout.fragment_addposting, container, false);
-		startActivity(new Intent(activity, AddPostingActivity.class));
+		
+		Button btn = (Button) v.findViewById(R.id.button1);
+		btn.setOnClickListener(new View.OnClickListener() {
+ 			@Override
+ 			public void onClick(View v) {
+ 				startActivity(new Intent(activity, AddPostingActivity.class));
+ 			}
+		});
 		
 		init(v);
 		return v;

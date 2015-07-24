@@ -41,15 +41,11 @@ public class AddPostingActivity extends Activity{
 	ImageView btnImage;
 	
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_addposting);
-        
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_addposting);    
      // 추가할 레이아
      		final LinearLayout linearLayoutForm = (LinearLayout) findViewById(R.id.linearLayoutForm);
-
-     		
-     		
      		// 항목 추가 버튼
      		btnAdd = (ImageButton) findViewById(R.id.btnAdd);
      		btnAdd.setOnClickListener(new View.OnClickListener() {
