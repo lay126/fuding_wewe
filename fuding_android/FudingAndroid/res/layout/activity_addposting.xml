@@ -36,7 +36,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="재" />
+                android:text="재료" />
 
             <EditText
                 android:id="@+id/edit_ingredient"
@@ -57,7 +57,7 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="소요시" />
+                android:text="소요시간" />
 
             <EditText
                 android:id="@+id/edit_time"
@@ -77,7 +77,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="인" />
+                android:text="인분" />
 
             <EditText
                 android:id="@+id/edit_amount"

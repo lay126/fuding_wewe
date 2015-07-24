@@ -19,6 +19,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -41,6 +42,7 @@ public class AddPostingActivity extends Activity{
 	ImageButton btnAdd;
 	ImageView btnImage;
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,15 +57,12 @@ public class AddPostingActivity extends Activity{
 
 			@Override
 			public void onClick(View v) {
-				final LinearLayout newView = (LinearLayout) getLayoutInflater()
-						.inflate(R.layout.row_add_item, null);
-				newView.setLayoutParams(new LayoutParams(
-						ViewGroup.LayoutParams.WRAP_CONTENT,
-						ViewGroup.LayoutParams.WRAP_CONTENT));
+				final LinearLayout newView = (LinearLayout) getLayoutInflater().inflate(R.layout.row_add_item, null);
+				newView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+														 ViewGroup.LayoutParams.WRAP_CONTENT));
 
 				// 항목 삭제 버튼
-				ImageButton btnRemove = (ImageButton) newView
-						.findViewById(R.id.btnRemove);
+				ImageButton btnRemove = (ImageButton) newView.findViewById(R.id.btnRemove);
 				btnRemove.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -77,11 +76,11 @@ public class AddPostingActivity extends Activity{
 					@Override
 					public void onClick(View v) {
 						// 앨범으로 이동
+						Log.d("addPosting log : ", "");
 						makepicture();
 					}
 				});
 				linearLayoutForm.addView(newView);
-
 			}
 		});
         
