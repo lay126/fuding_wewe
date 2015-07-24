@@ -10,9 +10,11 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 from jinja2 import Template
 
-from tornado.wsgi import WSGIContainer
-from tornado.httpserver import HTTPServer
-from tornado.ioloop import IOLoop 
+# for image file
+import os
+from flask import Flask, request, redirect, url_for
+from werkzeug import secure_filename\
+
 
 
 # configuration
@@ -21,6 +23,7 @@ DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'
+
 
 # create our little application :)
 # 실제 어플리케이션을 생성하고, 설정을 가져와 어플리케이션을 초기화 한다.
@@ -31,8 +34,17 @@ app.config.from_object(__name__)
 # app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
-# from werkzeug.contrib.fixers import ProxyFix
-# app.wsgi_app = ProxyFix(app.wsgi_app)
+
+# image file
+#UPLOAD_FOLDER = '/Users/ayoung/git/fuding_wewe/fuding_server/fuding_s/images/uploads'
+UPLOAD_FOLDER = '/root/server/fuding_wewe/fuding_server/fuding_s/images/uploads'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+
 
 
 #------------------------------------------------------------------------------------------
@@ -71,6 +83,7 @@ def connect_db():
 # 데이터베이스를 초기화 시키는 init_db 함수
 def init_db():
     with closing(connect_db()) as db:
+        #with app.open_resource('/Users/ayoung/git/fuding_wewe/fuding_server/fuding_s/static/schema.sql') as f:
         with app.open_resource('/root/server/fuding_wewe/fuding_server/fuding_s/static/schema.sql') as f:
             db.cursor().executescript(f.read())
         db.commit()
@@ -86,23 +99,25 @@ def teardown_request(exception):
 
 
 
+
 #------------------------------------------------------------------------------------------
 # 단독서버로 실행되는 어플리케이션을 위한 서버 실행 코드 
 # if __name__ == '__main__':
     # app.run()
 
-# 가상 서버에서 돌릴 때에는 다음과 같이 run host를 지정한다.
+# 가상 서버에서 돌릴 때에는 다음과 같이 run host를 지정한다
 # 지금 지정된 IP는 TOAST CLOUD 주소.
 if __name__ == '__main__':
+    # app.run()
     app.run(host='0.0.0.0', port=9006)
 
 
-# run on tornado server
+# # run on tornado server
 # if __name__=="__main__": 
 #     http_server = HTTPServer(WSGIContainer(app))
 #     http_server.listen(5000)
 #     IOLoop.instance().start()
-    #app.run(host='0.0.0.0', port=8080)
+#     app.run(host='0.0.0.0', port=8080)
 
 
 
