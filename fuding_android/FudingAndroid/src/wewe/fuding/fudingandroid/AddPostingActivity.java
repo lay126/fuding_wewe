@@ -29,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+
 public class AddPostingActivity extends Activity{
 
 	private static final int PICK_FROM_CAMERA = 0;
@@ -44,42 +45,45 @@ public class AddPostingActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_addposting);    
-     // 추가할 레이아
-     		final LinearLayout linearLayoutForm = (LinearLayout) findViewById(R.id.linearLayoutForm);
-     		// 항목 추가 버튼
-     		btnAdd = (ImageButton) findViewById(R.id.btnAdd);
-     		btnAdd.setOnClickListener(new View.OnClickListener() {
+		// 추가할 레이아
+     	
+		final LinearLayout linearLayoutForm = (LinearLayout) findViewById(R.id.linearLayoutForm);
+ 
+     	// 항목 추가 버튼
+     	btnAdd = (ImageButton) findViewById(R.id.btnAdd);
+     	btnAdd.setOnClickListener(new View.OnClickListener() {
 
-     			@Override
-     			public void onClick(View v) {
-     				final LinearLayout newView = (LinearLayout) getLayoutInflater().inflate(R.layout.row_add_item, null);
-     				newView.setLayoutParams(new LayoutParams(
-     						ViewGroup.LayoutParams.WRAP_CONTENT,
-     						ViewGroup.LayoutParams.WRAP_CONTENT));
-     			
-     				// 항목 삭제 버튼 
-     				ImageButton btnRemove = (ImageButton) newView.findViewById(R.id.btnRemove);
-     				btnRemove.setOnClickListener(new View.OnClickListener() {
-     					@Override
-     					public void onClick(View v) {
-     						linearLayoutForm.removeView(newView);
-     					}
-     				});
-     				
-     				// 항목 단계별 사진 
-     				btnImage = (ImageView) newView.findViewById(R.id.btnImage);
-     				btnImage.setOnClickListener(new View.OnClickListener() {
-     					@Override
-     					public void onClick(View v) {
-     						//앨범으로 이동 
-     						makepicture();
-     					}
-     				});
-     				linearLayoutForm.addView(newView);
-     				
-     			}
-     		});
-     		
+			@Override
+			public void onClick(View v) {
+				final LinearLayout newView = (LinearLayout) getLayoutInflater()
+						.inflate(R.layout.row_add_item, null);
+				newView.setLayoutParams(new LayoutParams(
+						ViewGroup.LayoutParams.WRAP_CONTENT,
+						ViewGroup.LayoutParams.WRAP_CONTENT));
+
+				// 항목 삭제 버튼
+				ImageButton btnRemove = (ImageButton) newView
+						.findViewById(R.id.btnRemove);
+				btnRemove.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						linearLayoutForm.removeView(newView);
+					}
+				});
+
+				// 항목 단계별 사진
+				btnImage = (ImageView) newView.findViewById(R.id.btnImage);
+				btnImage.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						// 앨범으로 이동
+						makepicture();
+					}
+				});
+				linearLayoutForm.addView(newView);
+
+			}
+		});
         
     }
 	private void makepicture() {
