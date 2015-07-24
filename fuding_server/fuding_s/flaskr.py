@@ -31,10 +31,6 @@ app.config.from_object(__name__)
 # app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
-from werkzeug.contrib.fixers import ProxyFix
-app.wsgi_app = ProxyFix(app.wsgi_app)
-
-
 #------------------------------------------------------------------------------------------
 
 @app.route('/')
