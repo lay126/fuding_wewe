@@ -1,0 +1,152 @@
+package wewe.fuding.fudingandroid;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+public class FudingMainActivity extends FragmentActivity {
+	public static final String TAG = FudingMainActivity.class.getSimpleName();
+	public static FudingMainActivity me;
+	int count = 0;
+	boolean isFirstExecute;
+	static Context main_context;
+
+	Fragment_NewsFeed frag_newsfeed = null;
+	Fragment_AddPost frag_addpost = null;
+	Fragment_Alarm frag_alarm = null;
+	Fragment_Profile frag_profile = null;
+
+	RelativeLayout newsfeed_layout, addpost_layout, alarm_layout, profile_layout;
+	TextView newsfeed_textView, addpost_textView, alarm_textView, profile_textView;
+
+	//
+	
+	int selected_button = 0;
+	ImageView top_menu, friend_btn, recent_btn, search_btn, setting_btn;
+	View friend_bottom, recent_bottom, search_bottom, setting_bottom, view_mid;
+
+	Handler mHandler = new Handler();
+	ViewPager mViewPager;
+	SectionsPagerAdapter mSectionsPagerAdapter;
+
+//	public static final boolean release = true;
+//	public static final boolean market = false;
+
+	/* Following the menu item constants which will be used for menu creation */
+//	public static final int FIRST_MENU_ID = Menu.FIRST;
+//	public static final int CONFIGURE_MENU_ITEM = FIRST_MENU_ID + 1;
+//	public static final int ABOUT_MENU_ITEM = FIRST_MENU_ID + 2;
+//	public static final int EXIT_MENU_ITEM = FIRST_MENU_ID + 3;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		setContentView(R.layout.activity_fuding_main);
+
+		super.onCreate(savedInstanceState);
+		me = this;
+		Log.d(TAG, "onCreate");
+
+		// 상단 탭
+		newsfeed_layout = (RelativeLayout) findViewById(R.id.newsfeed_layout);
+		addpost_layout = (RelativeLayout) findViewById(R.id.addpost_layout);
+		alarm_layout = (RelativeLayout) findViewById(R.id.alarm_layout);
+		profile_layout = (RelativeLayout) findViewById(R.id.profile_layout);
+
+//		// 상단 탭 안에 들어가는 이미지
+//		newsfeed_btn = (ImageView) findViewById(R.id.img_main_friend);
+//		addpost_btn = (ImageView) findViewById(R.id.img_main_recent);
+//		alarm_btn = (ImageView) findViewById(R.id.img_main_search);
+//		profile_btn = (ImageView) findViewById(R.id.img_main_setting);
+
+//		// 클릭됬을 때 하단에 보이는 바
+//		newsfeed_bottom = (View) findViewById(R.id.btn_friend_bottom_bar);
+//		addpost_bottom = (View) findViewById(R.id.btn_recent_bottom_bar);
+//		alarm_bottom = (View) findViewById(R.id.btn_search_bottom_bar);
+//		profile_bottom = (View) findViewById(R.id.btn_setting_bottom_bar);
+//
+		newsfeed_textView = (TextView) findViewById(R.id.newsfeed_text);
+		addpost_textView = (TextView) findViewById(R.id.addpost_text);
+		alarm_textView = (TextView) findViewById(R.id.alarm_text);
+		profile_textView = (TextView) findViewById(R.id.profile_text);
+
+		// 프래그먼트 초기화. 스와이프를 사용하기위해 해놓은것.
+		frag_newsfeed = Fragment_NewsFeed.getInstance();
+		frag_addpost = Fragment_AddPost.getInstance();
+		frag_alarm = Fragment_Alarm.getInstance();
+		frag_profile = Fragment_Profile.getInstance();
+
+		// 스와이프를 사용하기위한 페이저어댑터
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager.setAdapter(mSectionsPagerAdapter);
+		mViewPager
+				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() { // 스와이프
+					@Override
+					public void onPageSelected(int position) {
+						// set tabbar item change
+						setSelectedItem(position);
+					}
+				});
+		mViewPager.setOffscreenPageLimit(4);
+
+		newsfeed_layout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mViewPager.setCurrentItem(0);
+			}
+		});
+		addpost_layout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mViewPager.setCurrentItem(1);
+
+			}
+		});
+		alarm_layout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mViewPager.setCurrentItem(2);
+
+			}
+		});
+		profile_layout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mViewPager.setCurrentItem(3);
+				
+			
+			}
+		});
+
+		// 친구탭은 누른 상태로 시작
+//		newsfeed_btn.setImageResource(R.drawable.friend_ic_on);
+//		newsfeed_bottom.setVisibility(View.VISIBLE);
+
+		Log.d(TAG, "getIntent() : " + getIntent());
+
+		// 받아온 인텐트에 fragment항목이 있을 경우 해당 항목대로 이동
+		String fragment = getIntent().getStringExtra("fragment");
+//		if (fragment != null) {
+//			if ("friend".equals(fragment))
+//				mViewPager.setCurrentItem(0);
+//			else if ("recent".equals(fragment))
+//				mViewPager.setCurrentItem(1);
+//			else if ("search".equals(fragment))
+//				mViewPager.setCurrentItem(2);
+//			else if ("setting".equals(fragment))
+//				mViewPager.setCurrentItem(3);
+//		}
+	}
+}
+	

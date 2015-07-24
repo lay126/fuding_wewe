@@ -9,5 +9,12 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="titleTecnologies">Tecnologies</string>
+    <string name="btnRemove">Remove</string>
+    <string name="btnAdd">Add</string>
+    <string name="btnDisplay">Show</string>
+    <string name="settings_profile_album">앨범</string>
+    <string name="settings_profile_camera">카메라</string>
+    <string name="settings_profile_delete">삭제</string>
 
 </resources>

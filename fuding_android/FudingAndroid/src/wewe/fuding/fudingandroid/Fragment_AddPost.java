@@ -11,9 +11,8 @@ import android.view.ViewGroup;
 public class Fragment_AddPost extends Fragment {
 	public static final String TAG = Fragment_AddPost.class.getSimpleName(); 
 	public static FragmentActivity activity; // 자신을 포함하는 activity. onCreateView때 설정되고 onDestroyView때 null이 된다.
-	
 	private static Fragment_AddPost instance = null;
-
+	
 	public static Fragment_AddPost getInstance() {
 		if (instance == null) { // 최초 1회 초기화
 			instance = new Fragment_AddPost();
@@ -24,22 +23,14 @@ public class Fragment_AddPost extends Fragment {
 	public Fragment_AddPost() {
 		 
 	}
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		activity = getActivity();
 
 		View v;
 		v = inflater.inflate(R.layout.fragment_addposting, container, false);
-		
-		Intent resultIntent = new Intent(activity, FudingMainActivity.class);
-
-		resultIntent.putExtra("fragment", "search");
-		resultIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // 이미 생성된 Activity가 있으면 그것을 그대로 사용하고 onCreate 대신 onNewIntent가 호출된다.
-
-		startActivity(resultIntent);
-		
-		
+		startActivity(new Intent(activity, AddPostingActivity.class));
 		
 		init(v);
 		return v;

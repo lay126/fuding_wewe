@@ -1,0 +1,118 @@
+package wewe.fuding.fudingandroid;
+
+import java.util.ArrayList;
+
+import android.app.ActionBar.LayoutParams;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
+public class Fragment_AddPost extends Fragment {
+	public static final String TAG = Fragment_AddPost.class.getSimpleName(); 
+	public static FragmentActivity activity; // 자신을 포함하는 activity. onCreateView때 설정되고 onDestroyView때 null이 된다.
+	
+	private static Fragment_AddPost instance = null;
+
+	public static Fragment_AddPost getInstance() {
+		if (instance == null) { // 최초 1회 초기화
+			instance = new Fragment_AddPost();
+		}
+		return instance;
+	}
+
+	public Fragment_AddPost() {
+		 
+	}
+	ImageButton btnAdd;
+	Button btnDisplay;
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		activity = getActivity();
+
+		View v;
+		v = inflater.inflate(R.layout.fragment_addposting, container, false);
+		
+		btnAdd = (ImageButton) v.findViewById(R.id.btnAdd);
+		btnDisplay = (Button) v.findViewById(R.id.btnDisplay);
+		final LinearLayout linearLayoutForm = (LinearLayout) v.findViewById(R.id.linearLayoutForm);
+		btnAdd.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				final LinearLayout newView = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.row_add_item, null);
+				newView.setLayoutParams(new LayoutParams(
+						ViewGroup.LayoutParams.WRAP_CONTENT,
+						ViewGroup.LayoutParams.WRAP_CONTENT));
+				ImageButton btnRemove = (ImageButton) newView
+						.findViewById(R.id.btnRemove);
+				btnRemove.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						linearLayoutForm.removeView(newView);
+					}
+				});
+				linearLayoutForm.addView(newView);
+			}
+		});
+		
+		btnDisplay.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				LinearLayout scrollViewlinerLayout = (LinearLayout) v.findViewById(R.id.linearLayoutForm);
+				java.util.ArrayList<String> msg = new ArrayList<String>();
+				for (int i = 0; i < scrollViewlinerLayout.getChildCount(); i++) {
+					LinearLayout innerLayout = (LinearLayout) scrollViewlinerLayout
+							.getChildAt(i);
+					EditText edit = (EditText) innerLayout
+							.findViewById(R.id.editDescricao);
+					msg.add(edit.getText().toString());
+				}
+				Toast t = Toast.makeText(activity.getApplicationContext(),
+						msg.toString(), Toast.LENGTH_SHORT);
+				t.show();
+			}
+		});
+		//MyLayoutOperation.add(activity, btnAdd);
+		//MyLayoutOperation.display(activity, btnDisplay);
+		
+		init(v);
+		return v;
+
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+	}
+
+	private void init(View v) {
+
+	}
+}
