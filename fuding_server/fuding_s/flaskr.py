@@ -10,6 +10,10 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash
 from jinja2 import Template
 
+from tornado.wsgi import WSGIContainer
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop 
+
 
 # configuration
 DATABASE = '/tmp/flaskr.db'
@@ -89,8 +93,16 @@ def teardown_request(exception):
 
 # 가상 서버에서 돌릴 때에는 다음과 같이 run host를 지정한다.
 # 지금 지정된 IP는 TOAST CLOUD 주소.
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+# if __name__ == '__main__':
+#     app.run(host='0.0.0.0', port=5000)
+
+
+# run on tornado server
+if __name__=="__main__": 
+    http_server = HTTPServer(WSGIContainer(app))
+    http_server.listen(5000)
+    IOLoop.instance().start()
+    #app.run(host='0.0.0.0', port=8080)
 
 
 
