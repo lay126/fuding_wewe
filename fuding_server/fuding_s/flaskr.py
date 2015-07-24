@@ -71,7 +71,7 @@ def connect_db():
 # 데이터베이스를 초기화 시키는 init_db 함수
 def init_db():
     with closing(connect_db()) as db:
-        with app.open_resource('/Users/ayoung/git/fuding_wewe/fuding_server/fuding_s/static/schema.sql') as f:
+        with app.open_resource('/root/server/fuding_wewe/fuding_server/fuding_s/static/schema.sql') as f:
             db.cursor().executescript(f.read())
         db.commit()
 
