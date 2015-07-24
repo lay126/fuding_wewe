@@ -35,7 +35,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 
 @app.route('/')
 def index_page():
-    return "This is puding server's index page"
+    return "This is puding server's index page : "+ flask.request.remote_addr
 
 @app.route('/test')
 def show_entries():
