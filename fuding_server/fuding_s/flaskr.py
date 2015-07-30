@@ -34,6 +34,39 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 
+
+#------------------------------------------------------------------------------------------
+# stormtrooper을 이용한 회원 관리 
+# Create an account
+app.accounts.create({
+  'given_name': 'Joe',
+  'surname': 'Stormtrooper',
+  'email': 'joe@galacticempire.com',
+  'password': 'Changeme1',
+  'custom_data': {
+    'faction': 'empire'
+  }
+})
+
+# Authentication!
+app.authenticate_account('joe@galacticempire.com', 'Changeme1')
+
+
+# Assign group permissions.
+account.add_group('admins')
+
+# Verify group membership.
+if account.has_group('admins'):
+  # true
+else:
+  # false
+
+
+
+
+
+
+
 #------------------------------------------------------------------------------------------
 # image file
 UPLOAD_FOLDER = '/Users/ayoung/git/fuding_wewe/fuding_server/fuding_s/images/uploads'
@@ -99,6 +132,7 @@ def upload_file():
         file = request.files['file']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            filename = '아이디+시간+.png'
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
     return '''
