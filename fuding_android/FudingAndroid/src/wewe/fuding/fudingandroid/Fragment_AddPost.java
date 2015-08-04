@@ -1,6 +1,9 @@
 package wewe.fuding.fudingandroid;
 
+import wewe.fuding.db.DbOpenHelper;
+import wewe.fuding.domain.Frame;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,11 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class Fragment_AddPost extends Fragment {
 	public static final String TAG = Fragment_AddPost.class.getSimpleName(); 
 	public static FragmentActivity activity; // 자신을 포함하는 activity. onCreateView때 설정되고 onDestroyView때 null이 된다.
 	private static Fragment_AddPost instance = null;
+	
+	private DbOpenHelper mDbOpenHelper;
+	private Cursor mCursor;
 	
 	public static Fragment_AddPost getInstance() {
 		if (instance == null) { // 최초 1회 초기화
@@ -32,11 +39,33 @@ public class Fragment_AddPost extends Fragment {
 		View v;
 		v = inflater.inflate(R.layout.fragment_addposting, container, false);
 		
+		final EditText edit_title = (EditText)v.findViewById(R.id.edit_title);
+		final EditText edit_ingredient = (EditText)v.findViewById(R.id.edit_ingredient);
+		final EditText edit_time = (EditText)v.findViewById(R.id.edit_time);
+		final EditText edit_amount = (EditText)v.findViewById(R.id.edit_amount);
+		final EditText edit_tag = (EditText)v.findViewById(R.id.edit_tag); 
+		
 		Button btn = (Button) v.findViewById(R.id.button1);
 		btn.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
- 				startActivity(new Intent(activity, AddPostingActivity.class));
+ 				
+ 				Frame food = new Frame();
+ 				food.setUserId("yet");
+ 				food.setFoodName(edit_title.getText().toString());
+ 				food.setIngre(edit_ingredient.getText().toString());
+ 				food.setTotalTime(edit_time.getText().toString());
+ 				food.setAmount(edit_amount.getText().toString());
+ 				food.setTag(edit_tag.getText().toString());
+
+ 				// DB Create and Open
+ 		        mDbOpenHelper = new DbOpenHelper(activity);
+ 		        mDbOpenHelper.open();
+ 		        mDbOpenHelper.insertFrameColumn(food);
+
+ 		        // 서버 http 전송 
+ 		        
+ 		        startActivity(new Intent(activity, AddPostingActivity.class));
  			}
 		});
 		

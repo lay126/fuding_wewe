@@ -208,7 +208,7 @@ containing a value of this type.
     }
     public static final class id {
         public static final int LinearLayout1=0x7f040017;
-        public static final int action_settings=0x7f040038;
+        public static final int action_settings=0x7f040039;
         public static final int addpost_layout=0x7f04001a;
         public static final int addpost_text=0x7f04001b;
         public static final int alarm_layout=0x7f04001c;
@@ -217,7 +217,7 @@ containing a value of this type.
         public static final int bottom=0x7f04000c;
         public static final int box_count=0x7f04000b;
         public static final int btnImage=0x7f040035;
-        public static final int btnRemove=0x7f040037;
+        public static final int btnRemove=0x7f040038;
         public static final int btn_add=0x7f040014;
         public static final int btn_ok=0x7f040015;
         public static final int button=0x7f04000a;
@@ -262,6 +262,7 @@ containing a value of this type.
         public static final int standard=0x7f040009;
         public static final int stepEditText=0x7f040036;
         public static final int textView1=0x7f040020;
+        public static final int time_edit=0x7f040037;
         public static final int top=0x7f04000e;
         public static final int unknown=0x7f040006;
     }

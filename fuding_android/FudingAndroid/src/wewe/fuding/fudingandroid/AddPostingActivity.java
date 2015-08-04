@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import wewe.fuding.domain.Recipe;
+import wewe.fuding.domain.Content;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -27,6 +27,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -85,12 +86,12 @@ public class AddPostingActivity extends ListActivity {
 			@Override
 			public void onClick(View v) {
 
-				ArrayList<Recipe> containArrayList = new ArrayList<Recipe>();
+				ArrayList<Content> containArrayList = new ArrayList<Content>();
 
 				for (int i = 0; i < mItem.size(); i++) {
-					Recipe temp = new Recipe();
+					Content temp = new Content();
 					temp.setContent(mItem.get(i).step);
-					temp.setImageURL(mItem.get(i).image);
+					temp.setPhoto(mItem.get(i).image);
 
 					containArrayList.add(temp);
 				}
@@ -108,22 +109,23 @@ public class AddPostingActivity extends ListActivity {
 
 			@Override
 			public void onClick(View v) {
-				mItem.add(new Item("".toString(), "다음 단계를 입력해주세요.".toString()));
+				mItem.add(new Item("", "", ""));
 				adapter.notifyDataSetChanged();
 			}
 		});
 		
 		
-//		// 처음 리스트뷰 불러오기 
+		// 처음 리스트뷰 불러오기 
 //		DataManager dbManager = new DataManager(getApplicationContext());
-		ArrayList<Recipe> getArrayList = new ArrayList<Recipe>();
 //		getArrayList = dbManager.getItem(null);
+//		ArrayList<Content> arrayList = new ArrayList<Content>();
 		mItem = new ArrayList<Item>();
+//
+//		for (int i = 1; i < arrayList.size(); ++i) {
+//			mItem.add(new Item(String.valueOf(arrayList.get(i).getFoodId()), arrayList.get(i).getContent()));
+//		}
 
-		for (int i = 1; i < getArrayList.size(); ++i) {
-			mItem.add(new Item(String.valueOf(getArrayList.get(i).getImageURL()), getArrayList.get(i).getContent()));
-		}
-	 	adapter = new ItemAdapter(mItem);
+		adapter = new ItemAdapter(mItem);
 		
 		setListAdapter(adapter);
 	}
@@ -131,23 +133,25 @@ public class AddPostingActivity extends ListActivity {
 	class Item {
 
 		private String image;
-		private String step; 
+		private String step;
+		private String time;
 		
-		public Item(String image, String step) {
+		public Item(String image, String step, String time) {
 			this.image =  image;
 			this.step = step;
-			
+			this.time = time;
 		}
 
 		@Override
 		public String toString() {
-			return step+image;
+			return step+image+time;
 		}
 	}
 
 	private class ViewHolder {
 		public TextView stepView;
 		public ImageView imageView;
+		public TextView timeView;
 	}
 
 	private class ItemAdapter extends ArrayAdapter<Item> {
@@ -166,8 +170,11 @@ public class AddPostingActivity extends ListActivity {
 				ImageView image = (ImageView) v.findViewById(R.id.btnImage);
 				holder.imageView = image;
 
-				TextView stepView = (TextView) v.findViewById(R.id.stepEditText); 
+				EditText stepView = (EditText) v.findViewById(R.id.stepEditText); 
 				holder.stepView = stepView;
+				
+				EditText timeView = (EditText)v.findViewById(R.id.time_edit); 
+				holder.timeView = timeView;
 				
 				v.setTag(holder);
 			}
@@ -175,14 +182,15 @@ public class AddPostingActivity extends ListActivity {
 			final ViewHolder holder = (ViewHolder) v.getTag();
 			String stepText = getItem(position).step;
 			holder.stepView.setText(stepText);
+			String timeText = getItem(position).time;
+			holder.timeView.setText(timeText);
 			
 			holder.imageView.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					makepicture();
 					btnImage = holder.imageView;
-						
+					makepicture();
 				}
 			});
 			
@@ -191,7 +199,6 @@ public class AddPostingActivity extends ListActivity {
 
 		@Override
 		public long getItemId(int position) {
-		    // TODO Auto-generated method stub
 		    return position;
 		}
 

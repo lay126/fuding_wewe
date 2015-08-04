@@ -73,7 +73,7 @@ int drawable messenger_button_send_round_shadow 0x7f020019
 int drawable messenger_button_white_bg_round 0x7f02001a
 int drawable messenger_button_white_bg_selector 0x7f02001b
 int id LinearLayout1 0x7f040017
-int id action_settings 0x7f040038
+int id action_settings 0x7f040039
 int id addpost_layout 0x7f04001a
 int id addpost_text 0x7f04001b
 int id alarm_layout 0x7f04001c
@@ -82,7 +82,7 @@ int id automatic 0x7f040000
 int id bottom 0x7f04000c
 int id box_count 0x7f04000b
 int id btnImage 0x7f040035
-int id btnRemove 0x7f040037
+int id btnRemove 0x7f040038
 int id btn_add 0x7f040014
 int id btn_ok 0x7f040015
 int id button 0x7f04000a
@@ -127,6 +127,7 @@ int id small 0x7f040003
 int id standard 0x7f040009
 int id stepEditText 0x7f040036
 int id textView1 0x7f040020
+int id time_edit 0x7f040037
 int id top 0x7f04000e
 int id unknown 0x7f040006
 int layout activity_addposting 0x7f030000
