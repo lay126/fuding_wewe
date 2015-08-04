@@ -9,7 +9,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import wewe.fuding.domain.Recipe;
+import wewe.fuding.db.DataManager;
+import wewe.fuding.domain.Content;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -85,12 +86,12 @@ public class AddPostingActivity extends ListActivity {
 			@Override
 			public void onClick(View v) {
 
-				ArrayList<Recipe> containArrayList = new ArrayList<Recipe>();
+				ArrayList<Content> containArrayList = new ArrayList<Content>();
 
 				for (int i = 0; i < mItem.size(); i++) {
-					Recipe temp = new Recipe();
+					Content temp = new Content();
 					temp.setContent(mItem.get(i).step);
-					temp.setImageURL(mItem.get(i).image);
+					temp.setPhoto(mItem.get(i).image);
 
 					containArrayList.add(temp);
 				}
@@ -116,12 +117,12 @@ public class AddPostingActivity extends ListActivity {
 		
 //		// 처음 리스트뷰 불러오기 
 //		DataManager dbManager = new DataManager(getApplicationContext());
-		ArrayList<Recipe> getArrayList = new ArrayList<Recipe>();
+		ArrayList<Content> getArrayList = new ArrayList<Content>();
 //		getArrayList = dbManager.getItem(null);
 		mItem = new ArrayList<Item>();
 
 		for (int i = 1; i < getArrayList.size(); ++i) {
-			mItem.add(new Item(String.valueOf(getArrayList.get(i).getImageURL()), getArrayList.get(i).getContent()));
+			mItem.add(new Item(String.valueOf(getArrayList.get(i).getPhoto()), getArrayList.get(i).getContent()));
 		}
 	 	adapter = new ItemAdapter(mItem);
 		
