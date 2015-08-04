@@ -33,6 +33,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mobeta.android.dslv.DragSortController;
+import com.mobeta.android.dslv.DragSortListView;
+
 
 public class AddPostingActivity extends ListActivity { 
 	
@@ -41,8 +44,7 @@ public class AddPostingActivity extends ListActivity {
 	private static final int CROP_FROM_CAMERA = 2;
 	Bitmap image;
 	Uri mImageCaptureUri;
-	File copy_file;
-//	ImageButton btnAdd;
+	File copy_file; 
 	ImageView btnImage;
 	private ItemAdapter adapter;
 	private ArrayList<Item> mItem;
@@ -125,8 +127,29 @@ public class AddPostingActivity extends ListActivity {
 //			mItem.add(new Item(String.valueOf(arrayList.get(i).getFoodId()), arrayList.get(i).getContent()));
 //		}
 
-		adapter = new ItemAdapter(mItem);
 		
+		
+//		adapter = new ItemAdapter(this, R.layout.row_add_item, mItem);
+//	    listView.setAdapter(adapter);
+//	    listView.setDropListener(onDrop);
+//	    listView.setRemoveListener(onRemove);
+//
+//	    DragSortController controller = new DragSortController(listView);
+//	    controller.setDragHandleId(R.id.menu);
+//	            //controller.setClickRemoveId(R.id.);
+//	    controller.setRemoveEnabled(false);
+//	    controller.setSortEnabled(true);
+//	    controller.setDragInitMode(1);
+//	            //controller.setRemoveMode(removeMode);
+//
+//	    listView.setFloatViewManager(controller);
+//	    listView.setOnTouchListener(controller);
+//	    listView.setDragEnabled(true);
+		
+		
+		
+		
+		adapter = new ItemAdapter(mItem);
 		setListAdapter(adapter);
 	}
 
