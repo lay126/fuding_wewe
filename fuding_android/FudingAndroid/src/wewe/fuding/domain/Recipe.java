@@ -3,16 +3,37 @@ package wewe.fuding.domain;
 import java.util.Date;
 
 public class Recipe {
-	private int recipeNum;
-	private String recipeName;
-	private Date recipeCreatedDate;
-	private Date recipeUpdatedDate;
-	private String recipeTimes;
-	private String recipeTag;
-	private int recipeQty;
+	private int recipeNum;			// 
+	private int recipeQty;			//
+
+	private String recipeName;		// 요리이름 
+	private Date recipeCreatedDate;	// 업로드시간 
+	private Date recipeUpdatedDate;	// 수정시간 
+	private String recipeTimes;		// 소요시간 
+	private String recipeTag;		// 재료태그 
+
+	private String content;			// 단계설명 
+	private String imageURL;		// 사진 URL
+
 
 	public Recipe() {
 		super();
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public String getImageURL() {
+		return imageURL;
+	}
+	
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+	
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public int getRecipeNum() {
