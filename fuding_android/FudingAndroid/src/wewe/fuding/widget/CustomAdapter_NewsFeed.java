@@ -27,13 +27,13 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 		arrList = new ArrayList<Frame>();
 	}
 
-	public CustomAdapter_NewsFeed(Context aContext, int aLayout,
+	public CustomAdapter_NewsFeed(Context aContext,
 			ArrayList<Frame> aArrList) {
 		context = aContext;
 		inflater = (LayoutInflater) aContext
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		arrList = aArrList;
-		layout = aLayout;
+		// layout = aLayout;
 	}
 
 	@Override
@@ -49,6 +49,10 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 	@Override
 	public long getItemId(int position) {
 		return position;
+	}
+	
+	public void add(Frame frame) {
+		arrList.add(frame);
 	}
 
 	@Override
@@ -66,12 +70,8 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 //			// 좋아요 버튼을 터치 했을 때 이벤트 발생
 //			Button btn = (Button) convertView.findViewById(R.id.newsfeed_imgBtnLike);
 //			btn.setOnClickListener(new OnClickListener() {
-//
 //				@Override
 //				public void onClick(View v) {
-//					// 터치 시 해당 아이템 이름 출력
-//					Toast.makeText(context, m_List.get(pos), Toast.LENGTH_SHORT)
-//							.show();
 //				}
 //			});
 
@@ -82,12 +82,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 //				}
 //			});
 
-//			// 리스트 아이템을 길게 터치 했을 떄 이벤트 발생
-//			convertView.setOnLongClickListener(new OnLongClickListener() {
-//				@Override
-//				public boolean onLongClick(View v) {
-//				}
-//			});
 		}
 
 		return convertView;
