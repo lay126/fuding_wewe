@@ -122,6 +122,13 @@ class WRITE_CONTENT(models.Model):
 	wc_img = models.ImageField(verbose_name=u'wc_photo', upload_to='fuding_dj_s/images/content_img/', blank=True, )
 	wc_text = models.CharField(verbose_name=u'wc_text', max_length=200, )
 
+class WRITE_TAG(models.Model):
+	class Meta:
+		verbose_name = u'WRITE_TAG'
+		db_table = 'WRITE_TAG_DB'
+	wtg_index = models.AutoField(verbose_name=u'wtg_index', primary_key=True, db_index=True, )
+	wt_index = models.IntegerField(verbose_name=u'wt_index', null=False, default=0, )
+	wtg_value = models.CharField(verbose_name=u'wtg_value', max_length=100, )
 
 
 

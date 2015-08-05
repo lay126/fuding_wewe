@@ -63,6 +63,9 @@ class WRITE_CONTENTAdmin(admin.ModelAdmin):
 	list_display = ('wc_index', 'wf_index',
 					'wc_index_num', 'wc_img', 'wc_text', )
 
+class WRITE_TAGAdmin(admin.ModelAdmin):
+	list_display = ('wtg_index', 'wt_index', 
+					'wtg_value' )
 
 
 
@@ -80,5 +83,6 @@ admin.site.register(USER_LIKES, USER_LIKESAdmin)
 admin.site.register(WRITE_FRAME, WRITE_FRAMEAdmin)
 admin.site.register(WRITE_TITLE, WRITE_TITLEAdmin)
 admin.site.register(WRITE_CONTENT, WRITE_CONTENTAdmin)
+admin.site.register(WRITE_TAG, WRITE_TAGAdmin)
 
 
