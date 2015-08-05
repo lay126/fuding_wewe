@@ -182,6 +182,7 @@ public class AddPostingActivity extends ListActivity {
 //	    listView.setDragEnabled(true);
 				
 		
+		// 여으니니니닌 
 		adapter = new ItemAdapter(mItem);
 		setListAdapter(adapter);
 	}

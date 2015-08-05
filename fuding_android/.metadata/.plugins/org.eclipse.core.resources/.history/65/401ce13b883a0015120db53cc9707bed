@@ -1,0 +1,11 @@
+package wewe.fuding.domain;
+
+import java.util.Date;
+
+public class Recipe {
+	private int foodId;
+	private int contentId;
+	private String content;
+	private String contentTime;
+	private String photo;
+}

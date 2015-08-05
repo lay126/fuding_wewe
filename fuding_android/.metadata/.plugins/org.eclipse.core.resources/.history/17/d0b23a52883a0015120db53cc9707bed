@@ -1,0 +1,44 @@
+package wewe.fuding.domain;
+
+import java.util.Date;
+
+public class Recipe {
+	
+	private int foodId;
+	private int contentId;
+	private String content;
+	private String contentTime;
+	private String photo;
+	
+	public int getFoodId() {
+		return foodId;
+	}
+	public void setFoodId(int foodId) {
+		this.foodId = foodId;
+	}
+	public int getContentId() {
+		return contentId;
+	}
+	public void setContentId(int contentId) {
+		this.contentId = contentId;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getContentTime() {
+		return contentTime;
+	}
+	public void setContentTime(String contentTime) {
+		this.contentTime = contentTime;
+	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rowdetail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@id/drag_handle"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/ic_launcher" />
+
+    <ImageView
+        android:id="@+id/btnImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/ic_launcher" />
+
+    <EditText
+        android:id="@+id/stepEditText"
+        android:layout_width="161dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.60"
+        android:ems="10"
+        android:inputType="text" >
+    </EditText>
+
+    <EditText
+        android:id="@+id/time_edit"
+        android:layout_width="41dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" > 
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="분" />
+
+    <ImageButton
+        android:id="@+id/btnRemove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/btnRemove"
+        android:src="@android:drawable/ic_delete" />
+
+</LinearLayout>

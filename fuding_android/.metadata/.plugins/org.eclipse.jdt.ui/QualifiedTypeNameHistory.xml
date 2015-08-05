@@ -5,4 +5,7 @@
 <fullyQualifiedTypeName name="android.content.Intent"/>
 <fullyQualifiedTypeName name="wewe.fuding.fudingandroid.LaunchActivity"/>
 <fullyQualifiedTypeName name="wewe.fuding.fudingandroid.FudingMainActivity"/>
+<fullyQualifiedTypeName name="com.mobeta.android.dslv.DragSortListView"/>
+<fullyQualifiedTypeName name="wewe.fuding.utils.HttpRequest"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
 </qualifiedTypeNameHistroy>

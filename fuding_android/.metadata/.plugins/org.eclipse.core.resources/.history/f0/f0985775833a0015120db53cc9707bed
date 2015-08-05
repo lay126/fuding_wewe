@@ -1,0 +1,138 @@
+package wewe.fuding.fudingandroid;
+
+import wewe.fuding.db.DbOpenHelper;
+import wewe.fuding.domain.Frame;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class Fragment_AddPost extends Fragment {
+	public static final String TAG = Fragment_AddPost.class.getSimpleName(); 
+	public static FragmentActivity activity; // 자신을 포함하는 activity. onCreateView때 설정되고 onDestroyView때 null이 된다.
+	private static Fragment_AddPost instance = null;
+	
+	private Context context = null;
+	private DbOpenHelper mDbOpenHelper;
+	private Cursor mCursor=null;
+	
+	
+	public static Fragment_AddPost getInstance() {
+		if (instance == null) { // 최초 1회 초기화
+			instance = new Fragment_AddPost();
+		}
+		return instance;
+	}
+
+	public Fragment_AddPost() {
+		 
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		activity = getActivity();
+
+		View v;
+		v = inflater.inflate(R.layout.fragment_addposting, container, false);
+		
+		final EditText edit_title = (EditText) v.findViewById(R.id.edit_title);
+		final EditText edit_ingredient = (EditText) v.findViewById(R.id.edit_ingredient);
+		final EditText edit_amount = (EditText) v.findViewById(R.id.edit_amount);
+		final EditText edit_time = (EditText) v.findViewById(R.id.edit_time);
+		final EditText edit_tag = (EditText) v.findViewById(R.id.edit_tag);
+		
+		Button btn = (Button) v.findViewById(R.id.button1);
+		btn.setOnClickListener(new View.OnClickListener() {
+ 			@Override
+ 			public void onClick(View v) {
+ 				
+				
+ 				String foodName = edit_title.getText().toString();
+ 				String ingre = edit_ingredient.getText().toString(); 
+ 				String amount = edit_amount.getText().toString();
+ 				String totalTime = edit_time.getText().toString();
+ 				String tag = edit_tag.getText().toString();
+ 				
+ 				Log.d("db insert item :", foodName+ingre+amount+totalTime+tag);
+ 				
+ 				Frame food = new Frame();
+ 				food.setFoodName(edit_title.getText().toString());
+ 				food.setIngre(edit_ingredient.getText().toString());
+ 				food.setAmount(edit_amount.getText().toString());
+ 				food.setTotalTime(edit_time.getText().toString());
+ 				food.setTag(edit_tag.getText().toString());
+ 				
+ 				Log.d("db insert item1 :", food.getFoodName());
+ 				
+ 			    // DB Create and Open
+ 		        mDbOpenHelper = new DbOpenHelper(activity);
+ 		        mDbOpenHelper.open();
+ 				mDbOpenHelper.insertFrameColumn(food);
+// 				Log.d("db insert flag", ""+flag);
+// 				if (flag) {
+// 					Log.d("db insert", "success");
+// 				} else {
+// 					Log.d("db insert", "fail");
+// 				}
+
+ 				mCursor = mDbOpenHelper.getFrameAllColumns();
+ 				Log.d(TAG, "COUNT = " + mCursor.getCount());
+ 				
+ 				while (mCursor.moveToNext()) {
+ 		        	
+ 					Log.d("db getAll",	mCursor.getString(mCursor.getColumnIndex("userId"))+
+ 							mCursor.getString(mCursor.getColumnIndex("foodName"))+
+ 							mCursor.getString(mCursor.getColumnIndex("ingre"))+
+ 							mCursor.getString(mCursor.getColumnIndex("amount"))+
+ 							mCursor.getString(mCursor.getColumnIndex("totalTime"))+
+ 							mCursor.getString(mCursor.getColumnIndex("tag")));
+ 							
+ 					
+ 					
+ 				}
+ 				
+ 				mCursor.close();
+
+ 				
+ 				
+ 				startActivity(new Intent(activity, AddPostingActivity.class));
+ 			}
+		});
+		
+		init(v);
+		return v;
+
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+	}
+
+	private void init(View v) {
+
+	}
+}

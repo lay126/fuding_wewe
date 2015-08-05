@@ -1,0 +1,19 @@
+package wewe.fuding.db;
+
+
+import android.provider.BaseColumns;
+
+// DataBase Table
+public final class DataBases {
+	
+	public static final class WriteFrame implements BaseColumns{ 
+		public static final String USERID = "userId";
+		public static final String CONTENT_INDEX = "content_index";
+		public static final String _TABLENAME = "writeFrame";
+		public static final String _CREATE = "create table "+_TABLENAME+"(" 
+											+_ID+" integer primary key autoincrement, " 	
+											+NAME+" text not null , " 
+											+CONTACT+" text not null , " 
+											+EMAIL+" text not null );";
+	}
+}

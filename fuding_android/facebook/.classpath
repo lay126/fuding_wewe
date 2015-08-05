@@ -6,6 +6,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="/Users/jeongyeoeun/Documents/ProgramFiles/bolts-android-1.2.0.jar"/>
-	<classpathentry kind="lib" path="/Users/jeongyeoeun/Documents/ProgramFiles/Android/android-sdk-macosx/extras/android/support/v4/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

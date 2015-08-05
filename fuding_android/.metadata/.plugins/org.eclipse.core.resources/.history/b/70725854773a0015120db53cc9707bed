@@ -1,0 +1,91 @@
+package wewe.fuding.domain;
+
+import java.util.Date;
+
+public class Content {
+	 
+	private int foodId;			// 음식 프레임 고유 번호  
+	private int contentId;	// 단계 순서 번호 
+	private String content;		// 단계 별 설명 
+	private String contentTime;	// 단계 별 소요 시간 
+	private String photo;		// 사진 URL
+
+	OODID+" text not null , " 
+	+CONTENTID+" text not null , " 
+	+CONTENT+" text not null , " 
+	+CONTENTTIME+" text not null , " 
+	+PHOTO+"
+
+	public String getContent() {
+		return content;
+	}
+
+	public String getImageURL() {
+		return imageURL;
+	}
+	
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
+	
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public int getRecipeNum() {
+		return recipeNum;
+	}
+
+	public void setRecipeNum(int recipeNum) {
+		this.recipeNum = recipeNum;
+	}
+
+	public String getRecipeName() {
+		return recipeName;
+	}
+
+	public void setRecipeName(String recipeName) {
+		this.recipeName = recipeName;
+	}
+
+	public Date getRecipeCreatedDate() {
+		return recipeCreatedDate;
+	}
+
+	public void setRecipeCreatedDate(Date recipeCreatedDate) {
+		this.recipeCreatedDate = recipeCreatedDate;
+	}
+
+	public Date getRecipeUpdatedDate() {
+		return recipeUpdatedDate;
+	}
+
+	public void setRecipeUpdatedDate(Date recipeUpdatedDate) {
+		this.recipeUpdatedDate = recipeUpdatedDate;
+	}
+
+	public String getRecipeTimes() {
+		return recipeTimes;
+	}
+
+	public void setRecipeTimes(String recipeTimes) {
+		this.recipeTimes = recipeTimes;
+	}
+
+	public String getRecipeTag() {
+		return recipeTag;
+	}
+
+	public void setRecipeTag(String recipeTag) {
+		this.recipeTag = recipeTag;
+	}
+
+	public int getRecipeQty() {
+		return recipeQty;
+	}
+
+	public void setRecipeQty(int recipeQty) {
+		this.recipeQty = recipeQty;
+	}
+
+}

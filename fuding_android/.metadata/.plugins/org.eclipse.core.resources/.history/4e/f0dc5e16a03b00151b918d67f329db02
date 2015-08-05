@@ -1,0 +1,70 @@
+package wewe.fuding.fudingandroid;
+
+import java.io.IOException;
+
+import wewe.fuding.domain.User;
+import wewe.fuding.fudingandroid.HttpRequest.OnHttpRequestListener;
+import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
+
+public class HttpResponse extends Activity {
+
+	public void onPlayList() {
+		HttpRequest request = new HttpRequest(new OnHttpRequestListener() {
+			@Override
+			public void onSuccess(User user) {
+				// 서버에서 받아온 user의 데이터를 다룸.
+				//String url = "http://m.youtube.com/playlist?list="
+
+			}
+
+			@Override
+			public void onFailed() {
+				// 실패시
+			}
+		});
+
+		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		String user_accessToken = pref.getString("access_token", "");
+		String testValue = pref.getString("test_value", "default");
+		request.execute(user_accessToken, testValue); // 여기에 access_token을 넣음
+	}
+
+	public void onConnectBluetooth(String rgb) {
+
+		BluetoothHelper bluetooth = BluetoothHelper.getInstance(this);
+		boolean findDevice = bluetooth.findDevice();
+		if (findDevice) {
+			try {
+				bluetooth.openBluetooth();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (!bluetooth.getBluetoothAdapter().isEnabled()) {
+				Intent enableBtIntent = new Intent(
+						BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			} else {
+				String result = null;
+				SharedPreferences pref = getSharedPreferences("pref",
+						MODE_PRIVATE);
+				boolean color = pref.getBoolean("color", true);
+				if (color) {
+					result = pref.getString("select_color", "");
+				} else {
+					result = rgb;
+				}
+				try {
+					Log.d("MainActivity", "bluetooth : " + result);
+					bluetooth.sendMessage(result);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+}

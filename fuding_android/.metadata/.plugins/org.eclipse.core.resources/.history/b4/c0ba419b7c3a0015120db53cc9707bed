@@ -1,0 +1,50 @@
+package wewe.fuding.domain;
+
+import java.util.Date;
+
+public class Frame {
+	private int ID;			// 요리 고유 번호 			
+	private String foodName;	// 요리 이름 
+	private String ingre;		// 재료 태그  
+	private String amount;		// 요리 양  
+	private String totalTime;	// 소요 시간 
+	private String tag;			// 기타 태그 
+
+	public int getID() {
+		return ID;
+	}
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+	public String getFoodName() {
+		return foodName;
+	}
+	public void setFoodName(String foodName) {
+		this.foodName = foodName;
+	}
+	public String getIngre() {
+		return ingre;
+	}
+	public void setIngre(String ingre) {
+		this.ingre = ingre;
+	}
+	public String getAmount() {
+		return amount;
+	}
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+	public String getTotalTime() {
+		return totalTime;
+	}
+	public void setTotalTime(String totalTime) {
+		this.totalTime = totalTime;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+}
