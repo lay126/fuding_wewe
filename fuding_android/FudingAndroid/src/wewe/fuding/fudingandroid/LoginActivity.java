@@ -50,12 +50,12 @@ public class LoginActivity extends Activity {
 		// });
 	}
 
-//	public void KeepLoginOnClick(View view) {
-//		if (view.getId() == R.id.keep_login_button) {
-//			Intent intent = new Intent(LoginActivity.this,
-//					FudingMainActivity.class);
-//			startActivity(intent);
-//		}
-//	}
+	public void SkipLoginOnClick(View view) {
+		if (view.getId() == R.id.skip_login_button) {
+			Intent intent = new Intent(LoginActivity.this,
+					FudingMainActivity.class);
+			startActivity(intent);
+		}
+	}
 
 }

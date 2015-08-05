@@ -6,16 +6,24 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/com_facebook_button_like_background"
     tools:context="wewe.fuding.fudingandroid.LoginActivity" >
 
-    <ImageButton
-        android:id="@+id/imageButton1"
+    <Button
+        android:id="@+id/skip_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:padding="0dp"
-        android:src="@drawable/com_facebook_button_icon" />
+        android:layout_marginTop="100dp"
+        android:onClick="SkipLoginOnClick"
+        android:text="Skip the login for DaEun" />
 
+<!--    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp" />
+ --> 
 </RelativeLayout>
