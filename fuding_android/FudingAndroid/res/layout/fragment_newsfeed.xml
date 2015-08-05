@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RatingBar
-        android:id="@+id/ratingBar1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <ListView
+        android:id="@+id/listViewNewsfeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>
