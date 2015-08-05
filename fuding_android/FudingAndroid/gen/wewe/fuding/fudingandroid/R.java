@@ -9,6 +9,296 @@ package wewe.fuding.fudingandroid;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int click_remove_id=0x7f010010;
+        /** <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int collapsed_height=0x7f010000;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>bottom</code></td><td>0</td><td> Keep in sync with Enums in LikeView </td></tr>
+<tr><td><code>inline</code></td><td>1</td><td></td></tr>
+<tr><td><code>top</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int com_facebook_auxiliary_view_position=0x7f01001c;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int com_facebook_confirm_logout=0x7f010012;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int com_facebook_foreground_color=0x7f010018;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>center</code></td><td>0</td><td> Keep in sync with Enums in LikeView </td></tr>
+<tr><td><code>left</code></td><td>1</td><td></td></tr>
+<tr><td><code>right</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int com_facebook_horizontal_alignment=0x7f01001d;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int com_facebook_is_cropped=0x7f010017;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int com_facebook_login_text=0x7f010013;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int com_facebook_logout_text=0x7f010014;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int com_facebook_object_id=0x7f010019;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>unknown</code></td><td>0</td><td> Keep in sync with Enums in Likeview </td></tr>
+<tr><td><code>open_graph</code></td><td>1</td><td></td></tr>
+<tr><td><code>page</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int com_facebook_object_type=0x7f01001a;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>small</code></td><td>-2</td><td> Keep in sync with constants in ProfilePictureView </td></tr>
+<tr><td><code>normal</code></td><td>-3</td><td></td></tr>
+<tr><td><code>large</code></td><td>-4</td><td></td></tr>
+</table>
+         */
+        public static final int com_facebook_preset_size=0x7f010016;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>standard</code></td><td>0</td><td> Keep in sync with Enums in LikeView </td></tr>
+<tr><td><code>button</code></td><td>1</td><td></td></tr>
+<tr><td><code>box_count</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int com_facebook_style=0x7f01001b;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>automatic</code></td><td>0</td><td> Keep in sync with Enums in LoginButton </td></tr>
+<tr><td><code>display_always</code></td><td>1</td><td></td></tr>
+<tr><td><code>never_display</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int com_facebook_tooltip_mode=0x7f010015;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int drag_enabled=0x7f01000a;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int drag_handle_id=0x7f01000e;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int drag_scroll_start=0x7f010001;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>onDown</code></td><td>0</td><td></td></tr>
+<tr><td><code>onMove</code></td><td>1</td><td></td></tr>
+<tr><td><code>onLongPress</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static final int drag_start_mode=0x7f01000d;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int drop_animation_duration=0x7f010009;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int fling_handle_id=0x7f01000f;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int float_alpha=0x7f010006;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int float_background_color=0x7f010003;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int max_drag_scroll_speed=0x7f010002;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int remove_animation_duration=0x7f010008;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int remove_enabled=0x7f01000c;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>clickRemove</code></td><td>0</td><td></td></tr>
+<tr><td><code>flingRemove</code></td><td>1</td><td></td></tr>
+</table>
+         */
+        public static final int remove_mode=0x7f010004;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int slide_shuffle_speed=0x7f010007;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int sort_enabled=0x7f01000b;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int track_drag_sort=0x7f010005;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int use_default_controller=0x7f010011;
+    }
+    public static final class color {
+        public static final int com_facebook_blue=0x7f070000;
+        public static final int com_facebook_button_background_color=0x7f070005;
+        public static final int com_facebook_button_background_color_disabled=0x7f070006;
+        public static final int com_facebook_button_background_color_pressed=0x7f070007;
+        public static final int com_facebook_button_like_background_color_selected=0x7f070008;
+        public static final int com_facebook_button_login_silver_background_color=0x7f070009;
+        public static final int com_facebook_button_login_silver_background_color_pressed=0x7f07000a;
+        public static final int com_facebook_button_send_background_color=0x7f07000b;
+        public static final int com_facebook_button_send_background_color_pressed=0x7f07000c;
+        public static final int com_facebook_likeboxcountview_border_color=0x7f070002;
+        public static final int com_facebook_likeboxcountview_text_color=0x7f070003;
+        public static final int com_facebook_likeview_text_color=0x7f070001;
+        public static final int com_facebook_share_button_text_color=0x7f070004;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -18,74 +308,182 @@ public final class R {
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f080013;
+        public static final int activity_vertical_margin=0x7f080014;
+        public static final int com_facebook_likeboxcountview_border_radius=0x7f080005;
+        public static final int com_facebook_likeboxcountview_border_width=0x7f080006;
+        public static final int com_facebook_likeboxcountview_caret_height=0x7f080004;
+        public static final int com_facebook_likeboxcountview_caret_width=0x7f080003;
+        public static final int com_facebook_likeboxcountview_text_padding=0x7f080008;
+        public static final int com_facebook_likeboxcountview_text_size=0x7f080007;
+        public static final int com_facebook_likeview_edge_padding=0x7f080001;
+        public static final int com_facebook_likeview_internal_padding=0x7f080002;
+        public static final int com_facebook_likeview_text_size=0x7f080000;
+        public static final int com_facebook_profilepictureview_preset_size_large=0x7f08000b;
+        public static final int com_facebook_profilepictureview_preset_size_normal=0x7f08000a;
+        public static final int com_facebook_profilepictureview_preset_size_small=0x7f080009;
+        public static final int com_facebook_share_button_compound_drawable_padding=0x7f08000c;
+        public static final int com_facebook_share_button_padding_bottom=0x7f08000d;
+        public static final int com_facebook_share_button_padding_left=0x7f08000e;
+        public static final int com_facebook_share_button_padding_right=0x7f08000f;
+        public static final int com_facebook_share_button_padding_top=0x7f080010;
+        public static final int com_facebook_share_button_text_size=0x7f080011;
+        public static final int com_facebook_tooltip_horizontal_padding=0x7f080012;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int com_facebook_button_background=0x7f020000;
+        public static final int com_facebook_button_icon=0x7f020001;
+        public static final int com_facebook_button_like_background=0x7f020002;
+        public static final int com_facebook_button_like_icon_selected=0x7f020003;
+        public static final int com_facebook_button_login_silver_background=0x7f020004;
+        public static final int com_facebook_button_send_background=0x7f020005;
+        public static final int com_facebook_button_send_icon=0x7f020006;
+        public static final int com_facebook_close=0x7f020007;
+        public static final int com_facebook_profile_picture_blank_portrait=0x7f020008;
+        public static final int com_facebook_profile_picture_blank_square=0x7f020009;
+        public static final int com_facebook_tooltip_black_background=0x7f02000a;
+        public static final int com_facebook_tooltip_black_bottomnub=0x7f02000b;
+        public static final int com_facebook_tooltip_black_topnub=0x7f02000c;
+        public static final int com_facebook_tooltip_black_xout=0x7f02000d;
+        public static final int com_facebook_tooltip_blue_background=0x7f02000e;
+        public static final int com_facebook_tooltip_blue_bottomnub=0x7f02000f;
+        public static final int com_facebook_tooltip_blue_topnub=0x7f020010;
+        public static final int com_facebook_tooltip_blue_xout=0x7f020011;
+        public static final int ic_launcher=0x7f020012;
+        public static final int messenger_bubble_large_blue=0x7f020013;
+        public static final int messenger_bubble_large_white=0x7f020014;
+        public static final int messenger_bubble_small_blue=0x7f020015;
+        public static final int messenger_bubble_small_white=0x7f020016;
+        public static final int messenger_button_blue_bg_round=0x7f020017;
+        public static final int messenger_button_blue_bg_selector=0x7f020018;
+        public static final int messenger_button_send_round_shadow=0x7f020019;
+        public static final int messenger_button_white_bg_round=0x7f02001a;
+        public static final int messenger_button_white_bg_selector=0x7f02001b;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f080000;
-        public static final int action_settings=0x7f08001c;
-        public static final int addpost_layout=0x7f08000e;
-        public static final int addpost_text=0x7f08000f;
-        public static final int alarm_layout=0x7f080010;
-        public static final int alarm_text=0x7f080011;
-        public static final int btnAdd=0x7f08000a;
-        public static final int btnImage=0x7f080019;
-        public static final int btnRemove=0x7f08001b;
-        public static final int button1=0x7f080009;
-        public static final int editDescricao=0x7f08001a;
-        public static final int edit_amount=0x7f080005;
-        public static final int edit_ingredient=0x7f080002;
-        public static final int edit_tag=0x7f080006;
-        public static final int edit_time=0x7f080004;
-        public static final int edit_title=0x7f080001;
-        public static final int linearLayoutForm=0x7f080008;
-        public static final int listView1=0x7f080014;
-        public static final int newsfeed_layout=0x7f08000c;
-        public static final int newsfeed_text=0x7f08000d;
-        public static final int pager=0x7f08000b;
-        public static final int profile_layout=0x7f080012;
-        public static final int profile_text=0x7f080013;
-        public static final int radioButton1=0x7f080017;
-        public static final int ratingBar1=0x7f080016;
-        public static final int rowdetail=0x7f080018;
-        public static final int scrollView1=0x7f080007;
-        public static final int seekBar1=0x7f080015;
-        public static final int textView1=0x7f080003;
+        public static final int LinearLayout1=0x7f04001c;
+        public static final int action_settings=0x7f04003e;
+        public static final int addpost_layout=0x7f04001f;
+        public static final int addpost_text=0x7f040020;
+        public static final int alarm_layout=0x7f040021;
+        public static final int alarm_text=0x7f040022;
+        public static final int automatic=0x7f040005;
+        public static final int bottom=0x7f040011;
+        public static final int box_count=0x7f040010;
+        public static final int btnImage=0x7f04003a;
+        public static final int btnRemove=0x7f04003d;
+        public static final int btn_add=0x7f040019;
+        public static final int btn_ok=0x7f04001a;
+        public static final int button=0x7f04000f;
+        public static final int button1=0x7f040034;
+        public static final int center=0x7f040014;
+        public static final int clickRemove=0x7f040000;
+        public static final int click_remove=0x7f040018;
+        public static final int com_facebook_body_frame=0x7f040029;
+        public static final int com_facebook_button_xout=0x7f04002b;
+        public static final int com_facebook_fragment_container=0x7f040027;
+        public static final int com_facebook_login_activity_progress_bar=0x7f040028;
+        public static final int com_facebook_tooltip_bubble_view_bottom_pointer=0x7f04002d;
+        public static final int com_facebook_tooltip_bubble_view_text_body=0x7f04002c;
+        public static final int com_facebook_tooltip_bubble_view_top_pointer=0x7f04002a;
+        public static final int display_always=0x7f040006;
+        public static final int drag_handle=0x7f040017;
+        public static final int edit_amount=0x7f040032;
+        public static final int edit_ingredient=0x7f040030;
+        public static final int edit_tag=0x7f040033;
+        public static final int edit_time=0x7f040031;
+        public static final int edit_title=0x7f04002f;
+        public static final int flingRemove=0x7f040001;
+        public static final int imageButton1=0x7f040026;
+        public static final int inline=0x7f040012;
+        public static final int large=0x7f04000a;
+        public static final int left=0x7f040015;
+        public static final int listView1=0x7f04002e;
+        public static final int messenger_send_button=0x7f040038;
+        public static final int never_display=0x7f040007;
+        public static final int newsfeed_layout=0x7f04001d;
+        public static final int newsfeed_text=0x7f04001e;
+        public static final int normal=0x7f040009;
+        public static final int onDown=0x7f040002;
+        public static final int onLongPress=0x7f040004;
+        public static final int onMove=0x7f040003;
+        public static final int open_graph=0x7f04000c;
+        public static final int page=0x7f04000d;
+        public static final int pager=0x7f04001b;
+        public static final int profile_layout=0x7f040023;
+        public static final int profile_text=0x7f040024;
+        public static final int radioButton1=0x7f040037;
+        public static final int ratingBar1=0x7f040036;
+        public static final int right=0x7f040016;
+        public static final int rowdetail=0x7f040039;
+        public static final int seekBar1=0x7f040035;
+        public static final int small=0x7f040008;
+        public static final int standard=0x7f04000e;
+        public static final int stepEditText=0x7f04003b;
+        public static final int textView1=0x7f040025;
+        public static final int time_edit=0x7f04003c;
+        public static final int top=0x7f040013;
+        public static final int unknown=0x7f04000b;
     }
     public static final class layout {
         public static final int activity_addposting=0x7f030000;
         public static final int activity_fuding_main=0x7f030001;
         public static final int activity_launch=0x7f030002;
-        public static final int dialog_move_picture=0x7f030003;
-        public static final int fragment_addposting=0x7f030004;
-        public static final int fragment_alarm=0x7f030005;
-        public static final int fragment_newsfeed=0x7f030006;
-        public static final int fragment_profile=0x7f030007;
-        public static final int row_add_item=0x7f030008;
+        public static final int activity_login=0x7f030003;
+        public static final int com_facebook_activity_layout=0x7f030004;
+        public static final int com_facebook_login_fragment=0x7f030005;
+        public static final int com_facebook_tooltip_bubble=0x7f030006;
+        public static final int dialog_move_picture=0x7f030007;
+        public static final int fragment_addposting=0x7f030008;
+        public static final int fragment_alarm=0x7f030009;
+        public static final int fragment_newsfeed=0x7f03000a;
+        public static final int fragment_profile=0x7f03000b;
+        public static final int messenger_button_send_blue_large=0x7f03000c;
+        public static final int messenger_button_send_blue_round=0x7f03000d;
+        public static final int messenger_button_send_blue_small=0x7f03000e;
+        public static final int messenger_button_send_white_large=0x7f03000f;
+        public static final int messenger_button_send_white_round=0x7f030010;
+        public static final int messenger_button_send_white_small=0x7f030011;
+        public static final int row_add_item=0x7f030012;
     }
     public static final class menu {
-        public static final int fuding_main=0x7f070000;
-        public static final int launch=0x7f070001;
+        public static final int fuding_main=0x7f090000;
+        public static final int launch=0x7f090001;
+        public static final int login=0x7f090002;
     }
     public static final class string {
-        public static final int action_settings=0x7f050002;
-        public static final int app_name=0x7f050000;
-        public static final int btnAdd=0x7f05000a;
-        public static final int btnDisplay=0x7f05000b;
-        public static final int btnRemove=0x7f050009;
-        public static final int hello_world=0x7f050001;
-        public static final int settings_profile_album=0x7f05000c;
-        public static final int settings_profile_camera=0x7f05000d;
-        public static final int settings_profile_delete=0x7f05000e;
-        public static final int titleTecnologies=0x7f050008;
-        public static final int title_activity_fuding_main=0x7f050003;
-        public static final int title_activity_login=0x7f050007;
-        public static final int title_section1=0x7f050004;
-        public static final int title_section2=0x7f050005;
-        public static final int title_section3=0x7f050006;
+        public static final int action_settings=0x7f050013;
+        public static final int app_name=0x7f050011;
+        public static final int btnAdd=0x7f05001b;
+        public static final int btnDisplay=0x7f05001c;
+        public static final int btnRemove=0x7f05001a;
+        public static final int com_facebook_image_download_unknown_error=0x7f05000e;
+        public static final int com_facebook_internet_permission_error_message=0x7f05000c;
+        public static final int com_facebook_internet_permission_error_title=0x7f05000b;
+        public static final int com_facebook_like_button_liked=0x7f050002;
+        public static final int com_facebook_like_button_not_liked=0x7f050001;
+        public static final int com_facebook_loading=0x7f05000a;
+        public static final int com_facebook_loginview_cancel_action=0x7f050009;
+        public static final int com_facebook_loginview_log_in_button=0x7f050004;
+        public static final int com_facebook_loginview_log_in_button_long=0x7f050005;
+        public static final int com_facebook_loginview_log_out_action=0x7f050008;
+        public static final int com_facebook_loginview_log_out_button=0x7f050003;
+        public static final int com_facebook_loginview_logged_in_as=0x7f050006;
+        public static final int com_facebook_loginview_logged_in_using_facebook=0x7f050007;
+        public static final int com_facebook_send_button_text=0x7f050010;
+        public static final int com_facebook_share_button_text=0x7f05000f;
+        public static final int com_facebook_tooltip_default=0x7f05000d;
+        public static final int hello_world=0x7f050012;
+        public static final int messenger_send_button_text=0x7f050000;
+        public static final int settings_profile_album=0x7f05001d;
+        public static final int settings_profile_camera=0x7f05001e;
+        public static final int settings_profile_delete=0x7f05001f;
+        public static final int titleTecnologies=0x7f050019;
+        public static final int title_activity_fuding_main=0x7f050014;
+        public static final int title_activity_login=0x7f050018;
+        public static final int title_section1=0x7f050015;
+        public static final int title_section2=0x7f050016;
+        public static final int title_section3=0x7f050017;
     }
     public static final class style {
         /** 
@@ -109,10 +507,597 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f060000;
+        public static final int AppBaseTheme=0x7f060015;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f060001;
+        public static final int AppTheme=0x7f060016;
+        public static final int MessengerButton=0x7f060000;
+        public static final int MessengerButton_Blue=0x7f060001;
+        public static final int MessengerButton_Blue_Large=0x7f060002;
+        public static final int MessengerButton_Blue_Small=0x7f060003;
+        public static final int MessengerButton_White=0x7f060004;
+        public static final int MessengerButton_White_Large=0x7f060005;
+        public static final int MessengerButton_White_Small=0x7f060006;
+        public static final int MessengerButtonText=0x7f060007;
+        public static final int MessengerButtonText_Blue=0x7f060008;
+        public static final int MessengerButtonText_Blue_Large=0x7f060009;
+        public static final int MessengerButtonText_Blue_Small=0x7f06000a;
+        public static final int MessengerButtonText_White=0x7f06000b;
+        public static final int MessengerButtonText_White_Large=0x7f06000c;
+        public static final int MessengerButtonText_White_Small=0x7f06000d;
+        public static final int com_facebook_button=0x7f06000f;
+        public static final int com_facebook_button_like=0x7f060010;
+        public static final int com_facebook_button_send=0x7f060013;
+        public static final int com_facebook_button_share=0x7f060014;
+        public static final int com_facebook_loginview_default_style=0x7f060011;
+        public static final int com_facebook_loginview_silver_style=0x7f060012;
+        public static final int tooltip_bubble_text=0x7f06000e;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a DragSortListView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #DragSortListView_click_remove_id wewe.fuding.fudingandroid:click_remove_id}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_collapsed_height wewe.fuding.fudingandroid:collapsed_height}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_drag_enabled wewe.fuding.fudingandroid:drag_enabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_drag_handle_id wewe.fuding.fudingandroid:drag_handle_id}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_drag_scroll_start wewe.fuding.fudingandroid:drag_scroll_start}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_drag_start_mode wewe.fuding.fudingandroid:drag_start_mode}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_drop_animation_duration wewe.fuding.fudingandroid:drop_animation_duration}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_fling_handle_id wewe.fuding.fudingandroid:fling_handle_id}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_float_alpha wewe.fuding.fudingandroid:float_alpha}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_float_background_color wewe.fuding.fudingandroid:float_background_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_max_drag_scroll_speed wewe.fuding.fudingandroid:max_drag_scroll_speed}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_remove_animation_duration wewe.fuding.fudingandroid:remove_animation_duration}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_remove_enabled wewe.fuding.fudingandroid:remove_enabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_remove_mode wewe.fuding.fudingandroid:remove_mode}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_slide_shuffle_speed wewe.fuding.fudingandroid:slide_shuffle_speed}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_sort_enabled wewe.fuding.fudingandroid:sort_enabled}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_track_drag_sort wewe.fuding.fudingandroid:track_drag_sort}</code></td><td></td></tr>
+           <tr><td><code>{@link #DragSortListView_use_default_controller wewe.fuding.fudingandroid:use_default_controller}</code></td><td></td></tr>
+           </table>
+           @see #DragSortListView_click_remove_id
+           @see #DragSortListView_collapsed_height
+           @see #DragSortListView_drag_enabled
+           @see #DragSortListView_drag_handle_id
+           @see #DragSortListView_drag_scroll_start
+           @see #DragSortListView_drag_start_mode
+           @see #DragSortListView_drop_animation_duration
+           @see #DragSortListView_fling_handle_id
+           @see #DragSortListView_float_alpha
+           @see #DragSortListView_float_background_color
+           @see #DragSortListView_max_drag_scroll_speed
+           @see #DragSortListView_remove_animation_duration
+           @see #DragSortListView_remove_enabled
+           @see #DragSortListView_remove_mode
+           @see #DragSortListView_slide_shuffle_speed
+           @see #DragSortListView_sort_enabled
+           @see #DragSortListView_track_drag_sort
+           @see #DragSortListView_use_default_controller
+         */
+        public static final int[] DragSortListView = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007,
+            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b,
+            0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f,
+            0x7f010010, 0x7f010011
+        };
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#click_remove_id}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:click_remove_id
+        */
+        public static final int DragSortListView_click_remove_id = 16;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#collapsed_height}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
+Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
+in (inches), mm (millimeters).
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:collapsed_height
+        */
+        public static final int DragSortListView_collapsed_height = 0;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#drag_enabled}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:drag_enabled
+        */
+        public static final int DragSortListView_drag_enabled = 10;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#drag_handle_id}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:drag_handle_id
+        */
+        public static final int DragSortListView_drag_handle_id = 14;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#drag_scroll_start}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:drag_scroll_start
+        */
+        public static final int DragSortListView_drag_scroll_start = 1;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#drag_start_mode}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>onDown</code></td><td>0</td><td></td></tr>
+<tr><td><code>onMove</code></td><td>1</td><td></td></tr>
+<tr><td><code>onLongPress</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name wewe.fuding.fudingandroid:drag_start_mode
+        */
+        public static final int DragSortListView_drag_start_mode = 13;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#drop_animation_duration}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:drop_animation_duration
+        */
+        public static final int DragSortListView_drop_animation_duration = 9;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#fling_handle_id}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:fling_handle_id
+        */
+        public static final int DragSortListView_fling_handle_id = 15;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#float_alpha}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:float_alpha
+        */
+        public static final int DragSortListView_float_alpha = 6;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#float_background_color}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:float_background_color
+        */
+        public static final int DragSortListView_float_background_color = 3;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#max_drag_scroll_speed}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:max_drag_scroll_speed
+        */
+        public static final int DragSortListView_max_drag_scroll_speed = 2;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#remove_animation_duration}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:remove_animation_duration
+        */
+        public static final int DragSortListView_remove_animation_duration = 8;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#remove_enabled}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:remove_enabled
+        */
+        public static final int DragSortListView_remove_enabled = 12;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#remove_mode}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>clickRemove</code></td><td>0</td><td></td></tr>
+<tr><td><code>flingRemove</code></td><td>1</td><td></td></tr>
+</table>
+          @attr name wewe.fuding.fudingandroid:remove_mode
+        */
+        public static final int DragSortListView_remove_mode = 4;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#slide_shuffle_speed}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:slide_shuffle_speed
+        */
+        public static final int DragSortListView_slide_shuffle_speed = 7;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#sort_enabled}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:sort_enabled
+        */
+        public static final int DragSortListView_sort_enabled = 11;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#track_drag_sort}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:track_drag_sort
+        */
+        public static final int DragSortListView_track_drag_sort = 5;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#use_default_controller}
+          attribute's value can be found in the {@link #DragSortListView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:use_default_controller
+        */
+        public static final int DragSortListView_use_default_controller = 17;
+        /** Attributes that can be used with a com_facebook_like_view.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #com_facebook_like_view_com_facebook_auxiliary_view_position wewe.fuding.fudingandroid:com_facebook_auxiliary_view_position}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_like_view_com_facebook_foreground_color wewe.fuding.fudingandroid:com_facebook_foreground_color}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_like_view_com_facebook_horizontal_alignment wewe.fuding.fudingandroid:com_facebook_horizontal_alignment}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_like_view_com_facebook_object_id wewe.fuding.fudingandroid:com_facebook_object_id}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_like_view_com_facebook_object_type wewe.fuding.fudingandroid:com_facebook_object_type}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_like_view_com_facebook_style wewe.fuding.fudingandroid:com_facebook_style}</code></td><td></td></tr>
+           </table>
+           @see #com_facebook_like_view_com_facebook_auxiliary_view_position
+           @see #com_facebook_like_view_com_facebook_foreground_color
+           @see #com_facebook_like_view_com_facebook_horizontal_alignment
+           @see #com_facebook_like_view_com_facebook_object_id
+           @see #com_facebook_like_view_com_facebook_object_type
+           @see #com_facebook_like_view_com_facebook_style
+         */
+        public static final int[] com_facebook_like_view = {
+            0x7f010018, 0x7f010019, 0x7f01001a, 0x7f01001b,
+            0x7f01001c, 0x7f01001d
+        };
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_auxiliary_view_position}
+          attribute's value can be found in the {@link #com_facebook_like_view} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>bottom</code></td><td>0</td><td> Keep in sync with Enums in LikeView </td></tr>
+<tr><td><code>inline</code></td><td>1</td><td></td></tr>
+<tr><td><code>top</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name wewe.fuding.fudingandroid:com_facebook_auxiliary_view_position
+        */
+        public static final int com_facebook_like_view_com_facebook_auxiliary_view_position = 4;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_foreground_color}
+          attribute's value can be found in the {@link #com_facebook_like_view} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:com_facebook_foreground_color
+        */
+        public static final int com_facebook_like_view_com_facebook_foreground_color = 0;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_horizontal_alignment}
+          attribute's value can be found in the {@link #com_facebook_like_view} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>center</code></td><td>0</td><td> Keep in sync with Enums in LikeView </td></tr>
+<tr><td><code>left</code></td><td>1</td><td></td></tr>
+<tr><td><code>right</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name wewe.fuding.fudingandroid:com_facebook_horizontal_alignment
+        */
+        public static final int com_facebook_like_view_com_facebook_horizontal_alignment = 5;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_object_id}
+          attribute's value can be found in the {@link #com_facebook_like_view} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:com_facebook_object_id
+        */
+        public static final int com_facebook_like_view_com_facebook_object_id = 1;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_object_type}
+          attribute's value can be found in the {@link #com_facebook_like_view} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>unknown</code></td><td>0</td><td> Keep in sync with Enums in Likeview </td></tr>
+<tr><td><code>open_graph</code></td><td>1</td><td></td></tr>
+<tr><td><code>page</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name wewe.fuding.fudingandroid:com_facebook_object_type
+        */
+        public static final int com_facebook_like_view_com_facebook_object_type = 2;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_style}
+          attribute's value can be found in the {@link #com_facebook_like_view} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>standard</code></td><td>0</td><td> Keep in sync with Enums in LikeView </td></tr>
+<tr><td><code>button</code></td><td>1</td><td></td></tr>
+<tr><td><code>box_count</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name wewe.fuding.fudingandroid:com_facebook_style
+        */
+        public static final int com_facebook_like_view_com_facebook_style = 3;
+        /** Attributes that can be used with a com_facebook_login_view.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #com_facebook_login_view_com_facebook_confirm_logout wewe.fuding.fudingandroid:com_facebook_confirm_logout}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_login_view_com_facebook_login_text wewe.fuding.fudingandroid:com_facebook_login_text}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_login_view_com_facebook_logout_text wewe.fuding.fudingandroid:com_facebook_logout_text}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_login_view_com_facebook_tooltip_mode wewe.fuding.fudingandroid:com_facebook_tooltip_mode}</code></td><td></td></tr>
+           </table>
+           @see #com_facebook_login_view_com_facebook_confirm_logout
+           @see #com_facebook_login_view_com_facebook_login_text
+           @see #com_facebook_login_view_com_facebook_logout_text
+           @see #com_facebook_login_view_com_facebook_tooltip_mode
+         */
+        public static final int[] com_facebook_login_view = {
+            0x7f010012, 0x7f010013, 0x7f010014, 0x7f010015
+        };
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_confirm_logout}
+          attribute's value can be found in the {@link #com_facebook_login_view} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:com_facebook_confirm_logout
+        */
+        public static final int com_facebook_login_view_com_facebook_confirm_logout = 0;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_login_text}
+          attribute's value can be found in the {@link #com_facebook_login_view} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:com_facebook_login_text
+        */
+        public static final int com_facebook_login_view_com_facebook_login_text = 1;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_logout_text}
+          attribute's value can be found in the {@link #com_facebook_login_view} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:com_facebook_logout_text
+        */
+        public static final int com_facebook_login_view_com_facebook_logout_text = 2;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_tooltip_mode}
+          attribute's value can be found in the {@link #com_facebook_login_view} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>automatic</code></td><td>0</td><td> Keep in sync with Enums in LoginButton </td></tr>
+<tr><td><code>display_always</code></td><td>1</td><td></td></tr>
+<tr><td><code>never_display</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name wewe.fuding.fudingandroid:com_facebook_tooltip_mode
+        */
+        public static final int com_facebook_login_view_com_facebook_tooltip_mode = 3;
+        /** Attributes that can be used with a com_facebook_profile_picture_view.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #com_facebook_profile_picture_view_com_facebook_is_cropped wewe.fuding.fudingandroid:com_facebook_is_cropped}</code></td><td></td></tr>
+           <tr><td><code>{@link #com_facebook_profile_picture_view_com_facebook_preset_size wewe.fuding.fudingandroid:com_facebook_preset_size}</code></td><td></td></tr>
+           </table>
+           @see #com_facebook_profile_picture_view_com_facebook_is_cropped
+           @see #com_facebook_profile_picture_view_com_facebook_preset_size
+         */
+        public static final int[] com_facebook_profile_picture_view = {
+            0x7f010016, 0x7f010017
+        };
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_is_cropped}
+          attribute's value can be found in the {@link #com_facebook_profile_picture_view} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name wewe.fuding.fudingandroid:com_facebook_is_cropped
+        */
+        public static final int com_facebook_profile_picture_view_com_facebook_is_cropped = 1;
+        /**
+          <p>This symbol is the offset where the {@link wewe.fuding.fudingandroid.R.attr#com_facebook_preset_size}
+          attribute's value can be found in the {@link #com_facebook_profile_picture_view} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>small</code></td><td>-2</td><td> Keep in sync with constants in ProfilePictureView </td></tr>
+<tr><td><code>normal</code></td><td>-3</td><td></td></tr>
+<tr><td><code>large</code></td><td>-4</td><td></td></tr>
+</table>
+          @attr name wewe.fuding.fudingandroid:com_facebook_preset_size
+        */
+        public static final int com_facebook_profile_picture_view_com_facebook_preset_size = 0;
+    };
 }

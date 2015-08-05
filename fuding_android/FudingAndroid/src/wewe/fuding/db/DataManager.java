@@ -1,41 +1,30 @@
 package wewe.fuding.db;
 
-import android.content.Context;
-
-public class DataManager {
-	private Context context;
-	
-	
-	
-	/////
-}
-
-
-/*
-package itpm.project.database;
-
-import itpm.project.object.GroupTitle;
-import itpm.project.object.MyItem;
-
 import java.util.ArrayList;
 
+import wewe.fuding.domain.Frame;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-public class ProjectDataMgr {
+public class DataManager {
+	
 	private Context context = null;
-	private GroupDBHelper gDBHelper;
-	private ItemDBHelper iDBHelper;
-	private ArrayList<MyItem> itemList;
-
-	public ProjectDataMgr(Context aContext) {
-		context = aContext;
-		gDBHelper = new GroupDBHelper(context);
-		iDBHelper = new ItemDBHelper(context);
-		itemList = new ArrayList<MyItem>();
+	private DbOpenHelper mDbOpenHelper;
+	private Cursor mCursor=null;
+	
+    
+    public DataManager(Context context) {
+		this.context = context;
+		mDbOpenHelper = new DbOpenHelper(context);		
 	}
+}
+/*    
+    public void insertFrameColumn(Frame food) {
+    	
+    	mDbOpenHelper.insertFrameColumn();
+    }
+    
+}
 
 	public ArrayList<GroupTitle> getGrTitleList() {
 		ArrayList<GroupTitle> grTitle = new ArrayList<GroupTitle>();
