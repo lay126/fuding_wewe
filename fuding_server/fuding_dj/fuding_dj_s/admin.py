@@ -57,7 +57,7 @@ class WRITE_FRAMEAdmin(admin.ModelAdmin):
 
 class WRITE_TITLEAdmin(admin.ModelAdmin):
 	list_display = ('wt_index', 'wf_index', 
-					'user_id', 'wt_name', 'wt_ingre', 'wt_times', 'wt_tag', )
+					'user_id', 'wt_name', 'wt_ingre', 'wt_times', 'wt_quant', 'wt_tag', )
 
 class WRITE_CONTENTAdmin(admin.ModelAdmin):
 	list_display = ('wc_index', 'wf_index',

@@ -106,14 +106,15 @@ class WRITE_TITLE(models.Model):
 	user_id = models.IntegerField(verbose_name=u'user_id', null=False, default=0, )
 	wt_name = models.CharField(verbose_name=u'wt_name', max_length=20, null=False, default='no food name', )
 	# foreign
-	wt_ingre = models.IntegerField(verbose_name=u'wt_ingre',)
+	wt_ingre = models.CharField(verbose_name=u'wt_ingre', max_length=40,)
 	wt_times = models.IntegerField(verbose_name=u'wt_times', ) #소요시간(sec기준) 
+	wt_quant = models.IntegerField(verbose_name=u'wt_quant',)
 	# foreign
-	wt_tag = models.IntegerField(verbose_name=u'wt_tag',)
+	wt_tag = models.CharField(verbose_name=u'wt_tag', max_length=40,)
 
 class WRITE_CONTENT(models.Model):
 	class Meta:
-		verbose_name = u'WRITE_CONTENT'
+		verbose_name = u'WRITE_CONTENT' 
 		db_table = 'WRITE_CONTENT_DB'
 	wc_index = models.AutoField(verbose_name=u'wc_index', primary_key=True, db_index=True, )
 	wf_index = models.IntegerField(verbose_name=u'wf_index', null=False, default=0, )
