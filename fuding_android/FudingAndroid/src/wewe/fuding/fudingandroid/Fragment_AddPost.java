@@ -64,15 +64,37 @@ public class Fragment_AddPost extends Fragment {
  		        mDbOpenHelper.insertFrameColumn(food);
 
  		        // 서버 http 전송 
+ 		        //sendFoodInfo();
  		        
  		        startActivity(new Intent(activity, AddPostingActivity.class));
  			}
+
 		});
 		
 		init(v);
 		return v;
 
 	}
+
+//	private void sendFoodInfo() {
+//		public void sendAccessToken(final String access_token) {
+//			// 이미지와 메일 주소 가져오기 위해
+//			SignUpRequest request = new SignUpRequest(
+//					new OnSignUpListener() {
+//						@Override
+//						public void onSuccess(User user) {
+//							Log.d("LoginActivity", user.getUserPic()+" ," +user.getUserEmail());
+//							editor.putString("user_pic", user.getUserPic());
+//							editor.putString("user_mail", user.getUserEmail());
+//							editor.commit();
+//						}
+//						@Override
+//						public void onFailed() {
+//							// 실패시
+//						}
+//					}    
+//					);		
+//	}
 
 	@Override
 	public void onStart() {
