@@ -2,11 +2,15 @@ package wewe.fuding.fudingandroid;
 
 import wewe.fuding.db.DbOpenHelper;
 import wewe.fuding.domain.Frame;
+import wewe.fuding.utils.HttpRequestAddPost;
+import wewe.fuding.utils.HttpRequestAddPost.OnHttpRequestListener;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +21,11 @@ public class Fragment_AddPost extends Fragment {
 	public static final String TAG = Fragment_AddPost.class.getSimpleName(); 
 	public static FragmentActivity activity; // 자신을 포함하는 activity. onCreateView때 설정되고 onDestroyView때 null이 된다.
 	private static Fragment_AddPost instance = null;
-	
 	private DbOpenHelper mDbOpenHelper;
 	private Cursor mCursor;
+	Frame food;
+	ProgressDialog dialog = null;
+	int serverResponseCode = 0;
 	
 	public static Fragment_AddPost getInstance() {
 		if (instance == null) { // 최초 1회 초기화
@@ -39,6 +45,7 @@ public class Fragment_AddPost extends Fragment {
 		View v;
 		v = inflater.inflate(R.layout.fragment_addposting, container, false);
 		
+		food = new Frame();
 		final EditText edit_title = (EditText)v.findViewById(R.id.edit_title);
 		final EditText edit_ingredient = (EditText)v.findViewById(R.id.edit_ingredient);
 		final EditText edit_time = (EditText)v.findViewById(R.id.edit_time);
@@ -50,8 +57,7 @@ public class Fragment_AddPost extends Fragment {
  			@Override
  			public void onClick(View v) {
  				
- 				Frame food = new Frame();
- 				food.setUserId("yet");
+ 				food.setUserId("noUserId");
  				food.setFoodName(edit_title.getText().toString());
  				food.setIngre(edit_ingredient.getText().toString());
  				food.setTotalTime(edit_time.getText().toString());
@@ -59,9 +65,9 @@ public class Fragment_AddPost extends Fragment {
  				food.setTag(edit_tag.getText().toString());
 
  				// DB Create and Open
- 		        mDbOpenHelper = new DbOpenHelper(activity);
- 		        mDbOpenHelper.open();
- 		        mDbOpenHelper.insertFrameColumn(food);
+// 		        mDbOpenHelper = new DbOpenHelper(activity);
+// 		        mDbOpenHelper.open();
+// 		        mDbOpenHelper.insertFrameColumn(food);
 
  		        // 서버 http 전송 
  		        //sendFoodInfo();
@@ -76,25 +82,23 @@ public class Fragment_AddPost extends Fragment {
 
 	}
 
-//	private void sendFoodInfo() {
-//		public void sendAccessToken(final String access_token) {
-//			// 이미지와 메일 주소 가져오기 위해
-//			SignUpRequest request = new SignUpRequest(
-//					new OnSignUpListener() {
-//						@Override
-//						public void onSuccess(User user) {
-//							Log.d("LoginActivity", user.getUserPic()+" ," +user.getUserEmail());
-//							editor.putString("user_pic", user.getUserPic());
-//							editor.putString("user_mail", user.getUserEmail());
-//							editor.commit();
-//						}
-//						@Override
-//						public void onFailed() {
-//							// 실패시
-//						}
-//					}    
-//					);		
-//	}
+	private void sendFoodInfo() {
+			// 이미지와 메일 주소 가져오기 위해
+		HttpRequestAddPost request = new HttpRequestAddPost(
+			new OnHttpRequestListener() {
+				
+				@Override
+				public void onSuccess(Frame frame) {
+					Log.d("http", "success");
+				}
+
+				@Override
+				public void onFailed() {
+					Log.d("http", "fail");
+				}
+			});
+		request.execute(food.getUserId(), food.getFoodName(), food.getIngre(), food.getTotalTime(), food.getAmount(), food.getTag()); 
+	}
 
 	@Override
 	public void onStart() {
