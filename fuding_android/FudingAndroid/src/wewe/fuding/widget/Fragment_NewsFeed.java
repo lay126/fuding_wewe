@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView.FindListener;
 import android.widget.ListView;
 
 public class Fragment_NewsFeed extends Fragment {
@@ -43,7 +44,7 @@ public class Fragment_NewsFeed extends Fragment {
 		View v;
 		v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
 
-		init(v);
+		// init(v);//
 		return v;
 	}
 
@@ -69,9 +70,10 @@ public class Fragment_NewsFeed extends Fragment {
 
 	private void init(View v) {
 
+		nfList = new ArrayList<Frame>();
 		Frame tempF = new Frame("yeoeun", "불닭", "불,닭", "4인분", "30분", "#속쓰려", 4);
-		nfList.add(tempF);
-		
+		nfList.add(tempF);//
+		nfListView = (ListView) activity.findViewById(R.id.listViewNewsfeed);
 		nfAdapter = new CustomAdapter_NewsFeed(activity, nfList);
 		nfListView.setAdapter(nfAdapter);
 	}
