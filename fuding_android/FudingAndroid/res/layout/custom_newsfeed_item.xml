@@ -5,27 +5,39 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/newsfeed_txtViewUserId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ID" />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/newsfeed_imgView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/newsfeed_txtViewTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="hashTag" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Likes" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageButton
+            android:id="@+id/newsfeed_imgBtnLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="0dp"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/newsfeed_txtViewLikeCnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LikesCnt" />
+    </LinearLayout>
 
 </LinearLayout>

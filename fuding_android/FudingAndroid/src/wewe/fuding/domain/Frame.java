@@ -10,7 +10,7 @@ public class Frame {
 	private String amount; // 요리 양
 	private String totalTime; // 소요 시간
 	private String tag; //  기타 태그
-	private int likeCnt;
+	private int likeCnt; // 좋아요 수
 
 	public Frame() {
 	}
