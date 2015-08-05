@@ -18,12 +18,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import wewe.fuding.domain.Frame;
-import wewe.fuding.domain.User;
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class HttpRequestAddPost extends AsyncTask<String, Void, HttpResponse> {
 
-    private static final String POST_URL = "http://www.g9.co.kr/Display/VIP/Index/701553517";
+    private static final String POST_URL = "http://";
  
     public interface OnHttpRequestListener {
         public void onSuccess(Frame frame);
@@ -48,12 +48,12 @@ public class HttpRequestAddPost extends AsyncTask<String, Void, HttpResponse> {
         try {
             HttpPost post = new HttpPost(POST_URL);
             List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-            pairs.add(new BasicNameValuePair("", userId));
-            pairs.add(new BasicNameValuePair("", foodName));
-            pairs.add(new BasicNameValuePair("", ingre));
-            pairs.add(new BasicNameValuePair("", totalTime));
-            pairs.add(new BasicNameValuePair("", amount));
-            pairs.add(new BasicNameValuePair("", tag));
+            pairs.add(new BasicNameValuePair("user_id", userId));
+            pairs.add(new BasicNameValuePair("wt_name", foodName));
+            pairs.add(new BasicNameValuePair("wt_ingre", ingre));
+            pairs.add(new BasicNameValuePair("wt_times", totalTime));
+            pairs.add(new BasicNameValuePair("wt_quant", amount));
+            pairs.add(new BasicNameValuePair("wt_tags", tag));
             HttpEntity entity = new UrlEncodedFormEntity(pairs);
             post.setEntity(entity);
  
@@ -80,7 +80,7 @@ public class HttpRequestAddPost extends AsyncTask<String, Void, HttpResponse> {
                 String result = EntityUtils.toString(httpResponse.getEntity());
                 JSONObject object = new JSONObject(result);
                 listener.onSuccess(Frame.fromJson(object));
-                
+                Log.d("http", "success");
                 return;
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,7 +1,9 @@
-package wewe.fuding.fudingandroid;
+package wewe.fuding.widget;
 
+import wewe.fuding.activity.AddPostingActivity;
 import wewe.fuding.db.DbOpenHelper;
 import wewe.fuding.domain.Frame;
+import wewe.fuding.fudingandroid.R;
 import wewe.fuding.utils.HttpRequestAddPost;
 import wewe.fuding.utils.HttpRequestAddPost.OnHttpRequestListener;
 import android.app.ProgressDialog;
@@ -70,7 +72,7 @@ public class Fragment_AddPost extends Fragment {
 // 		        mDbOpenHelper.insertFrameColumn(food);
 
  		        // 서버 http 전송 
- 		        //sendFoodInfo();
+// 		        sendFoodInfo();
  		        
  		        startActivity(new Intent(activity, AddPostingActivity.class));
  			}

@@ -1,6 +1,8 @@
-package wewe.fuding.fudingandroid;
+package wewe.fuding.activity;
 
 import java.security.acl.Permission;
+
+import wewe.fuding.fudingandroid.R;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;

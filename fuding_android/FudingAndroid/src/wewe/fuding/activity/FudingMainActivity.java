@@ -1,5 +1,10 @@
-package wewe.fuding.fudingandroid;
+package wewe.fuding.activity;
 
+import wewe.fuding.fudingandroid.R;
+import wewe.fuding.widget.Fragment_AddPost;
+import wewe.fuding.widget.Fragment_Alarm;
+import wewe.fuding.widget.Fragment_NewsFeed;
+import wewe.fuding.widget.Fragment_Profile;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;

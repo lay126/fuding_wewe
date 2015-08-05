@@ -1,4 +1,4 @@
-package wewe.fuding.fudingandroid;
+package wewe.fuding.activity;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import wewe.fuding.domain.Content;
+import wewe.fuding.fudingandroid.R;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -180,10 +181,6 @@ public class AddPostingActivity extends ListActivity {
 //	    listView.setFloatViewManager(controller);
 //	    listView.setOnTouchListener(controller);
 //	    listView.setDragEnabled(true);
-				
-		
-		// 여으니니니닌 222222222222222222
-		int numnum = 111111;
 		
 		adapter = new ItemAdapter(mItem);
 		setListAdapter(adapter);
@@ -259,7 +256,7 @@ public class AddPostingActivity extends ListActivity {
 			}
 			
 			holder.imageView.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					btnImage = holder.imageView;
@@ -328,10 +325,10 @@ public class AddPostingActivity extends ListActivity {
 				dos.writeBytes("Content-Disposition: form-data; name=\"user_srl\""
 						+ lineEnd);
 				dos.writeBytes(lineEnd);
-				dos.writeBytes("1004");
+				//dos.writeBytes("1004");
 				// 源⑥???寃쎌슦媛€ ?덉쓬
 				// dos.write(SPUtils.get(me, "user_name").getBytes("utf-8"));
-				dos.writeBytes(lineEnd);
+				//dos.writeBytes(lineEnd);
 
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
 				dos.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\""

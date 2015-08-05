@@ -1,5 +1,6 @@
-package wewe.fuding.fudingandroid;
+package wewe.fuding.widget;
 
+import wewe.fuding.fudingandroid.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -7,20 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Fragment_Profile extends Fragment {
-	public static final String TAG = Fragment_Profile.class.getSimpleName(); 
+public class Fragment_Alarm extends Fragment {
+	public static final String TAG = Fragment_Alarm.class.getSimpleName(); 
 	public static FragmentActivity activity; // 자신을 포함하는 activity. onCreateView때 설정되고 onDestroyView때 null이 된다.
 	
-	private static Fragment_Profile instance = null;
+	private static Fragment_Alarm instance = null;
 
-	public static Fragment_Profile getInstance() {
+	public static Fragment_Alarm getInstance() {
 		if (instance == null) { // 최초 1회 초기화
-			instance = new Fragment_Profile();
+			instance = new Fragment_Alarm();
 		}
 		return instance;
 	}
 
-	public Fragment_Profile() {
+	public Fragment_Alarm() {
 		 
 	}
 
@@ -29,7 +30,21 @@ public class Fragment_Profile extends Fragment {
 		activity = getActivity();
 
 		View v;
-		v = inflater.inflate(R.layout.fragment_profile, container, false);
+		v = inflater.inflate(R.layout.fragment_alarm, container, false);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		init(v);
 		return v;
 
@@ -56,6 +71,7 @@ public class Fragment_Profile extends Fragment {
 	}
 
 	private void init(View v) {
-
+		
 	}
 }
+
