@@ -33,7 +33,6 @@ def test_upload_write_title(request):
 	def __unicode__(self):
 		return u'%s %s %s' % (self.wt_name, self.wt_ingre, self.wt_tag)
 
-
 	# make title
 	write_title_ = WRITE_TITLE(	user_id = user_id,
 								wt_name = wt_name, 
@@ -41,7 +40,6 @@ def test_upload_write_title(request):
 								wt_times = wt_times,
 								wt_quant = wt_quant,
 								wt_tag = wt_tag )
-
 	write_title_.save()
 
 	# code0 : success
