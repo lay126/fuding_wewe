@@ -121,7 +121,6 @@ public class AddPostingActivity extends ListActivity {
 					Toast.makeText(AddPostingActivity.this, "업로드에 실패했습니다.", Toast.LENGTH_LONG).show();
 				}
 				
-				
 //				DataManager dbManager = new DataManager(getApplicationContext());
 //				dbManager.deleteItem(-1);
 //				dbManager.createTable(containArrayList);
