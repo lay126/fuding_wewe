@@ -17,5 +17,5 @@ urlpatterns = patterns('',
     # upload url
     #----------------------------------------------------------------------------
 	url(r'^upload/write/title/', 'fuding_dj_s.views.test_upload_write_title'),
-    url(r'^upload/write/content/', 'fuding_dj_s.views.test_upload_write_content')
+    url(r'^upload/write/content/', 'fuding_dj_s.views.t_test_upload_write_content')
 )
