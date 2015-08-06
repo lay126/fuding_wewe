@@ -109,7 +109,9 @@ class WRITE_CONTENT(models.Model):
 	wc_index = models.AutoField(verbose_name=u'wc_index', primary_key=True, db_index=True, )
 	wt_index = models.IntegerField(verbose_name=u'wt_index', null=False, default=0, )
 	wc_index_num = models.IntegerField(verbose_name=u'wc_index_num', null=False, default=0, ) # 글에서 몇번째 카드인지를 명시 
-	wc_img = models.ImageField(verbose_name=u'wc_photo', upload_to='fuding_dj_s/images/content_img/', blank=True, )
+
+	wc_img = models.ImageField(verbose_name=u'wc_photo', upload_to='/root/fuding_wewe/fuding_server/fuding_dj/fuding_dj_s/images/content_img', blank=True, )
+	# wc_img = models.ImageField(verbose_name=u'wc_photo', upload_to='fuding_dj_s/images/content_img/', blank=True, )
 	wc_text = models.CharField(verbose_name=u'wc_text', max_length=200, )
 	wc_times = models.IntegerField(verbose_name=u'wc_times', null=False, default=0, )
 
