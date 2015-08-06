@@ -1,4 +1,4 @@
-package wewe.fuding.activity;
+﻿package wewe.fuding.activity;
 
 import wewe.fuding.fudingandroid.R;
 import wewe.fuding.widget.Fragment_AddPost;
@@ -155,6 +155,13 @@ public class FudingMainActivity extends FragmentActivity {
 //			else if ("setting".equals(fragment))
 //				mViewPager.setCurrentItem(3);
 //		}
+	}
+
+	//kt.기어에 데이터를 전송하기 위한 인텐트를 브로드캐스트한다.
+	public void sendDataToGear(String str) {
+		Intent intent = new Intent("myData");
+		intent.putExtra("data", "" + str);
+		sendBroadcast(intent);
 	}
 
 	@Override

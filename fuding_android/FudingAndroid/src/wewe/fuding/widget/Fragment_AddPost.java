@@ -1,4 +1,4 @@
-package wewe.fuding.widget;
+﻿package wewe.fuding.widget;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +31,11 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+//kt.브로드캐스트를 보내기위해.
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 
 public class Fragment_AddPost extends Fragment {
 	public static final String TAG = Fragment_AddPost.class.getSimpleName(); 
@@ -91,10 +96,39 @@ public class Fragment_AddPost extends Fragment {
  			}
 
 		});
+		//kt.기어에 레시피를 전송하기 위한 임시 테스트 버튼
+		Button btn2 = (Button) v.findViewById(R.id.button2);
+		btn2.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String str = edit_title.getText().toString() + ":"
+						+ edit_ingredient.getText().toString() + ":"
+						+ edit_time.getText().toString() + ":"
+						+ edit_amount.getText().toString() + ":"
+						+ edit_tag.getText().toString();
+				// str.concat(edit_title.getText().toString()+":");
+				// str.concat(edit_ingredient.getText().toString()+":");
+				// str.concat(edit_time.getText().toString()+":");
+				// str.concat(edit_amount.getText().toString()+":");
+				// str.concat(edit_tag.getText().toString());
+				Log.d(TAG, str);
+				sendDataToGear(str);
+
+			}
+		});
+
 		
 		init(v);
 		return v;
 
+	}
+
+	// kt.기어에 데이터를 전송하기 위한 인텐트를 브로드캐스트한다.
+	public void sendDataToGear(String str) {
+		Intent intent = new Intent("myData");
+		intent.putExtra("data", "" + str);
+		getActivity().sendBroadcast(intent);
 	}
 
 	private void sendFoodInfo(final Frame food) {
