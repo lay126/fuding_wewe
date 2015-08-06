@@ -123,7 +123,7 @@ def test_upload_write_content(request):
 	wc_finish_index = request.POST.get('wc_finish_index') # 끝이라면 1 주세여 
 
 	def __unicode__(self):
-		return u'%s %s %s' % (self.wt_name, self.wc_photo_name, self.wc_text)
+		return u'%s %s %s' % (self.user_name, self.wc_photo_name, self.wc_text)
 
 	user_ = User.objects.get(username=user_name)
 
@@ -144,17 +144,17 @@ def test_upload_write_content(request):
 	hash_.save()
 
 	# save photo
-	if request.method == 'POST':
-		if 'file' in request.FILES:
-			file = request.FILES['file']
-			filename = wc_photo_name
+	# if request.method == 'POST':
+	# 	if 'file' in request.FILES:
+	# 		file = request.FILES['file']
+	# 		filename = wc_photo_name
 
-			try:
-				write_content_.wc_img.save(filename, File(file), save=True)	
-			except:
-				# code1 : save photo fail
-				json_data = json.dumps('save photo fail')
-				return HttpResponse(json_data, content_type='application/json')	
+	# 		try:
+	# 			write_content_.wc_img.save(filename, File(file), save=True)	
+	# 		except:
+	# 			# code1 : save photo fail
+	# 			json_data = json.dumps('save photo fail')
+	# 			return HttpResponse(json_data, content_type='application/json')	
 
 	json_data = json.dumps(write_content_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
