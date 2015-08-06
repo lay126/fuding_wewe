@@ -208,15 +208,15 @@ def test_upload_write_frame(request):
 
 	# update frameDB.wc_index_... each
 	datas = []
-
 	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_index)
-
+	
 	for d in wc_list_:
 		data = model_to_dict(d)
 		datas.append(data)
 
 	wf_ = WRITE_FRAME.objects.filter(wf_index=write_frame_.wf_index)
-	# wf_.update(wc_index_1=1)
+
+	wf_.update(wc_index_1=10)
 
 	# if len(wc_list_) == int(wc_total):
 	for wc_ in wc_list_:
