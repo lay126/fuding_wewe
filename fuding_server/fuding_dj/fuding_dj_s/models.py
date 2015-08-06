@@ -46,7 +46,7 @@ class USER_WRITES(models.Model):
 	user_id = models.ForeignKey(USER)
 	write_index = models.AutoField(verbose_name=u'write_index', primary_key=True, unique=True, db_index=True, )
 	write_value = models.IntegerField(verbose_name=u'write_value', default=0, )
-	write_time = models.DateTimeField(verbose_name=u'write_time', default=datetime.now, blank=True, )
+	write_date = models.DateTimeField(verbose_name=u'write_date', default=datetime.now, blank=True, )
 	# point_time = models.DateTimeField(verbose_name=u'point_time', auto_now_add=True, blank=True)
 
 class USER_LIKES(models.Model):
@@ -56,7 +56,7 @@ class USER_LIKES(models.Model):
 	user_id = models.ForeignKey(USER)
 	wf_index = models.IntegerField(verbose_name=u'wf_index', default=0, )
 	like_index = models.AutoField(verbose_name=u'like_index', primary_key=True, unique=True, db_index=True, )
-	like_time = models.DateTimeField(verbose_name=u'like_time', default=datetime.now, blank=True, )
+	like_date = models.DateTimeField(verbose_name=u'like_date', default=datetime.now, blank=True, )
 	# point_time = models.DateTimeField(verbose_name=u'point_time', auto_now_add=True, blank=True)
 
 
@@ -83,7 +83,7 @@ class WRITE_FRAME(models.Model):
 	wc_index_8 = models.IntegerField(verbose_name=u'wc_index_8', null=False, default=0, )
 	wc_index_9 = models.IntegerField(verbose_name=u'wc_index_9', null=False, default=0, )
 	wc_total = models.IntegerField(verbose_name=u'wc_total', null=False, default=0, )
-	wc_time = models.DateTimeField(verbose_name=u'wc_time', default=datetime.now, blank=True, )
+	wc_date = models.DateTimeField(verbose_name=u'wc_date', default=datetime.now, blank=True, )
 
 class WRITE_TITLE(models.Model):
 	class Meta:

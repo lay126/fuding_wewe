@@ -32,8 +32,9 @@ def get_newsfeed(request):
 
 	user_ = User.objects.get(username=user_name)
 
-
-
+	#
+	#
+	#
 
 	return 0;
 
@@ -92,44 +93,48 @@ def test_upload_write_content(request):
 
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
-	wt_ingre = request.POST.get('wt_ingre')
-	wt_times = request.POST.get('wt_times')
-	wt_quant = request.POST.get('wt_quant')
-	wt_tag = request.POST.get('wt_tag')
+	wc_index_num = request.POST.get('wc_index_num') # 해당 카드의 순서 번호 
+	wc_photo_name = request.POST.get('wc_photo_name') # 사진 이름을 지정하기위한 파람 
+	wc_text = request.POST.get('wc_text')
+	wc_times = request.POST.get('wc_times')
+	wc_finish_index = request.POST.get('wc_finish_index') # 끝이라면 1 주세여 
 
 	def __unicode__(self):
-		return u'%s %s %s' % (self.wt_name, self.wt_ingre, self.wt_tag)
+		return u'%s %s %s' % (self.wt_name, self.wc_photo_name, self.wc_text)
 
 	user_ = User.objects.get(username=user_name)
 
 	# make title object
-	write_title_ = WRITE_TITLE(	user_id = user_.id,
-								wt_name = wt_name, 
-								wt_ingre = wt_ingre,
-								wt_times = wt_times,
-								wt_quant = wt_quant,
-								wt_tag = wt_tag )
-	write_title_.save()
+	write_content_ = WRITE_CONTENT(	wt_index = wt_index,
+									wc_index_num = wc_index_num,
+									wc_text = wc_text,
+									wc_times = wc_times )
+	write_content_.save()
 
 	# 지금 한글은 안됨 0806
 	hash_w = re.compile('#\w+')
-	# hash_w = re.compile('#[가-힣]+')
-
-	hashs = hash_w.findall(wt_ingre)
-	hashs2 = hash_w.findall(wt_tag)
+	hashs = hash_w.findall(wc_text)
 
 	for h in hashs:
 		hash_ = WRITE_TAG(	wtg_value = h,
-							wt_index = write_title_.wt_index )
+							wt_index = write_content_.wt_index )
 		hash_.save()
 
-	for h in hashs2:
-		hash_ = WRITE_TAG(	wtg_value = h,
-							wt_index = write_title_.wt_index )
-		hash_.save()
+	# save photo
+	if request.method == 'POST':
+		if 'file' in request.FILES:
+			file = request.FILES['file']
+			filename = wc_photo_name
+
+			try:
+				write_content_.wc_img.update(filename, File(file), save=True)	
+			except:
+				# code1 : save photo fail
+				json_data = json.dumps('save photo fail')
+				return HttpResponse(json_data, content_type='application/json')	
 
 
-	json_data = json.dumps(write_title_.wt_index)
+	json_data = json.dumps(write_content_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
 	# return HttpResponse(wt_tag)
 
