@@ -58,7 +58,7 @@ def get_newsfeed(request):
 		data = model_to_dict(d)
 		datas.append(data)
 
-	wr_ = WR('me', '2014', write_list_[0].wc_img, 10, '#tagggg')
+	wr_ = WR('me', '2014', write_list_[5].wc_img, 10, '#tagggg')
 
 	json_data = json.dumps(unicode(wr_.wr_image))
 	return HttpResponse(json_data, content_type='application/json')
@@ -78,7 +78,7 @@ def test_upload_write_title(request):
 	def __unicode__(self):
 		return u'%s %s %s' % (self.wt_name, self.wt_ingre, self.wt_tag)
 
-		user_ = User.objects.get(username=user_name)
+	user_ = User.objects.get(username=user_name)
 
 	# make title object
 	write_title_ = WRITE_TITLE(	user_id = user_.id,
@@ -99,12 +99,12 @@ def test_upload_write_title(request):
 	for h in hashs:
 		hash_ = WRITE_TAG(	wtg_value = h,
 							wt_index = write_title_.wt_index )
-		hash_.save()
+	hash_.save()
 
 	for h in hashs2:
 		hash_ = WRITE_TAG(	wtg_value = h,
 							wt_index = write_title_.wt_index )
-		hash_.save()
+	hash_.save()
 
 	json_data = json.dumps(write_title_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
@@ -159,27 +159,6 @@ def test_upload_write_content(request):
 	json_data = json.dumps(write_content_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
 	# return HttpResponse(wt_tag)
-
-
-
-
-
-
-
-
-
-@csrf_exempt
-def t_test_upload_write_content(request):
-
-	user_name = request.POST.get('user_name')
-
-	def __unicode__(self):
-		return u'%s %s %s' % (self.user_name)
-
-	json_data = json.dumps(user_name)
-	return HttpResponse(json_data, content_type='application/json')
-
-
 
 
 
