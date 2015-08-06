@@ -36,7 +36,7 @@ def test_upload_write_title(request):
 	def __unicode__(self):
 		return u'%s %s %s' % (self.wt_name, self.wt_ingre, self.wt_tag)
 
-	# make title
+	# make title object
 	write_title_ = WRITE_TITLE(	user_id = user_.id,
 								wt_name = wt_name, 
 								wt_ingre = wt_ingre,
@@ -45,19 +45,23 @@ def test_upload_write_title(request):
 								wt_tag = wt_tag )
 	write_title_.save()
 
-	tag_w = re.compile('#\w+\s')
+	# 해쉬태그 단어를 꺼내오기 위한 정규식. 
+	tag_w = re.compile('#\w+')
 	tags = tag_w.findall(wt_ingre)
 
-	tag_ = WRITE_TAG( wtg_value = tags[0])
-	tag_.save()
+
+	# 몰랐던 사실, write_title_객체 생성시에 wt_index는 없었으나,
+	# .save() 된 뒤에 DB접근을 다시 하지 않더라도 해당 객체의 다른 값들을 꺼내 쓸수 있음..
+	#### 신기방기. 똑똑하다. 
+	#### -> db_index값인 wt_index을 꺼내오려고 DB에 다른 unique한 값을 설정해야 하나 고민 중이었음
+	for t in tags:
+		tag_ = WRITE_TAG(	wtg_value = t,
+							wt_index = write_title_.wt_index )
+		tag_.save()
 
 
-
-	# code0 : success
-	json_data = json.dumps(0)
+	json_data = json.dumps(len(tags))
 	return HttpResponse(json_data, content_type='application/json')
-	# json_data = json.dumps(tags)
-	# return HttpResponse(json_data, content_type='application/json')
 
 
 
