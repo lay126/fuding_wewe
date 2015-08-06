@@ -18,12 +18,11 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".LaunchActivity"
+            android:name="wewe.fuding.activity.LaunchActivity"
             android:label="@string/app_name" >
-            
         </activity>
         <activity
-            android:name=".FudingMainActivity"
+            android:name="wewe.fuding.activity.FudingMainActivity"
             android:label="@string/title_activity_fuding_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,11 +31,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="wewe.fuding.activity.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name=".AddPostingActivity"
+            android:name="wewe.fuding.activity.AddPostingActivity"
             android:label="@string/title_activity_login" >
         </activity>
     </application>
