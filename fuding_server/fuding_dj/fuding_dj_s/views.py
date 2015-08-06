@@ -10,7 +10,6 @@ from django.core.context_processors import *
 from django.forms.models import *
 from django.template import *
 from django.utils.simplejson import dumps, loads, JSONEncoder
-# from django.utils import simplejson
 from django.core.files import File
 from django.core.context_processors import *
 from django.views.decorators.csrf import *
@@ -91,10 +90,10 @@ def test_upload_write_title(request):
 	wt_quant = request.POST.get('wt_quant')
 	wt_tag = request.POST.get('wt_tag')
 
+	user_ = User.objects.get(username=user_name)
+
 	def __unicode__(self):
 		return u'%s %s %s' % (self.wt_name, self.wt_ingre, self.wt_tag)
-
-	user_ = User.objects.get(username=user_name)
 
 	# make title object
 	write_title_ = WRITE_TITLE(	user_id = user_.id,
@@ -115,15 +114,16 @@ def test_upload_write_title(request):
 	for h in hashs:
 		hash_ = WRITE_TAG(	wtg_value = h,
 							wt_index = write_title_.wt_index )
-	hash_.save()
+		hash_.save()
 
 	for h in hashs2:
 		hash_ = WRITE_TAG(	wtg_value = h,
 							wt_index = write_title_.wt_index )
-	hash_.save()
+		hash_.save()
 
 	json_data = json.dumps(write_title_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
+
 
 
 @csrf_exempt
@@ -150,14 +150,15 @@ def test_upload_write_content(request):
 	write_content_.save()
 
 	# 지금 한글은 안됨 0806
-	hash_w = re.compile('#\w+')
+	# hash_w = re.compile('#\w+')
+	hash_w = re.compile('#([0-9a-zA-Z가-힣]*)')
 	hashs = hash_w.findall(wc_text)
 
 	try:
 		for h in hashs:
 			hash_ = WRITE_TAG(	wtg_value = h,
 								wt_index = write_content_.wt_index )
-		hash_.save()
+			hash_.save()
 	except: 
 		hashs = hash_w.findall(wc_text)
 
