@@ -86,7 +86,8 @@ class WRITE_FRAME(models.Model):
 	wc_date = models.DateTimeField(verbose_name=u'wc_date', default=datetime.now, blank=True, )
 	user_name = models.CharField(verbose_name=u'user_name', max_length=20, null=False, default='no name', )
 	wt_tag = models.CharField(verbose_name=u'wt_tag', max_length=20, null=False, default='no tag', )
-	wc_img = models.ImageField(verbose_name=u'wc_img', upload_to='/root/fuding_wewe/fuding_server/fuding_dj/fuding_dj_s/images/content_img', blank=True, )
+	wc_img = models.ImageField(verbose_name=u'wc_img', upload_to='fuding_dj_s/images/frame_img', blank=True, )
+	# wc_img = models.ImageField(verbose_name=u'wc_img', upload_to='/root/fuding_wewe/fuding_server/fuding_dj/fuding_dj_s/images/frame_img', blank=True, )
 
 class WRITE_TITLE(models.Model):
 	class Meta:

@@ -59,13 +59,14 @@ def get_newsfeed(request):
 				# lists.append(wr_)
 				# lists.append(wr2_)
 
+	# 임시
 	datas = []
-
 	write_list_ =  WRITE_FRAME.objects.all()
 	for d in write_list_:
 		data = model_to_dict(d)
 		datas.append(data)
 
+	# json_data = json.loads(datas)
 	json_data = json.dumps(unicode(datas))
 	return HttpResponse(json_data, content_type='application/json')
 
@@ -143,10 +144,13 @@ def test_upload_write_content(request):
 	hash_w = re.compile('#\w+')
 	hashs = hash_w.findall(wc_text)
 
-	for h in hashs:
-		hash_ = WRITE_TAG(	wtg_value = h,
-							wt_index = write_content_.wt_index )
-	hash_.save()
+	try:
+		for h in hashs:
+			hash_ = WRITE_TAG(	wtg_value = h,
+								wt_index = write_content_.wt_index )
+		hash_.save()
+	except: 
+		hashs = hash_w.findall(wc_text)
 
 	# save photo
 	if request.method == 'POST':
@@ -165,3 +169,80 @@ def test_upload_write_content(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
+
+@csrf_exempt
+def test_upload_write_frame(request):
+
+	user_name = request.POST.get('user_name')
+	wt_index = request.POST.get('wt_index')
+	wc_total = request.POST.get('wc_total') # 해당 카드의 갯수 
+	wc_photo_name = request.POST.get('wc_photo_name') # 사진 이름을 지정하기위한 파람 
+
+	def __unicode__(self):
+		return u'%s %s %s' % (self.user_name, self.wc_photo_name)
+
+	user_ = User.objects.get(username=user_name)
+	wt_ = WRITE_TITLE.objects.get(wt_index=wt_index)
+
+	# make frame object
+	write_frame_ = WRITE_FRAME(	user_name = user_name,
+								wt_index = wt_index,
+								wc_total = wc_total, 
+								wt_tag = wt_.wt_tag, )
+	write_frame_.save()
+
+	# update titleDB.wf_index 
+	wt2_ = WRITE_TITLE.objects.filter(wt_index=wt_index)
+	wt2_.update(wf_index=write_frame_.wf_index)
+
+
+	# update frameDB.wc_index_... each
+	datas = []
+
+	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_index)
+
+	for d in wc_list_:
+		data = model_to_dict(d)
+		datas.append(data)
+
+	wf_ = WRITE_FRAME.objects.filter(wf_index=write_frame_.wf_index)
+	# wf_.update(wc_index_1=1)
+
+	# if len(wc_list_) == int(wc_total):
+	for wc_ in wc_list_:
+		if int(wc_.wc_index_num) == 1:
+			wf_.update(wc_index_1=wc_.wc_index)
+		if int(wc_.wc_index_num) == 2:
+			wf_.update(wc_index_2=wc_.wc_index)
+		if int(wc_.wc_index_num) == 3:
+			wf_.update(wc_index_3=wc_.wc_index)
+		if int(wc_.wc_index_num) == 4:
+			wf_.update(wc_index_4=wc_.wc_index)
+		if int(wc_.wc_index_num) == 5:
+			wf_.update(wc_index_5=wc_.wc_index)
+		if int(wc_.wc_index_num) == 6:
+			wf_.update(wc_index_6=wc_.wc_index)
+		if int(wc_.wc_index_num) == 7:
+			wf_.update(wc_index_7=wc_.wc_index)
+		if int(wc_.wc_index_num) == 8:
+			wf_.update(wc_index_8=wc_.wc_index)
+		if int(wc_.wc_index_num) == 9:
+			wf_.update(wc_index_9=wc_.wc_index)
+
+
+	# save photo
+	if request.method == 'POST':
+		if 'file' in request.FILES:
+			file = request.FILES['file']
+			filename = wc_photo_name
+
+			try:
+				write_frame_.wc_img.save(filename, File(file), save=True)	
+			except:
+				json_data = json.dumps('save photo fail')
+				return HttpResponse(json_data, content_type='application/json')	
+
+
+	# json_data = json.dumps(len(wc_list_))
+	json_data = json.dumps(write_frame_.wf_index)
+	return HttpResponse(json_data, content_type='application/json')
