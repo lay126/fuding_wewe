@@ -1,6 +1,7 @@
 # _*_ encoding: utf-8 _*_
 import json
 import re
+import base64
 
 from django import forms
 from django.shortcuts import *
@@ -64,6 +65,9 @@ def get_newsfeed(request):
 	write_list_ =  WRITE_FRAME.objects.all()
 	for d in write_list_:
 		d.wc_date = str(d.wc_date)
+		with open("fuding_dj_s/images/content_img/phn.jpg", "rb") as imageFile:
+			stri = base64.b64encode(imageFile.read())
+		# d.wc_img = stri
 		data = model_to_dict(d)
 		datas.append(data)
 
@@ -71,7 +75,11 @@ def get_newsfeed(request):
 	json_data = json.dumps(unicode(datas))
 	return HttpResponse(json_data, content_type='application/json')
 
-
+	# link = 'sp_app/sp_pictures/sp_pictures/' + 'daily' + image_name + '.png'
+	# images = []
+	# image_data_2 = open(link, "rb").read()
+	# images.append(image_data_2)
+	# return HttpResponse(images, content_type="image/png")
 
 @csrf_exempt
 def test_upload_write_title(request):
