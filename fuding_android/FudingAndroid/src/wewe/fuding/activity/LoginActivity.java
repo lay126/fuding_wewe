@@ -2,27 +2,13 @@ package wewe.fuding.activity;
 
 import java.security.acl.Permission;
 
-import wewe.fuding.fudingandroid.R;
+import android.app.Activity;
+import android.os.Bundle;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.LoginResult;
-import com.facebook.LoggingBehavior;
-import com.facebook.login.widget.LoginButton;
 //import com.facebook.Session;
 //import com.facebook.SessionState;
 //import com.facebook.Settings;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 public class LoginActivity extends Activity implements Permission {
 

@@ -3,13 +3,10 @@
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import wewe.fuding.activity.AddPostingActivity;
+import wewe.fuding.activity.R;
 import wewe.fuding.db.DbOpenHelper;
 import wewe.fuding.domain.Frame;
-import wewe.fuding.fudingandroid.R;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,11 +28,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 //kt.브로드캐스트를 보내기위해.
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.IntentFilter;
 
 public class Fragment_AddPost extends Fragment {
 	public static final String TAG = Fragment_AddPost.class.getSimpleName(); 

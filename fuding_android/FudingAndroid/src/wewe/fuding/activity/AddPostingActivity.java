@@ -13,10 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import wewe.fuding.domain.Content;
-import wewe.fuding.fudingandroid.R;
 import android.app.Dialog;
 import android.app.ListActivity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -58,6 +56,8 @@ public class AddPostingActivity extends ListActivity {
 	Bitmap image;
 	Uri mImageCaptureUri;
 	Uri imageList[] = {null, null, null, null, null, null, null, null, null};
+	String contentList[] = {null, null, null, null, null, null, null, null, null};
+	
 	File copy_file; 
 	ImageView btnImage;
 	String upLoadServerUri;
@@ -110,18 +110,20 @@ public class AddPostingActivity extends ListActivity {
 //					containArrayList.add(temp);
 //				}
 				
-				upLoadServerUri = "";
+				upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
 				if (mImageCaptureUri != null) {
-					if (dialog==null) {
-					dialog = ProgressDialog.show(AddPostingActivity.this, "", "Uploading file...", true);
-					}
+//					if (dialog==null) {
+//						dialog = ProgressDialog.show(AddPostingActivity.this, "", "Uploading file...", true);
+//					}
 						new Thread(new Runnable() {
 							public void run() {
 								for (int i = 0; i < mItem.size(); i++) {
-									Log.d("url", "i = "+i);
+//									Log.d("url", "i = "+i);
 //									int result = uploadFile(mImageCaptureUri.getPath());
+									int result = uploadFile(imageList[content_index].getPath());
+//									Log.d("url", "content_index : "+i);
+//									Log.d("url", "imageList[i] : "+imageList[i]);
 //									Log.d("image upload", "result : "+result);
-									Log.d("url", "content_index : "+i);
 								}
 							}
 						}).start(); 
@@ -269,6 +271,7 @@ public class AddPostingActivity extends ListActivity {
 				public void onClick(View v) {
 					btnImage = holder.imageView;
 					content_position = position;
+					Log.d("url", "position"+content_position);
 					makepicture();
 				}
 			});
@@ -327,25 +330,60 @@ public class AddPostingActivity extends ListActivity {
 				conn.setRequestProperty("Content-Type",
 						"multipart/form-data;boundary=" + boundary);
 				conn.setRequestProperty("uploaded_file", fileName);
-
+				
 				dos = new DataOutputStream(conn.getOutputStream());
 
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"user_srl\""
-						+ lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"user_name\"" + lineEnd);
 				dos.writeBytes(lineEnd);
-				//dos.writeBytes("1004");
-				// 源⑥???寃쎌슦媛€ ?덉쓬
-				// dos.write(SPUtils.get(me, "user_name").getBytes("utf-8"));
-				//dos.writeBytes(lineEnd);
+				dos.write("ayoung".getBytes("utf-8"));
+				dos.writeBytes(lineEnd);
+				
+				dos.writeBytes(twoHyphens + boundary + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"wt_index\""+ lineEnd);
+				dos.writeBytes(lineEnd);
+				dos.write("1".getBytes("utf-8"));
+				dos.writeBytes(lineEnd);
+				
+				dos.writeBytes(twoHyphens + boundary + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"wc_index_num\""+ lineEnd);
+				dos.writeBytes(lineEnd);
+				dos.write("4".getBytes("utf-8"));
+				dos.writeBytes(lineEnd);
 
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\""
-						+ fileName + "\"" + lineEnd);
-				Log.d("image upload", "sdfsdf : " + fileName);
-
+				dos.writeBytes("Content-Disposition: form-data; name=\"wc_text\""+ lineEnd);
 				dos.writeBytes(lineEnd);
-
+				dos.write("#wc_text".getBytes("utf-8"));
+				dos.writeBytes(lineEnd);
+				
+				
+				dos.writeBytes(twoHyphens + boundary + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"wc_times\""+ lineEnd);
+				dos.writeBytes(lineEnd);
+				dos.write("500".getBytes("utf-8"));
+				dos.writeBytes(lineEnd);
+				
+				
+				dos.writeBytes(twoHyphens + boundary + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"finish_index\"" + lineEnd);
+				dos.writeBytes(lineEnd);
+				dos.write("0".getBytes("utf-8"));
+				dos.writeBytes(lineEnd);
+				
+				
+				dos.writeBytes(twoHyphens + boundary + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"wc_photo_name\"" + lineEnd);
+				dos.writeBytes(lineEnd);
+				dos.write("bb.jpg".getBytes("utf-8"));
+				dos.writeBytes(lineEnd);
+				
+				dos.writeBytes(twoHyphens + boundary + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"file\";fileName=\"" + fileName + "\"" + lineEnd);
+//				Log.d("image upload", "sdfsdf : " + fileName);
+				dos.writeBytes(lineEnd);
+				
+				
 				// create a buffer of maximum size
 				bytesAvailable = fileInputStream.available();
 
@@ -375,24 +413,22 @@ public class AddPostingActivity extends ListActivity {
 
 				// Responses from the server (code and message)
 				serverResponseCode = conn.getResponseCode();
-				// final String serverResponseMessage =
-				// conn.getResponseMessage();
+				 final String serverResponseMessage = conn.getResponseMessage();
 
-				// Log.d(TAG, "HTTP Response is : " + serverResponseMessage +
-				// ": " + serverResponseCode);
+				 Log.d("multipart", "HTTP Response is : " + serverResponseMessage +": " + serverResponseCode);
 
-				if (serverResponseCode == 200) {
-					Log.d("image upload", "success");
-					Toast.makeText(AddPostingActivity.this, "업로드 완료 ", Toast.LENGTH_LONG).show();
-					finish();
-				} else {
-					Log.d("image upload", "fail");
-					Toast.makeText(AddPostingActivity.this, "업로드 실패 ", Toast.LENGTH_LONG).show();
-				}
+//				if (serverResponseCode == 200) {
+//					Log.d("image upload", "success");
+//					Toast.makeText(AddPostingActivity.this, "업로드 완료 ", Toast.LENGTH_LONG).show();
+//					finish();
+//				} else {
+//					Log.d("image upload", "fail");
+//					Toast.makeText(AddPostingActivity.this, "업로드 실패 ", Toast.LENGTH_LONG).show();
+//				}
 
 			} catch (Exception e) {
 
-				dialog.dismiss();
+				//dialog.dismiss();
 				e.printStackTrace();
 
 				runOnUiThread(new Runnable() {
@@ -404,12 +440,22 @@ public class AddPostingActivity extends ListActivity {
 				Log.e("Upload file to server Exception",
 						"Exception : " + e.getMessage(), e);
 			}
-			dialog.dismiss();
+			//dialog.dismiss();
 			return serverResponseCode;
 
 		} // End else block
 
 	}
+
+	private Object setValue(String key, int i) {
+		return "Content-Disposition: form-data; name=\"" + key + "\"r\n\r\n"
+                + i;
+	}
+
+	public static String setValue(String key, String value) {
+        return "Content-Disposition: form-data; name=\"" + key + "\"r\n\r\n"
+                + value;
+    }
 
 	private void makepicture() {
 
@@ -487,7 +533,7 @@ public class AddPostingActivity extends ListActivity {
 			mImageCaptureUri = createSaveCropFile();
 			File cpoy_file = new File(mImageCaptureUri.getPath());
 
-			//Log.d(TAG, "mImageCaptureUri.getPath() : "+mImageCaptureUri.getPath());
+			Log.d("url", "mImageCaptureUri.getPath() : "+mImageCaptureUri.getPath());
 			// SD카드에 저장된 파일을 이미지 Crop을 위해 복사한다.
 			copyFile(original_file, cpoy_file);
 
@@ -529,7 +575,7 @@ public class AddPostingActivity extends ListActivity {
 			// 각 url값을 배열에 저장 
 			Log.d("url", "content_position : "+ content_position); 
 			imageList[content_position] = mImageCaptureUri;
-			Log.d("url", "crop url final: "+imageList[content_position]);
+			Log.d("url crop url final", ""+imageList[content_position]);
 			break;
 		}
 		}
@@ -540,16 +586,19 @@ public class AddPostingActivity extends ListActivity {
 		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         String imageId = pref.getString("imageURL_index", "default");
 		
-        String url = imageId + content_index + ".jpg";
-		
+        String url = imageId + "_" + content_position + ".jpg";
 		Uri uri = Uri.fromFile(new File(getExternalFilesDir(null), url));
 		//Log.d(TAG, "uri : "+uri);
 		
+		Log.d("url createSaveCropFile", url+"  ");
 		return uri;
 		// 유알아이도 있공. 스트링 유알엘도있음.
 	}
 
 	private File getImageFile(Uri uri) {
+		
+		Log.d("url getImageFile", uri+"");
+		
 		String[] projection = { MediaStore.Images.Media.DATA };
 		if (uri == null) {
 			uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;

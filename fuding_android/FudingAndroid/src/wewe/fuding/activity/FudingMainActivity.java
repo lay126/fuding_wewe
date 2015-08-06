@@ -1,6 +1,5 @@
 ﻿package wewe.fuding.activity;
 
-import wewe.fuding.fudingandroid.R;
 import wewe.fuding.widget.Fragment_AddPost;
 import wewe.fuding.widget.Fragment_Alarm;
 import wewe.fuding.widget.Fragment_NewsFeed;

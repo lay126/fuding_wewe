@@ -1,6 +1,6 @@
 package wewe.fuding.widget;
 
-import wewe.fuding.fudingandroid.R;
+import wewe.fuding.activity.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;

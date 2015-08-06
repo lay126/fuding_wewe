@@ -2,16 +2,13 @@ package wewe.fuding.widget;
 
 import java.util.ArrayList;
 
+import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
-import wewe.fuding.fudingandroid.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class CustomAdapter_NewsFeed extends BaseAdapter {
 
