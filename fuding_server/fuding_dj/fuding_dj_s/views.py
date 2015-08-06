@@ -127,7 +127,7 @@ def test_upload_write_content(request):
 			filename = wc_photo_name
 
 			try:
-				write_content_.wc_img.update(filename, File(file), save=True)	
+				write_content_.wc_img.save(filename, File(file), save=True)	
 			except:
 				# code1 : save photo fail
 				json_data = json.dumps('save photo fail')
