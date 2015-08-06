@@ -1,4 +1,4 @@
-# _*_ coding: utf-8 _*_
+# _*_ encoding: utf-8 _*_
 import json
 import re
 
@@ -9,6 +9,7 @@ from django.core.context_processors import *
 from django.forms.models import *
 from django.template import *
 from django.utils.simplejson import dumps, loads, JSONEncoder
+# from django.utils import simplejson
 from django.core.files import File
 from django.core.context_processors import *
 from django.views.decorators.csrf import *
@@ -46,22 +47,26 @@ def test_upload_write_title(request):
 								wt_tag = wt_tag )
 	write_title_.save()
 
-	# 해쉬태그 단어를 꺼내오기 위한 정규식. 
-	tag_w = re.compile('#\w+')
-	tags = tag_w.findall(wt_ingre)
+	hash_w = re.compile('#\w+')
+	# hash_w = re.compile('#[가-힣]+')
 
-	# 몰랐던 사실, write_title_객체 생성시에 wt_index는 없었으나,
-	# .save() 된 뒤에 DB접근을 다시 하지 않더라도 해당 객체의 다른 값들을 꺼내 쓸수 있음..
-	#### 신기방기. 똑똑하다. 
-	#### -> db_index값인 wt_index을 꺼내오려고 DB에 다른 unique한 값을 설정해야 하나 고민 중이었음
-	for t in tags:
-		tag_ = WRITE_TAG(	wtg_value = t,
+	hashs = hash_w.findall(wt_ingre)
+	hashs2 = hash_w.findall(wt_tag)
+
+	for h in hashs:
+		hash_ = WRITE_TAG(	wtg_value = h,
 							wt_index = write_title_.wt_index )
-		tag_.save()
+		hash_.save()
+
+	for h in hashs2:
+		hash_ = WRITE_TAG(	wtg_value = h,
+							wt_index = write_title_.wt_index )
+		hash_.save()
 
 
-	json_data = json.dumps(write_title_.wt_index)
-	return HttpResponse(json_data, content_type='application/json')
+	# json_data = json.dumps(len(hashs))
+	# return HttpResponse(json_data, content_type='application/json')
+	return HttpResponse(wt_tag)
 
 
 
