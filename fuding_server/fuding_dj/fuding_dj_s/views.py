@@ -63,6 +63,7 @@ def get_newsfeed(request):
 	datas = []
 	write_list_ =  WRITE_FRAME.objects.all()
 	for d in write_list_:
+		d.wc_date = str(d.wc_date)
 		data = model_to_dict(d)
 		datas.append(data)
 
