@@ -17,7 +17,7 @@
             android:text="ID" />
 
         <TextView
-            android:id="@+id/newsfeed_txtWriteDate"
+            android:id="@+id/newsfeed_txtViewWriteDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
