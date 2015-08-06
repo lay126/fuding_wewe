@@ -85,7 +85,7 @@ public class Fragment_AddPost extends Fragment {
 // 		        mDbOpenHelper.insertFrameColumn(food);
 
  		        // 서버 http 전송 
-// 		        sendFoodInfo(food);
+ 		        sendFoodInfo(food);
  		        
  		        startActivity(new Intent(activity, AddPostingActivity.class));
  			}
@@ -119,27 +119,25 @@ public class Fragment_AddPost extends Fragment {
 		RequestQueue mQueue2;
 		mQueue2 = Volley.newRequestQueue(activity);
 		Listener<String> listener = new Listener<String>() {
-		@Override
+			@Override
 			public void onResponse(String result) {
 				try {
-					JSONObject jObject = new JSONObject(result);
-					final String Value = jObject.getString("sending");
+
+//					JSONObject jObject = new JSONObject(result);
+//					final String Value = jObject.getString("sending");
 			
-					Log.d("result", Value);
+					Log.d("volley", "step1 result    : "+result);
 					
 					SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
 			        SharedPreferences.Editor editor = pref.edit();
-			        editor.putString("imageURL_index", "서버에서 보내준 유저id+고유번호+글번호");
+			        editor.putString("imageURL_index", result+"");
 			        editor.commit();
 					
-					if (Value.equals("success")) {
-						Toast.makeText(activity, "업로드 1단계 성공 ", Toast.LENGTH_LONG).show();
-					} else
-						Toast.makeText(activity, "업로드 실패 ", Toast.LENGTH_LONG).show();
+				//} catch (JSONException e) { 
+				//	e.printStackTrace();
+				} catch (Exception e){
 					
-				} catch (JSONException e) { 
-					e.printStackTrace();
-				}	
+				}
 			}
 		};
 
@@ -156,7 +154,7 @@ public class Fragment_AddPost extends Fragment {
 			protected Map<String, String> getParams()
 					throws com.android.volley.AuthFailureError {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("user_id", food.getUserId());
+				params.put("user_name", "ayoung");
 				params.put("wt_name", food.getFoodName());
 				params.put("wt_ingre", food.getIngre());
 				params.put("wt_times", food.getTotalTime());
