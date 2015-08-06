@@ -110,7 +110,6 @@ def test_upload_write_title(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
-
 @csrf_exempt
 def test_upload_write_content(request):
 
@@ -144,25 +143,19 @@ def test_upload_write_content(request):
 	hash_.save()
 
 	# save photo
-	# if request.method == 'POST':
-	# 	if 'file' in request.FILES:
-	# 		file = request.FILES['file']
-	# 		filename = wc_photo_name
+	if request.method == 'POST':
+		if 'file' in request.FILES:
+			file = request.FILES['file']
+			filename = wc_photo_name
 
-	# 		try:
-	# 			write_content_.wc_img.save(filename, File(file), save=True)	
-	# 		except:
-	# 			# code1 : save photo fail
-	# 			json_data = json.dumps('save photo fail')
-	# 			return HttpResponse(json_data, content_type='application/json')	
+			try:
+				write_content_.wc_img.save(filename, File(file), save=True)	
+			except:
+				# code1 : save photo fail
+				json_data = json.dumps('save photo fail')
+				return HttpResponse(json_data, content_type='application/json')	
 
 	json_data = json.dumps(write_content_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
-	# return HttpResponse(wt_tag)
-
-
-
-
-
 
 
