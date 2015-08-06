@@ -11,12 +11,13 @@ public class Frame {
 	private String totalTime; // 소요 시간
 	private String tag; //  기타 태그
 	private int likeCnt; // 좋아요 수
+	private String writeDate;
 
 	public Frame() {
 	}
 
 	public Frame(String userId, String foodName, String ingre, String amount,
-			String totalTime, String tag, int likeCnt) {
+			String totalTime, String tag, int likeCnt, String writeDate) {
 		this.userId = userId;
 		this.foodName = foodName;
 		this.ingre = ingre;
@@ -24,6 +25,7 @@ public class Frame {
 		this.totalTime = totalTime;
 		this.tag = tag;
 		this.likeCnt = likeCnt;
+		this.writeDate = writeDate;
 	}
 
 	public String getUserId() {
@@ -82,11 +84,20 @@ public class Frame {
 		this.likeCnt = likeCnt;
 	}
 
+	public String getWriteDate() {
+		return writeDate;
+	}
+
+	public void setWriteDate(String writeDate) {
+		this.writeDate = writeDate;
+	}
+
 	public static Frame fromJson(JSONObject object) throws JSONException {
 		return new Frame(object.getString("userId"),
 				object.getString("foodName"), object.getString("ingre"),
 				object.getString("amount"), object.getString("totalTime"),
-				object.getString("tag"), object.getInt("likeCnt"));
+				object.getString("tag"), object.getInt("likeCnt"),
+				object.getString("writeDate"));
 	}
 
 }
