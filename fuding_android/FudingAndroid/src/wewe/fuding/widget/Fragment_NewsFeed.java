@@ -73,7 +73,7 @@ public class Fragment_NewsFeed extends Fragment {
 			@Override
 			public void onResponse(JSONArray response) {
 				Log.d("onResponse", response.toString());
-				
+
 				try {
 					for (int i = 0; i < response.length(); i++) {
 
@@ -94,19 +94,19 @@ public class Fragment_NewsFeed extends Fragment {
 				}
 			}
 		};
-		
-		
+
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-				
+
 				String arrRes = "{'response':" + response + "}";
 				arrRes = arrRes.replace("\"", "");
 				arrRes = arrRes.replace("'", "\"");
-				arrRes = arrRes.replace(" " , "");
-				//arrRes = "" + arrRes;
+				arrRes = arrRes.replace(" ", "");
+				// arrRes = arrRes.replace("", "");
+				// arrRes = "" + arrRes;
 				Log.d(TAG, arrRes);
-				
+
 				JSONObject jobject = null;
 				try {
 					jobject = new JSONObject(arrRes);
@@ -114,7 +114,7 @@ public class Fragment_NewsFeed extends Fragment {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 				JSONArray jarray = null;
 				try {
 					jarray = jobject.getJSONArray("response");
@@ -122,8 +122,7 @@ public class Fragment_NewsFeed extends Fragment {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				
+
 				try {
 					for (int i = 0; i < jarray.length(); i++) {
 
@@ -142,7 +141,7 @@ public class Fragment_NewsFeed extends Fragment {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		};
 
@@ -155,10 +154,12 @@ public class Fragment_NewsFeed extends Fragment {
 			}
 		};
 
-//		JsonArrayRequest arrReq = new JsonArrayRequest(URL_address, arrListener,
-//				errorListener);
-		
-		StringRequest req = new StringRequest(Method.POST, URL_address, listener, errorListener){
+		// JsonArrayRequest arrReq = new JsonArrayRequest(URL_address,
+		// arrListener,
+		// errorListener);
+
+		StringRequest req = new StringRequest(Method.POST, URL_address,
+				listener, errorListener) {
 			// do sth
 		};
 
