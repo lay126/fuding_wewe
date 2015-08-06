@@ -18,6 +18,7 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -56,11 +57,14 @@ public class AddPostingActivity extends ListActivity {
 	
 	Bitmap image;
 	Uri mImageCaptureUri;
+	Uri imageList[] = {null, null, null, null, null, null, null, null, null};
 	File copy_file; 
 	ImageView btnImage;
 	String upLoadServerUri;
 	int serverResponseCode = 0;
 	boolean flag = false;	// 편집 레이아웃으로 변경 
+	int content_index = 0;
+	int content_position = 0;	//선택된 단계의 position 값을 통해 배을 저장한다. 
 	
 //	private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
 //		@Override
@@ -98,26 +102,30 @@ public class AddPostingActivity extends ListActivity {
 
 				ArrayList<Content> containArrayList = new ArrayList<Content>();
 
-				for (int i = 0; i < mItem.size(); i++) {
-					Content temp = new Content();
-					temp.setContent(mItem.get(i).step);
-					temp.setPhoto(mItem.get(i).image);
-
-					containArrayList.add(temp);
-				}
+//				for (int i = 0; i < mItem.size(); i++) {
+//					Content temp = new Content();
+//					temp.setContent(mItem.get(i).step);
+//					temp.setPhoto(mItem.get(i).image);
+//
+//					containArrayList.add(temp);
+//				}
 				
-				upLoadServerUri = "http://54.213.91.157:52271/Photo/setphoto";
+				upLoadServerUri = "";
 				if (mImageCaptureUri != null) {
+					if (dialog==null) {
 					dialog = ProgressDialog.show(AddPostingActivity.this, "", "Uploading file...", true);
-
-					new Thread(new Runnable() {
-						public void run() {
-							int result = uploadFile(mImageCaptureUri.getPath());
-							Log.d("image upload", "result : "+result);
-						}
-
-					}).start(); 
-					
+					}
+						new Thread(new Runnable() {
+							public void run() {
+								for (int i = 0; i < mItem.size(); i++) {
+									Log.d("url", "i = "+i);
+//									int result = uploadFile(mImageCaptureUri.getPath());
+//									Log.d("image upload", "result : "+result);
+									Log.d("url", "content_index : "+i);
+								}
+							}
+						}).start(); 
+						Log.d("url", "url :"+mImageCaptureUri.getPath());
 				} else {
 					Toast.makeText(AddPostingActivity.this, "업로드에 실패했습니다.", Toast.LENGTH_LONG).show();
 				}
@@ -260,6 +268,7 @@ public class AddPostingActivity extends ListActivity {
 				@Override
 				public void onClick(View v) {
 					btnImage = holder.imageView;
+					content_position = position;
 					makepicture();
 				}
 			});
@@ -472,7 +481,7 @@ public class AddPostingActivity extends ListActivity {
 
 		switch (requestCode) {
 		case PICK_FROM_ALBUM: {
-
+			
 			mImageCaptureUri = data.getData();
 			File original_file = getImageFile(mImageCaptureUri);
 			mImageCaptureUri = createSaveCropFile();
@@ -516,6 +525,11 @@ public class AddPostingActivity extends ListActivity {
 			btnImage.setBackgroundColor(Color.WHITE);
 			btnImage.setImageURI(mImageCaptureUri);
 			btnImage.setScaleType(ImageView.ScaleType.CENTER_CROP);	//가운데 자름 (길쭉하게 자른 경우)
+			
+			// 각 url값을 배열에 저장 
+			Log.d("url", "content_position : "+ content_position); 
+			imageList[content_position] = mImageCaptureUri;
+			Log.d("url", "crop url final: "+imageList[content_position]);
 			break;
 		}
 		}
@@ -523,7 +537,11 @@ public class AddPostingActivity extends ListActivity {
 	}
 
 	private Uri createSaveCropFile() {
-		String url = "daeun.jpg";
+		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        String imageId = pref.getString("imageURL_index", "default");
+		
+        String url = imageId + content_index + ".jpg";
+		
 		Uri uri = Uri.fromFile(new File(getExternalFilesDir(null), url));
 		//Log.d(TAG, "uri : "+uri);
 		
