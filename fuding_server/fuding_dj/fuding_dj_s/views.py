@@ -22,6 +22,22 @@ from django.contrib.auth.models import User, UserManager
 from fuding_dj_s.models import *
 
 
+@csrf_exempt
+def get_newsfeed(request):
+	
+	user_name = request.POST.get('user_name')
+
+	def __unicode__(self):
+		return u'%s' % (self.user_name)
+
+	user_ = User.objects.get(username=user_name)
+
+
+
+
+	return 0;
+
+
 
 @csrf_exempt
 def test_upload_write_title(request):
@@ -33,10 +49,10 @@ def test_upload_write_title(request):
 	wt_quant = request.POST.get('wt_quant')
 	wt_tag = request.POST.get('wt_tag')
 
-	user_ = User.objects.get(username=user_name)
-
 	def __unicode__(self):
 		return u'%s %s %s' % (self.wt_name, self.wt_ingre, self.wt_tag)
+
+	user_ = User.objects.get(username=user_name)
 
 	# make title object
 	write_title_ = WRITE_TITLE(	user_id = user_.id,
@@ -47,6 +63,7 @@ def test_upload_write_title(request):
 								wt_tag = wt_tag )
 	write_title_.save()
 
+	# 지금 한글은 안됨 0806
 	hash_w = re.compile('#\w+')
 	# hash_w = re.compile('#[가-힣]+')
 
@@ -72,7 +89,53 @@ def test_upload_write_title(request):
 
 @csrf_exempt
 def test_upload_write_content(request):
-	return 0
+
+	user_name = request.POST.get('user_name')
+	wt_index = request.POST.get('wt_index')
+	wt_ingre = request.POST.get('wt_ingre')
+	wt_times = request.POST.get('wt_times')
+	wt_quant = request.POST.get('wt_quant')
+	wt_tag = request.POST.get('wt_tag')
+
+	def __unicode__(self):
+		return u'%s %s %s' % (self.wt_name, self.wt_ingre, self.wt_tag)
+
+	user_ = User.objects.get(username=user_name)
+
+	# make title object
+	write_title_ = WRITE_TITLE(	user_id = user_.id,
+								wt_name = wt_name, 
+								wt_ingre = wt_ingre,
+								wt_times = wt_times,
+								wt_quant = wt_quant,
+								wt_tag = wt_tag )
+	write_title_.save()
+
+	# 지금 한글은 안됨 0806
+	hash_w = re.compile('#\w+')
+	# hash_w = re.compile('#[가-힣]+')
+
+	hashs = hash_w.findall(wt_ingre)
+	hashs2 = hash_w.findall(wt_tag)
+
+	for h in hashs:
+		hash_ = WRITE_TAG(	wtg_value = h,
+							wt_index = write_title_.wt_index )
+		hash_.save()
+
+	for h in hashs2:
+		hash_ = WRITE_TAG(	wtg_value = h,
+							wt_index = write_title_.wt_index )
+		hash_.save()
+
+
+	json_data = json.dumps(write_title_.wt_index)
+	return HttpResponse(json_data, content_type='application/json')
+	# return HttpResponse(wt_tag)
+
+
+
+
 
 
 

@@ -29,12 +29,6 @@ class USER_DATAAdmin(admin.ModelAdmin):
 					'user_writes',
 					'user_likes', )
 
-class USER_POINTSAdmin(admin.ModelAdmin):
-	list_display = ('user_id',
-					'point_index',
-					'point_value',
-					'point_time', )
-
 class USER_WRITESAdmin(admin.ModelAdmin):
 	list_display = ('user_id',
 					'write_index',
@@ -44,7 +38,7 @@ class USER_WRITESAdmin(admin.ModelAdmin):
 class USER_LIKESAdmin(admin.ModelAdmin):
 	list_display = ('user_id',
 					'like_index',
-					'like_value',
+					'wf_index',
 					'like_time', )
 
 
@@ -60,8 +54,8 @@ class WRITE_TITLEAdmin(admin.ModelAdmin):
 					'user_id', 'wt_name', 'wt_ingre', 'wt_times', 'wt_quant', 'wt_tag', )
 
 class WRITE_CONTENTAdmin(admin.ModelAdmin):
-	list_display = ('wc_index', 'wf_index',
-					'wc_index_num', 'wc_img', 'wc_text', )
+	list_display = ('wc_index', 'wt_index',
+					'wc_index_num', 'wc_img', 'wc_text', 'wc_times')
 
 class WRITE_TAGAdmin(admin.ModelAdmin):
 	list_display = ('wtg_index', 'wt_index', 
@@ -77,7 +71,6 @@ admin.site.register(User, UserAdmin)
 
 # Register your models here.
 admin.site.register(USER_DATA, USER_DATAAdmin)
-admin.site.register(USER_POINTS, USER_POINTSAdmin)
 admin.site.register(USER_WRITES, USER_WRITESAdmin)
 admin.site.register(USER_LIKES, USER_LIKESAdmin)
 admin.site.register(WRITE_FRAME, WRITE_FRAMEAdmin)

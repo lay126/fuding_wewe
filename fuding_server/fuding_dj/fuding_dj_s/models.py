@@ -39,16 +39,6 @@ class USER_DATA(models.Model):
 	# matching with write num
 	user_likes = models.IntegerField(verbose_name=u'user_likes', default=0)
 
-class USER_POINTS(models.Model):
-	class Meta:
-		verbose_name = u'USER_POINTS'
-		db_table = 'USER_POINTS_DB'
-	user_id = models.ForeignKey(User)
-	point_index = models.AutoField(verbose_name=u'point_index', primary_key=True, unique=True, db_index=True, )
-	point_value = models.IntegerField(verbose_name=u'point_value', default=0, )
-	point_time = models.DateTimeField(verbose_name=u'point_time', default=datetime.now, blank=True, )
-	# point_time = models.DateTimeField(verbose_name=u'point_time', auto_now_add=True, blank=True)
-
 class USER_WRITES(models.Model):
 	class Meta:
 		verbose_name = u'USER_WRITES'
@@ -64,8 +54,8 @@ class USER_LIKES(models.Model):
 		verbose_name = u'USER_LIKES'
 		db_table = 'USER_LIKES_DB'
 	user_id = models.ForeignKey(USER)
+	wf_index = models.IntegerField(verbose_name=u'wf_index', default=0, )
 	like_index = models.AutoField(verbose_name=u'like_index', primary_key=True, unique=True, db_index=True, )
-	like_value = models.IntegerField(verbose_name=u'like_value', default=0, )
 	like_time = models.DateTimeField(verbose_name=u'like_time', default=datetime.now, blank=True, )
 	# point_time = models.DateTimeField(verbose_name=u'point_time', auto_now_add=True, blank=True)
 
@@ -117,10 +107,11 @@ class WRITE_CONTENT(models.Model):
 		verbose_name = u'WRITE_CONTENT' 
 		db_table = 'WRITE_CONTENT_DB'
 	wc_index = models.AutoField(verbose_name=u'wc_index', primary_key=True, db_index=True, )
-	wf_index = models.IntegerField(verbose_name=u'wf_index', null=False, default=0, )
+	wt_index = models.IntegerField(verbose_name=u'wt_index', null=False, default=0, )
 	wc_index_num = models.IntegerField(verbose_name=u'wc_index_num', null=False, default=0, ) # 글에서 몇번째 카드인지를 명시 
 	wc_img = models.ImageField(verbose_name=u'wc_photo', upload_to='fuding_dj_s/images/content_img/', blank=True, )
 	wc_text = models.CharField(verbose_name=u'wc_text', max_length=200, )
+	wc_times = models.IntegerField(verbose_name=u'wc_times', null=False, default=0, )
 
 class WRITE_TAG(models.Model):
 	class Meta:
