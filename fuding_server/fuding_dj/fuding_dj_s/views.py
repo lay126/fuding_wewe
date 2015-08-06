@@ -60,7 +60,7 @@ def test_upload_write_title(request):
 		tag_.save()
 
 
-	json_data = json.dumps(len(tags))
+	json_data = json.dumps(write_title_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
 
 
