@@ -12,33 +12,43 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import wewe.fuding.domain.Content;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+
+
+// content, image, time
+// 마지막 이미지에는 1로 flag
+// 마지막 사진 전송에는 frame url 시 사진까지 전송! 
 
 public class AddPostingActivity extends ListActivity { 
 	
@@ -47,6 +57,7 @@ public class AddPostingActivity extends ListActivity {
 	private static final int CROP_FROM_CAMERA = 2;
 	private ItemAdapter adapter;
 	private ArrayList<Item> mItem;
+	private ArrayList<Item> mItem_re;
 	private String[] mItemName;
 	private String[] mItemTime;
 	ImageView btn_ok;
@@ -55,6 +66,7 @@ public class AddPostingActivity extends ListActivity {
 	
 	Bitmap image;
 	Uri mImageCaptureUri;
+	Uri uri_copy;
 	Uri imageList[] = {null, null, null, null, null, null, null, null, null};
 	String contentList[] = {null, null, null, null, null, null, null, null, null};
 	
@@ -65,6 +77,9 @@ public class AddPostingActivity extends ListActivity {
 	boolean flag = false;	// 편집 레이아웃으로 변경 
 	int content_index = 0;
 	int content_position = 0;	//선택된 단계의 position 값을 통해 배을 저장한다. 
+	EditText ed_step, ed_time;
+	ImageView dialog_image;
+	int httpFlag = 0;
 	
 //	private DragSortListView.DropListener onDrop = new DragSortListView.DropListener() {
 //		@Override
@@ -100,17 +115,22 @@ public class AddPostingActivity extends ListActivity {
 			@Override
 			public void onClick(View v) {
 
-				ArrayList<Content> containArrayList = new ArrayList<Content>();
+//				ArrayList<Content> containArrayList = new ArrayList<Content>();
 
+//				adapter.notifyDataSetChanged();
 //				for (int i = 0; i < mItem.size(); i++) {
 //					Content temp = new Content();
 //					temp.setContent(mItem.get(i).step);
 //					temp.setPhoto(mItem.get(i).image);
-//
+//					Log.d("tag", "mItem.get(i).step"+mItem.get(i).step);
+//					Log.d("tag", "mItem.get(i).image"+mItem.get(i).image);
 //					containArrayList.add(temp);
+//					Item item = new Item("",ed_step.getText().toString(), ed_time.getText().toString() );
+//					mItem_re.add(item);
+//				
 //				}
+//				mItem = mItem_re;
 				
-				upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
 				if (mImageCaptureUri != null) {
 //					if (dialog==null) {
 //						dialog = ProgressDialog.show(AddPostingActivity.this, "", "Uploading file...", true);
@@ -118,14 +138,30 @@ public class AddPostingActivity extends ListActivity {
 						new Thread(new Runnable() {
 							public void run() {
 								for (int i = 0; i < mItem.size(); i++) {
-//									Log.d("url", "i = "+i);
+									int finish_flag = 0;
+									int step_num = i+1;
+									content_index = i+1;
+									if (i+1 == mItem.size()) {
+										finish_flag = 1;
+										//마지막 단계에서 또다른 서버 통신
+										upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
+										uploadFile(mItem.get(i).image.getPath(), mItem.get(i).step, mItem.get(i).time, step_num, finish_flag);
+										
+										upLoadServerUri = "http://119.205.252.224:8000/upload/write/frame/";
+										uploadFile(mItem.get(i).image.getPath(), "", "", step_num, 3);
+									} else {
+										upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
+										uploadFile(mItem.get(i).image.getPath(), mItem.get(i).step, mItem.get(i).time, step_num, finish_flag);
+										Log.d("url", "i = "+mItem.get(i).image.getPath());
+									}
 //									int result = uploadFile(mImageCaptureUri.getPath());
-									int result = uploadFile(imageList[content_index].getPath());
-//									Log.d("url", "content_index : "+i);
-//									Log.d("url", "imageList[i] : "+imageList[i]);
+//									Log.d("image upload", "mItem : "+mItem.get(i).step +" : "+ mItem.get(i).time);
+//									Log.d("image upload", "content_index : "+i);
+//									Log.d("image upload", "imageList[i] : "+imageList[i]);
 //									Log.d("image upload", "result : "+result);
 								}
 							}
+
 						}).start(); 
 						Log.d("url", "url :"+mImageCaptureUri.getPath());
 				} else {
@@ -145,8 +181,72 @@ public class AddPostingActivity extends ListActivity {
 
 			@Override
 			public void onClick(View v) {
-				mItem.add(new Item("", "", ""));
-				adapter.notifyDataSetChanged();
+				//mItem.add(new Item("", "", ""));
+				//adapter.notifyDataSetChanged();
+			
+				Rect displayRectangle = new Rect();
+				if (dialog != null) {
+					dialog.dismiss();
+					dialog = null;
+				}
+				dialog = new Dialog(AddPostingActivity.this);
+				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+				Window window = dialog.getWindow();
+				window.getDecorView().getWindowVisibleDisplayFrame(displayRectangle);
+				WindowManager.LayoutParams wlp = new WindowManager.LayoutParams();
+				wlp.copyFrom(window.getAttributes());
+				wlp.width = (int) (displayRectangle.width() * 0.69f);
+				wlp.height = (int) (displayRectangle.height() * 0.65f);
+				
+				dialog.getWindow().setAttributes(wlp);
+				dialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
+				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				
+				View dialogView = (RelativeLayout) vi.inflate(R.layout.detail_setting, null);
+	
+				final EditText edit_step = (EditText) dialogView.findViewById(R.id.ed_step);
+				final EditText edit_time = (EditText) dialogView.findViewById(R.id.ed_time);
+				dialog_image = (ImageView) dialogView.findViewById(R.id.image);
+				Button btn_add_ok = (Button) dialogView.findViewById(R.id.btn_ok);
+				Button btn_add_cancel = (Button) dialogView.findViewById(R.id.btn_cancel);
+
+				btn_add_ok.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						if (edit_step.length() > 0 && edit_time.length() > 0) {
+							Toast.makeText(AddPostingActivity.this, "추가되었습니다.", Toast.LENGTH_LONG).show();
+
+							InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+							imm.hideSoftInputFromWindow(edit_time.getWindowToken(), 0);
+							mItem.add(new Item(uri_copy, edit_step.getText().toString(), edit_time.getText().toString()));
+							adapter.notifyDataSetChanged();
+							dialog.cancel();
+							
+						} else {
+							Toast.makeText(AddPostingActivity.this, "빈칸을 모두 채워주세요.", Toast.LENGTH_LONG).show();
+						}
+					}
+				});
+
+				btn_add_cancel.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						dialog.cancel();
+					}
+				});
+
+				dialog_image.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						Log.d("mItem", mItem.size()+1+"");
+						content_position = mItem.size()+1;
+						makepicture();
+					}
+				});
+				
+				dialog.setCancelable(true);
+				dialog.setContentView(dialogView);
+				dialog.show();
 			}
 		});
 		
@@ -198,11 +298,12 @@ public class AddPostingActivity extends ListActivity {
 
 	class Item {
 
-		private String image;
+		private Uri image;
 		private String step;
 		private String time;
+
 		
-		public Item(String image, String step, String time) {
+		public Item(Uri image, String step, String time) {
 			this.image =  image;
 			this.step = step;
 			this.time = time;
@@ -215,9 +316,9 @@ public class AddPostingActivity extends ListActivity {
 	}
 
 	private class ViewHolder {
-		public TextView stepView;
+		public EditText stepView;
 		public ImageView imageView, holderBtn, deleteBtn;
-		public TextView timeView;
+		public EditText timeView;
 	}
 
 	private class ItemAdapter extends ArrayAdapter<Item> {
@@ -256,7 +357,12 @@ public class AddPostingActivity extends ListActivity {
 			holder.stepView.setText(stepText);
 			String timeText = getItem(position).time;
 			holder.timeView.setText(timeText);
+			ed_step = holder.stepView;
+			ed_time = holder.timeView;
 			
+			holder.imageView.setBackgroundColor(Color.WHITE);
+			holder.imageView.setImageURI(getItem(position).image);
+					
 			if (flag) {
 				holder.holderBtn.setVisibility(View.VISIBLE);
 				holder.deleteBtn.setVisibility(View.VISIBLE);
@@ -264,18 +370,6 @@ public class AddPostingActivity extends ListActivity {
 				holder.holderBtn.setVisibility(View.GONE);
 				holder.deleteBtn.setVisibility(View.GONE);
 			}
-			
-			holder.imageView.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					btnImage = holder.imageView;
-					content_position = position;
-					Log.d("url", "position"+content_position);
-					makepicture();
-				}
-			});
-			
 			return v;
 		}
 
@@ -286,7 +380,7 @@ public class AddPostingActivity extends ListActivity {
 
 	}
 
-	private int uploadFile(String sourceFileUri) {
+	private int uploadFile(String sourceFileUri, String step, String time, int step_num, int finish_flag) {
 
 		String fileName = sourceFileUri;
 
@@ -313,8 +407,7 @@ public class AddPostingActivity extends ListActivity {
 		} else {
 			try {
 				// open a URL connection to the Servlet
-				FileInputStream fileInputStream = new FileInputStream(
-						sourceFile);
+				FileInputStream fileInputStream = new FileInputStream(sourceFile);
 				URL url = new URL(upLoadServerUri);
 
 				Log.d("image upload", "HTTP Request to : " + url);
@@ -333,54 +426,77 @@ public class AddPostingActivity extends ListActivity {
 				
 				dos = new DataOutputStream(conn.getOutputStream());
 
+				
+				if (finish_flag < 2) {
+					dos.writeBytes(twoHyphens + boundary + lineEnd);
+					dos.writeBytes("Content-Disposition: form-data; name=\"wc_index_num\""+ lineEnd);
+					dos.writeBytes(lineEnd);
+					dos.write((step_num+"").getBytes("utf-8"));
+					Log.d("image upload wc_index_num", step_num+"");
+					dos.writeBytes(lineEnd);
+
+					dos.writeBytes(twoHyphens + boundary + lineEnd);
+					dos.writeBytes("Content-Disposition: form-data; name=\"wc_text\""+ lineEnd);
+					dos.writeBytes(lineEnd);
+					dos.write(step.getBytes("utf-8"));
+					Log.d("image upload wc_text", step+"-");
+					dos.writeBytes(lineEnd);
+					
+					dos.writeBytes(twoHyphens + boundary + lineEnd);
+					dos.writeBytes("Content-Disposition: form-data; name=\"wc_times\""+ lineEnd);
+					dos.writeBytes(lineEnd);
+					dos.write((time+"").getBytes("utf-8"));
+					Log.d("image upload wc_times", time+"-");
+					
+					dos.writeBytes(twoHyphens + boundary + lineEnd);
+					dos.writeBytes("Content-Disposition: form-data; name=\"wc_finish_index\"" + lineEnd);
+					dos.writeBytes(lineEnd);
+					dos.write((finish_flag+"").getBytes("utf-8"));
+					Log.d("image upload wc_finish_index", "" + finish_flag);
+					dos.writeBytes(lineEnd);
+				} else {
+					dos.writeBytes(twoHyphens + boundary + lineEnd);
+					dos.writeBytes("Content-Disposition: form-data; name=\"wc_total\"" + lineEnd);
+					dos.writeBytes(lineEnd);
+					dos.write((step_num+"").getBytes("utf-8"));
+					Log.d("image upload wc_total", "" + finish_flag);
+					dos.writeBytes(lineEnd);
+				}
+					
+				dos.writeBytes(lineEnd);
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"user_name\"" + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"user_name\""+ lineEnd);
 				dos.writeBytes(lineEnd);
 				dos.write("ayoung".getBytes("utf-8"));
 				dos.writeBytes(lineEnd);
-				
+
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
 				dos.writeBytes("Content-Disposition: form-data; name=\"wt_index\""+ lineEnd);
 				dos.writeBytes(lineEnd);
-				dos.write("1".getBytes("utf-8"));
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		        String imageId = pref.getString("imageURL_index", "1");
+				dos.write((imageId+"").getBytes("utf-8"));
+				Log.d("image upload wt_index", imageId+"");
 				dos.writeBytes(lineEnd);
 				
-				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"wc_index_num\""+ lineEnd);
-				dos.writeBytes(lineEnd);
-				dos.write("4".getBytes("utf-8"));
-				dos.writeBytes(lineEnd);
 
-				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"wc_text\""+ lineEnd);
-				dos.writeBytes(lineEnd);
-				dos.write("#wc_text".getBytes("utf-8"));
-				dos.writeBytes(lineEnd);
 				
 				
-				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"wc_times\""+ lineEnd);
-				dos.writeBytes(lineEnd);
-				dos.write("500".getBytes("utf-8"));
-				dos.writeBytes(lineEnd);
 				
-				
-				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"finish_index\"" + lineEnd);
-				dos.writeBytes(lineEnd);
-				dos.write("0".getBytes("utf-8"));
-				dos.writeBytes(lineEnd);
 				
 				
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
 				dos.writeBytes("Content-Disposition: form-data; name=\"wc_photo_name\"" + lineEnd);
 				dos.writeBytes(lineEnd);
-				dos.write("bb.jpg".getBytes("utf-8"));
+		        String name = imageId + "_" + content_index + ".jpg";
+		        Log.d("image upload wc_photo_name", "" + name);
+				
+				dos.write(name.getBytes("utf-8"));
 				dos.writeBytes(lineEnd);
 				
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
 				dos.writeBytes("Content-Disposition: form-data; name=\"file\";fileName=\"" + fileName + "\"" + lineEnd);
-//				Log.d("image upload", "sdfsdf : " + fileName);
+				Log.d("image upload fileName", "" + fileName);
 				dos.writeBytes(lineEnd);
 				
 				
@@ -447,15 +563,6 @@ public class AddPostingActivity extends ListActivity {
 
 	}
 
-	private Object setValue(String key, int i) {
-		return "Content-Disposition: form-data; name=\"" + key + "\"r\n\r\n"
-                + i;
-	}
-
-	public static String setValue(String key, String value) {
-        return "Content-Disposition: form-data; name=\"" + key + "\"r\n\r\n"
-                + value;
-    }
 
 	private void makepicture() {
 
@@ -566,11 +673,12 @@ public class AddPostingActivity extends ListActivity {
 
 			if (extras != null) {
 				Bitmap bitm = extras.getParcelable("data");
-				btnImage.setImageBitmap(bitm);
+				dialog_image.setImageBitmap(bitm);
 			}
-			btnImage.setBackgroundColor(Color.WHITE);
-			btnImage.setImageURI(mImageCaptureUri);
-			btnImage.setScaleType(ImageView.ScaleType.CENTER_CROP);	//가운데 자름 (길쭉하게 자른 경우)
+			dialog_image.setBackgroundColor(Color.WHITE);
+			dialog_image.setImageURI(mImageCaptureUri);
+			uri_copy = mImageCaptureUri; 
+			dialog_image.setScaleType(ImageView.ScaleType.CENTER_CROP);	//가운데 자름 (길쭉하게 자른 경우)
 			
 			// 각 url값을 배열에 저장 
 			Log.d("url", "content_position : "+ content_position); 
@@ -584,7 +692,7 @@ public class AddPostingActivity extends ListActivity {
 
 	private Uri createSaveCropFile() {
 		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        String imageId = pref.getString("imageURL_index", "default");
+		String imageId = pref.getString("imageURL_index", "1");
 		
         String url = imageId + "_" + content_position + ".jpg";
 		Uri uri = Uri.fromFile(new File(getExternalFilesDir(null), url));

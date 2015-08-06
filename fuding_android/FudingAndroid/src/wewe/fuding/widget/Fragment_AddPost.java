@@ -141,7 +141,7 @@ public class Fragment_AddPost extends Fragment {
 //			});
 //		request.execute(food.getUserId(), food.getFoodName(), food.getIngre(), food.getTotalTime(), food.getAmount(), food.getTag()); 
 		
-		String URL_address= "http://119.205.252.51:8000/upload/write/title/"; 
+		String URL_address= "http://119.205.252.224:8000/upload/write/title/"; 
 		
 		RequestQueue mQueue2;
 		mQueue2 = Volley.newRequestQueue(activity);

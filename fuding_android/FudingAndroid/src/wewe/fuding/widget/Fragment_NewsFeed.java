@@ -57,7 +57,7 @@ public class Fragment_NewsFeed extends Fragment {
 		v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
 		nfFrameList = new ArrayList<Frame>();
 
-		showNewsfeed(nfFrameList);
+		//showNewsfeed(nfFrameList);
 
 		init(v);
 		return v;
