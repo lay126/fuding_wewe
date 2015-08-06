@@ -48,8 +48,7 @@ def test_upload_write_title(request):
 	# 해쉬태그 단어를 꺼내오기 위한 정규식. 
 	tag_w = re.compile('#\w+')
 	tags = tag_w.findall(wt_ingre)
-
-
+	
 	# 몰랐던 사실, write_title_객체 생성시에 wt_index는 없었으나,
 	# .save() 된 뒤에 DB접근을 다시 하지 않더라도 해당 객체의 다른 값들을 꺼내 쓸수 있음..
 	#### 신기방기. 똑똑하다. 
