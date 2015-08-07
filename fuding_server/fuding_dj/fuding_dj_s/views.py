@@ -2,6 +2,7 @@
 import json
 import re
 import base64
+import sys
 
 from django import forms
 from django.shortcuts import *
@@ -24,41 +25,6 @@ from fuding_dj_s.models import *
 
 @csrf_exempt
 def get_newsfeed(request):
-	
-				# user_name = request.POST.get('user_name')
-
-				# def __unicode__(self):
-				# 	return u'%s' % (self.user_name)
-
-				# user_ = User.objects.get(username=user_name)
-
-	# 일단 여은이 test용으로 content 디비 사용. 추후에는 db데이터들 조합하여 보내줌 
-	# DB.objects.filter(a = a)
-
-	# data 조합을 위한 class 생성
-				# class WR:
-				# 	def __init__(self, wr_name, wr_date, wr_image, wr_likes, wr_tags):
-				# 		self.wr_name = wr_name
-				# 		self.wr_date = wr_date
-				# 		self.wr_image = wr_image
-				# 		self.wr_likes = wr_likes
-				# 		self.wr_tags = wr_tags
-
-				# datas = []
-				# write_list_ =  WRITE_CONTENT.objects.all()
-
-				# for d in write_list_:
-				# 	data = model_to_dict(d)
-				# 	datas.append(data)
-
-				# wr_ = WR('me', '2014', write_list_[5].wc_img, 10, '#tagggg')
-				# wr2_ = WR('msssse', '2014', write_list_[5].wc_img, 10, '#tagwwwggg')
-
-				# lists = []
-
-				# lists.append(wr_)
-				# lists.append(wr2_)
-
 	# 임시
 	datas = []
 	write_list_ =  WRITE_FRAME.objects.all()
@@ -73,12 +39,7 @@ def get_newsfeed(request):
 	# json_data = json.loads(datas)
 	json_data = json.dumps(unicode(datas))
 	return HttpResponse(json_data, content_type='application/json')
-
-	# link = 'sp_app/sp_pictures/sp_pictures/' + 'daily' + image_name + '.png'
-	# images = []
-	# image_data_2 = open(link, "rb").read()
-	# images.append(image_data_2)
-	# return HttpResponse(images, content_type="image/png")
+	
 
 @csrf_exempt
 def test_upload_write_title(request):
@@ -149,18 +110,18 @@ def test_upload_write_content(request):
 									wc_times = wc_times )
 	write_content_.save()
 
-	# 지금 한글은 안됨 0806
-	# hash_w = re.compile('#\w+')
-	hash_w = re.compile('#([0-9a-zA-Z가-힣]*)')
-	hashs = hash_w.findall(wc_text)
-
+	# 한글 가능
+	# 해시태그 작성시에 띄어쓰기 해주세요 ㅠㅠ 
+	hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
+	hashs_ = hash_w.findall(wc_text)
 	try:
-		for h in hashs:
+		for h in hashs_:
 			hash_ = WRITE_TAG(	wtg_value = h,
 								wt_index = write_content_.wt_index )
 			hash_.save()
 	except: 
 		hashs = hash_w.findall(wc_text)
+
 
 	# save photo
 	if request.method == 'POST':
@@ -175,7 +136,9 @@ def test_upload_write_content(request):
 				json_data = json.dumps('save photo fail')
 				return HttpResponse(json_data, content_type='application/json')	
 
-	json_data = json.dumps(write_content_.wt_index)
+	# json_data = json.dumps(write_content_.wt_index)
+	# json_data = json.dumps(unicode(wc_text))
+	json_data = json.dumps(wc_text)
 	return HttpResponse(json_data, content_type='application/json')
 
 
@@ -207,15 +170,9 @@ def test_upload_write_frame(request):
 
 
 	# update frameDB.wc_index_... each
-	datas = []
 	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_index)
-	
-	for d in wc_list_:
-		data = model_to_dict(d)
-		datas.append(data)
 
 	wf_ = WRITE_FRAME.objects.filter(wf_index=write_frame_.wf_index)
-
 	wf_.update(wc_index_1=10)
 
 	# if len(wc_list_) == int(wc_total):
