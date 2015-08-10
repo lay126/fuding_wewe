@@ -202,7 +202,7 @@ public class AddPostingActivity extends ListActivity {
 				dialog.getWindow().setBackgroundDrawable( new ColorDrawable(android.graphics.Color.TRANSPARENT));
 				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 				
-				View dialogView = (RelativeLayout) vi.inflate(R.layout.detail_setting, null);
+				View dialogView = (RelativeLayout) vi.inflate(R.layout.dialog_detail_setting, null);
 	
 				final EditText edit_step = (EditText) dialogView.findViewById(R.id.ed_step);
 				final EditText edit_time = (EditText) dialogView.findViewById(R.id.ed_time);

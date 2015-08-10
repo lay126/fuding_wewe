@@ -1,7 +1,7 @@
 ﻿package wewe.fuding.activity;
 
 import wewe.fuding.widget.Fragment_AddPost;
-import wewe.fuding.widget.Fragment_Alarm;
+import wewe.fuding.widget.Fragment_Noti;
 import wewe.fuding.widget.Fragment_NewsFeed;
 import wewe.fuding.widget.Fragment_Profile;
 import android.content.Context;
@@ -29,7 +29,7 @@ public class FudingMainActivity extends FragmentActivity {
 
 	Fragment_NewsFeed frag_newsfeed = null;
 	Fragment_AddPost frag_addpost = null;
-	Fragment_Alarm frag_alarm = null;
+	Fragment_Noti frag_alarm = null;
 	Fragment_Profile frag_profile = null;
 
 	RelativeLayout newsfeed_layout, addpost_layout, alarm_layout, profile_layout;
@@ -89,7 +89,7 @@ public class FudingMainActivity extends FragmentActivity {
 		// 프래그먼트 초기화. 스와이프를 사용하기위해 해놓은것.
 		frag_newsfeed = Fragment_NewsFeed.getInstance();
 		frag_addpost = Fragment_AddPost.getInstance();
-		frag_alarm = Fragment_Alarm.getInstance();
+		frag_alarm = Fragment_Noti.getInstance();
 		frag_profile = Fragment_Profile.getInstance();
 
 		// 스와이프를 사용하기위한 페이저어댑터
