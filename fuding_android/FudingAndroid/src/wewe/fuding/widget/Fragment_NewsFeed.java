@@ -111,7 +111,6 @@ public class Fragment_NewsFeed extends Fragment {
 				try {
 					jobject = new JSONObject(arrRes);
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -119,7 +118,6 @@ public class Fragment_NewsFeed extends Fragment {
 				try {
 					jarray = jobject.getJSONArray("response");
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -188,12 +186,13 @@ public class Fragment_NewsFeed extends Fragment {
 
 	private void init(View v) {
 
-		nfFrameList = new ArrayList<Frame>();
-		Frame tempF = new Frame("yeoeun", "불닭", "불,닭", "4인분", "30분",
-				"#짱매움#속쓰려", 4, "15/08/07 12:14");
-		nfFrameList.add(tempF);//
+//		nfFrameList = new ArrayList<Frame>();
+//		Frame tempF = new Frame("yeoeun", "불닭", "불,닭", "4인분", "30분",
+//				"#짱매움#속쓰려", 4, "15/08/07 12:14");
+//		nfFrameList.add(tempF);//
 		nfListView = (ListView) v.findViewById(R.id.listViewNewsfeed);
-		nfAdapter = new CustomAdapter_NewsFeed(activity, nfFrameList);
+//		nfAdapter = new CustomAdapter_NewsFeed(activity, nfFrameList);
+		nfAdapter = new CustomAdapter_NewsFeed(activity);
 		nfListView.setAdapter(nfAdapter);
 	}
 }

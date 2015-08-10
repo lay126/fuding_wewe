@@ -21,7 +21,10 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 	int layout;
 	ArrayList<Frame> arrList;
 
-	public CustomAdapter_NewsFeed() {
+	public CustomAdapter_NewsFeed(Context aContext) {
+		context = aContext;
+		inflater = (LayoutInflater) aContext
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		arrList = new ArrayList<Frame>();
 	}
 
