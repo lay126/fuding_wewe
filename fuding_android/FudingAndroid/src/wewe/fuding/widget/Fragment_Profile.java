@@ -16,6 +16,7 @@ import com.android.volley.toolbox.Volley;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -35,6 +36,9 @@ public class Fragment_Profile extends Fragment {
 	private static Fragment_Profile instance = null;
 	private GridView gridView;
 	private CustomAdapter_Profile profileAdapter;
+//	ArrayList<Bitmap> picArr = new ArrayList<Bitmap>();
+
+
 
 	public static Fragment_Profile getInstance() {
 		if (instance == null) { // 최초 1회 초기화
