@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:background="#ffae5a"
         android:orientation="vertical" >
 
@@ -40,6 +40,14 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:text="내가 작성한 게시글" />
+
+        <GridLayout
+            android:id="@+id/profile_gridView"
+            android:layout_width="match_parent"
+            android:columnCount="3"
+            android:layout_height="wrap_content" >
+        </GridLayout>
+
     </LinearLayout>
 
 </LinearLayout>
