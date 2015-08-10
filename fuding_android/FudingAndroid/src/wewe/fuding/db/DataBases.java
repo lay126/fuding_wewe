@@ -42,4 +42,17 @@ public final class DataBases {
 													+PHOTO+" text not null);";
 	}
 	
+	public static final class CreateNotiDB implements BaseColumns{ 
+		public static final String FRIENDID = "friendId";
+		public static final String FRIENDIMAGE = "friendImage";
+		public static final String TYPE = "type";
+		public static final String DATE = "date";
+		public static final String _TABLENAME = "noti";
+		public static final String _CREATE_NOTI = "create table "+_TABLENAME+"(" 
+													+_ID+" integer primary key autoincrement, " 	
+													+FRIENDID+" text not null , " 
+													+FRIENDIMAGE+" text not null , " 
+													+TYPE+" text not null , " 
+													+DATE+" text not null);";
+	}
 }

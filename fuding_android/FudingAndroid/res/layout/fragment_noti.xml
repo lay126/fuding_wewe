@@ -6,7 +6,7 @@
     android:padding="13dp" >
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/listview_noti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>

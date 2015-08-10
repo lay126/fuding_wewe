@@ -1,6 +1,7 @@
 package wewe.fuding.db;
 
 import wewe.fuding.domain.Frame;
+import wewe.fuding.domain.Noti;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -31,6 +32,7 @@ public class DbOpenHelper {
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(DataBases.CreateFrameDB._CREATE_FRAME);
 			db.execSQL(DataBases.CreateContentDB._CREATE_CONTENT);
+			db.execSQL(DataBases.CreateNotiDB._CREATE_NOTI);
 
 		}
 
@@ -41,6 +43,8 @@ public class DbOpenHelper {
 					+ DataBases.CreateFrameDB._TABLENAME);
 			db.execSQL("DROP TABLE IF EXISTS "
 					+ DataBases.CreateContentDB._TABLENAME);
+			db.execSQL("DROP TABLE IF EXISTS "
+					+ DataBases.CreateNotiDB._TABLENAME);
 			onCreate(db);
 		}
 	}
@@ -95,6 +99,23 @@ public class DbOpenHelper {
 	public Cursor getContentAllColumns() {
 		return mDB.query(DataBases.CreateContentDB._TABLENAME, null, null, null,
 				null, null, null);
+	}
+
+	// [ NOTI TABLE ]
+	// Insert DB
+	public long insertNotiColumn(String friendId, String friendImage, String type, String date) {
+		ContentValues values = new ContentValues();
+		values.put(DataBases.CreateNotiDB.FRIENDID, friendId);
+		values.put(DataBases.CreateNotiDB.FRIENDIMAGE, friendImage);
+		values.put(DataBases.CreateNotiDB.TYPE, type);
+		values.put(DataBases.CreateNotiDB.DATE, date); 
+		return mDB.insert(DataBases.CreateNotiDB._TABLENAME, null, values);
+	}
+
+	// Select All
+	public Cursor getNotiAllColumns() {
+		return mDB.query(DataBases.CreateNotiDB._TABLENAME, null, null,
+				null, null, null, null);
 	}
 
 	// // Update DB

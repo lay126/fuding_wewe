@@ -78,9 +78,9 @@ public class Fragment_AddPost extends Fragment {
  				food.setTag(edit_tag.getText().toString());
 
  				// DB Create and Open
-// 		        mDbOpenHelper = new DbOpenHelper(activity);
-// 		        mDbOpenHelper.open();
-// 		        mDbOpenHelper.insertFrameColumn(food);
+ 		        mDbOpenHelper = new DbOpenHelper(activity);
+ 		        mDbOpenHelper.open();
+ 		        mDbOpenHelper.insertFrameColumn(food);
 
  		        // 서버 http 전송 
  		        sendFoodInfo(food);

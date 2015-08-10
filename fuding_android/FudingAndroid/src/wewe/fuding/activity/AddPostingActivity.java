@@ -479,12 +479,6 @@ public class AddPostingActivity extends ListActivity {
 				Log.d("image upload wt_index", imageId+"");
 				dos.writeBytes(lineEnd);
 				
-
-				
-				
-				
-				
-				
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
 				dos.writeBytes("Content-Disposition: form-data; name=\"wc_photo_name\"" + lineEnd);
 				dos.writeBytes(lineEnd);
@@ -498,7 +492,6 @@ public class AddPostingActivity extends ListActivity {
 				dos.writeBytes("Content-Disposition: form-data; name=\"file\";fileName=\"" + fileName + "\"" + lineEnd);
 				Log.d("image upload fileName", "" + fileName);
 				dos.writeBytes(lineEnd);
-				
 				
 				// create a buffer of maximum size
 				bytesAvailable = fileInputStream.available();
