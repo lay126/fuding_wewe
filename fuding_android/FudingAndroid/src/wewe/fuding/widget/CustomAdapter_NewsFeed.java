@@ -62,7 +62,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 			// view가 null일 경우 커스텀 레이아웃을 얻어 옴
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.custom_newsfeed_item,
+			convertView = inflater.inflate(R.layout.row_newsfeed_item,
 					parent, false);
 
 			// // 좋아요 버튼을 터치 했을 때 이벤트 발생
