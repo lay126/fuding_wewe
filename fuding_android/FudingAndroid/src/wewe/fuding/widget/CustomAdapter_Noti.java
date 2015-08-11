@@ -3,32 +3,30 @@ package wewe.fuding.widget;
 import java.util.ArrayList;
 
 import wewe.fuding.activity.R;
-import wewe.fuding.domain.Frame;
+import wewe.fuding.domain.Noti;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CustomAdapter_Alarm extends BaseAdapter {
-
-	// userId // foodName; // ingre
-	// amount // totalTime // tag // likeCnt
+public class CustomAdapter_Noti extends BaseAdapter {
 
 	Context context;
 	LayoutInflater inflater;
 	int layout;
-	ArrayList<Frame> arrList;
+	ArrayList<Noti> arrList;
 
-	public CustomAdapter_Alarm() {
-		arrList = new ArrayList<Frame>();
+	public CustomAdapter_Noti() {
+		arrList = new ArrayList<Noti>();
 	}
 
-	public CustomAdapter_Alarm(Context aContext, ArrayList<Frame> item) {
+	public CustomAdapter_Noti(Context aContext, ArrayList<Noti> noti_array) {
 		context = aContext;
 		inflater = (LayoutInflater) aContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		arrList = item;
+		arrList = noti_array;
 	}
 
 	@Override
@@ -46,23 +44,29 @@ public class CustomAdapter_Alarm extends BaseAdapter {
 		return position;
 	}
 
-	public void add(Frame frame) {
-		arrList.add(frame);
-	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		final int pos = position;
 		final Context context = parent.getContext();
 
-		// 리스트가 길어지면서 현재 화면에 보이지 않는 아이템은 convertView가 null인 상태로 들어 옴
 		if (convertView == null) {
-			// view가 null일 경우 커스텀 레이아웃을 얻어 옴
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.row_noti_item, parent, false);
-
+			
 		}
-		return parent;
+
+		ImageView image = (ImageView) convertView.findViewById(R.id.image);
+		TextView text = (TextView) convertView.findViewById(R.id.txt_noti);
+		TextView date = (TextView) convertView.findViewById(R.id.date);
+		
+		if (arrList.get(position).getType() == "1") {
+			text.setText(arrList.get(position).getFriendId()+" 님이 회원님의 게시글을 좋아합니다.");
+		} else if (arrList.get(position).getType() == "2") {
+			text.setText(arrList.get(position).getFriendId()+" 님이 회원님의 게시글에 댓글을 남겼습니다.");
+		}
+		date.setText(arrList.get(position).getDate());
+
+		return convertView;
 
 
 	}

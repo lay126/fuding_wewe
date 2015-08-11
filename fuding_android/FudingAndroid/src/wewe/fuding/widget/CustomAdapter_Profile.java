@@ -29,6 +29,8 @@ public class CustomAdapter_Profile extends BaseAdapter {
 			arrList = new ArrayList<ImageView>();
 	}
 	
+	
+	
 	@Override
 	public int getCount() {
 		return 0;

@@ -169,6 +169,7 @@ public class Fragment_NewsFeed extends Fragment {
 		super.onStart();
 	}
 
+
 	@Override
 	public void onResume() {
 		super.onResume();

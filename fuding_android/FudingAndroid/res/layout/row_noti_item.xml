@@ -6,26 +6,25 @@
     android:orientation="horizontal" >
 
     <ImageView
-        android:id="@+id/alarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:id="@+id/image"
+        android:layout_width="54dp"
+        android:layout_height="56dp"
         android:src="@android:drawable/ic_popup_reminder" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
+            android:id="@+id/txt_noti"
+            android:layout_width="186dp"
             android:layout_height="wrap_content"
             android:text="ilikefuding 님이 회원님의 레시피를 푸딩합니다" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="15분 전"
