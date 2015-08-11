@@ -117,8 +117,8 @@ public class Fragment_Profile extends Fragment {
 	}
 
 	private void init(View v) {
-		gridView = (GridView) v.findViewById(R.id.profile_gridView);
-		profileAdapter = new CustomAdapter_Profile(activity);
-		gridView.setAdapter(profileAdapter);
+//		gridView = (GridView) v.findViewById(R.id.profile_gridView);
+//		profileAdapter = new CustomAdapter_Profile(activity);
+//		gridView.setAdapter(profileAdapter);
 	}
 }
