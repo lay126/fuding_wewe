@@ -155,7 +155,8 @@ def test_upload_write_content(request):
 				json_data = json.dumps('save photo fail')
 				return HttpResponse(json_data, content_type='application/json')	
 
-	json_data = json.dumps(wc_text)
+	# 0 : success
+	json_data = json.dumps(0)
 	return HttpResponse(json_data, content_type='application/json')
 
 
