@@ -7,16 +7,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from datetime import *
 
-# this for mongo db 
-# from mongoengine import *
-
-# # mongo db user
-# class USERS(EmbeddedDocument):
-# 	user_id = stringField(max_length=50)
-# 	user_pwd = stringField(max_length=50)
-
-
- 
 
 #--------------------------------------------------------------------
 #--- default user ---------------------------------------
@@ -47,7 +37,6 @@ class USER_WRITES(models.Model):
 	write_index = models.AutoField(verbose_name=u'write_index', primary_key=True, unique=True, db_index=True, )
 	write_value = models.IntegerField(verbose_name=u'write_value', default=0, )
 	write_date = models.DateTimeField(verbose_name=u'write_date', default=datetime.now, blank=True, )
-	# point_time = models.DateTimeField(verbose_name=u'point_time', auto_now_add=True, blank=True)
 
 class USER_LIKES(models.Model):
 	class Meta:
@@ -57,8 +46,6 @@ class USER_LIKES(models.Model):
 	wf_index = models.IntegerField(verbose_name=u'wf_index', default=0, )
 	like_index = models.AutoField(verbose_name=u'like_index', primary_key=True, unique=True, db_index=True, )
 	like_date = models.DateTimeField(verbose_name=u'like_date', default=datetime.now, blank=True, )
-	# point_time = models.DateTimeField(verbose_name=u'point_time', auto_now_add=True, blank=True)
-
 
 
 
@@ -84,10 +71,6 @@ class WRITE_FRAME(models.Model):
 	wc_index_9 = models.IntegerField(verbose_name=u'wc_index_9', null=False, default=0, )
 	wc_total = models.IntegerField(verbose_name=u'wc_total', null=False, default=0, )
 	wc_date = models.DateTimeField(verbose_name=u'wc_date', default=datetime.now, blank=True, )
-	user_name = models.CharField(verbose_name=u'user_name', max_length=20, null=False, default='no name', )
-	wt_tag = models.CharField(verbose_name=u'wt_tag', max_length=20, null=False, default='no tag', )
-	wc_img = models.ImageField(verbose_name=u'wc_img', upload_to='fuding_dj_s/images/frame_img', blank=True, )
-	# wc_img = models.ImageField(verbose_name=u'wc_img', upload_to='/root/fuding_wewe/fuding_server/fuding_dj/fuding_dj_s/images/frame_img', blank=True, )
 
 class WRITE_TITLE(models.Model):
 	class Meta:
@@ -114,7 +97,7 @@ class WRITE_CONTENT(models.Model):
 	wt_index = models.IntegerField(verbose_name=u'wt_index', null=False, default=0, )
 	wc_index_num = models.IntegerField(verbose_name=u'wc_index_num', null=False, default=0, ) # 글에서 몇번째 카드인지를 명시 
 
-	wc_img = models.ImageField(verbose_name=u'wc_img', upload_to='/root/fuding_wewe/fuding_server/fuding_dj/fuding_dj_s/images/content_img', blank=True, )
+	wc_img = models.ImageField(verbose_name=u'wc_img', upload_to='fuding_dj_s/images/', blank=True, )
 	# wc_img = models.ImageField(verbose_name=u'wc_photo', upload_to='fuding_dj_s/images/content_img/', blank=True, )
 	wc_text = models.CharField(verbose_name=u'wc_text', max_length=200, )
 	wc_times = models.IntegerField(verbose_name=u'wc_times', null=False, default=0, )
