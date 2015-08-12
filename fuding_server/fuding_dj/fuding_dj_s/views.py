@@ -25,8 +25,8 @@ from fuding_dj_s.models import *
 
 @csrf_exempt
 def get_newsfeed(request):
-	# user_name = request.POST.get('user_name')
-	# user_ = User.objects.get(username=user_name)
+	user_name = request.POST.get('user_name')
+	user_ = User.objects.get(username=user_name)
 
 	# data box
 	datas = []
