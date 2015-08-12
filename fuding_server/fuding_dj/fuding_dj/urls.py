@@ -13,6 +13,7 @@ urlpatterns = patterns('',
     # get url
     #----------------------------------------------------------------------------
 	url(r'^get/newsfeed/', 'fuding_dj_s.views.get_newsfeed'),
+    url(r'^get/image/', 'fuding_dj_s.views.get_image'),
 
     # upload url
     #----------------------------------------------------------------------------

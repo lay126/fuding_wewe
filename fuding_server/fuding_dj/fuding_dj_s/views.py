@@ -25,20 +25,45 @@ from fuding_dj_s.models import *
 
 @csrf_exempt
 def get_newsfeed(request):
-	# 임시
+
+	user_name = request.POST.get('user_name')
+	user_ = User.objects.get(username=user_name)
+
 	datas = []
 	write_list_ =  WRITE_FRAME.objects.all()
-	for d in write_list_:
-		d.wc_date = str(d.wc_date)
-		with open("fuding_dj_s/images/content_img/phn.jpg", "rb") as imageFile:
-			stri = base64.b64encode(imageFile.read())
-		# d.wc_img = stri
-		data = model_to_dict(d)
-		datas.append(data)
 
-	# json_data = json.loads(datas)
+	dic = dict()
+	for d in write_list_: 
+		dic['wf_index'] = d.wf_index
+		dic['wt_index'] = d.wt_index
+		dic['wc_index_1'] = d.wc_index_1
+		dic['wc_index_2'] = d.wc_index_2
+		dic['wc_index_3'] = d.wc_index_3
+		dic['wc_index_4'] = d.wc_index_4
+		dic['wc_index_5'] = d.wc_index_5
+		dic['wc_index_6'] = d.wc_index_6
+		dic['wc_index_7'] = d.wc_index_7
+		dic['wc_index_8'] = d.wc_index_8
+		dic['wc_index_9'] = d.wc_index_9
+		dic['wc_total'] = d.wc_total
+		dic['wc_data'] = d.wc_date
+		datas.append(dic)
+
 	json_data = json.dumps(unicode(datas))
 	return HttpResponse(json_data, content_type='application/json')
+
+
+@csrf_exempt
+def get_image(request):
+	image_name = request.POST.get('image_name')
+
+	link = 'fuding_dj_s/images/frame_img/' + image_name
+
+	images = []
+	image_data_ = open(link, "rb").read()
+	images.append(image_data_)
+
+	return HttpResponse(images, content_type="image/png")
 	
 
 @csrf_exempt
