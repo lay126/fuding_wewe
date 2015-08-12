@@ -99,18 +99,8 @@ def test_upload_write_title(request):
 	write_title_.save()
 
 	# HASH TAG DEF
-	hash_tag_make(wc_text, wt_ingre)
-	hash_tag_make(wc_text, wt_tag)
-
-	for h in hashs:
-		hash_ = WRITE_TAG(	wtg_value = h,
-							wt_index = write_title_.wt_index )
-		hash_.save()
-
-	for h in hashs2:
-		hash_ = WRITE_TAG(	wtg_value = h,
-							wt_index = write_title_.wt_index )
-		hash_.save()
+	hash_tag_make(wt_ingre, write_title_.wt_index)
+	hash_tag_make(wt_tag, write_title_.wt_index)
 
 	json_data = json.dumps(write_title_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
