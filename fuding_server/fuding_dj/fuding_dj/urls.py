@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     #----------------------------------------------------------------------------
 	url(r'^get/newsfeed/', 'fuding_dj_s.views.get_newsfeed'),
     url(r'^get/image/', 'fuding_dj_s.views.get_image'),
+    url(r'^get/recipe/', 'fuding_dj_s.views.get_recipe'),
 
     # upload url
     #----------------------------------------------------------------------------

@@ -71,6 +71,29 @@ def get_image(request):
 	return HttpResponse(images, content_type="image/png")
 	
 
+''' 
+개당 레시피 보내주는 방식을 아직 모름.
+frame -> t/c -> content 순으로 보이는 건가?
+알아야지 짤 수 있을듯.
+'''
+@csrf_exempt
+def get_recipe(request):
+	wf_index = request.POST.get('wf_index')
+
+	datas = []
+	dic = dict()
+	di = dict()
+
+	dic['wf_index'] = str(wf_index)
+	wt_ = WRITE_TITLE.objects.get(wf_index=wf_index)
+	dic['wt_index'] = str(wt_.wt_index)
+	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_.wt_index)
+	datas.append(dic)
+
+	json_data = json.dumps(unicode(datas))
+	return HttpResponse(json_data, content_type='application/json')
+
+
 @csrf_exempt
 def test_upload_write_title(request):
 
