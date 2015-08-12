@@ -29,30 +29,26 @@ def get_newsfeed(request):
 	user_name = request.POST.get('user_name')
 	user_ = User.objects.get(username=user_name)
 
-	# # 임시
 	datas = []
 	write_list_ =  WRITE_FRAME.objects.all()
-	# for d in write_list_:
-	# 	d.wc_date = str(d.wc_date)
-	# 	with open("fuding_dj_s/images/frame_img/nae_2.jpg", "r") as imageFile:
-	# 		# stri = base64.b64encode(imageFile.read())
-	# 		datas.append(json.loads(imageFile))
-	# 	# d.wc_img = stri
-	# 	# d.wc_img = d.wc_img.url
-	# 	data = model_to_dict(d)
-	# 	datas.append(data)
-
-	# json_data = json.loads(datas)
-	# # json_data = json.dumps(unicode(aa))
-	# return HttpResponse(json_data, content_type='application/json')
 
 	dic = dict()
 	for d in write_list_: 
-		dic['date'] = str(d.wc_date)
-		dic['img'] = d.wc_img.url
+		dic['wf_index'] = d.wf_index
+		dic['wt_index'] = d.wt_index
+		dic['wc_index_1'] = d.wc_index_1
+		dic['wc_index_2'] = d.wc_index_2
+		dic['wc_index_3'] = d.wc_index_3
+		dic['wc_index_4'] = d.wc_index_4
+		dic['wc_index_5'] = d.wc_index_5
+		dic['wc_index_6'] = d.wc_index_6
+		dic['wc_index_7'] = d.wc_index_7
+		dic['wc_index_8'] = d.wc_index_8
+		dic['wc_index_9'] = d.wc_index_9
+		dic['wc_total'] = d.wc_total
+		dic['wc_data'] = d.wc_date
 		datas.append(dic)
 
-	# json_data = json.loads(datas)
 	json_data = json.dumps(unicode(datas))
 	return HttpResponse(json_data, content_type='application/json')
 
