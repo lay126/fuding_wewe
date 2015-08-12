@@ -162,13 +162,11 @@ def test_upload_write_frame(request):
 		return u'%s %s %s' % (self.user_name, self.wc_photo_name)
 
 	user_ = User.objects.get(username=user_name)
-	wt_ = WRITE_TITLE.objects.get(wt_index=wt_index)
+	wt_ = WRITE_TITLE.objects.filter(wt_index=wt_index)
 
 	# make frame object
-	write_frame_ = WRITE_FRAME(	user_name = user_name,
-								wt_index = wt_index,
-								wc_total = wc_total, 
-								wt_tag = wt_.wt_tag, )
+	write_frame_ = WRITE_FRAME(	wt_index = wt_index,
+								wc_total = wc_total, )
 	write_frame_.save()
 
 	# update titleDB.wf_index 
