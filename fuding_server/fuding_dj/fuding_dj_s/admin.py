@@ -43,7 +43,7 @@ class USER_LIKESAdmin(admin.ModelAdmin):
 
 
 class WRITE_FRAMEAdmin(admin.ModelAdmin):
-	list_display = ('wf_index', 'wf_writer',
+	list_display = ('wf_index', 'wf_writer', 'wf_likes',
 					'wt_index',
 					'wc_index_1', 'wc_index_2', 'wc_index_3', 'wc_index_4',
 					'wc_index_5', 'wc_index_6', 'wc_index_7', 'wc_index_8', 'wc_index_9', 

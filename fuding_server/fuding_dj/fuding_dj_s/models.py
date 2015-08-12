@@ -60,7 +60,8 @@ class WRITE_FRAME(models.Model):
 		db_table = 'WRITE_FRAME_DB'
 	wf_index = models.AutoField(verbose_name=u'wf_index', primary_key=True, db_index=True, )
 	wf_writer = models.CharField(verbose_name=u'wf_writer', max_length=20, null=False, default='no name', )
-	wt_index = models.IntegerField(verbose_name=u'wt_index', null=False, default=0, )
+	wf_likes = models.IntegerField(verbose_name=u'wf_likes', null=False, default=0, )
+	wt_index = models.IntegerField(verbose_name=u'wt_index', null=False, default=0, unique=True, )
 	wc_index_1 = models.IntegerField(verbose_name=u'wc_index_1', null=False, default=0, )
 	wc_index_2 = models.IntegerField(verbose_name=u'wc_index_2', null=False, default=0, )
 	wc_index_3 = models.IntegerField(verbose_name=u'wc_index_3', null=False, default=0, )
@@ -79,7 +80,7 @@ class WRITE_TITLE(models.Model):
 		db_table = 'WRITE_TITLE_DB'
 	wt_index = models.AutoField(verbose_name=u'wt_index', primary_key=True, db_index=True, )
 	# foreign
-	wf_index = models.IntegerField(verbose_name=u'wf_index', null=False, default=0, )
+	wf_index = models.IntegerField(verbose_name=u'wf_index', null=False, default=0)
 	# foreign
 	user_id = models.IntegerField(verbose_name=u'user_id', null=False, default=0, )
 	wt_name = models.CharField(verbose_name=u'wt_name', max_length=20, null=False, default='no food name', )

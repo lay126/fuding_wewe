@@ -35,26 +35,23 @@ def get_newsfeed(request):
 	# dict
 	dic = dict()
 	for d in write_list_: 
-		dic['wf_index'] = d.wf_index
-		dic['wt_index'] = d.wt_index
-		dic['wc_index_1'] = d.wc_index_1
-		dic['wc_index_2'] = d.wc_index_2
-		dic['wc_index_3'] = d.wc_index_3
-		dic['wc_index_4'] = d.wc_index_4
-		dic['wc_index_5'] = d.wc_index_5
-		dic['wc_index_6'] = d.wc_index_6
-		dic['wc_index_7'] = d.wc_index_7
-		dic['wc_index_8'] = d.wc_index_8
-		dic['wc_index_9'] = d.wc_index_9
-		dic['wc_total'] = d.wc_total
+		dic['wf_index'] = str(d.wf_index)
+		dic['wt_index'] = str(d.wt_index)
+		dic['wf_likes'] = str(d.wf_likes)
 		dic['wc_date'] = str(d.wc_date)
+		# wt_ (in dic_)
 		try : 
-			wt_ = WRITE_TITLE.objects.filter(wf_index=d.wf_index)
-			wc_ = WRITE_CONTENT.objects.filter(wf_index=d.wf_index)
+			wt_ = WRITE_TITLE.objects.get(wf_index=d.wf_index)
+			dic['wt_name'] = wt_.wt_name
 			dic['wt_tag'] = wt_.wt_tag
-			dic['wc_img'] = wc_.wc_img.url
 		except :
-			dic['error'] = 'no data'
+			dic['wt_name'] = 'no wt_name'
+			dic['wt_tag'] = 'no wt_tag'
+		# wc_ (in dic_)
+		wc_list_ = WRITE_CONTENT.objects.filter(wt_index=d.wt_index)
+		for wc_ in wc_list_ :
+			if wc_.wc_index_num == d.wc_total :
+				dic['wc_img'] = wc_.wc_img.url
 		datas.append(dic)
 
 	json_data = json.dumps(unicode(datas))
