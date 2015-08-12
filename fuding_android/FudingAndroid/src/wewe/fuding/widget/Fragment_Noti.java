@@ -8,6 +8,7 @@ import wewe.fuding.domain.Noti;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -28,6 +29,7 @@ public class Fragment_Noti extends Fragment {
 	
 	private DbOpenHelper mDbOpenHelper;
 	private Cursor mCursor;
+	private Handler mHandler = new Handler();
 	
 	public static Fragment_Noti getInstance() {
 		if (instance == null) { // 최초 1회 초기화
@@ -37,7 +39,7 @@ public class Fragment_Noti extends Fragment {
 	}
 
 	public Fragment_Noti() {
-		 
+		 noti_array = new ArrayList<Noti>();
 	}
 
 	@Override
@@ -46,7 +48,7 @@ public class Fragment_Noti extends Fragment {
 
 		View v;
 		v = inflater.inflate(R.layout.fragment_noti, container, false);
-		
+		Log.d("start", "oncreateView");
 		
 		
 		
@@ -58,7 +60,7 @@ public class Fragment_Noti extends Fragment {
 	@Override
 	public void onStart() {
 		
-		updateDataList(activity);
+//		updateDataList(activity);
 		super.onStart();
 	}
 	
@@ -78,8 +80,8 @@ public class Fragment_Noti extends Fragment {
 	}
 
 	private void init(View v) { 
-		
-		noti_array = new ArrayList<Noti>();
+		Log.d("start", "init");
+		//noti_array = new ArrayList<Noti>();
 		Noti noti = new Noti("", "1", "2015.11.10", "yundaeun");
 		noti_array.add(noti);
 		     noti = new Noti("", "2", "2015.11.14", "jungyeoeun");
@@ -91,8 +93,7 @@ public class Fragment_Noti extends Fragment {
 		
 	}
 	
-	// data_list를 최신으로 업데이트한다. 
-		@SuppressWarnings("null")
+	// data_list를 최신으로 업데이트한다.  
 		public void updateDataList(Context context) {
 			if (activity == null) return; 
 			
@@ -100,64 +101,45 @@ public class Fragment_Noti extends Fragment {
 //			Data_user.getInstance().refreshDataList(activity); // 탭 이동할 때 마다 실시간으로 증가하는 count를 적용하기 위해 db를 refresh 시켜줘야한다.
 //			ArrayList<Noti> infoList = Data_user.getInstance().getDataList();
 
-			mDbOpenHelper = new DbOpenHelper(activity);
-		    mDbOpenHelper.open();
-		    mDbOpenHelper.insertNotiColumn("yundaeun", "image", "1", "2013.03.11");
-		    mDbOpenHelper.insertNotiColumn("jungyeoeun", "image", "2", "2014.01.12");
+//			mDbOpenHelper = new DbOpenHelper(activity);
+//		    mDbOpenHelper.open();
+//		    mDbOpenHelper.insertNotiColumn("yundaeun!!!", "image", "1", "2013.03.11");
+//		    mDbOpenHelper.insertNotiColumn("jungyeoeun!!!", "image", "2", "2014.01.12");
 			
-//		    mCursor = mDbOpenHelper.getNotiAllColumns(); 
-//		    Noti noti;
-//		    ArrayList<Noti> infoList = null;
-//		    while (mCursor.moveToNext()) {
-//	        	
-//		    	noti = new Noti(
-//						mCursor.getString(mCursor.getColumnIndex("friendId")),
-//						mCursor.getString(mCursor.getColumnIndex("friendImage")),
-//						mCursor.getString(mCursor.getColumnIndex("type")),
-//						mCursor.getString(mCursor.getColumnIndex("date"))
-//						);
-//				Log.d("noti", mCursor.getString(mCursor.getColumnIndex("type")));
-//		    	//infoList.add(noti);
-//			}
-//			
-//			mCursor.close();
+		    mCursor = mDbOpenHelper.getNotiAllColumns(); 
+		    Noti noti;
+		    Log.d("start", "start");
+			//noti_array = new ArrayList<Noti>();
+
+		    while (mCursor.moveToNext()) {
+	        	
+		    	noti = new Noti(
+						mCursor.getString(mCursor.getColumnIndex("friendId")),
+						mCursor.getString(mCursor.getColumnIndex("friendImage")),
+						mCursor.getString(mCursor.getColumnIndex("type")),
+						mCursor.getString(mCursor.getColumnIndex("date"))
+						);
+				Log.d("noti", mCursor.getString(mCursor.getColumnIndex("type")));
+		    	noti_array.add(noti);
+			}
 			
+			mCursor.close();
 			
-			
-			
-			
+//			알람이 있는지 확인! broadcast??? 해야하는 건지 아영이랑 상의 
 //			실시간 뷰 변경 
-//			mHandler.post(new Runnable() {
-//				@Override
-//				public void run() {
-//					if (inner_cnt > 1) {
-//						if (MainActivity.new_friend_num != null) {
-//							MainActivity.new_friend_num.setVisibility(View.VISIBLE);
-//							MainActivity.new_friend_image.setVisibility(View.VISIBLE);
-//							MainActivity.new_friend_num.setText(inner_cnt - 1 + "");
-//						}
-//					} else {
-//						if (MainActivity.new_friend_num != null) { //null 오류날 때  있음
-//							MainActivity.new_friend_num.setVisibility(View.GONE);
-//							MainActivity.new_friend_image.setVisibility(View.GONE);
-//						}
-//					}
-//				}
-//			});
+			mHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					adapter.notifyDataSetChanged();
+				}
+			});
 			
 			
-//			if (activity != null) { // 최초 로딩 등의 이유로 activity가 null일 때는 넘어가고, activity가 존재한다면 list를 불러준다. 
-//				if (infoList.size() < 2) {
-//					friend_listview.setVisibility(View.GONE);
-//					no_friend.setVisibility(View.VISIBLE);
-//				} else {
-//					if (friend_listview!=null) {
-//						friend_listview.setVisibility(View.VISIBLE);
-//						no_friend.setVisibility(View.GONE);
-//						makeFriendList();
-//					}
-//				}
-//			}
+			if (activity != null) { // 최초 로딩 등의 이유로 activity가 null일 때는 넘어가고, activity가 존재한다면 list를 불러준다. 
+				if (noti_array.size() < 2) {
+					listView.setVisibility(View.GONE);
+				}
+			}
 		}
 
 }
