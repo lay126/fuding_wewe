@@ -25,8 +25,8 @@ from fuding_dj_s.models import *
 
 @csrf_exempt
 def get_newsfeed(request):
-	user_name = request.POST.get('user_name')
-	user_ = User.objects.get(username=user_name)
+	# user_name = request.POST.get('user_name')
+	# user_ = User.objects.get(username=user_name)
 
 	# data box
 	datas = []
@@ -125,7 +125,7 @@ def test_upload_write_content(request):
 	wc_photo_name = request.POST.get('wc_photo_name') # 사진 이름을 지정하기위한 파람 
 	wc_text = request.POST.get('wc_text')
 	wc_times = request.POST.get('wc_times')
-	wc_finish_index = request.POST.get('wc_finish_index') # 끝이라면 1 주세여 
+	wc_finish_index = request.POST.get('wc_finish_index') # 끝이라면 1 주세여  # 이제 필요 없음 
 
 	def __unicode__(self):
 		return u'%s %s %s' % (self.user_name, self.wc_photo_name, self.wc_text)
@@ -242,5 +242,4 @@ def hash_tag_make(hash_text, wt_index):
 		hashs = hash_w.findall(wc_text)
 
 	return 0;
-
 
