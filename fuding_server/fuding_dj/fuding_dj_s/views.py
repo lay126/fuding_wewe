@@ -49,8 +49,8 @@ def get_newsfeed(request):
 		dic['wc_total'] = d.wc_total
 		dic['wc_date'] = str(d.wc_date)
 		try : 
-			wt_ = WRITE_TITLE.objects.get(d.wf_index)
-			wc_ = WRITE_CONTENT.objects.get(d.wf_index)
+			wt_ = WRITE_TITLE.objects.filter(wf_index=d.wf_index)
+			wc_ = WRITE_CONTENT.objects.filter(wf_index=d.wf_index)
 			dic['wt_tag'] = wt_.wt_tag
 			dic['wc_img'] = wc_.wc_img.url
 		except :

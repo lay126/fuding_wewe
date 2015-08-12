@@ -59,6 +59,7 @@ class WRITE_FRAME(models.Model):
 		verbose_name = u'WRITE_FRAME'
 		db_table = 'WRITE_FRAME_DB'
 	wf_index = models.AutoField(verbose_name=u'wf_index', primary_key=True, db_index=True, )
+	wf_writer = models.CharField(verbose_name=u'wf_writer', max_length=20, null=False, default='no name', )
 	wt_index = models.IntegerField(verbose_name=u'wt_index', null=False, default=0, )
 	wc_index_1 = models.IntegerField(verbose_name=u'wc_index_1', null=False, default=0, )
 	wc_index_2 = models.IntegerField(verbose_name=u'wc_index_2', null=False, default=0, )
