@@ -54,7 +54,7 @@ public class Fragment_Profile extends Fragment {
 
 		View v;
 		v = inflater.inflate(R.layout.fragment_profile, container, false);
-		init(v);
+//		init(v);
 		return v;
 
 	}

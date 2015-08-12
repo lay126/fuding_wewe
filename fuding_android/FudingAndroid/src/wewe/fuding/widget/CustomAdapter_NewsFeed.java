@@ -19,7 +19,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 	Context context;
 	LayoutInflater inflater;
 	int layout;
-	ArrayList<Frame> arrList;
+	private ArrayList<Frame> arrList;
 
 	public CustomAdapter_NewsFeed(Context aContext) {
 		context = aContext;
