@@ -156,7 +156,7 @@ def test_upload_write_content(request):
 				return HttpResponse(json_data, content_type='application/json')	
 
 	# 0 : success
-	json_data = json.dumps(0)
+	json_data = json.dumps(write_content_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
 
 
