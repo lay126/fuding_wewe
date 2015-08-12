@@ -25,13 +25,14 @@ from fuding_dj_s.models import *
 
 @csrf_exempt
 def get_newsfeed(request):
-
 	user_name = request.POST.get('user_name')
 	user_ = User.objects.get(username=user_name)
 
+	# data box
 	datas = []
 	write_list_ =  WRITE_FRAME.objects.all()
 
+	# dict
 	dic = dict()
 	for d in write_list_: 
 		dic['wf_index'] = d.wf_index
@@ -46,7 +47,14 @@ def get_newsfeed(request):
 		dic['wc_index_8'] = d.wc_index_8
 		dic['wc_index_9'] = d.wc_index_9
 		dic['wc_total'] = d.wc_total
-		dic['wc_data'] = d.wc_date
+		dic['wc_date'] = str(d.wc_date)
+		try : 
+			wt_ = WRITE_TITLE.objects.get(d.wf_index)
+			wc_ = WRITE_CONTENT.objects.get(d.wf_index)
+			dic['wt_tag'] = wt_.wt_tag
+			dic['wc_img'] = wc_.wc_img.url
+		except :
+			dic['error'] = 'no data'
 		datas.append(dic)
 
 	json_data = json.dumps(unicode(datas))
@@ -90,12 +98,9 @@ def test_upload_write_title(request):
 								wt_tag = wt_tag )
 	write_title_.save()
 
-	# 지금 한글은 안됨 0806
-	hash_w = re.compile('#\w+')
-	# hash_w = re.compile('#[가-힣]+')
-
-	hashs = hash_w.findall(wt_ingre)
-	hashs2 = hash_w.findall(wt_tag)
+	# HASH TAG DEF
+	hash_tag_make(wc_text, wt_ingre)
+	hash_tag_make(wc_text, wt_tag)
 
 	for h in hashs:
 		hash_ = WRITE_TAG(	wtg_value = h,
@@ -109,7 +114,6 @@ def test_upload_write_title(request):
 
 	json_data = json.dumps(write_title_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
-
 
 
 @csrf_exempt
@@ -135,18 +139,8 @@ def test_upload_write_content(request):
 									wc_times = wc_times )
 	write_content_.save()
 
-	# 한글 가능
-	# 해시태그 작성시에 띄어쓰기 해주세요 ㅠㅠ 
-	hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
-	hashs_ = hash_w.findall(wc_text)
-	try:
-		for h in hashs_:
-			hash_ = WRITE_TAG(	wtg_value = h,
-								wt_index = write_content_.wt_index )
-			hash_.save()
-	except: 
-		hashs = hash_w.findall(wc_text)
-
+	# HASH TAG DEF
+	hash_tag_make(wc_text, wt_index)
 
 	# save photo
 	if request.method == 'POST':
@@ -161,11 +155,8 @@ def test_upload_write_content(request):
 				json_data = json.dumps('save photo fail')
 				return HttpResponse(json_data, content_type='application/json')	
 
-	# json_data = json.dumps(write_content_.wt_index)
-	# json_data = json.dumps(unicode(wc_text))
 	json_data = json.dumps(wc_text)
 	return HttpResponse(json_data, content_type='application/json')
-
 
 
 @csrf_exempt
@@ -192,7 +183,6 @@ def test_upload_write_frame(request):
 	# update titleDB.wf_index 
 	wt2_ = WRITE_TITLE.objects.filter(wt_index=wt_index)
 	wt2_.update(wf_index=write_frame_.wf_index)
-
 
 	# update frameDB.wc_index_... each
 	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_index)
@@ -221,7 +211,6 @@ def test_upload_write_frame(request):
 		if int(wc_.wc_index_num) == 9:
 			wf_.update(wc_index_9=wc_.wc_index)
 
-
 	# save photo
 	if request.method == 'POST':
 		if 'file' in request.FILES:
@@ -234,7 +223,23 @@ def test_upload_write_frame(request):
 				json_data = json.dumps('save photo fail')
 				return HttpResponse(json_data, content_type='application/json')	
 
-
-	# json_data = json.dumps(len(wc_list_))
 	json_data = json.dumps(write_frame_.wf_index)
 	return HttpResponse(json_data, content_type='application/json')
+
+
+def hash_tag_make(hash_text, wt_index):
+	# 한글 가능 : 해시태그 작성시에 띄어쓰기 해주세요 ㅠㅠ
+	hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
+	hashs = hash_w.findall(hash_text)
+
+	try : 
+		for h in hashs:
+			hash_ = WRITE_TAG(	wtg_value = h,
+								wt_index = wt_index )
+			hash_.save()
+	except : 
+		hashs = hash_w.findall(wc_text)
+
+	return 0;
+
+
