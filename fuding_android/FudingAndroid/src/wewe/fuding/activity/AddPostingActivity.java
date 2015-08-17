@@ -10,7 +10,16 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -141,36 +150,21 @@ public class AddPostingActivity extends ListActivity {
 									int finish_flag = 0;
 									int step_num = i+1;
 									content_index = i+1;
+									upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
 									if (i+1 == mItem.size()) {
 										finish_flag = 1;
-										//마지막 단계에서 또다른 서버 통신
-										upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
 										uploadFile(mItem.get(i).image.getPath(), mItem.get(i).step, mItem.get(i).time, step_num, finish_flag);
-										
-										upLoadServerUri = "http://119.205.252.224:8000/upload/write/frame/";
-										uploadFile(mItem.get(i).image.getPath(), "", "", step_num, 3);
+										finishContent(step_num);
 									} else {
-										upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
 										uploadFile(mItem.get(i).image.getPath(), mItem.get(i).step, mItem.get(i).time, step_num, finish_flag);
-										Log.d("url", "i = "+mItem.get(i).image.getPath());
 									}
-//									int result = uploadFile(mImageCaptureUri.getPath());
-//									Log.d("image upload", "mItem : "+mItem.get(i).step +" : "+ mItem.get(i).time);
-//									Log.d("image upload", "content_index : "+i);
-//									Log.d("image upload", "imageList[i] : "+imageList[i]);
-//									Log.d("image upload", "result : "+result);
 								}
 							}
-
 						}).start(); 
 						Log.d("url", "url :"+mImageCaptureUri.getPath());
 				} else {
 					Toast.makeText(AddPostingActivity.this, "업로드에 실패했습니다.", Toast.LENGTH_LONG).show();
 				}
-				
-//				DataManager dbManager = new DataManager(getApplicationContext());
-//				dbManager.deleteItem(-1);
-//				dbManager.createTable(containArrayList);
 				finish();
 			}
 		});
@@ -427,7 +421,7 @@ public class AddPostingActivity extends ListActivity {
 				dos = new DataOutputStream(conn.getOutputStream());
 
 				
-				if (finish_flag < 2) {
+//				if (finish_flag < 2) {
 					dos.writeBytes(twoHyphens + boundary + lineEnd);
 					dos.writeBytes("Content-Disposition: form-data; name=\"wc_index_num\""+ lineEnd);
 					dos.writeBytes(lineEnd);
@@ -454,14 +448,14 @@ public class AddPostingActivity extends ListActivity {
 					dos.write((finish_flag+"").getBytes("utf-8"));
 					Log.d("image upload wc_finish_index", "" + finish_flag);
 					dos.writeBytes(lineEnd);
-				} else {
-					dos.writeBytes(twoHyphens + boundary + lineEnd);
-					dos.writeBytes("Content-Disposition: form-data; name=\"wc_total\"" + lineEnd);
-					dos.writeBytes(lineEnd);
-					dos.write((step_num+"").getBytes("utf-8"));
-					Log.d("image upload wc_total", "" + finish_flag);
-					dos.writeBytes(lineEnd);
-				}
+//				} else {
+//					dos.writeBytes(twoHyphens + boundary + lineEnd);
+//					dos.writeBytes("Content-Disposition: form-data; name=\"wc_total\"" + lineEnd);
+//					dos.writeBytes(lineEnd);
+//					dos.write((step_num+"").getBytes("utf-8"));
+//					Log.d("image upload wc_total", "" + finish_flag);
+//					dos.writeBytes(lineEnd);
+//				}
 					
 				dos.writeBytes(lineEnd);
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
@@ -556,7 +550,47 @@ public class AddPostingActivity extends ListActivity {
 
 	}
 
+	private void finishContent(final int step_num) {
+        
+        String URL_address= "http://119.205.252.224:8000/upload/write/frame/"; 
+		
+		RequestQueue mQueue2;
+		mQueue2 = Volley.newRequestQueue(this);
+		Listener<String> listener = new Listener<String>() {
+			@Override
+			public void onResponse(String result) {
+				try {
+					Log.d("volley", "step1 result    : "+result);
+				} catch (Exception e){}
+			}
+		};
 
+		com.android.volley.Response.ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Toast.makeText(AddPostingActivity.this, "네트워크상태가좋지 않습니다.잠시만 기다려주세요.", Toast.LENGTH_LONG).show();
+				}
+		};
+		
+		StringRequest myReq = new StringRequest(Method.POST, URL_address, listener,
+				errorListener) {
+			@Override
+			protected Map<String, String> getParams()
+					throws com.android.volley.AuthFailureError {
+				Map<String, String> params = new HashMap<String, String>();
+				
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		        String imageId = pref.getString("imageURL_index", "1");
+				params.put("user_name", "ayoung");
+				params.put("wt_index", imageId);
+				params.put("wc_total", step_num+"");
+				return params;
+			};
+		};
+		mQueue2.add(myReq);
+	
+	}
+				
 	private void makepicture() {
 
 		final LinearLayout change_picture = (LinearLayout) View.inflate(this, R.layout.dialog_move_picture, null);
