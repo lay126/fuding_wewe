@@ -1,6 +1,8 @@
 package wewe.fuding.widget;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -57,13 +60,13 @@ public class Fragment_NewsFeed extends Fragment {
 		v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
 		nfFrameList = new ArrayList<Frame>();
 
-		//showNewsfeed(nfFrameList);
+		showNewsfeed(nfFrameList, v);
 
-		init(v);
+//		init(v); 
 		return v;
 	}
 
-	private void showNewsfeed(final ArrayList<Frame> frameArr) {
+	private void showNewsfeed(final ArrayList<Frame> frameArr, View v) {
 		String URL_address = "http://119.205.252.224:8000/get/newsfeed/";
 
 		RequestQueue mQueue;
@@ -98,13 +101,11 @@ public class Fragment_NewsFeed extends Fragment {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
-
 				String arrRes = "{'response':" + response + "}";
 				arrRes = arrRes.replace("\"", "");
 				arrRes = arrRes.replace("'", "\"");
 				arrRes = arrRes.replace(" ", "");
 				// arrRes = arrRes.replace("", "");
-				// arrRes = "" + arrRes;
 				Log.d(TAG, arrRes);
 
 				JSONObject jobject = null;
@@ -147,7 +148,7 @@ public class Fragment_NewsFeed extends Fragment {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				error.printStackTrace();
-				Toast.makeText(activity, "네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
+				Toast.makeText(activity, "뉴스피드 : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
 						Toast.LENGTH_LONG).show();
 			}
 		};
@@ -158,17 +159,23 @@ public class Fragment_NewsFeed extends Fragment {
 
 		StringRequest req = new StringRequest(Method.POST, URL_address,
 				listener, errorListener) {
-			// do sth
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("user_name", "ayoung");
+				return params;
+			}
+
 		};
 
 		mQueue.add(req);
+		 init(v);
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
 	}
-
 
 	@Override
 	public void onResume() {
@@ -187,12 +194,12 @@ public class Fragment_NewsFeed extends Fragment {
 
 	private void init(View v) {
 
-//		nfFrameList = new ArrayList<Frame>();
-//		Frame tempF = new Frame("yeoeun", "불닭", "불,닭", "4인분", "30분",
-//				"#짱매움#속쓰려", 4, "15/08/07 12:14");
-//		nfFrameList.add(tempF);//
+		// nfFrameList = new ArrayList<Frame>();
+		// Frame tempF = new Frame("yeoeun", "불닭", "불,닭", "4인분", "30분",
+		// "#짱매움#속쓰려", 4, "15/08/07 12:14");
+		// nfFrameList.add(tempF);//
 		nfListView = (ListView) v.findViewById(R.id.listViewNewsfeed);
-//		nfAdapter = new CustomAdapter_NewsFeed(activity, nfFrameList);
+		// nfAdapter = new CustomAdapter_NewsFeed(activity, nfFrameList);
 		nfAdapter = new CustomAdapter_NewsFeed(activity);
 		nfListView.setAdapter(nfAdapter);
 	}
