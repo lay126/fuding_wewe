@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,7 +44,7 @@ public class Fragment_Profile extends Fragment {
 	private static Fragment_Profile instance = null;
 	private GridView gridView;
 	private CustomAdapter_Profile profileAdapter;
-	public static ImageView edit_profile;
+	public static ImageButton edit_profile;
 
 	// ArrayList<Bitmap> picArr = new ArrayList<Bitmap>();
 	private Content pfContent; // newsfeed frame
@@ -66,7 +67,7 @@ public class Fragment_Profile extends Fragment {
 		View v;
 		v = inflater.inflate(R.layout.fragment_profile, container, false);
 
-		edit_profile = (ImageView) v.findViewById(R.id.profile_edit_btn);
+		edit_profile = (ImageButton) v.findViewById(R.id.profile_edit_btn);
 		edit_profile.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -81,14 +82,14 @@ public class Fragment_Profile extends Fragment {
 		String shared_name = pref.getString("name", "name");
 		name.setText(shared_name);
 
-
 		showMyContent(v, contentArr);
 		return v;
 
 	}
 
 	private void showMyContent(View v, final ArrayList<Content> contentArr) {
-		String URL_address = "http://119.205.252.224:8000/get/mycontent/";
+		// String URL_address = "http://119.205.252.224:8000/get/mycontent/";
+		String URL_address = null;
 
 		RequestQueue mQueue;
 		mQueue = Volley.newRequestQueue(activity);
@@ -124,8 +125,9 @@ public class Fragment_Profile extends Fragment {
 
 						pfContent = new Content();
 
-						pfContent.setContent(jsonContent.getString("wc_content"));
-						
+						pfContent.setContent(jsonContent
+								.getString("wc_content"));
+
 						contentArr.add(pfContent);
 					}
 				} catch (JSONException e) {
@@ -179,8 +181,12 @@ public class Fragment_Profile extends Fragment {
 	}
 
 	private void init(View v, ArrayList<Content> contentArr) {
-		 gridView = (GridView) v.findViewById(R.id.profile_gridView);
-		 profileAdapter = new CustomAdapter_Profile(activity, contentArr);
-		 gridView.setAdapter(profileAdapter);
+		gridView = (GridView) v.findViewById(R.id.profile_gridView);
+		if (contentArr == null) {
+			profileAdapter = new CustomAdapter_Profile(activity);
+		} else {
+			profileAdapter = new CustomAdapter_Profile(activity, contentArr);
+		}
+		gridView.setAdapter(profileAdapter);
 	}
 }

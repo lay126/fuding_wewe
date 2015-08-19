@@ -25,11 +25,12 @@
             android:layout_margin="10dp"
             android:text="name" />
 
-        <Button
+        <ImageButton
             android:id="@+id/profile_edit_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="프로필 편집 " />
+            android:src="@drawable/ic_launcher"
+            android:text="프로필 편집" />
 
         <ImageView
             android:id="@+id/imageView1"
@@ -54,12 +55,12 @@
             android:padding="5dp"
             android:text="내가 작성한 게시글" />
 
-        <GridLayout
+        <GridView
             android:id="@+id/profile_gridView"
             android:layout_width="match_parent"
             android:columnCount="3"
             android:layout_height="wrap_content" >
-        </GridLayout>
+        </GridView>
 
     </LinearLayout>
 
