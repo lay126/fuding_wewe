@@ -161,7 +161,11 @@ public class Fragment_NewsFeed extends Fragment {
 
 	private void init(View v, ArrayList<Frame> frameArr) {
 		nfListView = (ListView) v.findViewById(R.id.listViewNewsfeed);
-		nfAdapter = new CustomAdapter_NewsFeed(activity, frameArr);
+		if (frameArr == null) {
+			nfAdapter = new CustomAdapter_NewsFeed(activity);
+		} else {
+			nfAdapter = new CustomAdapter_NewsFeed(activity, frameArr);
+		}
 		nfListView.setAdapter(nfAdapter);
 	}
 }
