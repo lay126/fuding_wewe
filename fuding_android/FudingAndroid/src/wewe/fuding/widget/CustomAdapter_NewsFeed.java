@@ -65,8 +65,8 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 			// view가 null일 경우 커스텀 레이아웃을 얻어 옴
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.row_newsfeed_item,
-					parent, false);
+			convertView = inflater.inflate(R.layout.row_newsfeed_item, parent,
+					false);
 
 			// // 좋아요 버튼을 터치 했을 때 이벤트 발생
 			// Button btn = (Button)
@@ -93,6 +93,10 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 		TextView tvDate = (TextView) convertView
 				.findViewById(R.id.newsfeed_txtViewWriteDate);
 		tvDate.setText(arrList.get(pos).getWriteDate());
+
+		TextView tvContentTitle = (TextView) convertView
+				.findViewById(R.id.newsfeed_txtViewContentTitle);
+		tvContentTitle.setText("" + arrList.get(pos).getFoodName());
 
 		TextView tvLikeCnt = (TextView) convertView
 				.findViewById(R.id.newsfeed_txtViewLikeCnt);

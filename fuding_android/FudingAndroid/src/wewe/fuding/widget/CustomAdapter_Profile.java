@@ -58,7 +58,6 @@ public class CustomAdapter_Profile extends BaseAdapter {
 			convertView = inflater.inflate(R.layout.grid_mycontent_item,
 					parent, false);
 			
-
 			// // 리스트 아이템을 터치 했을 때 이벤트 발생
 			// convertView.setOnClickListener(new OnClickListener() {
 			// @Override
@@ -66,7 +65,6 @@ public class CustomAdapter_Profile extends BaseAdapter {
 			// }
 			// });
 		}
-		
 		
 		return null;
 	}
