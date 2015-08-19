@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class CustomAdapter_Profile extends BaseAdapter {
 
@@ -26,6 +27,12 @@ public class CustomAdapter_Profile extends BaseAdapter {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			arrList = new ArrayList<Content>();
 	}
+	public CustomAdapter_Profile(Context aContext, ArrayList<Content> aArrList) {
+		context = aContext;
+		inflater = (LayoutInflater) aContext
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		arrList = aArrList;
+}
 	
 	@Override
 	public int getCount() {
@@ -65,6 +72,10 @@ public class CustomAdapter_Profile extends BaseAdapter {
 			// }
 			// });
 		}
+		
+		//image 
+		TextView tvMyContent = (TextView) convertView.findViewById(R.id.mycontent_txtView);
+		tvMyContent.setText(arrList.get(pos).getContent());
 		
 		return null;
 	}

@@ -38,7 +38,7 @@ public class Fragment_NewsFeed extends Fragment {
 	private Frame nfFrame; // newsfeed frame
 	private CustomAdapter_NewsFeed nfAdapter;
 	private ListView nfListView;
-	private ArrayList<Frame> nfFrameList;
+	private ArrayList<Frame> frameArr;
 
 	public static Fragment_NewsFeed getInstance() {
 		if (instance == null) { // 최초 1회 초기화
@@ -57,44 +57,18 @@ public class Fragment_NewsFeed extends Fragment {
 
 		View v;
 		v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
-		nfFrameList = new ArrayList<Frame>();
+		frameArr = new ArrayList<Frame>();
 
-		showNewsfeed(nfFrameList, v);
+		showNewsfeed(v, frameArr);
 
 		return v;
 	}
 
-	private void showNewsfeed(final ArrayList<Frame> frameArr, View v) {
+	private void showNewsfeed(View v, final ArrayList<Frame> frameArr) {
 		String URL_address = "http://119.205.252.224:8000/get/newsfeed/";
 
 		RequestQueue mQueue;
 		mQueue = Volley.newRequestQueue(activity);
-
-		Listener<JSONArray> arrListener = new Response.Listener<JSONArray>() {
-			@Override
-			public void onResponse(JSONArray response) {
-				Log.d("onResponse", response.toString());
-
-				try {
-					for (int i = 0; i < response.length(); i++) {
-
-						JSONObject jsonFrame = (JSONObject) response.get(i);
-
-						nfFrame = new Frame();
-
-						nfFrame.setUserId(jsonFrame.getString("wr_name"));
-						nfFrame.setWriteDate(jsonFrame.getString("wr_date"));
-						nfFrame.setLikeCnt(Integer.parseInt(jsonFrame
-								.getString("wr_likes")));
-						nfFrame.setTag(jsonFrame.getString("wr_tags"));
-
-						frameArr.add(nfFrame);
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		};
 
 		Listener<String> listener = new Listener<String>() {
 			@Override
@@ -138,7 +112,6 @@ public class Fragment_NewsFeed extends Fragment {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-
 			}
 		};
 
