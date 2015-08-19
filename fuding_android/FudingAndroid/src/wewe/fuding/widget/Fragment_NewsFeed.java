@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
+import wewe.fuding.utils.ImageDownloader;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -106,7 +107,8 @@ public class Fragment_NewsFeed extends Fragment {
 						nfFrame.setLikeCnt(Integer.parseInt(jsonFrame
 								.getString("wf_likes")));
 						nfFrame.setTag(jsonFrame.getString("wt_tag"));
-
+						nfFrame.setFoodImgURL(jsonFrame.getString("wc_img"));
+						
 						frameArr.add(nfFrame);
 					}
 				} catch (JSONException e) {
