@@ -27,7 +27,6 @@ import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -62,7 +61,6 @@ public class Fragment_NewsFeed extends Fragment {
 
 		showNewsfeed(nfFrameList, v);
 
-//		init(v); 
 		return v;
 	}
 
@@ -101,11 +99,12 @@ public class Fragment_NewsFeed extends Fragment {
 		Listener<String> listener = new Listener<String>() {
 			@Override
 			public void onResponse(String response) {
+				// to make data available
 				String arrRes = "{'response':" + response + "}";
 				arrRes = arrRes.replace("\"", "");
 				arrRes = arrRes.replace("'", "\"");
 				arrRes = arrRes.replace(" ", "");
-				// arrRes = arrRes.replace("", "");
+				arrRes = arrRes.replace(":u\"", ":\"");
 				Log.d(TAG, arrRes);
 
 				JSONObject jobject = null;
@@ -124,16 +123,15 @@ public class Fragment_NewsFeed extends Fragment {
 
 				try {
 					for (int i = 0; i < jarray.length(); i++) {
-
 						JSONObject jsonFrame = (JSONObject) jarray.get(i);
 
 						nfFrame = new Frame();
 
-						nfFrame.setUserId(jsonFrame.getString("wr_name"));
-						nfFrame.setWriteDate(jsonFrame.getString("wr_date"));
+						nfFrame.setUserId(jsonFrame.getString("wt_name"));
+						nfFrame.setWriteDate(jsonFrame.getString("wc_date"));
 						nfFrame.setLikeCnt(Integer.parseInt(jsonFrame
-								.getString("wr_likes")));
-						nfFrame.setTag(jsonFrame.getString("wr_tags"));
+								.getString("wf_likes")));
+						nfFrame.setTag(jsonFrame.getString("wt_tag"));
 
 						frameArr.add(nfFrame);
 					}
@@ -153,10 +151,6 @@ public class Fragment_NewsFeed extends Fragment {
 			}
 		};
 
-		// JsonArrayRequest arrReq = new JsonArrayRequest(URL_address,
-		// arrListener,
-		// errorListener);
-
 		StringRequest req = new StringRequest(Method.POST, URL_address,
 				listener, errorListener) {
 			@Override
@@ -169,7 +163,7 @@ public class Fragment_NewsFeed extends Fragment {
 		};
 
 		mQueue.add(req);
-		 init(v);
+		init(v, frameArr);
 	}
 
 	@Override
@@ -192,15 +186,9 @@ public class Fragment_NewsFeed extends Fragment {
 		super.onDestroyView();
 	}
 
-	private void init(View v) {
-
-		// nfFrameList = new ArrayList<Frame>();
-		// Frame tempF = new Frame("yeoeun", "불닭", "불,닭", "4인분", "30분",
-		// "#짱매움#속쓰려", 4, "15/08/07 12:14");
-		// nfFrameList.add(tempF);//
+	private void init(View v, ArrayList<Frame> frameArr) {
 		nfListView = (ListView) v.findViewById(R.id.listViewNewsfeed);
-		// nfAdapter = new CustomAdapter_NewsFeed(activity, nfFrameList);
-		nfAdapter = new CustomAdapter_NewsFeed(activity);
+		nfAdapter = new CustomAdapter_NewsFeed(activity, frameArr);
 		nfListView.setAdapter(nfAdapter);
 	}
 }
