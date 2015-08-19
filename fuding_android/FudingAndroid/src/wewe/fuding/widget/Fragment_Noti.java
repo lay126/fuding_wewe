@@ -60,7 +60,7 @@ public class Fragment_Noti extends Fragment {
 	@Override
 	public void onStart() {
 		
-//		updateDataList(activity);
+		updateDataList(activity);
 		super.onStart();
 	}
 	
@@ -105,6 +105,7 @@ public class Fragment_Noti extends Fragment {
 //		    mDbOpenHelper.open();
 //		    mDbOpenHelper.insertNotiColumn("yundaeun!!!", "image", "1", "2013.03.11");
 //		    mDbOpenHelper.insertNotiColumn("jungyeoeun!!!", "image", "2", "2014.01.12");
+			
 			
 		    mCursor = mDbOpenHelper.getNotiAllColumns(); 
 		    Noti noti;
