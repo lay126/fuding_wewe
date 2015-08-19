@@ -1,44 +1,42 @@
 package wewe.fuding.widget;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
+import wewe.fuding.activity.ProfileActivity;
 import wewe.fuding.activity.R;
-import wewe.fuding.domain.Frame;
-import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 public class Fragment_Profile extends Fragment {
 	public static final String TAG = Fragment_Profile.class.getSimpleName();
 	public static FragmentActivity activity; // 자신을 포함하는 activity. onCreateView때
 												// 설정되고 onDestroyView때 null이 된다.
-
+	
 	private static Fragment_Profile instance = null;
 	private GridView gridView;
 	private CustomAdapter_Profile profileAdapter;
+	public static ImageView edit_profile;
 //	ArrayList<Bitmap> picArr = new ArrayList<Bitmap>();
-
-
+	
 
 	public static Fragment_Profile getInstance() {
 		if (instance == null) { // 최초 1회 초기화
@@ -54,11 +52,26 @@ public class Fragment_Profile extends Fragment {
 
 		View v;
 		v = inflater.inflate(R.layout.fragment_profile, container, false);
-//		init(v);
+
+		edit_profile = (ImageView)v.findViewById(R.id.profile_edit_btn);
+		edit_profile.setOnClickListener(new View.OnClickListener() {
+ 			@Override
+ 			public void onClick(View v) {
+ 				startActivity(new Intent(activity, ProfileActivity.class));
+ 			}
+ 		});
+		
+		// 미리 저장되어있던 값을 불러오는 과정 
+		TextView name = (TextView) v.findViewById(R.id.profile_txtUserId);
+		SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
+        String shared_name = pref.getString("name", "name");
+		name.setText(shared_name);
+		
+		//init(v);
 		return v;
 
 	}
-
+	
 	private void showMyContent() {
 		String URL_address = "http://119.205.252.224:8000/get/mycontent/";
 
