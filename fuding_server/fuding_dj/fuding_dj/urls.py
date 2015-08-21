@@ -22,6 +22,8 @@ urlpatterns = patterns('fuding_dj_s.views',
     url(r'^get/image/(?P<image_name>\w+/\w+/\w+.\w+)$', 'get_image'),
     url(r'^get/recipe/', 'get_recipe'),
 
+    url(r'^hash/find/', 'hash_find'),
+
     # upload url
     #----------------------------------------------------------------------------
 	url(r'^upload/write/title/', 'test_upload_write_title'),

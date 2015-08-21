@@ -194,17 +194,20 @@ def get_recipe(request):
 	wt_ = WRITE_TITLE.objects.get(wf_index=wf_index)
 	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_.wt_index)
 
+	# wf
 	dic['wf_index'] = str(wf_index)
 	dic['wf_writer'] = str(wf_.wf_writer)
 	dic['wf_likes'] = str(wf_.wf_likes)
 	dic['wc_total'] = str(wf_.wc_total)
 
+	# wt
 	dic['wt_name'] = wt_.wt_name
 	dic['wt_ingre'] = wt_.wt_ingre
 	dic['wt_times'] = str(wt_.wt_times)
 	dic['wt_quant'] = str(wt_.wt_quant)
 	dic['wt_tag'] = wt_.wt_tag
 
+	# wc
 	for wc_ in wc_list_ :
 		if wf_.wc_index_1 is not 0:
 			if int(wc_.wc_index_num) == 1:
@@ -431,6 +434,7 @@ def test_upload_write_frame(request):
 # ------------------------------------------------------------------------------------------------------------
 # SEARCH
 # ------------------------------------------------------------------------------------------------------------
+# 해쉬태그들을 tagDB에 저장하는 함수 (공통사용)
 def hash_tag_make(hash_text, wt_index):
 	# 한글 가능 : 해시태그 작성시에 띄어쓰기 해주세요 ㅠㅠ
 	hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
@@ -444,5 +448,61 @@ def hash_tag_make(hash_text, wt_index):
 	except : 
 		hashs = hash_w.findall(wc_text)
 
-	return 0;
+	return 0
+
+
+# 해쉬태그 검색 함수 
+@csrf_exempt
+def hash_find(request):
+	search_text = request.POST.get('search_text')
+
+	hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
+	hashs = hash_w.findall(search_text)
+
+	datas = []
+	check_data = []
+	for h in hashs:
+		tag_frames = WRITE_TAG.objects.filter(wtg_value=h)
+		for tag_frame in tag_frames:
+			# 중복 데이터 출력 방지 
+			if tag_frame.wt_index not in check_data:
+				check_data.append(tag_frame.wt_index)
+
+				wt_ = WRITE_TITLE.objects.get(wt_index=tag_frame.wt_index)
+				# wt_ = WRITE_TITLE.objects.get(wt_index=1)
+				wf_ = WRITE_FRAME.objects.get(wf_index=wt_.wf_index)
+
+				dic = dict()
+				dic['wf_index'] = str(wf_.wf_index)
+				dic['wt_index'] = str(wf_.wt_index)
+				dic['wf_likes'] = str(wf_.wf_likes)
+				dic['wc_date'] = str(wf_.wc_date)
+
+				# wt_ (in dic_)
+				try : 
+					wt_ = WRITE_TITLE.objects.get(wf_index=wf_.wf_index)
+					dic['wt_name'] = wt_.wt_name
+					dic['wt_tag'] = wt_.wt_tag
+				except :
+					dic['wt_name'] = 'no wt_name'
+					dic['wt_tag'] = 'no wt_tag'
+
+				# wc_ (in dic_)
+				wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wf_.wt_index)
+				for wc_ in wc_list_ :
+					if wc_.wc_index_num == wf_.wc_total :
+						dic['wc_img'] = wc_.wc_img.url
+
+				datas.append(dic)
+
+
+
+	json_data = json.dumps(datas)
+	return HttpResponse(json_data, content_type='application/json')
+
+
+
+
+
+
 
