@@ -28,7 +28,7 @@ def join_user(request):
 	join_id = request.POST.get('join_id', False)
 	join_email = request.POST.get('join_email', False)
 	join_pwd = request.POST.get('join_pwd', False)
-	join_intro = request.POST.get('join_intro', False)
+	join_info = request.POST.get('join_info', False)
 
 	try:
 		join_ = User.objects.create_user(username=join_id, email=join_email, password=join_pwd)
@@ -40,7 +40,7 @@ def join_user(request):
 							user_points = 0,
 							user_writes = 0,
 							user_likes = 0,
-							user_intro = join_intro, )
+							user_info = join_info, )
 	try:
 		join_data_.save()
 	except Exception, e:
@@ -69,23 +69,28 @@ def login_user(request):
 	#make session
 	request.session['sess_id'] = login_.username
 
-
-	user_ = User.objects.get(username=login_id)
 	datas = []
-	datas.append(user_.id) 			#index
-	datas.append(user_.username) 	#id
-	datas.append(user_.email)
+	dic = dict()
+
+	# if login success, get user object.
+	user_ = User.objects.get(username=login_id)
+	
+	dic['id'] = str(user_.id)				#index
+	dic['username'] = str(user_.username)	#id
+	dic['email'] = str(user_.email)
 
 	try :
 		user_data_ = USER_DATA.objects.get(user_id = user_)
-		datas.append(user_data_.user_points)
-		datas.append(user_data_.user_writes)
-		datas.append(user_data_.user_intro)
+		dic['user_points'] = str(user_data_.user_points)
+		dic['user_writes'] = str(user_data_.user_writes)
+		dic['user_info'] = str(user_data_.user_info)
 	except: 
-		datas.append('no data ')
+		dic['user_points'] = str(0)
+		dic['user_writes'] = str(0)
+		dic['user_info'] = str("")
 
-	json_data = json.dumps(datas)
-	return HttpResponse(json_data, content_type='application/json')
+	datas.append(dic)
+	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
 

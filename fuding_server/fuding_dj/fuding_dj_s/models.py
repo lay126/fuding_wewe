@@ -28,7 +28,7 @@ class USER_DATA(models.Model):
 	user_writes = models.IntegerField(verbose_name=u'user_writes', default=0)
 	# matching with write num
 	user_likes = models.IntegerField(verbose_name=u'user_likes', default=0)
-	user_intro = models.CharField(verbose_name=u'user_intro', default='', max_length=100,)
+	user_info = models.CharField(verbose_name=u'user_info', default='', max_length=100,)
 
 
 class USER_WRITES(models.Model):
