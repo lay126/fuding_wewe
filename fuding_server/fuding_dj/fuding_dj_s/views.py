@@ -62,7 +62,8 @@ def get_newsfeed(request):
 def get_image(request):
 	image_name = request.POST.get('image_name')
 
-	link = 'fuding_dj_s/images/' + image_name
+	# link = 'fuding_dj_s/images/' + image_name
+	link = image_name
 
 	images = []
 	image_data_ = open(link, "rb").read()
@@ -93,7 +94,7 @@ def get_recipe(request):
 	datas.append(dic)
 	datas.append(di)
 
-	json_data = json.dumps(unicode(datas))
+	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
 
 
