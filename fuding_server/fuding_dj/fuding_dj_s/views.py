@@ -96,6 +96,7 @@ def login_user(request):
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
+
 @csrf_exempt
 def update_user(request):
 	user_name = request.POST.get('user_name')

@@ -14,7 +14,6 @@ urlpatterns = patterns('fuding_dj_s.views',
     #----------------------------------------------------------------------------
     url(r'^join/user', 'join_user'),
     url(r'^login/user', 'login_user'),
-    url(r'^update/user', 'update_user'),
 
     # get url
     #----------------------------------------------------------------------------
