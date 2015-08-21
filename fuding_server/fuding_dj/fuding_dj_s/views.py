@@ -142,8 +142,39 @@ def get_image(request, image_name):
 # 내가 쓴 레시피 보는 부분 
 @csrf_exempt
 def get_myfeed(request):
+	user_name = request.POST.get('user_name')
+	user_ = User.objects.get(username=user_name)
 
-	return 0
+	# data box
+	datas = []
+	write_list_ = WRITE_FRAME.objects.filter(wf_writer=user_name)
+
+	# dict
+	for d in write_list_: 
+		dic = dict()
+		dic['wf_index'] = str(d.wf_index)
+		dic['wt_index'] = str(d.wt_index)
+		dic['wf_likes'] = str(d.wf_likes)
+		dic['wc_date'] = str(d.wc_date)
+		# wt_ (in dic_)
+		try : 
+			wt_ = WRITE_TITLE.objects.get(wf_index=d.wf_index)
+			dic['wt_name'] = wt_.wt_name
+			dic['wt_tag'] = wt_.wt_tag
+		except :
+			dic['wt_name'] = 'no wt_name'
+			dic['wt_tag'] = 'no wt_tag'
+		# wc_ (in dic_)
+		wc_list_ = WRITE_CONTENT.objects.filter(wt_index=d.wt_index)
+		for wc_ in wc_list_ :
+			if wc_.wc_index_num == d.wc_total :
+				dic['wc_img'] = wc_.wc_img.url
+		datas.append(dic)
+
+	json_data = json.dumps(datas)
+	return HttpResponse(json_data, content_type='application/json')
+
+
 
 ''' 
 개당 레시피 보내주는 방식을 아직 모름.
