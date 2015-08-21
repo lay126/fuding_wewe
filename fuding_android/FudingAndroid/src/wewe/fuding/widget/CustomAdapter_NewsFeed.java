@@ -6,6 +6,7 @@ import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
 import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 
 	// userId // foodName; // ingre
 	// amount // totalTime // tag // likeCnt
+	public static final String TAG = CustomAdapter_NewsFeed.class.getSimpleName();
 
 	Context context;
 	LayoutInflater inflater;
@@ -112,7 +114,8 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 
 		ImageView imgFood = (ImageView) convertView
 				.findViewById(R.id.newsfeed_imgView);
-		String URL_img_address = "http://119.205.252.224:8000/get/image/" + arrList.get(pos).getFoodImgURL();
+		String URL_img_address = "http://119.205.252.224:8000/get/image" + arrList.get(pos).getFoodImgURL();
+		Log.i(TAG, URL_img_address);
 		imgDownloader.download(URL_img_address, imgFood, 0);
 		
 		
