@@ -4,23 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
+import wewe.fuding.activity.DetailActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
 import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +17,18 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 public class CustomAdapter_NewsFeed extends BaseAdapter {
 
@@ -46,7 +43,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 	private ArrayList<Frame> arrList;
 	private ImageDownloader imgDownloader = new ImageDownloader();
 	private String imgDownURL;
-	private int likeState;
 
 	public CustomAdapter_NewsFeed(Context aContext) {
 		context = aContext;
@@ -96,16 +92,15 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					false);
 
 			// 좋아요 버튼을 터치 했을 때 이벤트 발생
-			ImageButton btn = (ImageButton) convertView
-					.findViewById(R.id.newsfeed_imgBtnLike);
+			ImageView btn = (ImageView) convertView.findViewById(R.id.newsfeed_imgBtnLike);
 			btn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					 clickLikeBtn();
+//					clickLikeBtn();
 				}
 
 				private void clickLikeBtn() {
-					String URL_address = "http://119.205.252.224:8000/set/like/";
+					String URL_address = "http://119.205.252.224:8000/get/newsfeed/";
 
 					RequestQueue mQueue;
 					mQueue = Volley.newRequestQueue(context);
@@ -113,20 +108,11 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					Listener<String> listener = new Listener<String>() {
 						@Override
 						public void onResponse(String response) {
-							Log.i("*like state", response);
-							
-							// // to make data available
-							// String res = "{'response':" + response + "}";
-							// Log.d(TAG, res);
-							//
-							// JSONObject jobject = null;
-							// try {
-							// jobject = new JSONObject(res);
-							//
-							// String likeState = jobject.getString("");
-							// } catch (JSONException e) {
-							// e.printStackTrace();
-							// }
+							try {
+								
+							}catch(Exception e) {
+								e.printStackTrace();
+							}
 						}
 					};
 
@@ -134,37 +120,35 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 						@Override
 						public void onErrorResponse(VolleyError error) {
 							error.printStackTrace();
-							Toast.makeText(context,
-									"좋아요클릭 : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
+							Toast.makeText(context, "좋아요클릭 : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
 									Toast.LENGTH_LONG).show();
 						}
 					};
 
-					StringRequest req = new StringRequest(Method.POST,
-							URL_address, listener, errorListener) {
+					StringRequest req = new StringRequest(Method.POST, URL_address,
+							listener, errorListener) {
 						@Override
-						protected Map<String, String> getParams()
-								throws AuthFailureError {
+						protected Map<String, String> getParams() throws AuthFailureError {
 							Map<String, String> params = new HashMap<String, String>();
-							// 사용자아이디, 글넘버
 							params.put("user_name", "ayoung");
-							params.put("wf_index", ""
-									+ arrList.get(pos).getFoodIndex());
+							// 글넘버
+							params.put("", "");
 							return params;
 						}
 
 					};
 
-					mQueue.add(req);
+					mQueue.add(req);					
 				}
 			});
 
 			// // 리스트 아이템을 터치 했을 때 이벤트 발생
-			// convertView.setOnClickListener(new OnClickListener() {
-			// @Override
-			// public void onClick(View v) {
-			// }
-			// });
+//			 convertView.setOnClickListener(new OnClickListener() {
+//			 @Override
+//			 public void onClick(View v) {
+//				 v.getContext().startActivity(new Intent(v.getContext(), DetailActivity.class));
+//			 }
+//			 });
 
 		}
 
@@ -180,15 +164,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				.findViewById(R.id.newsfeed_txtViewContentTitle);
 		tvContentTitle.setText("" + arrList.get(pos).getFoodName());
 
-		ImageButton btnLike = (ImageButton) convertView
-				.findViewById(R.id.newsfeed_imgBtnLike);
-		if (arrList.get(pos).getLikeState() == 0) {
-			// unclicked
-			btnLike.setImageResource(R.drawable.like_unclicked);
-		} else {
-			btnLike.setImageResource(R.drawable.like_clicked);
-		}
-
 		TextView tvLikeCnt = (TextView) convertView
 				.findViewById(R.id.newsfeed_txtViewLikeCnt);
 		tvLikeCnt.setText("" + arrList.get(pos).getLikeCnt());
@@ -199,7 +174,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 
 		ImageView imgFood = (ImageView) convertView
 				.findViewById(R.id.newsfeed_imgView);
-		String URL_img_address = "http://119.205.252.224:8000/get/image/"
+		String URL_img_address = "http://119.205.252.224:8000/get/image"
 				+ arrList.get(pos).getFoodImgURL();
 		Log.i(TAG, URL_img_address);
 		imgDownloader.download(URL_img_address, imgFood, 0);
