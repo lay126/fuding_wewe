@@ -1,108 +1,104 @@
 package wewe.fuding.activity;
 
-import java.security.acl.Permission;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.facebook.CallbackManager;
-import com.facebook.login.widget.LoginButton;
-//import com.facebook.Session;
-//import com.facebook.SessionState;
-//import com.facebook.Settings;
+// http://shary1012.tistory.com/78
+public class LoginActivity extends Activity { 
 
-public class LoginActivity extends Activity implements Permission {
-
-	CallbackManager callbackManager;
-
+	ImageView login_btn, sign_up_btn;
+	EditText edit_id, edit_password;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// FacebookSdk.sdkInitialize(getApplicationContext());
 		setContentView(R.layout.activity_login);
-
-		init();
-		// callbackManager = CallbackManager.Factory.create();
-
-		// loginButton.registerCallback(callbackManager, new
-		// FacebookCallback<LoginResult>() {
-		// @Override
-		// public void onSuccess(LoginResult loginResult) {
-		// // App code
-		// Toast.makeText(LoginActivity.this, "onSuccess", 0).show();
-		// }
-		//
-		// @Override
-		// public void onCancel() {
-		// // App code
-		// Toast.makeText(LoginActivity.this, "onCancel", 0).show();
-		// }
-		//
-		// @Override
-		// public void onError(FacebookException exception) {
-		// // App code
-		// Toast.makeText(LoginActivity.this, "onError", 0).show();
-		// }
-		// });
-	}
-
-	private void init() {
-		LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
 		
-		// http://shary1012.tistory.com/78
+		login_btn = (ImageView) findViewById(R.id.login_btn);
+		sign_up_btn = (ImageView) findViewById(R.id.sign_up_btn);
+		edit_id = (EditText) findViewById(R.id.id_text);
+		edit_password = (EditText) findViewById(R.id.password_text);
+		
+		login_btn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				loginRequest(edit_id.getText().toString(), edit_password.getText().toString());
+			}
+		});
+		
+		sign_up_btn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+			}
+		});
 	}
 
-	// 다은이코드
-	// public void SkipLoginOnClick(View view) {
-	// if (view.getId() == R.id.skip_login_button) {
-	// Intent intent = new Intent(LoginActivity.this,
-	// FudingMainActivity.class);
-	// startActivity(intent);
-	// }
-	// }
-	//
-	// private void facebookInit(Bundle savedInstanceState) {
-	// Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
-	//
-	// Session session = Session.getActiveSession();
-	// if (session == null) {
-	// if (savedInstanceState != null) {
-	// session = Session.restoreSession(this, null, statusCallback,
-	// savedInstanceState);
-	// session.openForRead(new Session.OpenRequest(this)
-	// .setPermissions(
-	// Arrays.asList("public_profile", "read_stream",
-	// "user_likes", "user_birthday",
-	// "user_tagged_places")).setCallback(
-	// statusCallback));
-	// Log.d("savedInstanceState", "savedInstanceState");
-	// }
-	// if (session == null) {
-	// session = new Session(this);
-	// session.openForRead(new Session.OpenRequest(this)
-	// .setPermissions(
-	// Arrays.asList("public_profile", "read_stream",
-	// "user_likes", "user_birthday",
-	// "user_tagged_places", "email"))
-	// .setCallback(statusCallback));
-	// Log.d("savedInstanceState", "not savedInstanceState");
-	// }
-	//
-	// Session.setActiveSession(session);
-	// // session.openForRead(new Session.OpenRequest(this)
-	// // .setPermissions(
-	// // Arrays.asList("public_profile", "read_stream",
-	// // "user_likes", "user_birthday",
-	// // "user_tagged_places")).setCallback(
-	// // statusCallback));
-	//
-	// if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
-	// session.openForRead(new Session.OpenRequest(this)
-	// .setCallback(statusCallback));
-	// }
-	// }
-	//
-	// updateView();
-	// }
+	private void loginRequest(final String id, final String pwd) {
+		String URL_address= "http://119.205.252.224:8000/upload/write/title/"; 
+		
+		RequestQueue mQueue2;
+		mQueue2 = Volley.newRequestQueue(LoginActivity.this);
+		Listener<String> listener = new Listener<String>() {
+			@Override
+			public void onResponse(String result) {
+				try {
+
+					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+			        SharedPreferences.Editor editor = pref.edit();
+			        editor.putString("login_check", "true");
+			        editor.commit();
+					
+				} catch (Exception e){
+					
+				}
+			}
+		};
+
+		com.android.volley.Response.ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Toast.makeText(LoginActivity.this, "네트워크상태가좋지 않습니다.잠시만 기다려주세요.", Toast.LENGTH_LONG).show();
+				}
+		};
+		
+		StringRequest myReq = new StringRequest(Method.POST, URL_address, listener,
+				errorListener) {
+			@Override
+			protected Map<String, String> getParams()
+					throws com.android.volley.AuthFailureError {
+				Map<String, String> params = new HashMap<String, String>();
+				params.put("user_id", id);
+				params.put("user_pwd", pwd);
+
+				
+				return params;
+			};
+		};
+		mQueue2.add(myReq);
+	
+
+	
+	}
+	
+
 
 }

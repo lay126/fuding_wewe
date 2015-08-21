@@ -21,6 +21,10 @@ urlpatterns = patterns('fuding_dj_s.views',
 	url(r'^upload/write/title/', 'test_upload_write_title'),
     url(r'^upload/write/content/', 'test_upload_write_content'),
     url(r'^upload/write/frame/', 'test_upload_write_frame'),
+
+    # set url
+    #----------------------------------------------------------------------------
+    url(r'^set/like/', 'set_like'),
 )
 
 # urlpatterns += static('static_files', document_root=settings.MEDIA_ROOT)

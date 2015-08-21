@@ -55,7 +55,6 @@ public class ProfileActivity extends Activity {
 		id = (EditText)findViewById(R.id.edit_id);
 		phone = (EditText)findViewById(R.id.edit_phone);
 		gender = (EditText)findViewById(R.id.edit_gender);
-		
 		profile_image = (ImageView)findViewById(R.id.profile_image);
 		profile_image.setOnClickListener(new View.OnClickListener() {
  			@Override

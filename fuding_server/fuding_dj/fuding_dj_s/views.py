@@ -33,8 +33,8 @@ def get_newsfeed(request):
 	write_list_ =  WRITE_FRAME.objects.all()
 
 	# dict
-	dic = dict()
 	for d in write_list_: 
+		dic = dict()
 		dic['wf_index'] = str(d.wf_index)
 		dic['wt_index'] = str(d.wt_index)
 		dic['wf_likes'] = str(d.wf_likes)
@@ -67,6 +67,7 @@ def get_image(request, image_name):
 
 	return HttpResponse(images, content_type="image/png")
 
+
 ''' 
 개당 레시피 보내주는 방식을 아직 모름.
 frame -> t/c -> content 순으로 보이는 건가?
@@ -91,6 +92,12 @@ def get_recipe(request):
 
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
+
+
+def set_like(request):
+
+	# 0:안눌린것 1:눌린것 
+	return 1;
 
 
 @csrf_exempt

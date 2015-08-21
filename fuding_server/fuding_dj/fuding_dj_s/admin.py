@@ -27,7 +27,8 @@ class USER_DATAAdmin(admin.ModelAdmin):
 	list_display = ('user_id',
 					'user_points',
 					'user_writes',
-					'user_likes', )
+					'user_likes',
+					'user_intro', )
 
 class USER_WRITESAdmin(admin.ModelAdmin):
 	list_display = ('user_id',
