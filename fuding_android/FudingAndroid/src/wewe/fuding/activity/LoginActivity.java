@@ -70,6 +70,11 @@ public class LoginActivity extends Activity {
 			        SharedPreferences.Editor editor = pref.edit();
 			        editor.putString("login_check", "true");
 			        editor.commit();
+			        
+			        // 로그인 에서 받은 값 sp에 저장 (아이디 이메일)
+			        // 프로필 변경 엑티비티에서 띄워줘야함 , 변경 시 sp 변경 
+			        //           유저 아이디 넘겨줌 
+			        
 				} catch (Exception e){
 					
 				}
