@@ -58,19 +58,14 @@ def get_newsfeed(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
-@csrf_exempt
-def get_image(request):
-	image_name = request.POST.get('image_name')
-
-	# link = 'fuding_dj_s/images/' + image_name
-	link = image_name
+def get_image(request, image_name):
+	link = 'fuding_dj_s/images/' + image_name
 
 	images = []
 	image_data_ = open(link, "rb").read()
 	images.append(image_data_)
 
 	return HttpResponse(images, content_type="image/png")
-	
 
 ''' 
 개당 레시피 보내주는 방식을 아직 모름.
