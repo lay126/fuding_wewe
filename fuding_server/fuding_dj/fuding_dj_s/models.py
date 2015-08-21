@@ -8,9 +8,9 @@ from django.contrib.auth.models import User
 from datetime import *
 
 
-#--------------------------------------------------------------------
-#--- default user ---------------------------------------
-#--------------------------------------------------------------------
+# --------------------------------------------------------------------
+# user
+# --------------------------------------------------------------------
 class USER(models.Model):
 	class Meta:
 		verbose_name = u'USER'
@@ -35,7 +35,7 @@ class USER_WRITES(models.Model):
 	class Meta:
 		verbose_name = u'USER_WRITES'
 		db_table = 'USER_WRITES_DB'
-	user_id = models.ForeignKey(USER)
+	user_id = models.CharField(verbose_name=u'user_id', default='no name', max_length=20,)
 	write_index = models.AutoField(verbose_name=u'write_index', primary_key=True, unique=True, db_index=True, )
 	write_value = models.IntegerField(verbose_name=u'write_value', default=0, )
 	write_date = models.DateTimeField(verbose_name=u'write_date', default=datetime.now, blank=True, )
@@ -44,7 +44,7 @@ class USER_LIKES(models.Model):
 	class Meta:
 		verbose_name = u'USER_LIKES'
 		db_table = 'USER_LIKES_DB'
-	user_id = models.ForeignKey(USER)
+	user_id = models.CharField(verbose_name=u'user_id', default='no name', max_length=20,)
 	wf_index = models.IntegerField(verbose_name=u'wf_index', default=0, )
 	like_index = models.AutoField(verbose_name=u'like_index', primary_key=True, unique=True, db_index=True, )
 	like_date = models.DateTimeField(verbose_name=u'like_date', default=datetime.now, blank=True, )
@@ -52,10 +52,9 @@ class USER_LIKES(models.Model):
 
 
 
-#--------------------------------------------------------------------
-#--- food write ---------------------------------------
-#--------------------------------------------------------------------
-
+# --------------------------------------------------------------------
+# food write 
+# --------------------------------------------------------------------
 class WRITE_FRAME(models.Model):
 	class Meta:
 		verbose_name = u'WRITE_FRAME'

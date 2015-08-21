@@ -23,6 +23,10 @@ from django.contrib.auth.models import User, UserManager
 from fuding_dj_s.models import *
 
 
+
+# ------------------------------------------------------------------------------------------------------------
+# USER
+# ------------------------------------------------------------------------------------------------------------
 @csrf_exempt
 def join_user(request):
 	join_id = request.POST.get('join_id', False)
@@ -93,7 +97,9 @@ def login_user(request):
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
-
+# ------------------------------------------------------------------------------------------------------------
+# FEED
+# ------------------------------------------------------------------------------------------------------------
 @csrf_exempt
 def get_newsfeed(request):
 	user_name = request.POST.get('user_name')
@@ -202,15 +208,38 @@ def get_recipe(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
+# ------------------------------------------------------------------------------------------------------------
+# CHANGE
+# ------------------------------------------------------------------------------------------------------------
+@csrf_exempt
 def set_like(request):
+	user_name = request.POST.get('user_name')
+	wf_index = request.POST.get('wf_index')
+
+	like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=wf_index)
+
+	if len(like_) is 0:
+		# 좋아요 해야하는 경우. 데이터 넣고, return 1
+		liking_ = USER_LIKES(	user_id = user_name,
+								wf_index = wf_index, )
+		liking_.save()
+		data = '1'
+	if len(like_) is not 0:
+		# 이미 좋아요 된 경우. 없애고, return 0
+		for l_ in like_ :
+			l_.delete()
+		data = '0'
 
 	# 0:안눌린것 1:눌린것 
-	return 1
+	return HttpResponse(json.dumps(data), content_type='application/json')
 
 
+
+# ------------------------------------------------------------------------------------------------------------
+# WRITE
+# ------------------------------------------------------------------------------------------------------------
 @csrf_exempt
 def test_upload_write_title(request):
-
 	user_name = request.POST.get('user_name')
 	wt_name = request.POST.get('wt_name')
 	wt_ingre = request.POST.get('wt_ingre')
@@ -242,7 +271,6 @@ def test_upload_write_title(request):
 
 @csrf_exempt
 def test_upload_write_content(request):
-
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
 	wc_index_num = request.POST.get('wc_index_num') # 해당 카드의 순서 번호 
@@ -286,7 +314,6 @@ def test_upload_write_content(request):
 
 @csrf_exempt
 def test_upload_write_frame(request):
-
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
 	wc_total = request.POST.get('wc_total') # 해당 카드의 갯수 
@@ -350,6 +377,10 @@ def test_upload_write_frame(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
+
+# ------------------------------------------------------------------------------------------------------------
+# SEARCH
+# ------------------------------------------------------------------------------------------------------------
 def hash_tag_make(hash_text, wt_index):
 	# 한글 가능 : 해시태그 작성시에 띄어쓰기 해주세요 ㅠㅠ
 	hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
