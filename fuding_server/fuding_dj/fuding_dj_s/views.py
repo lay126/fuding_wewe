@@ -49,9 +49,44 @@ def join_user(request):
 	return HttpResponse(json.dumps('0', ensure_ascii=False), content_type='application/json')
 
 
+@csrf_exempt
 def login_user(request):
+	login_id = request.POST.get('login_id')
+	login_pwd = request.POST.get('login_pwd')
 
-	return 0
+	login_ = authenticate(username=login_id, password=login_pwd)
+
+	if login_ is not None:
+		if login_.is_active:
+			login(request, login_)
+		else:
+			#disabled account
+			return HttpResponse(json.dumps('1', ensure_ascii=False), content_type='application/json')
+	else:
+		#invaild login
+		return HttpResponse(json.dumps('1', ensure_ascii=False), content_type='application/json')
+
+	#make session
+	request.session['sess_id'] = login_.username
+
+
+	user_ = User.objects.get(username=login_id)
+	datas = []
+	datas.append(user_.id) 			#index
+	datas.append(user_.username) 	#id
+	datas.append(user_.email)
+
+	try :
+		user_data_ = USER_DATA.objects.get(user_id = user_)
+		datas.append(user_data_.user_points)
+		datas.append(user_data_.user_writes)
+		datas.append(user_data_.user_intro)
+	except: 
+		datas.append('no data ')
+
+	json_data = json.dumps(datas)
+	return HttpResponse(json_data, content_type='application/json')
+
 
 
 @csrf_exempt
