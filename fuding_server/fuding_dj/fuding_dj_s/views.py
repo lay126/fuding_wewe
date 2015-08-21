@@ -59,7 +59,7 @@ def get_newsfeed(request):
 
 
 def get_image(request, image_name):
-	link = 'fuding_dj_s/images/' + image_name
+	link = image_name
 
 	images = []
 	image_data_ = open(link, "rb").read()
