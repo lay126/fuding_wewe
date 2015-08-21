@@ -33,8 +33,8 @@ def get_newsfeed(request):
 	write_list_ =  WRITE_FRAME.objects.all()
 
 	# dict
-	dic = dict()
 	for d in write_list_: 
+		dic = dict()
 		dic['wf_index'] = str(d.wf_index)
 		dic['wt_index'] = str(d.wt_index)
 		dic['wf_likes'] = str(d.wf_likes)
@@ -66,6 +66,7 @@ def get_image(request, image_name):
 	images.append(image_data_)
 
 	return HttpResponse(images, content_type="image/png")
+
 
 ''' 
 개당 레시피 보내주는 방식을 아직 모름.
