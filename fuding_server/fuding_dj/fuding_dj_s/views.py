@@ -465,36 +465,32 @@ def hash_find(request):
 		tag_frames = WRITE_TAG.objects.filter(wtg_value=h)
 		for tag_frame in tag_frames:
 			# 중복 데이터 출력 방지 
-			if tag_frame.wt_index not in check_data:
-				check_data.append(tag_frame.wt_index)
+			wt_index_ = tag_frame.wt_index
+			if wt_index_ not in check_data:
+				check_data.append(wt_index_)
+				try :
+					wt_ = WRITE_TITLE.objects.get(wt_index=wt_index_)
+					wf_ = WRITE_FRAME.objects.get(wf_index=wt_.wf_index)
+					wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wf_.wt_index)
 
-				wt_ = WRITE_TITLE.objects.get(wt_index=tag_frame.wt_index)
-				# wt_ = WRITE_TITLE.objects.get(wt_index=1)
-				wf_ = WRITE_FRAME.objects.get(wf_index=wt_.wf_index)
+					dic = dict()
+					dic['wf_index'] = str(wf_.wf_index)
+					dic['wt_index'] = str(wf_.wt_index)
+					dic['wf_likes'] = str(wf_.wf_likes)
+					dic['wc_date'] = str(wf_.wc_date)
 
-				dic = dict()
-				dic['wf_index'] = str(wf_.wf_index)
-				dic['wt_index'] = str(wf_.wt_index)
-				dic['wf_likes'] = str(wf_.wf_likes)
-				dic['wc_date'] = str(wf_.wc_date)
-
-				# wt_ (in dic_)
-				try : 
-					wt_ = WRITE_TITLE.objects.get(wf_index=wf_.wf_index)
+					# wt_ (in dic_)
 					dic['wt_name'] = wt_.wt_name
 					dic['wt_tag'] = wt_.wt_tag
+
+					# wc_ (in dic_)
+					for wc_ in wc_list_ :
+						if wc_.wc_index_num == wf_.wc_total :
+							dic['wc_img'] = wc_.wc_img.url
+
+					datas.append(dic)
 				except :
-					dic['wt_name'] = 'no wt_name'
-					dic['wt_tag'] = 'no wt_tag'
-
-				# wc_ (in dic_)
-				wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wf_.wt_index)
-				for wc_ in wc_list_ :
-					if wc_.wc_index_num == wf_.wc_total :
-						dic['wc_img'] = wc_.wc_img.url
-
-				datas.append(dic)
-
+					pass
 
 
 	json_data = json.dumps(datas)
