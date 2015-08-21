@@ -33,8 +33,7 @@ public class SignUpActivity  extends Activity {
 		
 		id = (EditText) findViewById(R.id.edit_id);
 		pwd = (EditText) findViewById(R.id.edit_pwd);
-		email = (EditText) findViewById(R.id.edit_email);
-		content = (EditText) findViewById(R.id.edit_content);
+		email = (EditText) findViewById(R.id.edit_email); 
 
 		ok_btn = (ImageView) findViewById(R.id.ok_btn);
 		cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
@@ -43,8 +42,8 @@ public class SignUpActivity  extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				if (id.getText().toString() == null || pwd.getText().toString() == null || email.getText().toString() == null) {
-					Toast.makeText(SignUpActivity.this, "아이디와 비밀번호, 이메일은 필수입력 사항입니다.", Toast.LENGTH_LONG).show();
+				if ("".equals(id.getText().toString()) || "".equals(pwd.getText().toString()) || "".equals(email.getText().toString())) {
+					Toast.makeText(SignUpActivity.this, "빈칸을 모두 입력해주세요.", Toast.LENGTH_LONG).show();
 				} else {
 					signupRequest(id.getText().toString(), pwd.getText().toString(), email.getText().toString(), content.getText().toString());
 				}
@@ -69,7 +68,8 @@ public class SignUpActivity  extends Activity {
 			public void onResponse(String result) {
 				try {
 					Log.d("signupActivity.class", "success");
-					finish();
+					Toast.makeText(SignUpActivity.this, "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show();
+					finish(); 
 				} catch (Exception e){
 					
 				}
@@ -92,7 +92,7 @@ public class SignUpActivity  extends Activity {
 				params.put("join_id", id);
 				params.put("join_email", email);
 				params.put("join_pwd", pwd);
-				params.put("join_info", content);
+			//	params.put("join_info", content);
 				
 				return params;
 			};

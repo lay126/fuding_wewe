@@ -40,7 +40,11 @@ public class LoginActivity extends Activity {
 		login_btn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				loginRequest(edit_id.getText().toString(), edit_password.getText().toString());
+				if ("".equals(edit_id.getText().toString()) || "".equals(edit_password.getText().toString())) {
+					Toast.makeText(LoginActivity.this, "아이디와 비밀번호를 입력해주세요.", Toast.LENGTH_LONG).show();
+				} else {
+					loginRequest(edit_id.getText().toString(), edit_password.getText().toString());
+				}
 			}
 		});
 		
@@ -53,7 +57,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void loginRequest(final String id, final String pwd) {
-		String URL_address= "http://119.205.252.224:8000/login/user"; 
+		String URL_address= "http://119.205.252.224:8000/login/user/"; 
 		
 		RequestQueue mQueue2;
 		mQueue2 = Volley.newRequestQueue(LoginActivity.this);
@@ -61,6 +65,7 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onResponse(String result) {
 				try {
+					Log.d("LoginActivity", result);
 					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 			        SharedPreferences.Editor editor = pref.edit();
 			        editor.putString("login_check", "true");

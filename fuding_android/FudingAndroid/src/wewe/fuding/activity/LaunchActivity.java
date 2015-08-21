@@ -21,17 +21,17 @@ public class LaunchActivity extends Activity {
 			@Override
 			public void run() {
 				 
-//				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-//		        String login_check = pref.getString("login_check", "false");
-//				
-//		        Log.d("LoginActivity.class", "login_check : "+ login_check);
-//		        if ("true".equals(login_check)) {
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		        String login_check = pref.getString("login_check", "false");
+				
+		        Log.d("LoginActivity.class", "login_check : "+ login_check);
+		        if ("true".equals(login_check)) {
 		        	Intent intent = new Intent(LaunchActivity.this, FudingMainActivity.class);
 		        	startActivity(intent);
-//		        } else {
-//		        	Intent intent = new Intent(LaunchActivity.this, LoginActivity.class);
-//		        	startActivity(intent);
-//		        }
+		        } else {
+		        	Intent intent = new Intent(LaunchActivity.this, LoginActivity.class);
+		        	startActivity(intent);
+		        }
 				finish();
 			}
 		}, 2000);
