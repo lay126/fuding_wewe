@@ -118,8 +118,9 @@ def update_user(request):
  				json_data = json.dumps('save photo fail')
  				return HttpResponse(json_data, content_type='application/json')	
 
- 	user_data_ = USER_DATA.objects.filter(user_id=user_)
-	user_data_.update(user_info=user_info)	
+ 	if user_info is not None:
+ 		user_data_ = USER_DATA.objects.filter(user_id=user_)
+		user_data_.update(user_info=user_info)	
 
 	json_data = json.dumps('0')
 	return HttpResponse(json_data, content_type='application/json')	
