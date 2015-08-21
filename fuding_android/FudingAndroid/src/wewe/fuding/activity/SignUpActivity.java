@@ -60,7 +60,7 @@ public class SignUpActivity  extends Activity {
 	}
 
 	private void signupRequest(final String id, final String pwd, final String email, final String content) {
-		String URL_address= "http://119.205.252.224:8000/upload/write/title/"; 
+		String URL_address= "http://119.205.252.224:8000/join/user/"; 
 		
 		RequestQueue mQueue2;
 		mQueue2 = Volley.newRequestQueue(SignUpActivity.this);
@@ -89,10 +89,10 @@ public class SignUpActivity  extends Activity {
 			protected Map<String, String> getParams()
 					throws com.android.volley.AuthFailureError {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("user_id", id);
-				params.put("user_pwd", pwd);
-				params.put("user_email", email);
-				params.put("user_content", content);
+				params.put("join_id", id);
+				params.put("join_email", email);
+				params.put("join_pwd", pwd);
+				params.put("join_info", content);
 				
 				return params;
 			};

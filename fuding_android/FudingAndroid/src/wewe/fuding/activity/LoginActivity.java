@@ -53,7 +53,7 @@ public class LoginActivity extends Activity {
 	}
 
 	private void loginRequest(final String id, final String pwd) {
-		String URL_address= "http://119.205.252.224:8000/upload/write/title/"; 
+		String URL_address= "http://119.205.252.224:8000/login/user"; 
 		
 		RequestQueue mQueue2;
 		mQueue2 = Volley.newRequestQueue(LoginActivity.this);
@@ -61,12 +61,10 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onResponse(String result) {
 				try {
-
 					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 			        SharedPreferences.Editor editor = pref.edit();
 			        editor.putString("login_check", "true");
 			        editor.commit();
-					
 				} catch (Exception e){
 					
 				}
@@ -86,9 +84,8 @@ public class LoginActivity extends Activity {
 			protected Map<String, String> getParams()
 					throws com.android.volley.AuthFailureError {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("user_id", id);
-				params.put("user_pwd", pwd);
-
+				params.put("login_id", id);
+				params.put("login_pwd", pwd);
 				
 				return params;
 			};
