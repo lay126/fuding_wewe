@@ -135,6 +135,7 @@ def get_newsfeed(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
+# 이미지 url로 뿌림 
 def get_image(request, image_name):
 	link = image_name
 
@@ -181,31 +182,80 @@ def get_myfeed(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
-
-''' 
-개당 레시피 보내주는 방식을 아직 모름.
-frame -> t/c -> content 순으로 보이는 건가?
-알아야지 짤 수 있을듯.
-'''
+# 레시피 상세 페이지 
 @csrf_exempt
 def get_recipe(request):
 	wf_index = request.POST.get('wf_index')
 
 	datas = []
 	dic = dict()
-	di = dict()
+	
+	wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
+	wt_ = WRITE_TITLE.objects.get(wf_index=wf_index)
+	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_.wt_index)
 
 	dic['wf_index'] = str(wf_index)
-	wt_ = WRITE_TITLE.objects.get(wf_index=wf_index)
-	dic['wt_index'] = str(wt_.wt_index)
-	# testing
-	di['aa'] = 'aa'
-	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_.wt_index)
-	datas.append(dic)
-	datas.append(di)
+	dic['wf_writer'] = str(wf_.wf_writer)
+	dic['wf_likes'] = str(wf_.wf_likes)
+	dic['wc_total'] = str(wf_.wc_total)
 
-	json_data = json.dumps(datas)
-	return HttpResponse(json_data, content_type='application/json')
+	dic['wt_name'] = wt_.wt_name
+	dic['wt_ingre'] = wt_.wt_ingre
+	dic['wt_times'] = str(wt_.wt_times)
+	dic['wt_quant'] = str(wt_.wt_quant)
+	dic['wt_tag'] = wt_.wt_tag
+
+	for wc_ in wc_list_ :
+		if wf_.wc_index_1 is not 0:
+			if int(wc_.wc_index_num) == 1:
+				dic['wc_img_1'] = wc_.wc_img.url
+				dic['wc_text_1'] = wc_.wc_text
+				dic['wc_times_1'] = str(wc_.wc_times)
+		if wf_.wc_index_2 is not 0:
+			if int(wc_.wc_index_num) == 2:
+				dic['wc_img_2'] = wc_.wc_img.url
+				dic['wc_text_2'] = wc_.wc_text
+				dic['wc_times_2'] = str(wc_.wc_times)
+		if wf_.wc_index_3 is not 0:
+			if int(wc_.wc_index_num) == 3:
+				dic['wc_img_3'] = wc_.wc_img.url
+				dic['wc_text_3'] = wc_.wc_text
+				dic['wc_times_3'] = str(wc_.wc_times)
+		if wf_.wc_index_4 is not 0:
+			if int(wc_.wc_index_num) == 4:
+				dic['wc_img_4'] = wc_.wc_img.url
+				dic['wc_text_4'] = wc_.wc_text
+				dic['wc_times_4'] = str(wc_.wc_times)
+		if wf_.wc_index_5 is not 0:
+			if int(wc_.wc_index_num) == 5:
+				dic['wc_img_5'] = wc_.wc_img.url
+				dic['wc_text_5'] = wc_.wc_text
+				dic['wc_times_5'] = str(wc_.wc_times)
+		if wf_.wc_index_6 is not 0:
+			if int(wc_.wc_index_num) == 6:
+				dic['wc_img_6'] = wc_.wc_img.url
+				dic['wc_text_6'] = wc_.wc_text
+				dic['wc_times_6'] = str(wc_.wc_times)
+		if wf_.wc_index_7 is not 0:
+			if int(wc_.wc_index_num) == 7:
+				dic['wc_img_7'] = wc_.wc_img.url
+				dic['wc_text_7'] = wc_.wc_text
+				dic['wc_times_7'] = str(wc_.wc_times)
+		if wf_.wc_index_8 is not 0:
+			if int(wc_.wc_index_num) == 8:
+				dic['wc_img_8'] = wc_.wc_img.url
+				dic['wc_text_8'] = wc_.wc_text
+				dic['wc_times_8'] = str(wc_.wc_times)
+		if wf_.wc_index_9 is not 0:
+			if int(wc_.wc_index_num) == 9:
+				dic['wc_img_9'] = wc_.wc_img.url
+				dic['wc_text_9'] = wc_.wc_text
+				dic['wc_times_9'] = str(wc_.wc_times)
+
+
+	datas.append(dic)
+
+	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
 # ------------------------------------------------------------------------------------------------------------
