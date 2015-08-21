@@ -104,20 +104,21 @@ def update_user(request):
 	image_name = request.POST.get('image_name') # use, user_name
 
 	user_ = User.objects.get(username=user_name)
-	user_data_ = USER_DATA.objects.filter(user_id=user_)
+	user_data_ = USER_DATA.objects.get(user_id=user_)
 
 	# save photo
-	if request.method == 'POST':
-		if 'file' in request.FILES:
-			file = request.FILES['file']
-			filename = image_name
-			try:
+ 	if request.method == 'POST':
+ 		if 'file' in request.FILES:
+ 			file = request.FILES['file']
+ 			filename = image_name
+ 			try:
 				user_data_.user_img.delete()
-				user_data_.user_img.save(filename, File(file), save=True)	
-			except:
-				json_data = json.dumps('save photo fail')
-				return HttpResponse(json_data, content_type='application/json')	
+ 				user_data_.user_img.save(filename, File(file), save=True)	
+ 			except:
+ 				json_data = json.dumps('save photo fail')
+ 				return HttpResponse(json_data, content_type='application/json')	
 
+ 	user_data_ = USER_DATA.objects.filter(user_id=user_)
 	user_data_.update(user_info=user_info)	
 
 	json_data = json.dumps('0')

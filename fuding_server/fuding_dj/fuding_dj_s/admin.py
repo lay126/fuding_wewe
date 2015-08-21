@@ -22,13 +22,13 @@ class UserAdmin(admin.ModelAdmin):
 	list_display = ('id', 'username', 'email', 'password', )
 
 
-
 class USER_DATAAdmin(admin.ModelAdmin):
 	list_display = ('user_id',
 					'user_points',
 					'user_writes',
 					'user_likes',
-					'user_info', )
+					'user_info', 
+					'user_img', )
 
 class USER_WRITESAdmin(admin.ModelAdmin):
 	list_display = ('user_id',

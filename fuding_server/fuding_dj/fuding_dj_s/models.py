@@ -29,6 +29,8 @@ class USER_DATA(models.Model):
 	# matching with write num
 	user_likes = models.IntegerField(verbose_name=u'user_likes', default=0)
 	user_info = models.CharField(verbose_name=u'user_info', default='', max_length=100,)
+	user_img = models.ImageField(verbose_name=u'user_img', upload_to='fuding_dj_s/images/', blank=True, )
+
 
 
 class USER_WRITES(models.Model):
