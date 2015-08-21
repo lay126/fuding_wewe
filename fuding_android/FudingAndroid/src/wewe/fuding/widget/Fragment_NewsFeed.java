@@ -76,10 +76,6 @@ public class Fragment_NewsFeed extends Fragment {
 			public void onResponse(String response) {
 				// to make data available
 				String arrRes = "{'response':" + response + "}";
-//				arrRes = arrRes.replace("\"", "");
-//				arrRes = arrRes.replace("'", "\"");
-//				arrRes = arrRes.replace(" ", "");
-//				arrRes = arrRes.replace(":u\"", ":\"");
 				Log.d(TAG, arrRes);
 
 				JSONObject jobject = null;
