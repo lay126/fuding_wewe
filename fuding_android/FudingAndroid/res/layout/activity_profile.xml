@@ -6,127 +6,75 @@
     android:orientation="vertical"
     tools:context="wewe.fuding.activity.ProfileActivity" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp" 
-        android:background="#FFFFDF">
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="프로필 수정" />
-
-    </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/profile_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/com_facebook_profile_picture_blank_square" />
-
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="name" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
 
-        <EditText
-            android:id="@+id/edit_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </EditText>
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#FFFFDF" >
 
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="프로필 수정" />
+            </RelativeLayout>
 
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="id" />
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/com_facebook_profile_picture_blank_square" />
 
-        <EditText
-            android:id="@+id/edit_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </EditText>
-    </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="mail" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자기소개" />
 
-        <EditText
-            android:id="@+id/edit_mail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </EditText>
-    </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+                <EditText
+                    android:id="@+id/edit_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" >
 
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="phone" />
+                    <requestFocus />
+                </EditText>
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/edit_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </EditText>
-    </LinearLayout>
-      <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="59dp" >
 
-        <TextView 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="gender" />
+                <ImageView
+                    android:id="@+id/ok_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/com_facebook_button_background" />
 
-        <EditText
-            android:id="@+id/edit_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </EditText>
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/cancel_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:src="@drawable/com_facebook_button_send_background" />
+            </LinearLayout>
+        </LinearLayout>
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent" >
-
-          <ImageView
-              android:id="@+id/ok_btn"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="0.5"
-              android:src="@drawable/com_facebook_button_background" />
-
-          <ImageView
-              android:id="@+id/cancel_btn"
-              android:layout_width="0dp"
-              android:layout_height="match_parent"
-              android:layout_weight="0.5"
-              android:src="@drawable/com_facebook_button_send_background" />
-
-      </LinearLayout>
+    </ScrollView>
     
 </LinearLayout>

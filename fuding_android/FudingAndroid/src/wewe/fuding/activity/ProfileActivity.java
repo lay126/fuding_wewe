@@ -44,17 +44,14 @@ public class ProfileActivity extends Activity {
 	ImageView profile_image; 
 	String upLoadServerUri;
 	int serverResponseCode = 0;
-	EditText name, id, phone, gender;
+	EditText info;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		
-		name = (EditText)findViewById(R.id.edit_name);
-		id = (EditText)findViewById(R.id.edit_id);
-		phone = (EditText)findViewById(R.id.edit_phone);
-		gender = (EditText)findViewById(R.id.edit_gender);
+		info = (EditText)findViewById(R.id.edit_info);
 		profile_image = (ImageView)findViewById(R.id.profile_image);
 		profile_image.setOnClickListener(new View.OnClickListener() {
  			@Override
@@ -64,7 +61,7 @@ public class ProfileActivity extends Activity {
  		});
 		
 		ImageView ok_btn = (ImageView)findViewById(R.id.ok_btn);
-		profile_image.setOnClickListener(new View.OnClickListener() {
+		ok_btn.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
 				Toast.makeText(ProfileActivity.this, "프로필 수정을 완료했습니다.", Toast.LENGTH_LONG).show();
@@ -84,10 +81,7 @@ public class ProfileActivity extends Activity {
 			        editor.commit();
 				}
 
-				editor.putString("name", name.getText().toString());
-				editor.putString("id", id.getText().toString());
-				editor.putString("phone", phone.getText().toString());
-				editor.putString("gender", gender.getText().toString());
+				editor.putString("user_info", info.getText().toString());
 		        editor.commit();
 				
 				// 변경된 프로필 내용 서버에 전송
@@ -99,7 +93,7 @@ public class ProfileActivity extends Activity {
 		
 		
 		ImageView cancel_btn = (ImageView)findViewById(R.id.cancel_btn);
-			profile_image.setOnClickListener(new View.OnClickListener() {
+		cancel_btn.setOnClickListener(new View.OnClickListener() {
 	 			@Override
 	 			public void onClick(View v) {
 	 				Toast.makeText(ProfileActivity.this, "프로필 수정을 취소했습니다.", Toast.LENGTH_LONG).show();
@@ -158,7 +152,7 @@ public class ProfileActivity extends Activity {
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
 				dos.writeBytes("Content-Disposition: form-data; name=\"wt_index\""+ lineEnd);
 				dos.writeBytes(lineEnd);
-				dos.write(("ㅇ").getBytes("utf-8"));
+				dos.write((info.getText().toString()).getBytes("utf-8"));
 				Log.d("image upload wt_index", "");
 				dos.writeBytes(lineEnd);
 				
