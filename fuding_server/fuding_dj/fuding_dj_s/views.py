@@ -129,12 +129,22 @@ def get_newsfeed(request):
 		for wc_ in wc_list_ :
 			if wc_.wc_index_num == d.wc_total :
 				dic['wc_img'] = wc_.wc_img.url
+		# user like state 
+		like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=d.wf_index)
+		if len(like_) is 0:
+			# 좋아요 안된경우 
+			dic['like_flag'] = '0'
+		if len(like_) is not 0:
+			# 이미 좋아요 된 경우
+			dic['like_flag'] = '1'
+
 		datas.append(dic)
 
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
 
 
+################
 # 이미지 url로 뿌림 
 def get_image(request, image_name):
 	link = image_name
@@ -380,7 +390,8 @@ def test_upload_write_frame(request):
 
 	# make frame object
 	write_frame_ = WRITE_FRAME(	wt_index = wt_index,
-								wc_total = wc_total, )
+								wc_total = wc_total, 
+								wf_writer = user_name,)
 	write_frame_.save()
 
 	# update titleDB.wf_index 
