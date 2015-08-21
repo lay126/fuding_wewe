@@ -96,6 +96,31 @@ def login_user(request):
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
+@csrf_exempt
+def update_user(request):
+	user_name = request.POST.get('user_name')
+	user_info = request.POST.get('user_info')
+	image_name = request.POST.get('image_name') # use, user_name
+
+	user_ = User.objects.get(username=user_name)
+	user_data_ = USER_DATA.objects.get(user_id=user_)
+
+	# save photo
+	if request.method == 'POST':
+		if 'file' in request.FILES:
+			file = request.FILES['file']
+			filename = image_name
+			#기존 이미지 삭제하여야 함.
+			try:
+				user_data_.user_img.save(filename, File(file), save=True)	
+			except:
+				json_data = json.dumps('save photo fail')
+				return HttpResponse(json_data, content_type='application/json')	
+
+
+	json_data = json.dumps('0')
+	return HttpResponse(json_data, content_type='application/json')	
+
 
 # ------------------------------------------------------------------------------------------------------------
 # FEED
