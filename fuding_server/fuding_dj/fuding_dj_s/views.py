@@ -54,7 +54,7 @@ def get_newsfeed(request):
 				dic['wc_img'] = wc_.wc_img.url
 		datas.append(dic)
 
-	json_data = json.dumps(unicode(datas))
+	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
 
 
@@ -87,8 +87,11 @@ def get_recipe(request):
 	dic['wf_index'] = str(wf_index)
 	wt_ = WRITE_TITLE.objects.get(wf_index=wf_index)
 	dic['wt_index'] = str(wt_.wt_index)
+	# testing
+	di['aa'] = 'aa'
 	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_.wt_index)
 	datas.append(dic)
+	datas.append(di)
 
 	json_data = json.dumps(unicode(datas))
 	return HttpResponse(json_data, content_type='application/json')
