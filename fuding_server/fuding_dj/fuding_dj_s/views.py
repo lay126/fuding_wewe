@@ -94,6 +94,12 @@ def get_recipe(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
+def set_like(request):
+
+	# 0:안눌린것 1:눌린것 
+	return 1;
+
+
 @csrf_exempt
 def test_upload_write_title(request):
 
