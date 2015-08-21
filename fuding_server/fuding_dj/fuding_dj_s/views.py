@@ -24,6 +24,37 @@ from fuding_dj_s.models import *
 
 
 @csrf_exempt
+def join_user(request):
+	join_id = request.POST.get('join_id', False)
+	join_email = request.POST.get('join_email', False)
+	join_pwd = request.POST.get('join_pwd', False)
+	join_intro = request.POST.get('join_intro', False)
+
+	try:
+		join_ = User.objects.create_user(username=join_id, email=join_email, password=join_pwd)
+		join_.save()
+	except Exception, e:
+		return HttpResponse(json.dumps('1', ensure_ascii=False), content_type='application/json')
+
+	join_data_ = USER_DATA(	user_id = join_, 
+							user_points = 0,
+							user_writes = 0,
+							user_likes = 0,
+							user_intro = join_intro, )
+	try:
+		join_data_.save()
+	except Exception, e:
+		return HttpResponse(json.dumps('1', ensure_ascii=False), content_type='application/json')
+
+	return HttpResponse(json.dumps('0', ensure_ascii=False), content_type='application/json')
+
+
+def login_user(request):
+
+	return 0
+
+
+@csrf_exempt
 def get_newsfeed(request):
 	user_name = request.POST.get('user_name')
 	user_ = User.objects.get(username=user_name)
@@ -68,6 +99,12 @@ def get_image(request, image_name):
 	return HttpResponse(images, content_type="image/png")
 
 
+# 내가 쓴 레시피 보는 부분 
+@csrf_exempt
+def get_myfeed(request):
+
+	return 0
+
 ''' 
 개당 레시피 보내주는 방식을 아직 모름.
 frame -> t/c -> content 순으로 보이는 건가?
@@ -97,7 +134,7 @@ def get_recipe(request):
 def set_like(request):
 
 	# 0:안눌린것 1:눌린것 
-	return 1;
+	return 1
 
 
 @csrf_exempt

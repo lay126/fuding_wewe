@@ -10,9 +10,15 @@ urlpatterns = patterns('fuding_dj_s.views',
 
     url(r'^admin/', include(admin.site.urls)),
 
+    # user url
+    #----------------------------------------------------------------------------
+    url(r'^join/user', 'join_user'),
+    url(r'^login/user', 'login_user'),
+
     # get url
     #----------------------------------------------------------------------------
 	url(r'^get/newsfeed/', 'get_newsfeed'),
+    url(r'^get/myfeed/', 'get_myfeed'),
     url(r'^get/image/(?P<image_name>\w+/\w+/\w+.\w+)$', 'get_image'),
     url(r'^get/recipe/', 'get_recipe'),
 
