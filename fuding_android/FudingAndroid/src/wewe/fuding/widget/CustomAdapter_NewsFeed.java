@@ -28,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 	private ArrayList<Frame> arrList;
 	private ImageDownloader imgDownloader = new ImageDownloader();
 	private String imgDownURL;
+	private int likeState;
 
 	public CustomAdapter_NewsFeed(Context aContext) {
 		context = aContext;
@@ -94,16 +96,16 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					false);
 
 			// 좋아요 버튼을 터치 했을 때 이벤트 발생
-			Button btn = (Button) convertView
+			ImageButton btn = (ImageButton) convertView
 					.findViewById(R.id.newsfeed_imgBtnLike);
 			btn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-//					clickLikeBtn();
+					 clickLikeBtn();
 				}
 
 				private void clickLikeBtn() {
-					String URL_address = "http://119.205.252.224:8000/get/newsfeed/";
+					String URL_address = "http://119.205.252.224:8000/set/like/";
 
 					RequestQueue mQueue;
 					mQueue = Volley.newRequestQueue(context);
@@ -111,11 +113,20 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					Listener<String> listener = new Listener<String>() {
 						@Override
 						public void onResponse(String response) {
-							try {
-								
-							}catch(Exception e) {
-								e.printStackTrace();
-							}
+							Log.i("*like state", response);
+							
+							// // to make data available
+							// String res = "{'response':" + response + "}";
+							// Log.d(TAG, res);
+							//
+							// JSONObject jobject = null;
+							// try {
+							// jobject = new JSONObject(res);
+							//
+							// String likeState = jobject.getString("");
+							// } catch (JSONException e) {
+							// e.printStackTrace();
+							// }
 						}
 					};
 
@@ -123,25 +134,28 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 						@Override
 						public void onErrorResponse(VolleyError error) {
 							error.printStackTrace();
-							Toast.makeText(context, "좋아요클릭 : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
+							Toast.makeText(context,
+									"좋아요클릭 : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
 									Toast.LENGTH_LONG).show();
 						}
 					};
 
-					StringRequest req = new StringRequest(Method.POST, URL_address,
-							listener, errorListener) {
+					StringRequest req = new StringRequest(Method.POST,
+							URL_address, listener, errorListener) {
 						@Override
-						protected Map<String, String> getParams() throws AuthFailureError {
+						protected Map<String, String> getParams()
+								throws AuthFailureError {
 							Map<String, String> params = new HashMap<String, String>();
+							// 사용자아이디, 글넘버
 							params.put("user_name", "ayoung");
-							// 글넘버
-							params.put("", "");
+							params.put("wf_index", ""
+									+ arrList.get(pos).getFoodIndex());
 							return params;
 						}
 
 					};
 
-					mQueue.add(req);					
+					mQueue.add(req);
 				}
 			});
 
@@ -166,6 +180,15 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				.findViewById(R.id.newsfeed_txtViewContentTitle);
 		tvContentTitle.setText("" + arrList.get(pos).getFoodName());
 
+		ImageButton btnLike = (ImageButton) convertView
+				.findViewById(R.id.newsfeed_imgBtnLike);
+		if (arrList.get(pos).getLikeState() == 0) {
+			// unclicked
+			btnLike.setImageResource(R.drawable.like_unclicked);
+		} else {
+			btnLike.setImageResource(R.drawable.like_clicked);
+		}
+
 		TextView tvLikeCnt = (TextView) convertView
 				.findViewById(R.id.newsfeed_txtViewLikeCnt);
 		tvLikeCnt.setText("" + arrList.get(pos).getLikeCnt());
@@ -176,7 +199,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 
 		ImageView imgFood = (ImageView) convertView
 				.findViewById(R.id.newsfeed_imgView);
-		String URL_img_address = "http://119.205.252.224:8000/get/image"
+		String URL_img_address = "http://119.205.252.224:8000/get/image/"
 				+ arrList.get(pos).getFoodImgURL();
 		Log.i(TAG, URL_img_address);
 		imgDownloader.download(URL_img_address, imgFood, 0);
