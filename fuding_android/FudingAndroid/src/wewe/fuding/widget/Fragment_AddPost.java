@@ -65,6 +65,13 @@ public class Fragment_AddPost extends Fragment {
 		final EditText edit_amount = (EditText)v.findViewById(R.id.edit_amount);
 		final EditText edit_tag = (EditText)v.findViewById(R.id.edit_tag); 
 		
+		// 글 작성 후 빈칸 띄우기 
+		edit_title.setText("");
+		edit_ingredient.setText("");
+		edit_time.setText("");
+		edit_amount.setText("");
+		edit_tag.setText("");
+		
 		Button btn = (Button) v.findViewById(R.id.button1);
 		btn.setOnClickListener(new View.OnClickListener() {
  			@Override
@@ -216,7 +223,6 @@ public class Fragment_AddPost extends Fragment {
 		super.onDestroyView();
 	}
 
-	private void init(View v) {
-
+	private void init(View v) { 
 	}
 }

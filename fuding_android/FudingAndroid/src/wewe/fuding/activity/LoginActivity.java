@@ -3,6 +3,10 @@ package wewe.fuding.activity;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
@@ -66,10 +70,24 @@ public class LoginActivity extends Activity {
 			public void onResponse(String result) {
 				try {
 					Log.d("LoginActivity", result);
+					
+					// to make data available
+					String arrRes = "{'response':" + result + "}"; 
+					
+					
+					
+					
 					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 			        SharedPreferences.Editor editor = pref.edit();
 			        editor.putString("login_check", "true");
 			        editor.commit();
+			        
+			        
+			        // 모든 값 sharedPreferences 에 저장하고 
+			        // 프로필 편집 모드 때 띄워주기 
+			        // 글 작성 후 모두 빈칸으로 변경 
+			        
+			        
 				} catch (Exception e){
 					
 				}

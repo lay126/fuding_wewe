@@ -4,23 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
+import wewe.fuding.activity.DetailActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
 import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +20,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 public class CustomAdapter_NewsFeed extends BaseAdapter {
 
@@ -94,8 +92,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					false);
 
 			// 좋아요 버튼을 터치 했을 때 이벤트 발생
-			Button btn = (Button) convertView
-					.findViewById(R.id.newsfeed_imgBtnLike);
+			ImageView btn = (ImageView) convertView.findViewById(R.id.newsfeed_imgBtnLike);
 			btn.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -146,11 +143,12 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 			});
 
 			// // 리스트 아이템을 터치 했을 때 이벤트 발생
-			// convertView.setOnClickListener(new OnClickListener() {
-			// @Override
-			// public void onClick(View v) {
-			// }
-			// });
+//			 convertView.setOnClickListener(new OnClickListener() {
+//			 @Override
+//			 public void onClick(View v) {
+//				 v.getContext().startActivity(new Intent(v.getContext(), DetailActivity.class));
+//			 }
+//			 });
 
 		}
 
