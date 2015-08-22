@@ -181,7 +181,9 @@ public class Fragment_AddPost extends Fragment {
 			protected Map<String, String> getParams()
 					throws com.android.volley.AuthFailureError {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("user_name", "ayoung");
+				SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
+		        String user_name = pref.getString("user_name", "ayoung"); // ayoung is default value.
+				params.put("user_name", user_name);
 				params.put("wt_name", food.getFoodName());
 				params.put("wt_ingre", food.getIngre());
 				params.put("wt_times", food.getTotalTime());
