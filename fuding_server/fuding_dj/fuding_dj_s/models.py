@@ -91,7 +91,8 @@ class WRITE_FRAME(models.Model):
 	wc_index_8 = models.IntegerField(verbose_name=u'wc_index_8', null=False, default=0, )
 	wc_index_9 = models.IntegerField(verbose_name=u'wc_index_9', null=False, default=0, )
 	wc_total = models.IntegerField(verbose_name=u'wc_total', null=False, default=0, )
-	wc_date = models.DateTimeField(verbose_name=u'wc_date', default=datetime.now, blank=True, )
+	wc_date = models.CharField(verbose_name=u'wc_date', max_length=20, null=False, default='yyyy/mm/dd', )
+	wc_date_sort = models.DateTimeField(verbose_name=u'wc_date_sort', default=datetime.now, blank=True, )
 
 class WRITE_TITLE(models.Model):
 	class Meta:
