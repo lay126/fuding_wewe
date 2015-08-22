@@ -48,7 +48,6 @@ def join_user(request):
 
 
 	join_data_ = USER_DATA(	user_id = join_, 
-							user_points = 0,
 							user_writes = 0,
 							user_likes = 0,
 							user_info = join_info, )
@@ -334,7 +333,7 @@ def get_recipe(request):
 
 
 # ------------------------------------------------------------------------------------------------------------
-# CHANGE
+# LIKE, FOLLOW
 # ------------------------------------------------------------------------------------------------------------
 @csrf_exempt
 def set_like(request):
@@ -357,6 +356,57 @@ def set_like(request):
 
 	# 0:안눌린것 1:눌린것 
 	return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+@csrf_exempt
+def set_follow(request):
+	user_id = request.POST.get('user_id')
+	following_id = request.POST.get('following_id')
+
+	datas = []
+	datas = do_follow(user_id, following_id)
+
+	return HttpResponse(json.dumps(datas), content_type='application/json')
+
+
+# 애시당초 이 함수들은, 팔로잉 여부를 판별하여 단지 '호춞만 됨'
+def do_follow(user_id, following_id):
+	datas = []
+	dic = dict()
+
+	try: 
+		user_ = User.objects.get(username = user_id)
+		following_ = User.objects.get(username = following_id)
+		user_data_ = USER_DATA.objects.get(user_id = user_)
+		following_data_ = USER_DATA.objects.get(user_id = following_)
+
+		# 내 팔로잉 +1, 상대방 팔로워 +1 
+		try: 
+			fnum_1 = int(user_data_.user_followings) + 1
+			fnum_2 = int(following_data_.user_followers) + 1
+
+			user_data_.update(user_followings = str(fnum_1)
+			# following_data_.update(user_followers = str(fnum_2))
+
+			# 팔로우 디비에 추가 
+			try: 
+				follow_ = USER_FOLLOWS(	user_id = user_id,
+										following_id = following_id)
+				follow_.save()
+				dic['result'] = '0'
+			except:
+				dic['result'] = '111'
+		except:
+			dic['result'] = str(fnum_1)
+	except:
+		dic['result'] = '11'
+
+	datas.append(dic)
+	return datas
+
+def do_un_follow(user_id, following_id):
+
+	return 0
 
 
 
@@ -570,11 +620,9 @@ def hash_find(request):
 						# 이미 좋아요 된 경우
 						dic['like_flag'] = '1'
 
-
 					datas.append(dic)
 				except :
 					pass
-
 
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
