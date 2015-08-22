@@ -35,7 +35,7 @@ public class DetailActivity  extends Activity {
 	}
 
 	private void getAllContent() {
-		String URL_address = "http://119.205.252.224:8000/get/newsfeed/";
+		String URL_address = "http://119.205.252.224:8000/get/recipe/";
 
 		RequestQueue mQueue;
 		mQueue = Volley.newRequestQueue(this);
@@ -95,7 +95,10 @@ public class DetailActivity  extends Activity {
 				protected Map<String, String> getParams()
 						throws AuthFailureError {
 					Map<String, String> params = new HashMap<String, String>();
-//					params.put("user_name", userName);
+					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+					int index = pref.getInt("wf_index", 1);
+					
+					params.put("wf_index", index+"");
 
 					return params;
 				}

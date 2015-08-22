@@ -9,7 +9,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -586,9 +588,16 @@ public class AddPostingActivity extends ListActivity {
 		        String imageId = pref.getString("imageURL_index", "1");
 		        String username = pref.getString("user_name", "1");
 		        
+		        
+		        SimpleDateFormat dateFormat = new  SimpleDateFormat("yyyy/MM/dd", java.util.Locale.getDefault());
+		        Date date = new Date();
+		        String strDate = dateFormat.format(date);
+		        Log.d("tag", strDate); 
+		       
 		        params.put("user_name", username);
 				params.put("wt_index", imageId);
 				params.put("wc_total", step_num+"");
+				params.put("wc_date", strDate);
 				return params;
 			};
 		};

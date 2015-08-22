@@ -10,6 +10,7 @@ import wewe.fuding.domain.Frame;
 import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,10 +113,8 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 							Log.i("**likeState", response);
 
 							if (response.equals("1")) {
-								Log.i("***likeState is 1", response);
 								btnLike.setImageResource(R.drawable.like_clicked);
 							} else {
-								Log.i("***likeState is 0", response);
 								btnLike.setImageResource(R.drawable.like_unclicked);
 							}
 						}
@@ -200,6 +199,11 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 		imgFood.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				int wf_index = arrList.get(pos).getFoodIndex();
+				SharedPreferences pref = context.getSharedPreferences("pref", context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putInt("wf_index", wf_index); //로그인 세션 저장 
+				editor.commit();
 				context.startActivity(new Intent(context, DetailActivity.class));
 			}
 		});	
