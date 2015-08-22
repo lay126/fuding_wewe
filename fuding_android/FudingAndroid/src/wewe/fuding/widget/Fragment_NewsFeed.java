@@ -10,21 +10,23 @@ import org.json.JSONObject;
 
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
-import wewe.fuding.utils.ImageDownloader;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -60,12 +62,30 @@ public class Fragment_NewsFeed extends Fragment {
 		v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
 		frameArr = new ArrayList<Frame>();
 
-		showNewsfeed(v, frameArr);
+		showNewsfeed(v, frameArr, 0, null);
+
+		final EditText searchEditText = (EditText) v
+				.findViewById(R.id.newsfeed_search_edit);
+		ImageButton searchBtn = (ImageButton) v
+				.findViewById(R.id.newsfeed_search_btn);
+
+		searchBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				String strSearchTag = searchEditText.getText().toString();
+				if (!strSearchTag.equals("")) {
+					showNewsfeed(v, frameArr, 1, strSearchTag);
+				}
+			}
+		});
 
 		return v;
 	}
 
-	private void showNewsfeed(View v, final ArrayList<Frame> frameArr) {
+	private void showNewsfeed(View v, final ArrayList<Frame> frameArr,
+			int type, final String tag) {
+		// if type is 1, it means tag search.
 		String URL_address = "http://119.205.252.224:8000/get/newsfeed/";
 
 		RequestQueue mQueue;
@@ -102,7 +122,8 @@ public class Fragment_NewsFeed extends Fragment {
 						nfFrame.setWriteDate(jsonFrame.getString("wc_date"));
 						nfFrame.setLikeCnt(Integer.parseInt(jsonFrame
 								.getString("wf_likes")));
-						nfFrame.setLikeState(Integer.parseInt(jsonFrame.getString("like_flag")));
+						nfFrame.setLikeState(Integer.parseInt(jsonFrame
+								.getString("like_flag")));
 						nfFrame.setTag(jsonFrame.getString("wt_tag"));
 						nfFrame.setFoodImgURL(jsonFrame.getString("wc_img"));
 						nfFrame.setFoodIndex(Integer.parseInt(jsonFrame
@@ -125,16 +146,36 @@ public class Fragment_NewsFeed extends Fragment {
 			}
 		};
 
-		StringRequest req = new StringRequest(Method.POST, URL_address,
-				listener, errorListener) {
-			@Override
-			protected Map<String, String> getParams() throws AuthFailureError {
-				Map<String, String> params = new HashMap<String, String>();
-				params.put("user_name", "ayoung");
-				return params;
-			}
+		StringRequest req;
+		if (type == 0) { // 그냥 뉴스피드 뿌려주는 경우
+			req = new StringRequest(Method.POST, URL_address, listener,
+					errorListener) {
+				@Override
+				protected Map<String, String> getParams()
+						throws AuthFailureError {
+					Map<String, String> params = new HashMap<String, String>();
+					SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
+			        String userName = pref.getString("user_name", "1");
+					params.put("user_name", userName);
 
-		};
+					return params;
+				}
+			};
+		} else { // 검색일 경우
+			req = new StringRequest(Method.POST, URL_address, listener,
+					errorListener) {
+				@Override
+				protected Map<String, String> getParams()
+						throws AuthFailureError {
+					Map<String, String> params = new HashMap<String, String>();
+					tag.replace("#", " #");
+					Log.i(TAG, tag);
+					params.put("search_text", tag);
+
+					return params;
+				}
+			};
+		}
 
 		mQueue.add(req);
 		init(v, frameArr);
