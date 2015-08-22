@@ -174,6 +174,7 @@ def get_profile(request):
 	dic['user_name'] = profile_user_.username
 	dic['user_writes'] = str(profile_user_data_.user_writes)
 	dic['user_info'] = profile_user_data_.user_info
+
 	try:
 		dic['user_img'] = profile_user_data_.user_img.url
 	except:
@@ -181,6 +182,7 @@ def get_profile(request):
 		dic['user_img'] = ""
 	dic['user_followers'] = str(profile_user_data_.user_followers)
 	dic['user_followings'] = str(profile_user_data_.user_followings)
+
 	# 내 프로필인지 판별 
 	if user_name == profile_name:
 		dic['me_flag'] = "yes"
@@ -392,6 +394,9 @@ def set_like(request):
 	user_name = request.POST.get('user_name')
 	wf_index = request.POST.get('wf_index')
 
+	datas = []
+	dic = dict()
+
 	like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=wf_index)
 
 	if len(like_) is 0:
@@ -399,15 +404,16 @@ def set_like(request):
 		liking_ = USER_LIKES(	user_id = user_name,
 								wf_index = wf_index, )
 		liking_.save()
-		data = '1'
+		dic['like_state'] = '1'
 	if len(like_) is not 0:
 		# 이미 좋아요 된 경우. 없애고, return 0
 		for l_ in like_ :
 			l_.delete()
-		data = '0'
+		dic['like_state'] = '0'
 
 	# 0:안눌린것 1:눌린것 
-	return HttpResponse(json.dumps(data), content_type='application/json')
+	datas.append(dic)
+	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
 @csrf_exempt
