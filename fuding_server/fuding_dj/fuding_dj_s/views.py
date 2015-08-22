@@ -161,6 +161,18 @@ def update_user(request):
 # ------------------------------------------------------------------------------------------------------------
 # FEED
 # ------------------------------------------------------------------------------------------------------------
+################
+# 이미지 url로 뿌림 
+def get_image(request, image_name):
+	link = image_name
+
+	images = []
+	image_data_ = open(link, "rb").read()
+	images.append(image_data_)
+
+	return HttpResponse(images, content_type="image/png")
+
+
 @csrf_exempt
 def get_newsfeed(request):
 	# data box
@@ -207,18 +219,6 @@ def get_newsfeed(request):
 
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
-
-
-################
-# 이미지 url로 뿌림 
-def get_image(request, image_name):
-	link = image_name
-
-	images = []
-	image_data_ = open(link, "rb").read()
-	images.append(image_data_)
-
-	return HttpResponse(images, content_type="image/png")
 
 
 # 내가 쓴 레시피 보는 부분 
