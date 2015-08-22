@@ -22,6 +22,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -51,8 +52,20 @@ public class ProfileActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profile);
 		
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        
 		info = (EditText)findViewById(R.id.edit_info);
 		profile_image = (ImageView)findViewById(R.id.profile_image);
+		
+		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        String myProfile = pref.getString("profileImage", "default");
+        Uri myUri = Uri.parse(myProfile);
+        profile_image.setBackgroundColor(Color.WHITE);
+		profile_image.setImageURI(myUri);
+		profile_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        
+        
 		profile_image.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
@@ -65,16 +78,15 @@ public class ProfileActivity extends Activity {
  			@Override
  			public void onClick(View v) {
 				Toast.makeText(ProfileActivity.this, "프로필 수정을 완료했습니다.", Toast.LENGTH_LONG).show();
-				startActivity(new Intent(ProfileActivity.this, Fragment_Profile.class));
 				
 				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
 
 				// 이미지 미리 변경 
 				if (mImageCaptureUri!=null) {
-					Fragment_Profile.edit_profile.setBackgroundColor(Color.WHITE);
-					Fragment_Profile.edit_profile.setImageURI(mImageCaptureUri);
-					Fragment_Profile.edit_profile.setScaleType(ImageView.ScaleType.CENTER_CROP);	//가운데 자름 (길쭉하게 자른 경우)
+					Fragment_Profile.photo.setBackgroundColor(Color.WHITE);
+					Fragment_Profile.photo.setImageURI(mImageCaptureUri);
+					Fragment_Profile.photo.setScaleType(ImageView.ScaleType.CENTER_CROP);	//가운데 자름 (길쭉하게 자른 경우)
 				
 					// 이미지 파일 저장해두기 
 			        editor.putString("profileImage", mImageCaptureUri+"");
@@ -86,7 +98,8 @@ public class ProfileActivity extends Activity {
 				
 				// 변경된 프로필 내용 서버에 전송
 				// 이미지 주소, 이름, 아이디, 등등..
-				uploadProfile(mImageCaptureUri.getPath());
+ 				upLoadServerUri = "http://119.205.252.224:8000/update/user/"; 
+		        uploadProfile(mImageCaptureUri.getPath(), info.getText().toString());
 				finish();
  			}
  		});
@@ -102,8 +115,7 @@ public class ProfileActivity extends Activity {
 	 		});
 	}
 
-	protected int uploadProfile(String sourceFileUri) {
-
+	protected int uploadProfile(String sourceFileUri, String info) {
 
 		String fileName = sourceFileUri;
 
@@ -118,17 +130,11 @@ public class ProfileActivity extends Activity {
 		File sourceFile = new File(sourceFileUri);
 
 		if (!sourceFile.isFile()) {
-
-			dialog.dismiss();
-
-			runOnUiThread(new Runnable() {
-				public void run() {
-				}
-			});
 			return 0;
 
 		} else {
 			try {
+				
 				// open a URL connection to the Servlet
 				FileInputStream fileInputStream = new FileInputStream(sourceFile);
 				URL url = new URL(upLoadServerUri);
@@ -148,21 +154,26 @@ public class ProfileActivity extends Activity {
 				conn.setRequestProperty("uploaded_file", fileName);
 				
 				dos = new DataOutputStream(conn.getOutputStream());
+					
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		        String user_name = pref.getString("user_name", "ayoung");
+				
+				dos.writeBytes(twoHyphens + boundary + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"user_name\""+ lineEnd);
+				dos.writeBytes(lineEnd);
+				dos.write((user_name).getBytes("utf-8")); 
+				dos.writeBytes(lineEnd);
 
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"wt_index\""+ lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"user_info\""+ lineEnd);
 				dos.writeBytes(lineEnd);
-				dos.write((info.getText().toString()).getBytes("utf-8"));
-				Log.d("image upload wt_index", "");
+				dos.write((info).getBytes("utf-8")); 
 				dos.writeBytes(lineEnd);
-				
+
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"wc_photo_name\"" + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"image_name\"" + lineEnd);
 				dos.writeBytes(lineEnd);
-				
-				// 프로필 이미지 이름은 글쓴이 고유 아이디 -================================================================
-				String name = ".jpg";
-				dos.write(name.getBytes("utf-8"));
+		        String name = user_name + ".jpg";
 		        Log.d("image upload wc_photo_name", "" + name);
 				
 				dos.write(name.getBytes("utf-8"));
@@ -205,6 +216,7 @@ public class ProfileActivity extends Activity {
 				 final String serverResponseMessage = conn.getResponseMessage();
 
 				 Log.d("multipart", "HTTP Response is : " + serverResponseMessage +": " + serverResponseCode);
+ 
 
 			} catch (Exception e) {
 
@@ -223,9 +235,7 @@ public class ProfileActivity extends Activity {
 			//dialog.dismiss();
 			return serverResponseCode;
 
-		} // End else block
-
-		
+		} 
 	}
 
 	protected void makepicture() {
@@ -350,7 +360,9 @@ public class ProfileActivity extends Activity {
 	}
 
 	private Uri createSaveCropFile() {
-		String url = "myPhoto.jpg";
+		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        String user_name = pref.getString("user_name", "ayoung");
+		String url = user_name+".jpg";
 		Uri uri = Uri.fromFile(new File(getExternalFilesDir(null), url));
 		//Log.d(TAG, "uri : "+uri);
 		

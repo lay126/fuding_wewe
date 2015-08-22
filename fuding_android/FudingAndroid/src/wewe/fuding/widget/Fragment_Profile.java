@@ -13,6 +13,8 @@ import wewe.fuding.activity.R;
 import wewe.fuding.domain.Content;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -44,7 +46,7 @@ public class Fragment_Profile extends Fragment {
 	private static Fragment_Profile instance = null;
 	private GridView gridView;
 	private CustomAdapter_Profile profileAdapter;
-	public static ImageButton edit_profile;
+	public static ImageView photo;
 
 	// ArrayList<Bitmap> picArr = new ArrayList<Bitmap>();
 	private Content pfContent; // newsfeed frame
@@ -68,7 +70,22 @@ public class Fragment_Profile extends Fragment {
 		v = inflater.inflate(R.layout.fragment_profile, container, false);
 		contentArr = new ArrayList<Content>();
 		
-		edit_profile = (ImageButton) v.findViewById(R.id.profile_edit_btn);
+		// 미리 저장되어있던 값을 불러오는 과정
+		TextView userName = (TextView) v.findViewById(R.id.profile_txtUserId);
+		SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
+        String name = pref.getString("user_name", "ayoung");
+        String myProfile = pref.getString("profileImage", "default");
+        Uri myUri = Uri.parse(myProfile);
+        
+        userName.setText(name);
+
+        
+        photo = (ImageView) v.findViewById(R.id.profile_imgViewProfile);
+        photo.setBackgroundColor(Color.WHITE);
+        photo.setImageURI(myUri);
+        photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        
+        ImageButton edit_profile = (ImageButton) v.findViewById(R.id.profile_edit_btn);
 		edit_profile.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -76,12 +93,6 @@ public class Fragment_Profile extends Fragment {
 			}
 		});
 
-		// 미리 저장되어있던 값을 불러오는 과정
-		TextView name = (TextView) v.findViewById(R.id.profile_txtUserId);
-		SharedPreferences pref = activity.getSharedPreferences("pref",
-				activity.MODE_PRIVATE);
-		String shared_name = pref.getString("name", "name");
-		name.setText(shared_name);
 
 		showMyContent(v, contentArr);
 		return v;
