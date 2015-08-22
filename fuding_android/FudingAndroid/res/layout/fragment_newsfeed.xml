@@ -5,6 +5,33 @@
     android:orientation="vertical"
     android:padding="13dp" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffae5a"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/newsfeed_search_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:ems="10"
+            android:hint="예) #야식#자취요리" >
+
+            <!-- <requestFocus /> -->
+        </EditText>
+
+        <ImageButton
+            android:id="@+id/newsfeed_search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="#00ff0000"
+            android:padding="0dp"
+            android:src="@drawable/btn_search" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/listViewNewsfeed"
         android:layout_width="match_parent"
