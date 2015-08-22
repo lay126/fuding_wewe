@@ -35,11 +35,16 @@ def join_user(request):
 	join_pwd = request.POST.get('join_pwd', False)
 	join_info = request.POST.get('join_info', False)
 
+	datas = []
+	dic = dict()
 	try:
 		join_ = User.objects.create_user(username=join_id, email=join_email, password=join_pwd)
 		join_.save()
 	except Exception, e:
-		return HttpResponse(json.dumps('1', ensure_ascii=False), content_type='application/json')
+		dic['result'] = '1'
+		datas.append(dic)
+		return HttpResponse(json.dumps(datas), content_type='application/json')
+
 
 	join_data_ = USER_DATA(	user_id = join_, 
 							user_points = 0,
@@ -48,16 +53,21 @@ def join_user(request):
 							user_info = join_info, )
 	try:
 		join_data_.save()
-	except Exception, e:
-		return HttpResponse(json.dumps('1', ensure_ascii=False), content_type='application/json')
+		dic['result'] = '0'
+	except:
+		dic['result'] = '1'
 
-	return HttpResponse(json.dumps('0', ensure_ascii=False), content_type='application/json')
+	datas.append(dic)
+	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
 @csrf_exempt
 def login_user(request):
 	login_id = request.POST.get('login_id')
 	login_pwd = request.POST.get('login_pwd')
+
+	datas = []
+	dic = dict()
 
 	login_ = authenticate(username=login_id, password=login_pwd)
 
@@ -66,10 +76,15 @@ def login_user(request):
 			login(request, login_)
 		else:
 			#disabled account
-			return HttpResponse(json.dumps('1', ensure_ascii=False), content_type='application/json')
+			dic['result'] = '1'
+			datas.append(dic)
+			return HttpResponse(json.dumps(datas), content_type='application/json')
+
 	else:
 		#invaild login
-		return HttpResponse(json.dumps('1', ensure_ascii=False), content_type='application/json')
+		dic['result'] = '1'
+		datas.append(dic)
+		return HttpResponse(json.dumps(datas), content_type='application/json')
 
 	#make session
 	request.session['sess_id'] = login_.username
@@ -94,6 +109,7 @@ def login_user(request):
 		dic['user_writes'] = str(0)
 		dic['user_info'] = str("")
 
+	dic['result'] = '0'
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
