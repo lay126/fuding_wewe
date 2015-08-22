@@ -118,7 +118,8 @@ public class Fragment_NewsFeed extends Fragment {
 
 						nfFrame = new Frame();
 
-						nfFrame.setUserId(jsonFrame.getString("wt_name"));
+						nfFrame.setUserId(jsonFrame.getString("wf_writer"));
+						nfFrame.setFoodName(jsonFrame.getString("wt_name"));
 						nfFrame.setWriteDate(jsonFrame.getString("wc_date"));
 						nfFrame.setLikeCnt(Integer.parseInt(jsonFrame
 								.getString("wf_likes")));
@@ -155,7 +156,7 @@ public class Fragment_NewsFeed extends Fragment {
 						throws AuthFailureError {
 					Map<String, String> params = new HashMap<String, String>();
 					SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
-			        String userName = pref.getString("user_name", "1");
+			        String userName = pref.getString("user_name", "ayoung");
 					params.put("user_name", userName);
 
 					return params;
