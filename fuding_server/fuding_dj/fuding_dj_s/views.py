@@ -121,8 +121,16 @@ def update_user(request):
 	user_info = request.POST.get('user_info')
 	image_name = request.POST.get('image_name') # use, user_name
 
-	user_ = User.objects.get(username=user_name)
-	user_data_ = USER_DATA.objects.get(user_id=user_)
+	datas = []
+	dic = dict()
+
+	try:
+		user_ = User.objects.get(username=user_name)
+		user_data_ = USER_DATA.objects.get(user_id=user_)
+	except:
+		dic['result'] = '1'
+		datas.append(dic)
+		return HttpResponse(json.dumps(datas), content_type='application/json')
 
 	# save photo
  	if request.method == 'POST':
@@ -133,15 +141,22 @@ def update_user(request):
 				user_data_.user_img.delete()
  				user_data_.user_img.save(filename, File(file), save=True)	
  			except:
- 				json_data = json.dumps('save photo fail')
- 				return HttpResponse(json_data, content_type='application/json')	
+ 				dic['result'] = '1'
+				datas.append(dic)
+				return HttpResponse(json.dumps(datas), content_type='application/json')
 
  	if user_info is not None:
- 		user_data_ = USER_DATA.objects.filter(user_id=user_)
-		user_data_.update(user_info=user_info)	
+ 		try: 
+	 		user_data_ = USER_DATA.objects.filter(user_id=user_)
+			user_data_.update(user_info=user_info)	
+		except:
+			dic['result'] = '1'
+			datas.append(dic)
+			return HttpResponse(json.dumps(datas), content_type='application/json')
 
-	json_data = json.dumps('0')
-	return HttpResponse(json_data, content_type='application/json')	
+	dic['result'] = '0'
+	datas.append(dic)
+	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
 # ------------------------------------------------------------------------------------------------------------
