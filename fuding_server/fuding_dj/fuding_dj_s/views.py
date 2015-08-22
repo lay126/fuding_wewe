@@ -181,6 +181,7 @@ def get_newsfeed(request):
 		datas.append(dic)
 		for d in write_list_: 
 			dic = dict()
+			# 글 작성자 이름  wf_writer
 			dic['wf_index'] = str(d.wf_index)
 			dic['wt_index'] = str(d.wt_index)
 			dic['wf_likes'] = str(d.wf_likes)

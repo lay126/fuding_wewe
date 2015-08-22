@@ -33,7 +33,6 @@ urlpatterns = patterns('',
     #----------------------------------------------------------------------------
     url(r'^set/like/', 'fuding_dj_s.views.set_like'),
     url(r'^set/follow/', 'fuding_dj_s.views.set_follow'),
-    url(r'^set/unfollow/', 'fuding_dj_s.views.set_unfollow'),
 
 
     # follow api
