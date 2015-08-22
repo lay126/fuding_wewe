@@ -458,6 +458,7 @@ def set_like(request):
 	dic = dict()
 
 	like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=wf_index)
+	wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
 
 	if len(like_) is 0:
 		# 좋아요 해야하는 경우. 데이터 넣고, return 1
@@ -465,11 +466,13 @@ def set_like(request):
 								wf_index = wf_index, )
 		liking_.save()
 		dic['like_state'] = '1'
+		do_noti(wf_.wf_writer, user_name, 1, wf_index, 'yyyy/mm/dd')
 	if len(like_) is not 0:
 		# 이미 좋아요 된 경우. 없애고, return 0
 		for l_ in like_ :
 			l_.delete()
 		dic['like_state'] = '0'
+		do_unnoti(wf_.wf_writer, user_name, 1, wf_index)
 
 	# 0:안눌린것 1:눌린것 
 	datas.append(dic)
@@ -494,7 +497,7 @@ def set_follow(request):
 		# 이미 좋아요 된 경우. 없애고, return 0
 		datas = do_unfollow(user_id, following_id)
 		# 노티 디비에서 없엠
-		do_unnoti(following_id, user_id, 3)
+		do_unnoti(following_id, user_id, 3, 0)
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
@@ -607,7 +610,7 @@ def do_noti(user_id, noti_id, noti_flag, wf_index, noti_date):
 
 	return 0
 
-def do_unnoti(user_id, noti_id, noti_flag):
+def do_unnoti(user_id, noti_id, noti_flag, wf_index):
 	try: 
 		user_ = User.objects.get(username = user_id)
 		noti_user_ = User.objects.get(username = noti_id)
@@ -615,7 +618,7 @@ def do_unnoti(user_id, noti_id, noti_flag):
 		noti_user_data_ = USER_DATA.objects.get(user_id = noti_user_)
 
 		try: 
-			noti_ = USER_NOTIS.objects.filter(user_id=user_id).filter(noti_id=noti_id).filter(noti_flag=noti_flag)
+			noti_ = USER_NOTIS.objects.filter(user_id=user_id).filter(noti_id=noti_id).filter(noti_flag=noti_flag).filter(wf_index=wf_index)
 			
 			if len(noti_) is not 0:
 				# 이미 노티 된 경우. 없애고, return 0
