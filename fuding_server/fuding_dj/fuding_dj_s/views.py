@@ -187,40 +187,17 @@ def get_newsfeed(request):
 	write_list_ =  WRITE_FRAME.objects.all().order_by('-wc_date_sort')
 	follower_list_ = USER_FOLLOWS.objects.filter(user_id=user_name)
 
-	# dict
+	# dict (use def)
 	for d in write_list_: 
-		# wf_writer
-		# for fl in follower_list_:
-			# if d.wf_writer is fl.following_id:
-		dic = dict()
-		dic['wf_writer'] = str(d.wf_writer)
-		dic['wf_index'] = str(d.wf_index)
-		dic['wt_index'] = str(d.wt_index)
-		dic['wf_likes'] = str(d.wf_likes)
-		dic['wc_date'] = str(d.wc_date)
-		# wt_ (in dic_)
-		try : 
-			wt_ = WRITE_TITLE.objects.get(wf_index=d.wf_index)
-			dic['wt_name'] = wt_.wt_name
-			dic['wt_tag'] = wt_.wt_tag
-		except :
-			dic['wt_name'] = 'no wt_name'
-			dic['wt_tag'] = 'no wt_tag'
-		# wc_ (in dic_)
-		wc_list_ = WRITE_CONTENT.objects.filter(wt_index=d.wt_index)
-		for wc_ in wc_list_ :
-			if wc_.wc_index_num == d.wc_total :
-				dic['wc_img'] = wc_.wc_img.url
-		# user like state 
-		like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=d.wf_index)
-		if len(like_) is 0:
-			# 좋아요 안된경우 
-			dic['like_flag'] = '0'
-		if len(like_) is not 0:
-			# 이미 좋아요 된 경우
-			dic['like_flag'] = '1'
-		# 하나씩 저장!
-		datas.append(dic)
+		for fl in follower_list_:
+			if d.wf_writer == fl.following_id:
+				dic = dict()
+				dic = feed_list(user_name, d.wf_index, d.wt_index, d.wf_likes, d.wc_date, d.wf_writer, d.wc_total)
+				datas.append(dic)
+			elif d.wf_writer == user_name:
+				dic = dict()
+				dic = feed_list(user_name, d.wf_index, d.wt_index, d.wf_likes, d.wc_date, d.wf_writer, d.wc_total)
+				datas.append(dic)
 
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
@@ -348,6 +325,39 @@ def get_recipe(request):
 	datas.append(dic)
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
+
+
+# 피드 리스트를 만드는 함수 
+def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_total):
+	dic = dict()
+	dic['wf_index'] = str(wf_index)
+	dic['wt_index'] = str(wt_index)
+	dic['wf_likes'] = str(wf_likes)
+	dic['wf_writer'] = str(wf_writer)
+	dic['wc_date'] = str(wc_date)
+	# wt_ (in dic_)
+	try : 
+		wt_ = WRITE_TITLE.objects.get(wf_index=wf_index)
+		dic['wt_name'] = wt_.wt_name
+		dic['wt_tag'] = wt_.wt_tag
+	except :
+		dic['wt_name'] = 'no wt_name'
+		dic['wt_tag'] = 'no wt_tag'
+	# wc_ (in dic_)
+	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_index)
+	for wc_ in wc_list_ :
+		if wc_.wc_index_num == wc_total :
+			dic['wc_img'] = wc_.wc_img.url
+	# user like state 
+	like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=wf_index)
+	if len(like_) is 0:
+		# 좋아요 안된경우 
+		dic['like_flag'] = '0'
+	if len(like_) is not 0:
+		# 이미 좋아요 된 경우
+		dic['like_flag'] = '1'
+	
+	return dic
 
 
 # ------------------------------------------------------------------------------------------------------------
