@@ -26,6 +26,8 @@ import android.widget.Toast;
 
 public class DetailActivity  extends Activity { 
 	
+	String quant, writer, likes, name, tag, times, ingre, total;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,16 +66,20 @@ public class DetailActivity  extends Activity {
 				try {
 					for (int i = 0; i < jarray.length(); i++) {
 						JSONObject jsonFrame = (JSONObject) jarray.get(i);
-
-//						nfFrame.setUserId(jsonFrame.getString("wt_name"));
-//						nfFrame.setWriteDate(jsonFrame.getString("wc_date"));
-//						nfFrame.setLikeCnt(Integer.parseInt(jsonFrame.getString("wf_likes")));
-//						nfFrame.setLikeState(Integer.parseInt(jsonFrame.getString("like_flag")));
-//						nfFrame.setTag(jsonFrame.getString("wt_tag"));
-//						nfFrame.setFoodImgURL(jsonFrame.getString("wc_img"));
-//						nfFrame.setFoodIndex(Integer.parseInt(jsonFrame.getString("wt_index")));
-//
-//						frameArr.add(nfFrame);
+						quant = jsonFrame.getString("wt_quant");
+						writer = jsonFrame.getString("wf_writer");
+						likes = jsonFrame.getString("wf_likes");
+						name = jsonFrame.getString("wt_name");
+						tag = jsonFrame.getString("wt_tag");
+						times = jsonFrame.getString("wt_times");
+						ingre = jsonFrame.getString("wt_ingre"); 
+						total = jsonFrame.getString("wc_total");
+						
+						Log.d("detail", quant+writer+likes+name+tag+times+ingre+total);
+						
+						for (int i=0; i<Integer.parseInt(total); i++) {
+							
+						}
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();

@@ -202,7 +202,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				int wf_index = arrList.get(pos).getFoodIndex();
 				SharedPreferences pref = context.getSharedPreferences("pref", context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
-				editor.putInt("wf_index", wf_index); //로그인 세션 저장 
+				editor.putInt("wf_index", wf_index); 
 				editor.commit();
 				context.startActivity(new Intent(context, DetailActivity.class));
 			}
