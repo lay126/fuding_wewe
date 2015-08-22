@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import wewe.fuding.activity.DetailActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
 import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,15 +92,15 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					false);
 
 			// 좋아요 버튼을 터치 했을 때 이벤트 발생
-			ImageButton btn = (ImageButton) convertView
+			final ImageButton btnLike = (ImageButton) convertView
 					.findViewById(R.id.newsfeed_imgBtnLike);
-			btn.setOnClickListener(new OnClickListener() {
+			btnLike.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					clickLikeBtn();
+					clickLikeBtn(v);
 				}
 
-				private void clickLikeBtn() {
+				private void clickLikeBtn(View v) {
 					String URL_address = "http://119.205.252.224:8000/set/like/";
 
 					RequestQueue mQueue;
@@ -109,18 +111,11 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 						public void onResponse(String response) {
 							Log.i("**likeState", response);
 
-							// // to make data available
-							// String res = "{'response':" + response + "}";
-							// Log.d(TAG, res);
-							//
-							// JSONObject jobject = null;
-							// try {
-							// jobject = new JSONObject(res);
-							//
-							// String likeState = jobject.getString("");
-							// } catch (JSONException e) {
-							// e.printStackTrace();
-							// }
+							if (response.equals("1")) {
+								btnLike.setImageResource(R.drawable.like_clicked);
+							} else {
+								btnLike.setImageResource(R.drawable.like_unclicked);
+							}
 						}
 					};
 
@@ -200,6 +195,13 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 		Log.i(TAG, URL_img_address);
 		imgDownloader.download(URL_img_address, imgFood, 0);
 
+		imgFood.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				context.startActivity(new Intent(context, DetailActivity.class));
+			}
+		});	
+		
 		// userId // foodName; // ingre
 		// amount // totalTime // tag // likeCnt
 		return convertView;

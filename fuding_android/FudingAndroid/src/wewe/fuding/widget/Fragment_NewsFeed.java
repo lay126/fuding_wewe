@@ -190,6 +190,8 @@ public class Fragment_NewsFeed extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		
+		nfAdapter.notifyDataSetChanged();
 	}
 
 	@Override
