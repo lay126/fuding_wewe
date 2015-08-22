@@ -369,6 +369,16 @@ def set_follow(request):
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
+@csrf_exempt
+def set_unfollow(request):
+	user_id = request.POST.get('user_id')
+	following_id = request.POST.get('following_id')
+
+	datas = []
+	datas = do_unfollow(user_id, following_id)
+
+	return HttpResponse(json.dumps(datas), content_type='application/json')
+
 # 애시당초 이 함수들은, 팔로잉 여부를 판별하여 단지 '호춞만 됨'
 def do_follow(user_id, following_id):
 	datas = []
@@ -383,9 +393,10 @@ def do_follow(user_id, following_id):
 		# 내 팔로잉 +1, 상대방 팔로워 +1 
 		try: 
 			fnum_1 = user_data_.user_followings + 1
-			dic['user_followings'] = str(user_data_.user_followings)
 			fnum_2 = following_data_.user_followers + 1
-			dic['user_followers'] = str(following_data_.user_followers)
+
+			dic['followings'] = str(user_data_.user_followings)
+			dic['followers'] = str(following_data_.user_followers)
 
 			try:
 				user_data_ = USER_DATA.objects.filter(user_id = user_)
@@ -393,7 +404,7 @@ def do_follow(user_id, following_id):
 				user_data_.update(user_followings = fnum_1)
 				following_data_.update(user_followers = fnum_2)
 			except:
-				dic['e'] = 'e'
+				dic['result'] = '1'
 
 			# 팔로우 디비에 추가 
 			try: 
@@ -411,9 +422,50 @@ def do_follow(user_id, following_id):
 	datas.append(dic)
 	return datas
 
-def do_un_follow(user_id, following_id):
+def do_unfollow(user_id, following_id):
+	datas = []
+	dic = dict()
 
-	return 0
+	try: 
+		user_ = User.objects.get(username = user_id)
+		following_ = User.objects.get(username = following_id)
+		user_data_ = USER_DATA.objects.get(user_id = user_)
+		following_data_ = USER_DATA.objects.get(user_id = following_)
+
+		# 내 팔로잉 -1, 상대방 팔로워 -1 
+		try: 
+			fnum_1 = user_data_.user_followings - 1
+			fnum_2 = following_data_.user_followers - 1
+
+			dic['followings'] = str(user_data_.user_followings)
+			dic['followers'] = str(following_data_.user_followers)
+
+			try:
+				user_data_ = USER_DATA.objects.filter(user_id = user_)
+				following_data_ = USER_DATA.objects.filter(user_id = following_)
+				user_data_.update(user_followings = fnum_1)
+				following_data_.update(user_followers = fnum_2)
+			except:
+				dic['result'] = '1'
+
+			# 팔로우 디비에서 삭제  
+			try: 
+				follow_ = USER_FOLLOWS.objects.filter(user_id=user_id).filter(following_id=following_id)
+				
+				if len(follow_) is not 0:
+					# 이미 좋아요 된 경우. 없애고, return 0
+					for f_ in follow_ :
+						f_.delete()
+				dic['result'] = '0'
+			except:
+				dic['result'] = '1'
+		except:
+			dic['result'] = '1'
+	except:
+		dic['result'] = '1'
+
+	datas.append(dic)
+	return datas
 
 
 
