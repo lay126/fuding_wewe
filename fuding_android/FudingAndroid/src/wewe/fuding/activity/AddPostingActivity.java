@@ -582,7 +582,9 @@ public class AddPostingActivity extends ListActivity {
 				
 				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 		        String imageId = pref.getString("imageURL_index", "1");
-				params.put("user_name", "ayoung");
+		        String username = pref.getString("user_name", "1");
+		        
+		        params.put("user_name", username);
 				params.put("wt_index", imageId);
 				params.put("wc_total", step_num+"");
 				return params;
