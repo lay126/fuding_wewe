@@ -1,39 +1,42 @@
 from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib import admin
+
 admin.autodiscover()
 
-urlpatterns = patterns('fuding_dj_s.views',
-    # Examples:
-    # url(r'^$', 'fuding_dj.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
 
     # user url
     #----------------------------------------------------------------------------
-    url(r'^join/user', 'join_user'),
-    url(r'^login/user', 'login_user'),
-    url(r'^update/user', 'update_user'),
+    url(r'^join/user', 'fuding_dj_s.views.join_user'),
+    url(r'^login/user', 'fuding_dj_s.views.login_user'),
+    url(r'^update/user', 'fuding_dj_s.views.update_user'),
 
     # get url
     #----------------------------------------------------------------------------
-	url(r'^get/newsfeed/', 'get_newsfeed'),
-    url(r'^get/myfeed/', 'get_myfeed'),
-    url(r'^get/image/(?P<image_name>\w+/\w+/\w+.\w+)$', 'get_image'),
-    url(r'^get/recipe/', 'get_recipe'),
+	url(r'^get/newsfeed/', 'fuding_dj_s.views.get_newsfeed'),
+    url(r'^get/myfeed/', 'fuding_dj_s.views.get_myfeed'),
+    url(r'^get/image/(?P<image_name>\w+/\w+/\w+.\w+)$', 'fuding_dj_s.views.get_image'),
+    url(r'^get/recipe/', 'fuding_dj_s.views.get_recipe'),
 
-    url(r'^hash/find/', 'hash_find'),
+    url(r'^hash/find/', 'fuding_dj_s.views.hash_find'),
 
     # upload url
     #----------------------------------------------------------------------------
-	url(r'^upload/write/title/', 'test_upload_write_title'),
-    url(r'^upload/write/content/', 'test_upload_write_content'),
-    url(r'^upload/write/frame/', 'test_upload_write_frame'),
+	url(r'^upload/write/title/', 'fuding_dj_s.views.test_upload_write_title'),
+    url(r'^upload/write/content/', 'fuding_dj_s.views.test_upload_write_content'),
+    url(r'^upload/write/frame/', 'fuding_dj_s.views.test_upload_write_frame'),
 
     # set url
     #----------------------------------------------------------------------------
-    url(r'^set/like/', 'set_like'),
-)
+    url(r'^set/like/', 'fuding_dj_s.views.set_like'),
 
-# urlpatterns += static('static_files', document_root=settings.MEDIA_ROOT)
+
+    # follow api
+    #----------------------------------------------------------------------------
+    url(r'^toggle/(?P<app>[^\/]+)/(?P<model>[^\/]+)/(?P<id>\d+)/$', 'follow.views.toggle', name='toggle'),
+    url(r'^toggle/(?P<app>[^\/]+)/(?P<model>[^\/]+)/(?P<id>\d+)/$', 'follow.views.toggle', name='follow'),
+    url(r'^toggle/(?P<app>[^\/]+)/(?P<model>[^\/]+)/(?P<id>\d+)/$', 'follow.views.toggle', name='unfollow'),
+)

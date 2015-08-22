@@ -3,6 +3,12 @@ package wewe.fuding.activity;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import wewe.fuding.domain.Frame;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
@@ -66,17 +72,52 @@ public class LoginActivity extends Activity {
 			public void onResponse(String result) {
 				try {
 					Log.d("LoginActivity", result);
-					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-			        SharedPreferences.Editor editor = pref.edit();
-			        editor.putString("login_check", "true");
-			        editor.commit();
-			        
-			        // 로그인 에서 받은 값 sp에 저장 (아이디 이메일)
-			        // 프로필 변경 엑티비티에서 띄워줘야함 , 변경 시 sp 변경 
-			        //           유저 아이디 넘겨줌 
-			        
-				} catch (Exception e){
 					
+						// 로그인 에서 받은 값 sp에 저장 (아이디 이메일)
+						// 프로필 변경 엑티비티에서 띄워줘야함 , 변경 시 sp 변경 
+						//           유저 아이디 넘겨줌
+						String arrRes = "{'response':" + result + "}";
+
+						JSONObject jobject = null;
+						try {
+							jobject = new JSONObject(arrRes);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+						JSONArray jarray = null;
+						try {
+							jarray = jobject.getJSONArray("response");
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+						try {
+							for (int i = 0; i < jarray.length(); i++) {
+								JSONObject jsonFrame = (JSONObject) jarray.get(i);
+								String flag = jsonFrame.getString("result");
+								if ("0".equals(flag)) {
+									String userName = jsonFrame.getString("username");
+									String email = jsonFrame.getString("email"); 
+								
+									SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+									SharedPreferences.Editor editor = pref.edit();
+									editor.putString("login_check", "true"); //로그인 세션 저장 
+									editor.putString("user_name", userName); // 회원의 고유 아이디 
+									editor.putString("user_email", email); // 회원의 이메일 주소  
+									editor.commit();
+
+									startActivity(new Intent(LoginActivity.this, FudingMainActivity.class));
+									finish();
+								} else {
+									Toast.makeText(LoginActivity.this, "아이디와 비밀번호가 일치하지 않습니다.", Toast.LENGTH_LONG).show();
+								}		
+							}
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					
+					} catch (Exception e){
 				}
 			}
 		};

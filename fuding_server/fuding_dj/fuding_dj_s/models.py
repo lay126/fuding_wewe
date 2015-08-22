@@ -7,6 +7,9 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from datetime import *
 
+from follow import utils
+
+
 
 # --------------------------------------------------------------------
 # user
@@ -52,6 +55,12 @@ class USER_LIKES(models.Model):
 	like_date = models.DateTimeField(verbose_name=u'like_date', default=datetime.now, blank=True, )
 
 
+
+# follow api
+class MyModel(models.Model):
+    field = models.CharField(max_length = 255)
+
+utils.register(MyModel)
 
 
 # --------------------------------------------------------------------
@@ -114,6 +123,7 @@ class WRITE_TAG(models.Model):
 	wtg_index = models.AutoField(verbose_name=u'wtg_index', primary_key=True, db_index=True, )
 	wt_index = models.IntegerField(verbose_name=u'wt_index', null=False, default=0, )
 	wtg_value = models.CharField(verbose_name=u'wtg_value', max_length=100, )
+
 
 
 

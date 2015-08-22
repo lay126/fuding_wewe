@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'fuding_dj',
     'fuding_dj_s',
+    'follow',
 )
 
 MIDDLEWARE_CLASSES = (
