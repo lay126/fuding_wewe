@@ -21,6 +21,7 @@ from django.contrib.auth import *
 from django.contrib.auth.models import User, UserManager
 
 from fuding_dj_s.models import *
+from follow.models import *
 
 
 
