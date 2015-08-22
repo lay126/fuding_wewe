@@ -3,7 +3,13 @@ from django.db.models.loading import cache
 from django.http import HttpResponse, HttpResponseRedirect, \
     HttpResponseServerError, HttpResponseBadRequest
 from follow.utils import follow as _follow, unfollow as _unfollow, toggle as _toggle
+from django.views.decorators.csrf import *
 
+
+from fuding_dj_s.models import *
+from follow.models import *
+
+@csrf_exempt
 def check(func):
     """ 
     Check the permissions, http method and login state.
@@ -29,13 +35,18 @@ def check(func):
             return HttpResponseServerError('No follow object and `next` parameter found.')
     return iCheck
 
+
+@csrf_exempt
 @login_required
 @check
 def follow(request, app, model, id):
-    model = cache.get_model(app, model)
-    obj = model.objects.get(pk=id)
-    return _follow(request.user, obj)
+    # model = cache.get_model(app, model)
+    # obj = model.objects.get(pk=id)
+    user = User.objects.get(id=2)
+    obj = User.objects.get(id=id)
+    return _follow(user, obj)
 
+@csrf_exempt
 @login_required
 @check
 def unfollow(request, app, model, id):
@@ -44,9 +55,18 @@ def unfollow(request, app, model, id):
     return _unfollow(request.user, obj)
 
 
+@csrf_exempt
 @login_required
 @check
 def toggle(request, app, model, id):
     model = cache.get_model(app, model)
     obj = model.objects.get(pk=id)
     return _toggle(request.user, obj)
+
+
+@csrf_exempt
+@login_required
+def toggleaa(request, app, model, id):
+    obj = User.objects.get(id=id)
+
+    return HttpResponse(obj)

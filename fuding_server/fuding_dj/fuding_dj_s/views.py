@@ -16,6 +16,7 @@ from django.core.context_processors import *
 from django.views.decorators.csrf import *
 from django.core.files.storage import default_storage
 from django.contrib.sessions.models import Session
+from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import *
 from django.contrib.auth.models import User, UserManager
