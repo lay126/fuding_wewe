@@ -339,6 +339,48 @@ def get_recipe(request):
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
+# 사용자별 노티 뿌려줌
+@csrf_exempt
+def get_noti(request):
+	user_name = request.POST.get('user_name')
+
+	datas = []
+	try: 
+		noti_list_ = USER_NOTIS.objects.filter(user_id=user_name)
+
+		if len(noti_list_) is 0:
+			dic = dict()
+			dic['result'] = '1'
+			datas.append(dic)
+		else:
+			for noti_ in noti_list_:
+				dic = dict()
+				dic['result'] = '0'
+
+				try:
+					noti_user_ = User.objects.get(username=noti_.noti_id)
+					noti_user_data_ = USER_DATA.objects.get(user_id=noti_user_)
+					dic['noti_id'] = noti_.noti_id
+					try:
+						dic['noti_img'] = noti_user_data_.user_img.url
+					except:
+						dic['noti_img'] = ""
+				except:
+					dic = dict()
+					dic['result'] = '1'
+					datas.append(dic)
+
+				dic['wf_index'] = str(noti_.wf_index)
+				dic['noti_flag'] = str(noti_.noti_flag)
+				dic['noti_read'] = str(noti_.noti_read)
+				dic['noti_date'] = noti_.noti_date
+				datas.append(dic)
+	except:
+		dic = dict()
+		dic['result'] = '1'
+		datas.append(dic)
+
+	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 # 이미지 url로 뿌림 
 def get_image(request, image_name):
@@ -404,7 +446,6 @@ def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_to
 	
 	return dic
 
-
 # ------------------------------------------------------------------------------------------------------------
 # LIKE, FOLLOW
 # ------------------------------------------------------------------------------------------------------------
@@ -417,6 +458,7 @@ def set_like(request):
 	dic = dict()
 
 	like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=wf_index)
+	wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
 
 	if len(like_) is 0:
 		# 좋아요 해야하는 경우. 데이터 넣고, return 1
@@ -424,11 +466,13 @@ def set_like(request):
 								wf_index = wf_index, )
 		liking_.save()
 		dic['like_state'] = '1'
+		do_noti(wf_.wf_writer, user_name, 1, wf_index, 'yyyy/mm/dd')
 	if len(like_) is not 0:
 		# 이미 좋아요 된 경우. 없애고, return 0
 		for l_ in like_ :
 			l_.delete()
 		dic['like_state'] = '0'
+		do_unnoti(wf_.wf_writer, user_name, 1, wf_index)
 
 	# 0:안눌린것 1:눌린것 
 	datas.append(dic)
@@ -446,9 +490,14 @@ def set_follow(request):
 	if len(follow_) is 0:
 		# 좋아요 해야하는 경우. 데이터 넣고, return 1
 		datas = do_follow(user_id, following_id)
+		# 노티 디비에 추가 
+		# 추후 날짜 넣어야 함 
+		do_noti(following_id, user_id, 3, 0, 'yyyy/mm/dd')
 	if len(follow_) is not 0:
 		# 이미 좋아요 된 경우. 없애고, return 0
 		datas = do_unfollow(user_id, following_id)
+		# 노티 디비에서 없엠
+		do_unnoti(following_id, user_id, 3, 0)
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
@@ -542,6 +591,45 @@ def do_unfollow(user_id, following_id):
 	datas.append(dic)
 	return datas
 
+
+def do_noti(user_id, noti_id, noti_flag, wf_index, noti_date):
+	try: 
+		user_ = User.objects.get(username = user_id)
+		noti_user_ = User.objects.get(username = noti_id)
+		user_data_ = USER_DATA.objects.get(user_id = user_)
+		noti_user_data_ = USER_DATA.objects.get(user_id = noti_user_)
+
+		noti_ = USER_NOTIS(	user_id=user_id,
+							wf_index=wf_index, 
+							noti_id=noti_id,
+							noti_flag=noti_flag,
+							noti_date=noti_date )
+		noti_.save()
+	except:
+		pass
+
+	return 0
+
+def do_unnoti(user_id, noti_id, noti_flag, wf_index):
+	try: 
+		user_ = User.objects.get(username = user_id)
+		noti_user_ = User.objects.get(username = noti_id)
+		user_data_ = USER_DATA.objects.get(user_id = user_)
+		noti_user_data_ = USER_DATA.objects.get(user_id = noti_user_)
+
+		try: 
+			noti_ = USER_NOTIS.objects.filter(user_id=user_id).filter(noti_id=noti_id).filter(noti_flag=noti_flag).filter(wf_index=wf_index)
+			
+			if len(noti_) is not 0:
+				# 이미 노티 된 경우. 없애고, return 0
+				for n_ in noti_ :
+					n_.delete()
+		except:
+			pass
+	except:
+		pass
+
+	return 0
 
 # ------------------------------------------------------------------------------------------------------------
 # WRITE
