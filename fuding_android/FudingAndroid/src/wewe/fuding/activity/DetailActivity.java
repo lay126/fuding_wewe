@@ -10,7 +10,7 @@ import org.json.JSONObject;
 
 import wewe.fuding.activity.AddPostingActivity.Item;
 import wewe.fuding.utils.ImageDownloader;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,13 +31,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-public class DetailActivity  extends Activity { 
+public class DetailActivity  extends ListActivity { 
 	
 	String quant, writer, likes, name, tag, times, ingre, total;
 	String[] wc_image = null;
 	String[] wc_timer= null;
 	String[] wc_text = null;
-	
+	private ItemAdapter adapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,6 +61,11 @@ public class DetailActivity  extends Activity {
 		text_tag.setText("기타 태그 :"+tag);
 		text_times.setText("총 소요시간 :"+times);
 		text_ingre.setText("재료 태그 :"+ingre);
+		
+		ListView listView = (ListView)findViewById(R.id.listView);
+		
+		adapter = new ItemAdapter();
+		setListAdapter(adapter);
 	}
 
 	private void getAllContent() {
@@ -149,9 +155,9 @@ public class DetailActivity  extends Activity {
 
 	private class ItemAdapter extends ArrayAdapter<Item> {
 		
-		public ItemAdapter(List<Item> objects) {
+		public ItemAdapter() {
 		
-			super(DetailActivity.this, R.layout.row_detail_item, R.id.stepEditText, objects);
+			super(DetailActivity.this, R.layout.row_detail_item, R.id.foodImageView);
 		}	
 
 		@Override
