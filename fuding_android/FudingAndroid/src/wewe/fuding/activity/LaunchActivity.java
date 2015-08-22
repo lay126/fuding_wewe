@@ -1,5 +1,8 @@
 package wewe.fuding.activity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,7 +26,7 @@ public class LaunchActivity extends Activity {
 				 
 				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 		        String login_check = pref.getString("login_check", "false");
-				
+		         
 		        Log.d("LoginActivity.class", "login_check : "+ login_check);
 		        if ("true".equals(login_check)) {
 		        	Intent intent = new Intent(LaunchActivity.this, FudingMainActivity.class);

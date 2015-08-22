@@ -26,6 +26,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -57,6 +58,20 @@ public class ProfileActivity extends Activity {
         
 		info = (EditText)findViewById(R.id.edit_info);
 		profile_image = (ImageView)findViewById(R.id.profile_image);
+		
+		ImageView logout_btn = (ImageView)findViewById(R.id.logout_btn);
+		logout_btn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putString("login_check", "false"); //로그아웃 세션 저장 
+				startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+				finish();
+			}
+			
+		});
 		
 		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         String myProfile = pref.getString("profileImage", "default");

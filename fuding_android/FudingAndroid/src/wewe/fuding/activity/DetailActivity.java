@@ -26,6 +26,8 @@ import android.widget.Toast;
 
 public class DetailActivity  extends Activity { 
 	
+	String quant, writer, likes, name, tag, times, ingre, total;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,7 +37,7 @@ public class DetailActivity  extends Activity {
 	}
 
 	private void getAllContent() {
-		String URL_address = "http://119.205.252.224:8000/get/newsfeed/";
+		String URL_address = "http://119.205.252.224:8000/get/recipe/";
 
 		RequestQueue mQueue;
 		mQueue = Volley.newRequestQueue(this);
@@ -64,16 +66,20 @@ public class DetailActivity  extends Activity {
 				try {
 					for (int i = 0; i < jarray.length(); i++) {
 						JSONObject jsonFrame = (JSONObject) jarray.get(i);
-
-//						nfFrame.setUserId(jsonFrame.getString("wt_name"));
-//						nfFrame.setWriteDate(jsonFrame.getString("wc_date"));
-//						nfFrame.setLikeCnt(Integer.parseInt(jsonFrame.getString("wf_likes")));
-//						nfFrame.setLikeState(Integer.parseInt(jsonFrame.getString("like_flag")));
-//						nfFrame.setTag(jsonFrame.getString("wt_tag"));
-//						nfFrame.setFoodImgURL(jsonFrame.getString("wc_img"));
-//						nfFrame.setFoodIndex(Integer.parseInt(jsonFrame.getString("wt_index")));
-//
-//						frameArr.add(nfFrame);
+						quant = jsonFrame.getString("wt_quant");
+						writer = jsonFrame.getString("wf_writer");
+						likes = jsonFrame.getString("wf_likes");
+						name = jsonFrame.getString("wt_name");
+						tag = jsonFrame.getString("wt_tag");
+						times = jsonFrame.getString("wt_times");
+						ingre = jsonFrame.getString("wt_ingre"); 
+						total = jsonFrame.getString("wc_total");
+						
+						Log.d("detail", quant+writer+likes+name+tag+times+ingre+total);
+						
+						for (int i=0; i<Integer.parseInt(total); i++) {
+							
+						}
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -95,7 +101,10 @@ public class DetailActivity  extends Activity {
 				protected Map<String, String> getParams()
 						throws AuthFailureError {
 					Map<String, String> params = new HashMap<String, String>();
-//					params.put("user_name", userName);
+					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+					int index = pref.getInt("wf_index", 1);
+					
+					params.put("wf_index", index+"");
 
 					return params;
 				}

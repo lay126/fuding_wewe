@@ -8,12 +8,9 @@ import wewe.fuding.activity.DetailActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
 import wewe.fuding.utils.ImageDownloader;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Handler;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +44,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 	private ArrayList<Frame> arrList;
 	private ImageDownloader imgDownloader = new ImageDownloader();
 	private String imgDownURL;
-
-	ImageButton btnLike;
 
 	public CustomAdapter_NewsFeed(Context aContext) {
 		context = aContext;
@@ -87,7 +82,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final int pos = position;
-//		final Context context = parent.getContext();
+		final Context context = parent.getContext();
 
 		// 리스트가 길어지면서 현재 화면에 보이지 않는 아이템은 convertView가 null인 상태로 들어 옴
 		if (convertView == null) {
@@ -96,12 +91,10 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.row_newsfeed_item, parent,
 					false);
-		
 
 			// 좋아요 버튼을 터치 했을 때 이벤트 발생
-			btnLike = (ImageButton) convertView
+			final ImageButton btnLike = (ImageButton) convertView
 					.findViewById(R.id.newsfeed_imgBtnLike);
-
 			btnLike.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -118,33 +111,12 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 						@Override
 						public void onResponse(String response) {
 							Log.i("**likeState", response);
-							final String res = response;
-//							context.runOnUiThread(new Runnable() {
-//								
-//								@Override
-//								public void run() {
-//									// TODO Auto-generated method stub
-//									
-//								}
-//							}).start();
 
-//							if (context instanceof Fragment_NewsFeed) {
-//								
-//								
-//							}
-							new Thread(new Runnable() {
-								public void run() {
-									if (res.equals("1")) {
-										Log.i("***likeState is 1", res);
-										btnLike.setImageResource(R.drawable.like_clicked);
-										notifyDataSetChanged();
-									} else {
-										Log.i("***likeState is 0", res);
-										btnLike.setImageResource(R.drawable.like_unclicked);
-										notifyDataSetChanged();
-									}
-								}
-							}).start();
+							if (response.equals("1")) {
+								btnLike.setImageResource(R.drawable.like_clicked);
+							} else {
+								btnLike.setImageResource(R.drawable.like_unclicked);
+							}
 						}
 					};
 
@@ -202,13 +174,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 
 		ImageButton btnLike = (ImageButton) convertView
 				.findViewById(R.id.newsfeed_imgBtnLike);
-
-		// Bitmap bmLikeClicked =
-		// BitmapFactory.decodeResource(context.getResources(),
-		// R.drawable.like_clicked);
-		// btnLike.setImageBitmap(bmLikeClicked);
-		btnLike.setImageResource(R.drawable.like_clicked);
-
 		if (arrList.get(pos).getLikeState() == 0) {
 			// unclicked
 			btnLike.setImageResource(R.drawable.like_unclicked);
@@ -234,10 +199,15 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 		imgFood.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				int wf_index = arrList.get(pos).getFoodIndex();
+				SharedPreferences pref = context.getSharedPreferences("pref", context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putInt("wf_index", wf_index); 
+				editor.commit();
 				context.startActivity(new Intent(context, DetailActivity.class));
 			}
-		});
-
+		});	
+		
 		// userId // foodName; // ingre
 		// amount // totalTime // tag // likeCnt
 		return convertView;
