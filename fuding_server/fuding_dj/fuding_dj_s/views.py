@@ -172,16 +172,27 @@ def get_profile(request):
 
 	dic['user_email'] = profile_user_.email
 	dic['user_name'] = profile_user_.username
-	dic['user_writes'] = profile_user_data_.user_writes
+	dic['user_writes'] = str(profile_user_data_.user_writes)
 	dic['user_info'] = profile_user_data_.user_info
 	try:
 		dic['user_img'] = profile_user_data_.user_img.url
 	except:
 		# 지정된 프로필 사진 없는 경우 
 		dic['user_img'] = ""
-	dic['user_followers'] = profile_user_data_.user_followers
-	dic['user_followings'] = profile_user_data_.user_followings
-	dic['follow_flag'] = ""
+	dic['user_followers'] = str(profile_user_data_.user_followers)
+	dic['user_followings'] = str(profile_user_data_.user_followings)
+	# 내 프로필인지 판별 
+	if user_name == profile_name:
+		dic['me_flag'] = "yes"
+	else:
+		dic['me_flag'] = "no"
+	
+	# 팔로잉 중인지 판별 
+	follower_list_ = USER_FOLLOWS.objects.filter(user_id=user_name).filter(following_id=profile_name)
+	if len(follower_list_) is 0:
+		dic['follow_flag'] = "no"
+	else:
+		dic['follow_flag'] = "yes"
 
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
