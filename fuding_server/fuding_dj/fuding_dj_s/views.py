@@ -181,7 +181,7 @@ def get_newsfeed(request):
 		datas.append(dic)
 		for d in write_list_: 
 			dic = dict()
-			# 글 작성자 이름  wf_writer
+			dic['wf_writer'] = str(d.wf_writer)
 			dic['wf_index'] = str(d.wf_index)
 			dic['wt_index'] = str(d.wt_index)
 			dic['wf_likes'] = str(d.wf_likes)
@@ -247,6 +247,7 @@ def get_myfeed(request):
 		# dict
 		for d in write_list_: 
 			dic = dict()
+			dic['wf_writer'] = str(d.wf_writer)
 			dic['wf_index'] = str(d.wf_index)
 			dic['wt_index'] = str(d.wt_index)
 			# dic['wf_likes'] = str(d.wf_likes)
@@ -665,6 +666,7 @@ def hash_find(request):
 						wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wf_.wt_index)
 
 						dic = dict()
+						dic['wf_writer'] = str(wf_.wf_writer)
 						dic['wf_index'] = str(wf_.wf_index)
 						dic['wt_index'] = str(wf_.wt_index)
 						dic['wf_likes'] = str(wf_.wf_likes)
