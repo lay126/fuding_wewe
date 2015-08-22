@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -53,12 +55,13 @@ public class Fragment_NewsFeed extends Fragment {
 	public Fragment_NewsFeed() {
 	}
 
+	View v;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		activity = getActivity();
 
-		View v;
 		v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
 		frameArr = new ArrayList<Frame>();
 
@@ -70,12 +73,18 @@ public class Fragment_NewsFeed extends Fragment {
 				.findViewById(R.id.newsfeed_search_btn);
 
 		searchBtn.setOnClickListener(new OnClickListener() {
-
 			@Override
-			public void onClick(View v) {
+			public void onClick(View view) {
 				String strSearchTag = searchEditText.getText().toString();
 				if (!strSearchTag.equals("")) {
+					frameArr = new ArrayList<Frame>();
 					showNewsfeed(v, frameArr, 1, strSearchTag);
+
+					// keyboard hide
+					// InputMethodManager imm = (InputMethodManager)
+					// activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+					// imm.hideSoftInputFromWindow(searchEditText.getWindowToken(),
+					// 0);
 				}
 			}
 		});
@@ -85,9 +94,16 @@ public class Fragment_NewsFeed extends Fragment {
 
 	private void showNewsfeed(View v, final ArrayList<Frame> frameArr,
 			int type, final String tag) {
-		// if type is 1, it means tag search.
-		String URL_address = "http://119.205.252.224:8000/get/newsfeed/";
-
+		// if type is 1, it means that user clicked search btn
+		String URL_address;
+		if (type == 0) {
+			URL_address = "http://119.205.252.224:8000/get/newsfeed/";
+		} else if (type == 1) {
+			URL_address = "http://119.205.252.224:8000/hash/find/";
+		} else {
+			URL_address = null;
+		}
+		final int nfType = type;
 		RequestQueue mQueue;
 		mQueue = Volley.newRequestQueue(activity);
 
@@ -148,35 +164,24 @@ public class Fragment_NewsFeed extends Fragment {
 		};
 
 		StringRequest req;
-		if (type == 0) { // 그냥 뉴스피드 뿌려주는 경우
-			req = new StringRequest(Method.POST, URL_address, listener,
-					errorListener) {
-				@Override
-				protected Map<String, String> getParams()
-						throws AuthFailureError {
-					Map<String, String> params = new HashMap<String, String>();
-					SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
-			        String userName = pref.getString("user_name", "ayoung");
-					params.put("user_name", userName);
+		req = new StringRequest(Method.POST, URL_address, listener,
+				errorListener) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> params = new HashMap<String, String>();
+				SharedPreferences pref = activity.getSharedPreferences("pref",
+						activity.MODE_PRIVATE);
+				String userName = pref.getString("user_name", "ayoung");
+				params.put("user_name", userName);
 
-					return params;
-				}
-			};
-		} else { // 검색일 경우
-			req = new StringRequest(Method.POST, URL_address, listener,
-					errorListener) {
-				@Override
-				protected Map<String, String> getParams()
-						throws AuthFailureError {
-					Map<String, String> params = new HashMap<String, String>();
+				if (nfType == 1) { // 검색일경우
 					tag.replace("#", " #");
 					Log.i(TAG, tag);
 					params.put("search_text", tag);
-
-					return params;
 				}
-			};
-		}
+				return params;
+			}
+		};
 
 		mQueue.add(req);
 		init(v, frameArr);
@@ -190,7 +195,7 @@ public class Fragment_NewsFeed extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		
+
 		nfAdapter.notifyDataSetChanged();
 	}
 
@@ -211,6 +216,9 @@ public class Fragment_NewsFeed extends Fragment {
 		} else {
 			nfAdapter = new CustomAdapter_NewsFeed(activity, frameArr);
 		}
+		nfAdapter.notifyDataSetChanged();
+
 		nfListView.setAdapter(nfAdapter);
+
 	}
 }
