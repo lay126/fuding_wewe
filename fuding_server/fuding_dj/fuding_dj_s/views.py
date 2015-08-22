@@ -24,7 +24,8 @@ from django.contrib.auth.models import User, UserManager
 from fuding_dj_s.models import *
 from follow.models import *
 
-
+# GCM API KET
+# AIzaSyDniKsNEhgneJusfbl8NtjNxiYzqwq9gnM
 
 # ------------------------------------------------------------------------------------------------------------
 # USER
