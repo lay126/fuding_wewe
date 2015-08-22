@@ -128,7 +128,7 @@ public class Fragment_NewsFeed extends Fragment {
 						nfFrame.setTag(jsonFrame.getString("wt_tag"));
 						nfFrame.setFoodImgURL(jsonFrame.getString("wc_img"));
 						nfFrame.setFoodIndex(Integer.parseInt(jsonFrame
-								.getString("wt_index")));
+								.getString("wf_index")));
 
 						frameArr.add(nfFrame);
 					}

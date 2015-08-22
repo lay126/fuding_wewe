@@ -110,8 +110,10 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 							Log.i("**likeState", response);
 
 							if (response.equals("1")) {
+								Log.i("***likeState is 1", response);
 								btnLike.setImageResource(R.drawable.like_clicked);
 							} else {
+								Log.i("***likeState is 0", response);
 								btnLike.setImageResource(R.drawable.like_unclicked);
 							}
 						}
