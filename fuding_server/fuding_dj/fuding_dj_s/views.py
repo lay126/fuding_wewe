@@ -184,44 +184,43 @@ def get_newsfeed(request):
 	except:
 		pass
 
-	write_list_ =  WRITE_FRAME.objects.all().order_by('-wc_date')
+	write_list_ =  WRITE_FRAME.objects.all().order_by('-wc_date2')
 	follower_list_ = USER_FOLLOWS.objects.filter(user_id=user_name)
 
 	# dict
 	for d in write_list_: 
-
 		# wf_writer
-		for fl in follower_list_:
-			if d.wf_writer is fl.following_id:
-				dic = dict()
-				dic['wf_writer'] = str(d.wf_writer)
-				dic['wf_index'] = str(d.wf_index)
-				dic['wt_index'] = str(d.wt_index)
-				dic['wf_likes'] = str(d.wf_likes)
-				dic['wc_date'] = str(d.wc_date)
-				# wt_ (in dic_)
-				try : 
-					wt_ = WRITE_TITLE.objects.get(wf_index=d.wf_index)
-					dic['wt_name'] = wt_.wt_name
-					dic['wt_tag'] = wt_.wt_tag
-				except :
-					dic['wt_name'] = 'no wt_name'
-					dic['wt_tag'] = 'no wt_tag'
-				# wc_ (in dic_)
-				wc_list_ = WRITE_CONTENT.objects.filter(wt_index=d.wt_index)
-				for wc_ in wc_list_ :
-					if wc_.wc_index_num == d.wc_total :
-						dic['wc_img'] = wc_.wc_img.url
-				# user like state 
-				like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=d.wf_index)
-				if len(like_) is 0:
-					# 좋아요 안된경우 
-					dic['like_flag'] = '0'
-				if len(like_) is not 0:
-					# 이미 좋아요 된 경우
-					dic['like_flag'] = '1'
-				# 하나씩 저장!
-				datas.append(dic)
+		# for fl in follower_list_:
+			# if d.wf_writer is fl.following_id:
+		dic = dict()
+		dic['wf_writer'] = str(d.wf_writer)
+		dic['wf_index'] = str(d.wf_index)
+		dic['wt_index'] = str(d.wt_index)
+		dic['wf_likes'] = str(d.wf_likes)
+		dic['wc_date'] = str(d.wc_date)
+		# wt_ (in dic_)
+		try : 
+			wt_ = WRITE_TITLE.objects.get(wf_index=d.wf_index)
+			dic['wt_name'] = wt_.wt_name
+			dic['wt_tag'] = wt_.wt_tag
+		except :
+			dic['wt_name'] = 'no wt_name'
+			dic['wt_tag'] = 'no wt_tag'
+		# wc_ (in dic_)
+		wc_list_ = WRITE_CONTENT.objects.filter(wt_index=d.wt_index)
+		for wc_ in wc_list_ :
+			if wc_.wc_index_num == d.wc_total :
+				dic['wc_img'] = wc_.wc_img.url
+		# user like state 
+		like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=d.wf_index)
+		if len(like_) is 0:
+			# 좋아요 안된경우 
+			dic['like_flag'] = '0'
+		if len(like_) is not 0:
+			# 이미 좋아요 된 경우
+			dic['like_flag'] = '1'
+		# 하나씩 저장!
+		datas.append(dic)
 
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
@@ -426,6 +425,8 @@ def do_follow(user_id, following_id):
 										following_id = following_id)
 				follow_.save()
 				dic['result'] = '0'
+				dic['like_flag'] = '1'
+				
 			except:
 				dic['result'] = '1'
 		except:
@@ -471,6 +472,7 @@ def do_unfollow(user_id, following_id):
 					for f_ in follow_ :
 						f_.delete()
 				dic['result'] = '0'
+				dic['like_flag'] = '0'
 			except:
 				dic['result'] = '1'
 		except:
@@ -564,6 +566,7 @@ def test_upload_write_content(request):
 def test_upload_write_frame(request):
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
+	wt_date = request.POST.get('wt_date')
 	wc_total = request.POST.get('wc_total') # 해당 카드의 갯수 
 
 	def __unicode__(self):
@@ -608,6 +611,8 @@ def test_upload_write_frame(request):
 			wf_.update(wc_index_8=wc_.wc_index)
 		if int(wc_.wc_index_num) == 9:
 			wf_.update(wc_index_9=wc_.wc_index)
+
+	wf_.update(wc_date_sort=wt_date)
 
 	json_data = json.dumps(write_frame_.wf_index)
 	return HttpResponse(json_data, content_type='application/json')
