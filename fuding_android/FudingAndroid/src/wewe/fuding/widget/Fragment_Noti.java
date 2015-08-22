@@ -106,7 +106,7 @@ public class Fragment_Noti extends Fragment {
 //		    mDbOpenHelper.insertNotiColumn("yundaeun!!!", "image", "1", "2013.03.11");
 //		    mDbOpenHelper.insertNotiColumn("jungyeoeun!!!", "image", "2", "2014.01.12");
 			
-			
+			if (mCursor != null) {
 		    mCursor = mDbOpenHelper.getNotiAllColumns(); 
 		    Noti noti;
 		    Log.d("start", "start");
@@ -125,7 +125,7 @@ public class Fragment_Noti extends Fragment {
 			}
 			
 			mCursor.close();
-			
+			}
 //			알람이 있는지 확인! broadcast??? 해야하는 건지 아영이랑 상의 
 //			실시간 뷰 변경 
 			mHandler.post(new Runnable() {
