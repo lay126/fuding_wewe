@@ -379,19 +379,15 @@ def set_follow(request):
 	user_id = request.POST.get('user_id')
 	following_id = request.POST.get('following_id')
 
-	datas = []
-	datas = do_follow(user_id, following_id)
-
-	return HttpResponse(json.dumps(datas), content_type='application/json')
-
-
-@csrf_exempt
-def set_unfollow(request):
-	user_id = request.POST.get('user_id')
-	following_id = request.POST.get('following_id')
+	follow_ = USER_FOLLOWS.objects.filter(user_id=user_id).filter(following_id=following_id)
 
 	datas = []
-	datas = do_unfollow(user_id, following_id)
+	if len(follow_) is 0:
+		# 좋아요 해야하는 경우. 데이터 넣고, return 1
+		datas = do_follow(user_id, following_id)
+	if len(follow_) is not 0:
+		# 이미 좋아요 된 경우. 없애고, return 0
+		datas = do_unfollow(user_id, following_id)
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
@@ -568,7 +564,6 @@ def test_upload_write_frame(request):
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
 	wc_total = request.POST.get('wc_total') # 해당 카드의 갯수 
-	wc_photo_name = request.POST.get('wc_photo_name') # 사진 이름을 지정하기위한 파람 
 
 	def __unicode__(self):
 		return u'%s %s %s' % (self.user_name, self.wc_photo_name)
@@ -612,18 +607,6 @@ def test_upload_write_frame(request):
 			wf_.update(wc_index_8=wc_.wc_index)
 		if int(wc_.wc_index_num) == 9:
 			wf_.update(wc_index_9=wc_.wc_index)
-
-	# save photo
-	if request.method == 'POST':
-		if 'file' in request.FILES:
-			file = request.FILES['file']
-			filename = wc_photo_name
-
-			try:
-				write_frame_.wc_img.save(filename, File(file), save=True)	
-			except:
-				json_data = json.dumps('save photo fail')
-				return HttpResponse(json_data, content_type='application/json')	
 
 	json_data = json.dumps(write_frame_.wf_index)
 	return HttpResponse(json_data, content_type='application/json')
