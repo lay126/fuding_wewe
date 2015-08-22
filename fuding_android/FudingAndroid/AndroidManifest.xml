@@ -63,7 +63,8 @@
         </activity>
         <activity
             android:name="wewe.fuding.activity.FudingMainActivity"
-            android:label="@string/title_activity_fuding_main" >
+            android:label="@string/title_activity_fuding_main" 
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name="wewe.fuding.activity.LoginActivity"
