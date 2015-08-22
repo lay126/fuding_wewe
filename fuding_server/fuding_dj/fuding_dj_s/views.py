@@ -561,6 +561,16 @@ def hash_find(request):
 						if wc_.wc_index_num == wf_.wc_total :
 							dic['wc_img'] = wc_.wc_img.url
 
+					# user like state 
+					like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=d.wf_index)
+					if len(like_) is 0:
+						# 좋아요 안된경우 
+						dic['like_flag'] = '0'
+					if len(like_) is not 0:
+						# 이미 좋아요 된 경우
+						dic['like_flag'] = '1'
+
+
 					datas.append(dic)
 				except :
 					pass
