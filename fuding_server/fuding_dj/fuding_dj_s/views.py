@@ -206,43 +206,30 @@ def get_newsfeed(request):
 # 내가 쓴 레시피 보는 부분 
 @csrf_exempt
 def get_myfeed(request):
-	user_name = request.POST.get('user_name')
-	user_ = User.objects.get(username=user_name)
 
 	# data box
 	datas = []
-	write_list_ = WRITE_FRAME.objects.filter(wf_writer=user_name)
 
-	if len(write_list_) is 0:
+	try: 
+		user_name = request.POST.get('user_name')
+		user_ = User.objects.get(username=user_name)
+
+		write_list_ = WRITE_FRAME.objects.filter(wf_writer=user_name)
+
+		if len(write_list_) is 0:
+			dic = dict()
+			dic['result'] = "1"
+			datas.append(dic)
+		else:
+			# dict
+			for d in write_list_: 
+				dic = dict()
+				dic = feed_list(user_name, d.wf_index, d.wt_index, d.wf_likes, d.wc_date, d.wf_writer, d.wc_total)
+				datas.append(dic)
+	except:
 		dic = dict()
 		dic['result'] = "1"
 		datas.append(dic)
-	else:
-		dic = dict()
-		dic['result'] = "0"
-		datas.append(dic)
-		# dict
-		for d in write_list_: 
-			dic = dict()
-			dic['wf_writer'] = str(d.wf_writer)
-			dic['wf_index'] = str(d.wf_index)
-			dic['wt_index'] = str(d.wt_index)
-			# dic['wf_likes'] = str(d.wf_likes)
-			# dic['wc_date'] = str(d.wc_date)
-			# wt_ (in dic_)
-			try : 
-				wt_ = WRITE_TITLE.objects.get(wf_index=d.wf_index)
-				dic['wt_name'] = wt_.wt_name
-				# dic['wt_tag'] = wt_.wt_tag
-			except :
-				dic['wt_name'] = 'no wt_name'
-				# dic['wt_tag'] = 'no wt_tag'
-			# wc_ (in dic_)
-			wc_list_ = WRITE_CONTENT.objects.filter(wt_index=d.wt_index)
-			for wc_ in wc_list_ :
-				if wc_.wc_index_num == d.wc_total :
-					dic['wc_img'] = wc_.wc_img.url
-			datas.append(dic)
 
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
@@ -330,6 +317,7 @@ def get_recipe(request):
 # 피드 리스트를 만드는 함수 
 def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_total):
 	dic = dict()
+	dic['result'] = "0"
 	dic['wf_index'] = str(wf_index)
 	dic['wt_index'] = str(wt_index)
 	dic['wf_likes'] = str(wf_likes)
