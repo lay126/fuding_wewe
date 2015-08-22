@@ -356,7 +356,7 @@ def get_noti(request):
 			for noti_ in noti_list_:
 				dic = dict()
 				dic['result'] = '0'
-				
+
 				try:
 					noti_user_ = User.objects.get(username=noti_.noti_id)
 					noti_user_data_ = USER_DATA.objects.get(user_id=noti_user_)
@@ -446,7 +446,6 @@ def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_to
 	
 	return dic
 
-
 # ------------------------------------------------------------------------------------------------------------
 # LIKE, FOLLOW
 # ------------------------------------------------------------------------------------------------------------
@@ -488,9 +487,14 @@ def set_follow(request):
 	if len(follow_) is 0:
 		# 좋아요 해야하는 경우. 데이터 넣고, return 1
 		datas = do_follow(user_id, following_id)
+		# 노티 디비에 추가 
+		# 추후 날짜 넣어야 함 
+		do_noti(following_id, user_id, 3, 0, 'yyyy/mm/dd')
 	if len(follow_) is not 0:
 		# 이미 좋아요 된 경우. 없애고, return 0
 		datas = do_unfollow(user_id, following_id)
+		# 노티 디비에서 없엠
+		do_unnoti(following_id, user_id, 3)
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
@@ -584,6 +588,45 @@ def do_unfollow(user_id, following_id):
 	datas.append(dic)
 	return datas
 
+
+def do_noti(user_id, noti_id, noti_flag, wf_index, noti_date):
+	try: 
+		user_ = User.objects.get(username = user_id)
+		noti_user_ = User.objects.get(username = noti_id)
+		user_data_ = USER_DATA.objects.get(user_id = user_)
+		noti_user_data_ = USER_DATA.objects.get(user_id = noti_user_)
+
+		noti_ = USER_NOTIS(	user_id=user_id,
+							wf_index=wf_index, 
+							noti_id=noti_id,
+							noti_flag=noti_flag,
+							noti_date=noti_date )
+		noti_.save()
+	except:
+		pass
+
+	return 0
+
+def do_unnoti(user_id, noti_id, noti_flag):
+	try: 
+		user_ = User.objects.get(username = user_id)
+		noti_user_ = User.objects.get(username = noti_id)
+		user_data_ = USER_DATA.objects.get(user_id = user_)
+		noti_user_data_ = USER_DATA.objects.get(user_id = noti_user_)
+
+		try: 
+			noti_ = USER_NOTIS.objects.filter(user_id=user_id).filter(noti_id=noti_id).filter(noti_flag=noti_flag)
+			
+			if len(noti_) is not 0:
+				# 이미 노티 된 경우. 없애고, return 0
+				for n_ in noti_ :
+					n_.delete()
+		except:
+			pass
+	except:
+		pass
+
+	return 0
 
 # ------------------------------------------------------------------------------------------------------------
 # WRITE
