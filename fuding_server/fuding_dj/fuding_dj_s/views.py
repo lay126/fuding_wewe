@@ -158,6 +158,34 @@ def update_user(request):
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
+@csrf_exempt
+def get_profile(request):
+	user_name = request.POST.get('user_name')
+	profile_name = request.POST.get('profile_name')
+
+	datas = []
+	dic = dict()
+
+	user_ = User.objects.get(username=user_name)
+	profile_user_ = User.objects.get(username=profile_name)
+	profile_user_data_ = USER_DATA.objects.get(user_id=profile_user_)
+
+	dic['user_email'] = profile_user_.email
+	dic['user_name'] = profile_user_.username
+	dic['user_writes'] = profile_user_data_.user_writes
+	dic['user_info'] = profile_user_data_.user_info
+	try:
+		dic['user_img'] = profile_user_data_.user_img.url
+	except:
+		# 지정된 프로필 사진 없는 경우 
+		dic['user_img'] = ""
+	dic['user_followers'] = profile_user_data_.user_followers
+	dic['user_followings'] = profile_user_data_.user_followings
+	dic['follow_flag'] = ""
+
+	datas.append(dic)
+	return HttpResponse(json.dumps(datas), content_type='application/json')
+
 # ------------------------------------------------------------------------------------------------------------
 # FEED
 # ------------------------------------------------------------------------------------------------------------
@@ -209,7 +237,6 @@ def get_myfeed(request):
 
 	# data box
 	datas = []
-
 	try: 
 		user_name = request.POST.get('user_name')
 		user_ = User.objects.get(username=user_name)
