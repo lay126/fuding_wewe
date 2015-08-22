@@ -78,7 +78,6 @@ public class Fragment_Profile extends Fragment {
         Uri myUri = Uri.parse(myProfile);
         
         userName.setText(name);
-
         
         photo = (ImageView) v.findViewById(R.id.profile_imgViewProfile);
         photo.setBackgroundColor(Color.WHITE);
@@ -93,10 +92,8 @@ public class Fragment_Profile extends Fragment {
 			}
 		});
 
-
 		showMyContent(v, contentArr);
 		return v;
-
 	}
 
 	private void showMyContent(View v, final ArrayList<Content> contentArr) {
@@ -134,8 +131,7 @@ public class Fragment_Profile extends Fragment {
 						pfContent.setContent(jsonContent
 								.getString("wt_name"));
 						pfContent.setPhoto(jsonContent.getString("wc_img"));
-						//ay.. what's the difference between wt_index and wf_index?
-						pfContent.setFoodId(Integer.parseInt(jsonContent.getString("wt_index")));
+						pfContent.setFoodId(Integer.parseInt(jsonContent.getString("wf_index")));
 
 						contentArr.add(pfContent);
 					}
@@ -160,7 +156,10 @@ public class Fragment_Profile extends Fragment {
 			@Override
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String, String> params = new HashMap<String, String>();
-				params.put("user_name", "ayoung");
+				
+				SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
+		        String userName = pref.getString("user_name", "ayoung");
+				params.put("user_name", userName);
 				return params;
 			}
 		};

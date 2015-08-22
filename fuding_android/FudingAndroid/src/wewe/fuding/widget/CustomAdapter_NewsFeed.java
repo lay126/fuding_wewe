@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import wewe.fuding.activity.DetailActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
@@ -11,6 +15,7 @@ import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,9 +37,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 public class CustomAdapter_NewsFeed extends BaseAdapter {
-
-	// userId // foodName; // ingre
-	// amount // totalTime // tag // likeCnt
 	public static final String TAG = CustomAdapter_NewsFeed.class
 			.getSimpleName();
 
@@ -112,33 +114,62 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 						@Override
 						public void onResponse(String response) {
 							Log.i("**likeState", response);
-							final String res = response;
-							// context.runOnUiThread(new Runnable() {
+							String res = "{'response':" + response + "}";
+							Log.d(TAG, res);
+
+							JSONObject jobject = null;
+							try {
+								jobject = new JSONObject(res);
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+
+							JSONArray jarray = null;
+							try {
+								jarray = jobject.getJSONArray("response");
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+
+							try {
+								JSONObject jsonContent = (JSONObject) jarray
+										.get(0);
+								int state = Integer.parseInt(jsonContent
+										.getString("like_state"));
+
+								if (state == 1) {
+									Log.i("***likeState is 1", "" + state);
+									btnLike.setImageResource(R.drawable.like_clicked);
+								} else {
+									Log.i("***likeState is 0", "" + state);
+									btnLike.setImageResource(R.drawable.like_unclicked);
+								}
+								arrList.get(pos).setLikeState(state);
+								notifyDataSetChanged();
+							} catch (JSONException e) {
+								e.printStackTrace();
+							}
+							// final String res = response;
+							// FragmentActivity con = (FragmentActivity)
+							// context;
 							//
+							// con.runOnUiThread(new Runnable() {
 							// @Override
 							// public void run() {
-							// // TODO Auto-generated method stub
-							//
+							// if (res.equals("1")) {
+							// Log.i("***likeState is 1", res);
+							// btnLike.setImageResource(R.drawable.like_clicked);
+							// } else {
+							// Log.i("***likeState is 0", res);
+							// btnLike.setImageResource(R.drawable.like_unclicked);
 							// }
-							// }).start();
-
-							// if (context instanceof Fragment_NewsFeed) {
-							//
-							//
+							// res.trim();
+							// res.replace("\"", "");
+							// arrList.get(pos).setLikeState(
+							// Integer.parseInt(res));
+							// notifyDataSetChanged();
 							// }
-							new Thread(new Runnable() {
-								public void run() {
-									if (res.equals("1")) {
-										Log.i("***likeState is 1", res);
-										btnLike.setImageResource(R.drawable.like_clicked);
-										notifyDataSetChanged();
-									} else {
-										Log.i("***likeState is 0", res);
-										btnLike.setImageResource(R.drawable.like_unclicked);
-										notifyDataSetChanged();
-									}
-								}
-							}).start();
+							// });
 						}
 					};
 
@@ -159,7 +190,12 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 								throws AuthFailureError {
 							Map<String, String> params = new HashMap<String, String>();
 							// 사용자아이디, 글넘버
-							params.put("user_name", "ayoung");
+							SharedPreferences pref = context
+									.getSharedPreferences("pref",
+											context.MODE_PRIVATE);
+							String userName = pref.getString("user_name",
+									"ayoung");
+							params.put("user_name", userName);
 							params.put("wf_index", ""
 									+ arrList.get(pos).getFoodIndex());
 							return params;
@@ -219,7 +255,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				.findViewById(R.id.newsfeed_imgView);
 		String URL_img_address = "http://119.205.252.224:8000/get/image/"
 				+ arrList.get(pos).getFoodImgURL();
-		Log.i(TAG, URL_img_address);
 		imgDownloader.download(URL_img_address, imgFood, 0);
 
 		imgFood.setOnClickListener(new OnClickListener() {
