@@ -6,16 +6,7 @@
     android:orientation="vertical"
     tools:context="wewe.fuding.activity.ProfileActivity" >
 
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
+    
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -31,8 +22,8 @@
 
             <ImageView
                 android:id="@+id/profile_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:src="@drawable/com_facebook_profile_picture_blank_square" />
 
@@ -73,8 +64,7 @@
                     android:layout_weight="0.5"
                     android:src="@drawable/com_facebook_button_send_background" />
             </LinearLayout>
-        </LinearLayout>
 
-    </ScrollView>
+    
     
 </LinearLayout>

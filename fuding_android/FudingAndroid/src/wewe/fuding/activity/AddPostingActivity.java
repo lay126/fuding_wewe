@@ -461,13 +461,14 @@ public class AddPostingActivity extends ListActivity {
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
 				dos.writeBytes("Content-Disposition: form-data; name=\"user_name\""+ lineEnd);
 				dos.writeBytes(lineEnd);
-				dos.write("ayoung".getBytes("utf-8"));
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+		        String user_name = pref.getString("user_name", "ayoung");
+				dos.write(user_name.getBytes("utf-8"));
 				dos.writeBytes(lineEnd);
 
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
 				dos.writeBytes("Content-Disposition: form-data; name=\"wt_index\""+ lineEnd);
-				dos.writeBytes(lineEnd);
-				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+				dos.writeBytes(lineEnd); 
 		        String imageId = pref.getString("imageURL_index", "1");
 				dos.write((imageId+"").getBytes("utf-8"));
 				Log.d("image upload wt_index", imageId+"");
