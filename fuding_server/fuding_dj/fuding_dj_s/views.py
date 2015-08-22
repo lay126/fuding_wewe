@@ -222,10 +222,10 @@ def get_newsfeed(request):
 				dic = dict()
 				dic = feed_list(user_name, d.wf_index, d.wt_index, d.wf_likes, d.wc_date, d.wf_writer, d.wc_total)
 				datas.append(dic)
-			elif d.wf_writer == user_name:
-				dic = dict()
-				dic = feed_list(user_name, d.wf_index, d.wt_index, d.wf_likes, d.wc_date, d.wf_writer, d.wc_total)
-				datas.append(dic)
+		if d.wf_writer == user_.username:
+			dic = dict()
+			dic = feed_list(user_name, d.wf_index, d.wt_index, d.wf_likes, d.wc_date, d.wf_writer, d.wc_total)
+			datas.append(dic)
 
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
@@ -234,7 +234,6 @@ def get_newsfeed(request):
 # 내가 쓴 레시피 보는 부분 
 @csrf_exempt
 def get_myfeed(request):
-
 	# data box
 	datas = []
 	try: 
