@@ -339,6 +339,48 @@ def get_recipe(request):
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
+# 사용자별 노티 뿌려줌
+@csrf_exempt
+def get_noti(request):
+	user_name = request.POST.get('user_name')
+
+	datas = []
+	try: 
+		noti_list_ = USER_NOTIS.objects.filter(user_id=user_name)
+
+		if len(noti_list_) is 0:
+			dic = dict()
+			dic['result'] = '1'
+			datas.append(dic)
+		else:
+			for noti_ in noti_list_:
+				dic = dict()
+				dic['result'] = '0'
+				
+				try:
+					noti_user_ = User.objects.get(username=noti_.noti_id)
+					noti_user_data_ = USER_DATA.objects.get(user_id=noti_user_)
+					dic['noti_id'] = noti_.noti_id
+					try:
+						dic['noti_img'] = noti_user_data_.user_img.url
+					except:
+						dic['noti_img'] = ""
+				except:
+					dic = dict()
+					dic['result'] = '1'
+					datas.append(dic)
+
+				dic['wf_index'] = str(noti_.wf_index)
+				dic['noti_flag'] = str(noti_.noti_flag)
+				dic['noti_read'] = str(noti_.noti_read)
+				dic['noti_date'] = noti_.noti_date
+				datas.append(dic)
+	except:
+		dic = dict()
+		dic['result'] = '1'
+		datas.append(dic)
+
+	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 # 이미지 url로 뿌림 
 def get_image(request, image_name):

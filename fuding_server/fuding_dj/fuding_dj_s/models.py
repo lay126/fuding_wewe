@@ -80,13 +80,6 @@ class USER_NOTIS(models.Model):
 	noti_date_sort = models.DateTimeField(verbose_name=u'noti_date_sort', default=datetime.now, blank=True, )
 
 
-# follow api
-class MyModel(models.Model):
-    field = models.CharField(max_length = 255)
-
-utils.register(MyModel)
-
-
 # --------------------------------------------------------------------
 # food write 
 # --------------------------------------------------------------------
