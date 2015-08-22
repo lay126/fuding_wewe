@@ -184,7 +184,7 @@ def get_newsfeed(request):
 	except:
 		pass
 
-	write_list_ =  WRITE_FRAME.objects.all().order_by('-wc_date2')
+	write_list_ =  WRITE_FRAME.objects.all().order_by('-wc_date_sort')
 	follower_list_ = USER_FOLLOWS.objects.filter(user_id=user_name)
 
 	# dict
