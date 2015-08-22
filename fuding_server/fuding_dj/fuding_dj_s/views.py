@@ -355,12 +355,14 @@ def get_image(request, image_name):
 # 피드 리스트를 만드는 함수 
 def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_total):
 	dic = dict()
+
 	dic['result'] = "0"
 	dic['wf_index'] = str(wf_index)
 	dic['wt_index'] = str(wt_index)
 	dic['wf_likes'] = str(wf_likes)
 	dic['wf_writer'] = str(wf_writer)
 	dic['wc_date'] = str(wc_date)
+
 	# wt_ (in dic_)
 	try : 
 		wt_ = WRITE_TITLE.objects.get(wf_index=wf_index)
@@ -369,11 +371,13 @@ def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_to
 	except :
 		dic['wt_name'] = 'no wt_name'
 		dic['wt_tag'] = 'no wt_tag'
+
 	# wc_ (in dic_)
 	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_index)
 	for wc_ in wc_list_ :
 		if wc_.wc_index_num == wc_total :
 			dic['wc_img'] = wc_.wc_img.url
+
 	# user like state 
 	like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=wf_index)
 	if len(like_) is 0:
@@ -382,6 +386,23 @@ def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_to
 	if len(like_) is not 0:
 		# 이미 좋아요 된 경우
 		dic['like_flag'] = '1'
+
+	# follow_flag
+	follower_list_ = USER_FOLLOWS.objects.filter(user_id=user_name).filter(following_id=wf_writer)
+	if len(follower_list_) is 0:
+		if user_name == wf_writer:
+			# 나니까 팔로우 하는 중처럼 : yes
+			dic['follow_flag'] = 'yes'
+		else:
+			# 팔로우 안하는 중 : no
+			dic['follow_flag'] = 'no'
+	else:
+		if user_name == wf_writer:
+			# 나니까 팔로우 하는 중처럼 : yes
+			dic['follow_flag'] = 'yes'
+		else:
+			# 팔로우 하는 중 : yes
+			dic['follow_flag'] = 'yes'
 	
 	return dic
 
@@ -680,6 +701,7 @@ def hash_tag_make(hash_text, wt_index):
 # 해쉬태그 검색 함수 
 @csrf_exempt
 def hash_find(request):
+	user_name = request.POST.get('user_name')
 	search_text = request.POST.get('search_text')
 
 	hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
@@ -694,45 +716,21 @@ def hash_find(request):
 			dic['result'] = "1"
 			datas.append(dic)
 		else:
-			dic = dict()
-			dic['result'] = "0"
-			datas.append(dic)
 			for tag_frame in tag_frames:
 				# 중복 데이터 출력 방지 
 				wt_index_ = tag_frame.wt_index
 				if wt_index_ not in check_data:
-					check_data.append(wt_index_)
 					try :
 						wt_ = WRITE_TITLE.objects.get(wt_index=wt_index_)
 						wf_ = WRITE_FRAME.objects.get(wf_index=wt_.wf_index)
 						wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wf_.wt_index)
 
 						dic = dict()
-						dic['wf_writer'] = str(wf_.wf_writer)
-						dic['wf_index'] = str(wf_.wf_index)
-						dic['wt_index'] = str(wf_.wt_index)
-						dic['wf_likes'] = str(wf_.wf_likes)
-						dic['wc_date'] = str(wf_.wc_date)
-
-						# wt_ (in dic_)
-						dic['wt_name'] = wt_.wt_name
-						dic['wt_tag'] = wt_.wt_tag
-
-						# wc_ (in dic_)
-						for wc_ in wc_list_ :
-							if wc_.wc_index_num == wf_.wc_total :
-								dic['wc_img'] = wc_.wc_img.url
-
-						# user like state 
-						like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=d.wf_index)
-						if len(like_) is 0:
-							# 좋아요 안된경우 
-							dic['like_flag'] = '0'
-						if len(like_) is not 0:
-							# 이미 좋아요 된 경우
-							dic['like_flag'] = '1'
-
+						dic = feed_list(user_name, wf_.wf_index, wf_.wt_index, wf_.wf_likes, wf_.wc_date, wf_.wf_writer, wf_.wc_total)
 						datas.append(dic)
+
+						# 출력했으니 리스트에 넣어야지!
+						check_data.append(wt_index_)
 					except :
 						pass
 
