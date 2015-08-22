@@ -186,20 +186,10 @@ def get_profile(request):
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
+
 # ------------------------------------------------------------------------------------------------------------
 # FEED
 # ------------------------------------------------------------------------------------------------------------
-################
-# 이미지 url로 뿌림 
-def get_image(request, image_name):
-	link = image_name
-
-	images = []
-	image_data_ = open(link, "rb").read()
-	images.append(image_data_)
-
-	return HttpResponse(images, content_type="image/png")
-
 
 @csrf_exempt
 def get_newsfeed(request):
@@ -230,7 +220,6 @@ def get_newsfeed(request):
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
 
-
 # 내가 쓴 레시피 보는 부분 
 @csrf_exempt
 def get_myfeed(request):
@@ -259,7 +248,6 @@ def get_myfeed(request):
 
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
-
 
 # 레시피 상세 페이지 
 @csrf_exempt
@@ -339,6 +327,17 @@ def get_recipe(request):
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
+
+
+# 이미지 url로 뿌림 
+def get_image(request, image_name):
+	link = image_name
+
+	images = []
+	image_data_ = open(link, "rb").read()
+	images.append(image_data_)
+
+	return HttpResponse(images, content_type="image/png")
 
 # 피드 리스트를 만드는 함수 
 def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_total):
@@ -508,7 +507,6 @@ def do_unfollow(user_id, following_id):
 	return datas
 
 
-
 # ------------------------------------------------------------------------------------------------------------
 # WRITE
 # ------------------------------------------------------------------------------------------------------------
@@ -640,7 +638,6 @@ def test_upload_write_frame(request):
 
 	json_data = json.dumps(write_frame_.wf_index)
 	return HttpResponse(json_data, content_type='application/json')
-
 
 
 # ------------------------------------------------------------------------------------------------------------
