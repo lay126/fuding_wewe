@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import wewe.fuding.domain.Content;
 import wewe.fuding.domain.Frame;
+import wewe.fuding.utils.ImageDownloader;
 import wewe.fuding.activity.R;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +17,15 @@ import android.widget.TextView;
 
 public class CustomAdapter_Profile extends BaseAdapter {
 
+	public static final String TAG = CustomAdapter_Profile.class
+			.getSimpleName();
+
 	Context context;
 	LayoutInflater inflater;
 	int layout;
 	private final Integer[] mThumbIds = {};
 	private ArrayList<Content> arrList;
+	private ImageDownloader imgDownloader = new ImageDownloader();
 
 	public CustomAdapter_Profile(Context aContext) {
 		context = aContext;
@@ -33,6 +39,8 @@ public class CustomAdapter_Profile extends BaseAdapter {
 		inflater = (LayoutInflater) aContext
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		arrList = aArrList;
+
+		Log.i("customAdapter_profile", context + " " + " ");
 	}
 
 	@Override
@@ -78,8 +86,13 @@ public class CustomAdapter_Profile extends BaseAdapter {
 		TextView tvMyContent = (TextView) convertView
 				.findViewById(R.id.mycontent_txtView);
 		tvMyContent.setText(arrList.get(pos).getContent());
+		
+		ImageView imgFoodPhoto = (ImageView) convertView.findViewById(R.id.mycontent_imgView);
+		String URL_img_address = "http://119.205.252.224:8000/get/image/"
+				+ arrList.get(pos).getPhoto();
+		Log.i(TAG, URL_img_address);
+		imgDownloader.download(URL_img_address, imgFoodPhoto, 0);
 
-		return null;
+		return convertView;
 	}
-
 }

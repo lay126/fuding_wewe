@@ -58,7 +58,7 @@
         <GridView
             android:id="@+id/profile_gridView"
             android:layout_width="match_parent"
-            android:columnCount="3"
+            android:numColumns="3"
             android:layout_height="wrap_content" >
         </GridView>
 
