@@ -66,7 +66,8 @@ public class Fragment_Profile extends Fragment {
 
 		View v;
 		v = inflater.inflate(R.layout.fragment_profile, container, false);
-
+		contentArr = new ArrayList<Content>();
+		
 		edit_profile = (ImageButton) v.findViewById(R.id.profile_edit_btn);
 		edit_profile.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -88,8 +89,7 @@ public class Fragment_Profile extends Fragment {
 	}
 
 	private void showMyContent(View v, final ArrayList<Content> contentArr) {
-		// String URL_address = "http://119.205.252.224:8000/get/mycontent/";
-		String URL_address = null;
+		String URL_address = "http://119.205.252.224:8000/get/myfeed/";
 
 		RequestQueue mQueue;
 		mQueue = Volley.newRequestQueue(activity);
@@ -99,10 +99,6 @@ public class Fragment_Profile extends Fragment {
 			public void onResponse(String response) {
 				// to make data available
 				String arrRes = "{'response':" + response + "}";
-				arrRes = arrRes.replace("\"", "");
-				arrRes = arrRes.replace("'", "\"");
-				arrRes = arrRes.replace(" ", "");
-				arrRes = arrRes.replace(":u\"", ":\"");
 				Log.d(TAG, arrRes);
 
 				JSONObject jobject = null;
@@ -124,9 +120,11 @@ public class Fragment_Profile extends Fragment {
 						JSONObject jsonContent = (JSONObject) jarray.get(i);
 
 						pfContent = new Content();
-
 						pfContent.setContent(jsonContent
-								.getString("wc_content"));
+								.getString("wt_name"));
+						pfContent.setPhoto(jsonContent.getString("wc_img"));
+						//ay.. what's the difference between wt_index and wf_index?
+						pfContent.setFoodId(Integer.parseInt(jsonContent.getString("wt_index")));
 
 						contentArr.add(pfContent);
 					}
@@ -141,7 +139,7 @@ public class Fragment_Profile extends Fragment {
 			public void onErrorResponse(VolleyError error) {
 				error.printStackTrace();
 				Toast.makeText(activity,
-						"Profile : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
+						"Profile : 네트워크상태가좋지 않습니다. 잠시만 기다려주세요.",
 						Toast.LENGTH_LONG).show();
 			}
 		};

@@ -22,10 +22,24 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class HttpRequestAddPost{
+	
+	
+	
 //	 로그인 세션 체크 (true -> 로그인 상태 / false -> 로그아웃 상태 / 초기 상태)
 //	"login_check", "true"
-//	
-//   로그인 리턴 값 (회원의 고유 아이)		
-//	"user_id", result
+	
+//   로그인 리턴 값 (회원의 고유 아이디)		
+//	"user_name", result
+	
+//   로그인 리턴 값 (회원의 이메일 주소)		
+//	"user_email", result
+	
+//	 글 작성 시 리턴 값 (글의 고유 아이디) 
+//	"imageURL_index", result+""
+	
+	
+	
+	
+	
 	
 }
