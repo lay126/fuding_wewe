@@ -3,6 +3,10 @@ package wewe.fuding.activity;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,7 +49,7 @@ public class SignUpActivity  extends Activity {
 				if ("".equals(id.getText().toString()) || "".equals(pwd.getText().toString()) || "".equals(email.getText().toString())) {
 					Toast.makeText(SignUpActivity.this, "빈칸을 모두 입력해주세요.", Toast.LENGTH_LONG).show();
 				} else {
-					signupRequest(id.getText().toString(), pwd.getText().toString(), email.getText().toString(), content.getText().toString());
+					signupRequest(id.getText().toString(), pwd.getText().toString(), email.getText().toString());
 				}
 			}
 		});
@@ -58,7 +62,7 @@ public class SignUpActivity  extends Activity {
 		});
 	}
 
-	private void signupRequest(final String id, final String pwd, final String email, final String content) {
+	private void signupRequest(final String id, final String pwd, final String email) {
 		String URL_address= "http://119.205.252.224:8000/join/user/"; 
 		
 		RequestQueue mQueue2;
@@ -67,9 +71,34 @@ public class SignUpActivity  extends Activity {
 			@Override
 			public void onResponse(String result) {
 				try {
-					Log.d("signupActivity.class", "success");
-					Toast.makeText(SignUpActivity.this, "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show();
-					finish(); 
+					String arrRes = "{'response':" + result + "}";
+
+					JSONObject jobject = null;
+					try {
+						jobject = new JSONObject(arrRes);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
+					JSONArray jarray = null;
+					try {
+						jarray = jobject.getJSONArray("response");
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
+					try {
+						for (int i = 0; i < jarray.length(); i++) {
+							JSONObject jsonFrame = (JSONObject) jarray.get(i);
+							String flag = jsonFrame.getString("result");
+							if ("0".equals(flag)) {
+								Toast.makeText(SignUpActivity.this, "회원가입이 완료되었습니다.", Toast.LENGTH_LONG).show();
+								finish(); 
+							} else {
+								Toast.makeText(SignUpActivity.this, "이미 등록된 이메일입니다.", Toast.LENGTH_LONG).show();
+							}	
+						}
+					} catch (Exception e){}	 
 				} catch (Exception e){
 					
 				}
