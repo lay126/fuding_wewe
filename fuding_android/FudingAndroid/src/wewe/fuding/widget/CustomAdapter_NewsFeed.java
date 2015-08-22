@@ -9,19 +9,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import wewe.fuding.activity.DetailActivity;
+import wewe.fuding.activity.ProfileActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
 import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -215,12 +216,23 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 			// DetailActivity.class));
 			// }
 			// });
-
 		}
 
-		TextView tvUserId = (TextView) convertView
-				.findViewById(R.id.newsfeed_txtViewUserId);
-		tvUserId.setText(arrList.get(pos).getUserId());
+		Button btnUserId = (Button) convertView
+				.findViewById(R.id.newsfeed_btnViewUserId);
+		final String wfWriter = arrList.get(pos).getUserId();
+		btnUserId.setText(wfWriter);
+		btnUserId.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				SharedPreferences pref = context.getSharedPreferences("pref",
+						context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putString("wf_writer", wfWriter);
+				editor.commit();
+				context.startActivity(new Intent(context, Fragment_Profile.class));
+			}
+		});
 
 		TextView tvDate = (TextView) convertView
 				.findViewById(R.id.newsfeed_txtViewWriteDate);
@@ -232,10 +244,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 
 		ImageButton btnLike = (ImageButton) convertView
 				.findViewById(R.id.newsfeed_imgBtnLike);
-		// Bitmap bmLikeClicked =
-		// BitmapFactory.decodeResource(context.getResources(),
-		// R.drawable.like_clicked);
-		// btnLike.setImageBitmap(bmLikeClicked);
 		if (arrList.get(pos).getLikeState() == 0) {
 			// unclicked
 			btnLike.setImageResource(R.drawable.like_unclicked);
