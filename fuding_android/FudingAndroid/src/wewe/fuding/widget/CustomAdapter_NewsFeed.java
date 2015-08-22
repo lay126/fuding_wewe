@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import wewe.fuding.activity.DetailActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
 import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -195,6 +197,13 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 		Log.i(TAG, URL_img_address);
 		imgDownloader.download(URL_img_address, imgFood, 0);
 
+		imgFood.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				context.startActivity(new Intent(context, DetailActivity.class));
+			}
+		});	
+		
 		// userId // foodName; // ingre
 		// amount // totalTime // tag // likeCnt
 		return convertView;
