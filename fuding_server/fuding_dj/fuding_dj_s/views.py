@@ -163,11 +163,17 @@ def update_user(request):
 # ------------------------------------------------------------------------------------------------------------
 @csrf_exempt
 def get_newsfeed(request):
-	user_name = request.POST.get('user_name')
-	user_ = User.objects.get(username=user_name)
-
 	# data box
 	datas = []
+	try:
+		user_name = request.POST.get('user_name')
+		user_ = User.objects.get(username=user_name)
+	except:
+		dic = dict()
+		dic['result'] = '1'
+		datas.append(dic)
+		return HttpResponse(json.dumps(datas), content_type='application/json')
+
 	write_list_ =  WRITE_FRAME.objects.all()
 
 	# dict
@@ -393,8 +399,6 @@ def set_follow(request):
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
-
-# 애시당초 이 함수들은, 팔로잉 여부를 판별하여 단지 '호춞만 됨'
 def do_follow(user_id, following_id):
 	datas = []
 	dic = dict()
