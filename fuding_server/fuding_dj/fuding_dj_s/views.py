@@ -372,36 +372,36 @@ def set_follow(request):
 # 애시당초 이 함수들은, 팔로잉 여부를 판별하여 단지 '호춞만 됨'
 def do_follow(user_id, following_id):
 	datas = []
-	dic = dict()
+	# dic = dict()
 
-	try: 
-		user_ = User.objects.get(username = user_id)
-		following_ = User.objects.get(username = following_id)
-		user_data_ = USER_DATA.objects.get(user_id = user_)
-		following_data_ = USER_DATA.objects.get(user_id = following_)
+	# try: 
+	# 	user_ = User.objects.get(username = user_id)
+	# 	following_ = User.objects.get(username = following_id)
+	# 	user_data_ = USER_DATA.objects.get(user_id = user_)
+	# 	following_data_ = USER_DATA.objects.get(user_id = following_)
 
-		# 내 팔로잉 +1, 상대방 팔로워 +1 
-		try: 
-			fnum_1 = int(user_data_.user_followings) + 1
-			fnum_2 = int(following_data_.user_followers) + 1
+	# 	# 내 팔로잉 +1, 상대방 팔로워 +1 
+	# 	try: 
+	# 		fnum_1 = int(user_data_.user_followings) + 1
+	# 		fnum_2 = int(following_data_.user_followers) + 1
 
-			user_data_.update(user_followings = str(fnum_1)
-			# following_data_.update(user_followers = str(fnum_2))
+	# 		user_data_.update(user_followings = str(fnum_1)
+	# 		# following_data_.update(user_followers = str(fnum_2))
 
-			# 팔로우 디비에 추가 
-			try: 
-				follow_ = USER_FOLLOWS(	user_id = user_id,
-										following_id = following_id)
-				follow_.save()
-				dic['result'] = '0'
-			except:
-				dic['result'] = '111'
-		except:
-			dic['result'] = str(fnum_1)
-	except:
-		dic['result'] = '11'
+	# 		# 팔로우 디비에 추가 
+	# 		try: 
+	# 			follow_ = USER_FOLLOWS(	user_id = user_id,
+	# 									following_id = following_id)
+	# 			follow_.save()
+	# 			dic['result'] = '0'
+	# 		except:
+	# 			dic['result'] = '111'
+	# 	except:
+	# 		dic['result'] = str(fnum_1)
+	# except:
+	# 	dic['result'] = '11'
 
-	datas.append(dic)
+	# datas.append(dic)
 	return datas
 
 def do_un_follow(user_id, following_id):
