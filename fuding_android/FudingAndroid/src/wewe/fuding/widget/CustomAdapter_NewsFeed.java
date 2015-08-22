@@ -90,15 +90,15 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					false);
 
 			// 좋아요 버튼을 터치 했을 때 이벤트 발생
-			ImageButton btn = (ImageButton) convertView
+			final ImageButton btnLike = (ImageButton) convertView
 					.findViewById(R.id.newsfeed_imgBtnLike);
-			btn.setOnClickListener(new OnClickListener() {
+			btnLike.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					clickLikeBtn();
+					clickLikeBtn(v);
 				}
 
-				private void clickLikeBtn() {
+				private void clickLikeBtn(View v) {
 					String URL_address = "http://119.205.252.224:8000/set/like/";
 
 					RequestQueue mQueue;
@@ -109,18 +109,11 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 						public void onResponse(String response) {
 							Log.i("**likeState", response);
 
-							// // to make data available
-							// String res = "{'response':" + response + "}";
-							// Log.d(TAG, res);
-							//
-							// JSONObject jobject = null;
-							// try {
-							// jobject = new JSONObject(res);
-							//
-							// String likeState = jobject.getString("");
-							// } catch (JSONException e) {
-							// e.printStackTrace();
-							// }
+							if (response.equals("1")) {
+								btnLike.setImageResource(R.drawable.like_clicked);
+							} else {
+								btnLike.setImageResource(R.drawable.like_unclicked);
+							}
 						}
 					};
 
