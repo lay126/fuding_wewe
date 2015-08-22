@@ -21,74 +21,11 @@ import wewe.fuding.domain.Frame;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class HttpRequestAddPost extends AsyncTask<String, Void, HttpResponse> {
-
-    private static final String POST_URL = "http://";
- 
-    public interface OnHttpRequestListener {
-        public void onSuccess(Frame frame);
-        public void onFailed();
-    }
- 
-    private OnHttpRequestListener listener;
- 
-    public HttpRequestAddPost(OnHttpRequestListener onHttpRequestListener) {
-        this.listener = onHttpRequestListener;
-    }
- 
-    @Override
-    protected HttpResponse doInBackground(String... params) {
-        String userId = params[0];
-        String foodName = params[1]; 
-        String ingre = params[2]; 
-        String totalTime = params[3]; 
-        String amount = params[4]; 
-        String tag = params[5]; 
- 
-        try {
-            HttpPost post = new HttpPost(POST_URL);
-            List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-            pairs.add(new BasicNameValuePair("user_id", userId));
-            pairs.add(new BasicNameValuePair("wt_name", foodName));
-            pairs.add(new BasicNameValuePair("wt_ingre", ingre));
-            pairs.add(new BasicNameValuePair("wt_times", totalTime));
-            pairs.add(new BasicNameValuePair("wt_quant", amount));
-            pairs.add(new BasicNameValuePair("wt_tags", tag));
-            HttpEntity entity = new UrlEncodedFormEntity(pairs);
-            post.setEntity(entity);
- 
-            HttpClient client = new DefaultHttpClient();
- 
-            return client.execute(post);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
- 
-        return null;
-    }
- 
-    @Override
-    protected void onPostExecute(HttpResponse httpResponse) {
-        if (httpResponse == null) {
-            listener.onFailed();
-            return;
-        }
-
-        StatusLine line = httpResponse.getStatusLine();
-        if (line.getStatusCode() == 200) {
-            try {
-                String result = EntityUtils.toString(httpResponse.getEntity());
-                JSONObject object = new JSONObject(result);
-                listener.onSuccess(Frame.fromJson(object));
-                Log.d("http", "success");
-                return;
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
- 
-        listener.onFailed();
-    }
+public class HttpRequestAddPost{
+//	 로그인 세션 체크 (true -> 로그인 상태 / false -> 로그아웃 상태 / 초기 상태)
+//	"login_check", "true"
+//	
+//   로그인 리턴 값 (회원의 고유 아이)		
+//	"user_id", result
+	
 }
