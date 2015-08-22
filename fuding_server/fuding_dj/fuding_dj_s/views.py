@@ -24,9 +24,6 @@ from django.contrib.auth.models import User, UserManager
 from fuding_dj_s.models import *
 from follow.models import *
 
-# GCM API KET
-# AIzaSyDniKsNEhgneJusfbl8NtjNxiYzqwq9gnM
-
 # ------------------------------------------------------------------------------------------------------------
 # USER
 # ------------------------------------------------------------------------------------------------------------
@@ -627,7 +624,7 @@ def test_upload_write_content(request):
 def test_upload_write_frame(request):
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
-	wt_date = request.POST.get('wt_date')
+	wc_date = request.POST.get('wc_date')
 	wc_total = request.POST.get('wc_total') # 해당 카드의 갯수 
 
 	def __unicode__(self):
@@ -639,6 +636,7 @@ def test_upload_write_frame(request):
 	# make frame object
 	write_frame_ = WRITE_FRAME(	wt_index = wt_index,
 								wc_total = wc_total, 
+								wc_date = wc_date,
 								wf_writer = user_name,)
 	write_frame_.save()
 
@@ -673,7 +671,7 @@ def test_upload_write_frame(request):
 		if int(wc_.wc_index_num) == 9:
 			wf_.update(wc_index_9=wc_.wc_index)
 
-	wf_.update(wc_date_sort=wt_date)
+	wf_.update(wc_date=wc_date)
 
 	json_data = json.dumps(write_frame_.wf_index)
 	return HttpResponse(json_data, content_type='application/json')

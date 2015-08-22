@@ -61,6 +61,24 @@ class USER_FOLLOWS(models.Model):
 	user_id = models.CharField(verbose_name=u'user_id', default='no name', max_length=20,)
 	following_id = models.CharField(verbose_name=u'following_id', default='no name', max_length=20,)
 
+class USER_NOTIS(models.Model):
+	class Meta:
+		verbose_name = u'USER_NOTIS'
+		db_table = 'USER_NOTIS_DB'
+	noti_index = models.AutoField(verbose_name=u'noti_index', primary_key=True, db_index=True, )
+	user_id = models.CharField(verbose_name=u'user_id', default='no name', max_length=20,)
+	# 활동을 취한 사람의 아이디 
+	noti_id = models.CharField(verbose_name=u'noti_id', default='no name', max_length=20,)
+	# 활동이 취해진 글 번호 -> 팔로우인 경우 0을 취한다.
+	wf_index = models.IntegerField(verbose_name=u'wf_index', null=False, default=0)
+	# 1: 좋아요, 2: 댓글, 3: 팔로우 
+	noti_flag = models.IntegerField(verbose_name=u'noti_flag', default=0)
+	# 0: not read, 1: read
+	noti_read = models.IntegerField(verbose_name=u'noti_read', default=0)
+	# 좋아요, 댓글, 팔로우 시에 하나씩 추가해서 보내주어야 함 !
+	noti_date = models.CharField(verbose_name=u'noti_date', max_length=20, null=False, default='yyyy/mm/dd', )
+	noti_date_sort = models.DateTimeField(verbose_name=u'noti_date_sort', default=datetime.now, blank=True, )
+
 
 # follow api
 class MyModel(models.Model):

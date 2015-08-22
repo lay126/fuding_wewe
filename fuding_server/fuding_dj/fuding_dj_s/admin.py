@@ -47,6 +47,11 @@ class USER_FOLLOWSAdmin(admin.ModelAdmin):
 	list_display = ('user_id',
 					'following_id', )
 
+class USER_NOTISAdmin(admin.ModelAdmin):
+	list_display = ('noti_index',
+					'user_id', 'wf_index', 
+					'noti_id', 'noti_flag', 'noti_read', 'noti_date', 'noti_date_sort', )
+
 class WRITE_FRAMEAdmin(admin.ModelAdmin):
 	list_display = ('wf_index', 'wf_writer', 'wf_likes', 'wf_likes',
 					'wt_index',
