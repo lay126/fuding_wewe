@@ -1,39 +1,65 @@
 package wewe.fuding.activity;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import wewe.fuding.domain.Frame;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.ErrorListener;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
+import wewe.fuding.activity.AddPostingActivity.Item;
+import wewe.fuding.utils.ImageDownloader;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 public class DetailActivity  extends Activity { 
 	
 	String quant, writer, likes, name, tag, times, ingre, total;
-
+	String[] wc_image = null;
+	String[] wc_timer= null;
+	String[] wc_text = null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
 		
+		// 서버로부터 값 받아오기 
 		getAllContent();
+		
+		TextView text_quant = (TextView)findViewById(R.id.text_quant);
+		TextView text_writer = (TextView)findViewById(R.id.text_writer);
+		TextView text_likes = (TextView)findViewById(R.id.text_likes);
+		TextView text_name = (TextView)findViewById(R.id.text_name);
+		TextView text_tag = (TextView)findViewById(R.id.text_tag);
+		TextView text_times = (TextView)findViewById(R.id.text_times);
+		TextView text_ingre = (TextView)findViewById(R.id.text_ingre); 
+		
+		text_quant.setText("양 :"+quant);
+		text_writer.setText("작성자 :"+writer);
+		text_likes.setText("좋아요 :"+likes);
+		text_name.setText("음식이름 :"+name);
+		text_tag.setText("기타 태그 :"+tag);
+		text_times.setText("총 소요시간 :"+times);
+		text_ingre.setText("재료 태그 :"+ingre);
 	}
 
 	private void getAllContent() {
@@ -77,8 +103,10 @@ public class DetailActivity  extends Activity {
 						
 						Log.d("detail", quant+writer+likes+name+tag+times+ingre+total);
 						
-						for (int i=0; i<Integer.parseInt(total); i++) {
-							
+						for (int j=0; j<Integer.parseInt(total); j++) {
+							wc_image[j] = jsonFrame.getString("wc_image_"+j);
+							wc_timer[j] = jsonFrame.getString("wc_timer_"+j);
+							wc_text[j] = jsonFrame.getString("wc_text_"+j);
 						}
 					}
 				} catch (JSONException e) {
@@ -111,6 +139,62 @@ public class DetailActivity  extends Activity {
 		};
 		mQueue.add(req);
 	}
+	
+	
+	private class ViewHolder {
+		public TextView quant, writer, likes, name, tag, times, ingre, total;
+		public ImageView foodImageView;
+		public TextView content_text, time_text;
+	}
+
+	private class ItemAdapter extends ArrayAdapter<Item> {
+		
+		public ItemAdapter(List<Item> objects) {
+		
+			super(DetailActivity.this, R.layout.row_detail_item, R.id.stepEditText, objects);
+		}	
+
+		@Override
+		public View getView(final int position, View convertView, ViewGroup parent) {
+			View v = super.getView(position, convertView, parent);
+			final Item item = getItem(position);
+			if (v != convertView && v != null) {
+				ViewHolder holder = new ViewHolder();
+
+				ImageView foodImage = (ImageView) v.findViewById(R.id.foodImageView);
+				holder.foodImageView = foodImage;
+
+				TextView content = (TextView) v.findViewById(R.id.content_text);
+				holder.content_text = content;
+				 
+				TextView time = (TextView) v.findViewById(R.id.time_text);
+				holder.time_text = time;
+				
+				v.setTag(holder);
+			}
+
+			final ViewHolder holder = (ViewHolder) v.getTag();
+			
+			if (wc_text != null) {
+				holder.content_text.setText(wc_text[position]);
+				holder.time_text.setText(wc_timer[position]);
+				ImageDownloader.download(wc_image[position], holder.foodImageView, 0);
+			}
+			
+			return v;
+		}
+
+		@Override
+		public long getItemId(int position) {
+		    return position;
+		}
+
+	}
+
+	
+	
+	
+	
 	
 	
 }	
