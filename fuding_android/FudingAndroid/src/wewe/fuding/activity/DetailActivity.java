@@ -1,7 +1,7 @@
 package wewe.fuding.activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import wewe.fuding.activity.AddPostingActivity.Item;
+import wewe.fuding.domain.Detail;
 import wewe.fuding.utils.ImageDownloader;
 import android.app.ListActivity;
 import android.content.SharedPreferences;
@@ -18,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,38 +34,31 @@ import com.android.volley.toolbox.Volley;
 public class DetailActivity  extends ListActivity { 
 	
 	String quant, writer, likes, name, tag, times, ingre, total;
-	String[] wc_image = null;
-	String[] wc_timer= null;
-	String[] wc_text = null;
+	TextView text_quant, text_writer, text_likes, text_name, text_tag, text_times, text_ingre;
+	
+	private ArrayList<Detail> arrayDetail;
 	private ItemAdapter adapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
-		
+		arrayDetail = new ArrayList<Detail>();
 		// 서버로부터 값 받아오기 
 		getAllContent();
 		
-		TextView text_quant = (TextView)findViewById(R.id.text_quant);
-		TextView text_writer = (TextView)findViewById(R.id.text_writer);
-		TextView text_likes = (TextView)findViewById(R.id.text_likes);
-		TextView text_name = (TextView)findViewById(R.id.text_name);
-		TextView text_tag = (TextView)findViewById(R.id.text_tag);
-		TextView text_times = (TextView)findViewById(R.id.text_times);
-		TextView text_ingre = (TextView)findViewById(R.id.text_ingre); 
+		text_quant = (TextView)findViewById(R.id.text_quant);
+		text_writer = (TextView)findViewById(R.id.text_writer);
+		text_likes = (TextView)findViewById(R.id.text_likes);
+		text_name = (TextView)findViewById(R.id.text_name);
+		text_tag = (TextView)findViewById(R.id.text_tag);
+		text_times = (TextView)findViewById(R.id.text_times);
+		text_ingre = (TextView)findViewById(R.id.text_ingre); 
 		
-		text_quant.setText("양 :"+quant);
-		text_writer.setText("작성자 :"+writer);
-		text_likes.setText("좋아요 :"+likes);
-		text_name.setText("음식이름 :"+name);
-		text_tag.setText("기타 태그 :"+tag);
-		text_times.setText("총 소요시간 :"+times);
-		text_ingre.setText("재료 태그 :"+ingre);
 		
-		ListView listView = (ListView)findViewById(R.id.listView);
+		//ListView listView = (ListView)findViewById(R.id.listView);
 		
-		adapter = new ItemAdapter();
-		setListAdapter(adapter);
+		
 	}
 
 	private void getAllContent() {
@@ -107,13 +100,27 @@ public class DetailActivity  extends ListActivity {
 						ingre = jsonFrame.getString("wt_ingre"); 
 						total = jsonFrame.getString("wc_total");
 						
+						text_quant.setText("양 :"+quant);
+						text_writer.setText("작성자 :"+writer);
+						text_likes.setText("좋아요 :"+likes);
+						text_name.setText("음식이름 :"+name);
+						text_tag.setText("기타 태그 :"+tag);
+						text_times.setText("총 소요시간 :"+times);
+						text_ingre.setText("재료 태그 :"+ingre);
+
 						Log.d("detail", quant+writer+likes+name+tag+times+ingre+total);
+						String a = jsonFrame.getString("wc_img_"+1);
 						
-						for (int j=0; j<Integer.parseInt(total); j++) {
-							wc_image[j] = jsonFrame.getString("wc_image_"+j);
-							wc_timer[j] = jsonFrame.getString("wc_timer_"+j);
-							wc_text[j] = jsonFrame.getString("wc_text_"+j);
+						for (int j=1; j<=Integer.parseInt(total); j++) {
+							Detail detail = new Detail();
+							detail.setImage(jsonFrame.getString("wc_img_"+j));
+							detail.setContent(jsonFrame.getString("wc_text_"+j));
+							detail.setTime(jsonFrame.getString("wc_times_"+j));
+							
+							arrayDetail.add(detail);
 						}
+						adapter = new ItemAdapter(arrayDetail);
+						setListAdapter(adapter);
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -153,19 +160,20 @@ public class DetailActivity  extends ListActivity {
 		public TextView content_text, time_text;
 	}
 
-	private class ItemAdapter extends ArrayAdapter<Item> {
+	private class ItemAdapter extends ArrayAdapter<Detail> {
 		
-		public ItemAdapter() {
+		public ItemAdapter(ArrayList<Detail> arrayDetail) {
 		
-			super(DetailActivity.this, R.layout.row_detail_item, R.id.foodImageView);
+			super(DetailActivity.this, R.layout.row_detail_item, R.id.content_text, arrayDetail);
 		}	
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			View v = super.getView(position, convertView, parent);
-			final Item item = getItem(position);
+			final Detail detail = getItem(position);
 			if (v != convertView && v != null) {
 				ViewHolder holder = new ViewHolder();
+
 
 				ImageView foodImage = (ImageView) v.findViewById(R.id.foodImageView);
 				holder.foodImageView = foodImage;
@@ -181,12 +189,10 @@ public class DetailActivity  extends ListActivity {
 
 			final ViewHolder holder = (ViewHolder) v.getTag();
 			
-			if (wc_text != null) {
-				holder.content_text.setText(wc_text[position]);
-				holder.time_text.setText(wc_timer[position]);
-				ImageDownloader.download(wc_image[position], holder.foodImageView, 0);
-			}
-			
+			holder.content_text.setText(detail.getContent());
+			holder.time_text.setText(detail.getTime());
+			ImageDownloader.download("http://119.205.252.224:8000/get/image/"+detail.getImage(), holder.foodImageView, 0);
+
 			return v;
 		}
 
