@@ -547,7 +547,7 @@ def set_like(request):
 		tmp = wf_.wf_likes + 1
 		wf2_ = WRITE_FRAME.objects.filter(wf_index=wf_index)
 		wf2_.update(wf_likes=tmp)
-		
+
 	if len(like_) is not 0:
 		# 이미 좋아요 된 경우. 없애고, return 0
 		for l_ in like_ :
@@ -891,6 +891,11 @@ def upload_write_comment(request):
 		# 2번째인자 : 활동을 취한 사람의 아이디 
 		### wf_index: 댓글 노티의 경우는, 글번호가 아닌 댓글 번호를 넘겨주어야 한다
 		do_noti(wf_.wf_writer, user_name, 2, comment_.wcm_index, noti_date)
+
+		# 글 디비 댓글 필드 +1 
+		tmp = wf_.wf_comments + 1
+		wf2_ = WRITE_FRAME.objects.filter(wf_index=wf_index)
+		wf2_.update(wf_comments=tmp)
 	except:
 		dic['comment_state'] = '1'
 
@@ -1031,6 +1036,11 @@ def delete_comment(request):
 		if user_name == wcm_.wcm_writer:
 			wcm_.delete();
 			dic['comment_state'] = '0'
+
+		# 글 디비 댓글 필드 -1 
+		tmp = wf_.wf_comments -1
+		wf2_ = WRITE_FRAME.objects.filter(wf_index=wf_index)
+		wf2_.update(wf_comments=tmp)
 	except:
 		dic['comment_state'] = '1'
 
