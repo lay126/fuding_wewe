@@ -72,16 +72,16 @@ public class Fragment_Profile extends Fragment {
 		TextView userName = (TextView) v.findViewById(R.id.profile_txtUserId);
 		SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
         String name = pref.getString("user_name", "ayoung");
-        String myProfile = pref.getString("myImage", "");
-        Log.d("url_fragment", myProfile);
+//        String myProfile = pref.getString("myImage", "");
+//        Log.d("url_fragment", myProfile);
         
         userName.setText(name);
         
         photo = (NetworkImageView) v.findViewById(R.id.profile_imgViewProfile);
-        String URL_img_address = "http://119.205.252.224:8000/get/image/"+myProfile;
-        
-		FudingAPI API = FudingAPI.getInstance(activity);
-		photo.setImageUrl(URL_img_address, API.getmImageLoader());
+//        String URL_img_address = "http://119.205.252.224:8000/get/image/"+myProfile;
+//        
+//		FudingAPI API = FudingAPI.getInstance(activity);
+//		photo.setImageUrl(URL_img_address, API.getmImageLoader());
 		
 //        photo.setBackgroundColor(Color.WHITE);
 //        photo.setImageURI(myUri);
@@ -94,11 +94,84 @@ public class Fragment_Profile extends Fragment {
 				startActivity(new Intent(activity, UpdateProfileActivity.class));
 			}
 		});
-
+		getMyImage();
 		showMyContent(v, contentArr);
 		return v;
 	}
 
+	private void getMyImage() {
+		String URL_address = "http://119.205.252.224:8000/get/user/profile/";
+
+		RequestQueue mQueue;
+		mQueue = Volley.newRequestQueue(activity);
+
+		Listener<String> listener = new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				// to make data available
+				String arrRes = "{'response':" + response + "}";
+				Log.d("detail_update_re", arrRes);
+
+				JSONObject jobject = null;
+				try {
+					jobject = new JSONObject(arrRes);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				JSONArray jarray = null;
+				try {
+					jarray = jobject.getJSONArray("response");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				try {
+					for (int i = 0; i < jarray.length(); i++) {
+						JSONObject jsonFrame = (JSONObject) jarray.get(i);
+						String image_url = jsonFrame.getString("user_img");
+						SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
+						SharedPreferences.Editor editor = pref.edit();
+						editor.putString("myImage", image_url+"");
+				        editor.commit();
+						Log.d("url_put", image_url);
+						String URL_img_address = "http://119.205.252.224:8000/get/image/"+ image_url;
+						FudingAPI API = FudingAPI.getInstance(activity);
+						photo.setImageUrl(URL_img_address, API.getmImageLoader());
+						
+						
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+
+		ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				error.printStackTrace();
+				Toast.makeText(activity, "상세페이지 : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
+						Toast.LENGTH_LONG).show();
+			}
+		};
+
+		StringRequest req = new StringRequest(Method.POST, URL_address, listener, errorListener) {
+				@Override
+				protected Map<String, String> getParams()
+						throws AuthFailureError {
+					Map<String, String> params = new HashMap<String, String>();
+					SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
+					String index = pref.getString("user_name", "");
+					
+					params.put("user_name", index+"");
+
+					return params;
+				}
+		};
+		mQueue.add(req);
+	}
+	
 	private void showMyContent(View v, final ArrayList<Content> contentArr) {
 		String URL_address = "http://119.205.252.224:8000/get/myfeed/";
 
