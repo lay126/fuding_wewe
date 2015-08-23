@@ -13,18 +13,21 @@
         android:src="@drawable/ic_launcher" />
 
     <TextView
-        android:id="@+id/content_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="설명" />
-
-    <TextView
         android:id="@+id/time_text"
         android:layout_width="41dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
         android:ems="10"
         android:inputType="number"
-        android:text="분" >
-    </TextView>
+        android:text="" />
+
+    <TextView
+        android:id="@+id/content_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textSize="17sp"
+        android:text="설명" />
 
 </LinearLayout>
