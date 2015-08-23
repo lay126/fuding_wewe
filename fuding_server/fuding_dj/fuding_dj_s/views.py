@@ -350,10 +350,6 @@ def get_recipe(request):
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
-
-# 해당 글
-
-
 # 사용자별 노티 뿌려줌
 @csrf_exempt
 def get_noti(request):
@@ -829,9 +825,91 @@ def upload_write_comment(request):
 
 @csrf_exempt
 def delete_write(request):
+	# 라이크(노티) 삭제 > 댓글(노티) 삭제 > 태그 삭제 > 콘텐츠 삭제 > 타이틀 삭제 > 프레임 삭제
 	datas = []
 	dic = dict()
 
+	try:
+		user_name = request.POST.get('user_name')
+		wf_index = request.POST.get('wf_index')
+		dic['result'] = '0'
+
+		# 라이크 노티 삭제 
+		try:
+			wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
+			do_unnoti(wf_.wf_writer, user_name, 1, wf_index)
+		except:
+			dic['라이크 노티'] = '라이크 노티 삭제'
+
+		# 라이크 삭제
+		try:
+			like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=wf_index)
+			for l_ in like_ :
+					l_.delete()
+		except:
+			dic['라이크'] = '라이크 삭제'
+
+
+		# 댓글 리스트 받아옴
+		try:
+			################### wf_wt_index ##########################################################################################
+			wcm_list_ = WRITE_COMMENT.objects.filter(wt_index=wf_index)
+			# wcm_list_ = WRITE_COMMENT.objects.filter(wf_index=wf_index)
+			##########################################################################################################################
+			wt_ = WRITE_TITLE.objects.get(wt_index=wf_.wt_index)
+
+			if len(wcm_list_) is 0:
+				dic['댓글 리스트1'] = 0
+			else:
+				try:
+					for wcm_ in wcm_list_:
+						# 댓글 노티 삭제 
+						try:
+							do_unnoti(wf_.wf_writer, user_name, 2, wcm_.wcm_index)
+						except:
+							dic['댓글 노티'] = '댓글 노티 삭제'
+						# 댓글 삭제 
+						try:
+							wcm_.delete()
+						except:
+							dic['댓글'] = '댓글 삭제'
+				except:
+					dic['댓글 리스트2'] = wcm_.wcm_index
+		except:
+			dic['댓글 리스트3'] = len(wcm_list_)
+			pass
+
+		# 태그 삭제
+		try:
+			tag_list_ = WRITE_TAG.objects.filter(wt_index=wt_.wt_index)
+			for tag_ in tag_list_:
+				tag_.delete()
+		except:
+			dic['result'] = '태그 삭제'
+
+		# 콘텐츠 삭제
+		try:
+			wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wf_.wt_index)
+			for wc_ in wc_list_:
+				wc_.delete()
+		except:
+			dic['result'] = '콘텐츠 삭제'
+
+		# 타이틀 삭제
+		try:
+			wt_.delete()
+		except:
+			dic['result'] = '타이틀 삭제'
+
+		# 프레임 삭제
+		try:
+			wf_.delete()
+		except:
+			dic['result'] = '프레임 삭제'
+	except:
+		dic['result'] = '1'
+
+	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 @csrf_exempt
