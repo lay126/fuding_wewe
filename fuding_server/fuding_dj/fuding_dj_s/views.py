@@ -351,6 +351,9 @@ def get_recipe(request):
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
+# 해당 글
+
+
 # 사용자별 노티 뿌려줌
 @csrf_exempt
 def get_noti(request):
@@ -642,6 +645,7 @@ def do_unnoti(user_id, noti_id, noti_flag, wf_index):
 		pass
 
 	return 0
+
 
 # ------------------------------------------------------------------------------------------------------------
 # WRITE
