@@ -63,29 +63,12 @@ public class FudingMainActivity extends FragmentActivity {
 		me = this;
 		Log.d(TAG, "onCreate");
 
-		// 상단 탭
+		// 탭
 		newsfeed_layout = (RelativeLayout) findViewById(R.id.newsfeed_layout);
 		addpost_layout = (RelativeLayout) findViewById(R.id.addpost_layout);
 		alarm_layout = (RelativeLayout) findViewById(R.id.alarm_layout);
 		profile_layout = (RelativeLayout) findViewById(R.id.profile_layout);
-
-//		// 상단 탭 안에 들어가는 이미지
-//		newsfeed_btn = (ImageView) findViewById(R.id.img_main_friend);
-//		addpost_btn = (ImageView) findViewById(R.id.img_main_recent);
-//		alarm_btn = (ImageView) findViewById(R.id.img_main_search);
-//		profile_btn = (ImageView) findViewById(R.id.img_main_setting);
-
-//		// 클릭됬을 때 하단에 보이는 바
-//		newsfeed_bottom = (View) findViewById(R.id.btn_friend_bottom_bar);
-//		addpost_bottom = (View) findViewById(R.id.btn_recent_bottom_bar);
-//		alarm_bottom = (View) findViewById(R.id.btn_search_bottom_bar);
-//		profile_bottom = (View) findViewById(R.id.btn_setting_bottom_bar);
-//
-		newsfeed_textView = (TextView) findViewById(R.id.newsfeed_text);
-		addpost_textView = (TextView) findViewById(R.id.addpost_text);
-		alarm_textView = (TextView) findViewById(R.id.alarm_text);
-		profile_textView = (TextView) findViewById(R.id.profile_text);
-
+ 
 		// 프래그먼트 초기화. 스와이프를 사용하기위해 해놓은것.
 		frag_newsfeed = Fragment_NewsFeed.getInstance();
 		frag_addpost = Fragment_AddPost.getInstance();
@@ -137,8 +120,7 @@ public class FudingMainActivity extends FragmentActivity {
 		});
 
 		// 친구탭은 누른 상태로 시작
-//		newsfeed_btn.setImageResource(R.drawable.friend_ic_on);
-//		newsfeed_bottom.setVisibility(View.VISIBLE);
+		newsfeed_layout.setBackgroundResource(R.drawable.tap01_s);
 
 		Log.d(TAG, "getIntent() : " + getIntent());
 
@@ -218,21 +200,25 @@ public class FudingMainActivity extends FragmentActivity {
 		// 버튼 눌렸을때 눌린 느낌을 주기위한 버튼바꿔주는 함수.
 		switch (pos) {
 		case 0:
+			newsfeed_layout.setBackgroundResource(R.drawable.tap01_s);
 //			newsfeed_textView.setTextColor(getResources().getColor(R.color.bridge_green));
 //			newsfeed_bottom.setVisibility(View.VISIBLE);
 //			newsfeed_btn.setImageResource(R.drawable.friend_ic_on);
 			break;
 		case 1:
+			addpost_layout.setBackgroundResource(R.drawable.tap02_s);
 //			addposting_textView.setTextColor(getResources().getColor(R.color.bridge_green));
 //			addposting_bottom.setVisibility(View.VISIBLE);
 //			addposting_btn.setImageResource(R.drawable.recent_ic_on);
 			break;
 		case 2:
+			alarm_layout.setBackgroundResource(R.drawable.tap03_s);
 //			alarm_textView.setTextColor(getResources().getColor(R.color.bridge_green));
 //			alarm_bottom.setVisibility(View.VISIBLE);
 //			alarm_btn.setImageResource(R.drawable.friend_keypad_ic_on);
 			break;
 		case 3:
+			profile_layout.setBackgroundResource(R.drawable.tap04_s);
 //			profile_textView.setTextColor(getResources().getColor(R.color.bridge_green));
 //			profile_bottom.setVisibility(View.VISIBLE);
 //			profile_btn.setImageResource(R.drawable.setting_ic_on);
@@ -242,21 +228,25 @@ public class FudingMainActivity extends FragmentActivity {
 
 		switch (selected_button) {
 		case 0:
+			newsfeed_layout.setBackgroundResource(R.drawable.tap01_n);
 //			newsfeed_textView.setTextColor(getResources().getColor(R.color.main_text));
 //			newsfeed_bottom.setVisibility(View.INVISIBLE);
 //			newsfeed_btn.setImageResource(R.drawable.friend_ic_off);
 			break;
 		case 1:
+			addpost_layout.setBackgroundResource(R.drawable.tap02_n);
 //			addposting_textView.setTextColor(getResources().getColor(R.color.main_text));
 //			addposting_bottom.setVisibility(View.INVISIBLE);
 //			addposting_btn.setImageResource(R.drawable.recent_ic_off);
 			break;
 		case 2:
+			alarm_layout.setBackgroundResource(R.drawable.tap03_n);
 //			alarm_textView.setTextColor(getResources().getColor(R.color.main_text));
 //			alarm_bottom.setVisibility(View.INVISIBLE);
 //			alarm_btn.setImageResource(R.drawable.friend_keypad_ic_off);
 			break;
 		case 3:
+			profile_layout.setBackgroundResource(R.drawable.tap04_n);
 //			profile_textView.setTextColor(getResources().getColor(R.color.main_text));
 //			profile_bottom.setVisibility(View.INVISIBLE);
 //			profile_btn.setImageResource(R.drawable.setting_ic_off);
