@@ -68,10 +68,7 @@ class WRITE_CONTENTAdmin(admin.ModelAdmin):
 					'wc_index_num', 'wc_img', 'wc_text', 'wc_times')
 
 class WRITE_COMMENTAdmin(admin.ModelAdmin):
-	list_display = ('wcm_index', 
-					'wt_index',
-					################### wf_wt_index ##########################################################################################
-					# 'wf_index',
+	list_display = ('wcm_index', 'wt_index',
 					'wcm_writer', 'wcm_text', 'wcm_date', )
 
 class WRITE_TAGAdmin(admin.ModelAdmin):

@@ -631,12 +631,11 @@ def do_unnoti(user_id, noti_id, noti_flag, wf_index):
 
 	return 0
 
-
 # ------------------------------------------------------------------------------------------------------------
 # WRITE
 # ------------------------------------------------------------------------------------------------------------
 @csrf_exempt
-def upload_write_title(request):
+def test_upload_write_title(request):
 	user_name = request.POST.get('user_name')
 	wt_name = request.POST.get('wt_name')
 	wt_ingre = request.POST.get('wt_ingre')
@@ -667,7 +666,7 @@ def upload_write_title(request):
 
 
 @csrf_exempt
-def upload_write_content(request):
+def test_upload_write_content(request):
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
 	wc_index_num = request.POST.get('wc_index_num') # 해당 카드의 순서 번호 
@@ -710,7 +709,7 @@ def upload_write_content(request):
 
 
 @csrf_exempt
-def upload_write_frame(request):
+def test_upload_write_frame(request):
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
 	wc_date = request.POST.get('wc_date')
@@ -766,6 +765,7 @@ def upload_write_frame(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
+<<<<<<< HEAD
 
 @csrf_exempt
 def upload_write_comment(request):
@@ -799,6 +799,8 @@ def delete_comment(request):
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
+=======
+>>>>>>> aed6069b749fd1a5495339e57ff8f8e22335e0b0
 # ------------------------------------------------------------------------------------------------------------
 # SEARCH
 # ------------------------------------------------------------------------------------------------------------
