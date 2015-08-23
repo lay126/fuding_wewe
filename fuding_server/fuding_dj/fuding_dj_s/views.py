@@ -635,7 +635,7 @@ def do_unnoti(user_id, noti_id, noti_flag, wf_index):
 # WRITE
 # ------------------------------------------------------------------------------------------------------------
 @csrf_exempt
-def test_upload_write_title(request):
+def upload_write_title(request):
 	user_name = request.POST.get('user_name')
 	wt_name = request.POST.get('wt_name')
 	wt_ingre = request.POST.get('wt_ingre')
@@ -666,7 +666,7 @@ def test_upload_write_title(request):
 
 
 @csrf_exempt
-def test_upload_write_content(request):
+def upload_write_content(request):
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
 	wc_index_num = request.POST.get('wc_index_num') # 해당 카드의 순서 번호 
@@ -709,7 +709,7 @@ def test_upload_write_content(request):
 
 
 @csrf_exempt
-def test_upload_write_frame(request):
+def upload_write_frame(request):
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
 	wc_date = request.POST.get('wc_date')
