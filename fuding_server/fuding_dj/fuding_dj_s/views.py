@@ -856,6 +856,13 @@ def upload_write_frame(request):
 
 	wf_.update(wc_date=wc_date)
 
+	# 글 작성자, 작성글 수 +1
+	user_ = User.objects.get(username=user_name)
+	user_data_ = USER_DATA.objects.get(user_id=user_)
+	tmp = user_data_.user_writes + 1
+	user_data_ = USER_DATA.objects.filter(user_id=user_)
+	user_data_.update(user_writes=tmp)
+
 	json_data = json.dumps(write_frame_.wf_index)
 	return HttpResponse(json_data, content_type='application/json')
 
@@ -1007,9 +1014,16 @@ def delete_write(request):
 			dic['result'] = '1'
 			# dic['result'] = '프레임 삭제'
 			pass
+		# 글 작성자, 작성글 수 +1
+		user_ = User.objects.get(username=user_name)
+		user_data_ = USER_DATA.objects.get(user_id=user_)
+		tmp = user_data_.user_writes - 1
+		user_data_ = USER_DATA.objects.filter(user_id=user_)
+		user_data_.update(user_writes=tmp)
 	except:
 		dic['result'] = '1'
 		pass
+
 
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
