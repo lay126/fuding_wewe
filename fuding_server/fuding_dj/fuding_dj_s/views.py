@@ -300,6 +300,7 @@ def get_recipe(request):
 	dic['wf_index'] = str(wf_index)
 	dic['wf_writer'] = str(wf_.wf_writer)
 	dic['wf_likes'] = str(wf_.wf_likes)
+	dic['wf_comments'] = str(wf_.wf_comments)
 	dic['wc_total'] = str(wf_.wc_total)
 
 	# wt
