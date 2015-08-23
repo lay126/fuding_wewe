@@ -818,7 +818,8 @@ def upload_write_comment(request):
 		# 댓글 작성 노티, 디비에 추가 
 		wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
 		# 2번째인자 : 활동을 취한 사람의 아이디 
-		do_noti(wf_.wf_writer, user_name, 2, wf_index, noti_date)
+		### wf_index: 댓글 노티의 경우는, 글번호가 아닌 댓글 번호를 넘겨주어야 한다
+		do_noti(wf_.wf_writer, user_name, 2, comment_.wcm_index, noti_date)
 	except:
 		dic['comment_state'] = '1'
 
@@ -836,6 +837,13 @@ def delete_comment(request):
 		wf_index = request.POST.get('wf_index')
 		wcm_index = request.POST.get('wcm_index')
 
+		# 댓글 삭제 노티, 디비에 추가 
+		wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
+		# 2번째인자 : 활동을 취한 사람의 아이디 
+		### wf_index: 댓글 노티의 경우는, 글번호가 아닌 댓글 번호를 넘겨주어야 한다
+		do_unnoti(wf_.wf_writer, user_name, 2, wcm_index)
+
+		# 댓글 삭제 
 		wcm_ = WRITE_COMMENT.objects.get(wcm_index=wcm_index)
 		if user_name == wcm_.wcm_writer:
 			wcm_.delete();
