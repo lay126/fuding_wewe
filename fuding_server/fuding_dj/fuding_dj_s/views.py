@@ -800,7 +800,22 @@ def upload_write_comment(request):
 
 @csrf_exempt
 def delete_comment(request):
+	datas = []
+	dic = dict()
 
+	try: 
+		user_name = request.POST.get('user_name') # wcm_writer에 들어간다.
+		wf_index = request.POST.get('wf_index')
+		wcm_index = request.POST.get('wcm_index')
+
+		wcm_ = WRITE_COMMENT.objects.get(wcm_index=wcm_index)
+		if user_name == wcm_.wcm_writer:
+			wcm_.delete();
+			dic['comment_state'] = '0'
+	except:
+		dic['comment_state'] = '1'
+
+	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 

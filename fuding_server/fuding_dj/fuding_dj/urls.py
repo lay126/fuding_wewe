@@ -32,6 +32,8 @@ urlpatterns = patterns('',
     url(r'^upload/write/frame/', 'fuding_dj_s.views.upload_write_frame'),
     url(r'^upload/write/comment/', 'fuding_dj_s.views.upload_write_comment'),
 
+    url(r'^delete/comment/', 'fuding_dj_s.views.delete_comment'),
+
     # set url
     #----------------------------------------------------------------------------
     url(r'^set/like/', 'fuding_dj_s.views.set_like'),
