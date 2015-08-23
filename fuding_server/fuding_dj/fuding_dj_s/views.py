@@ -203,6 +203,25 @@ def get_profile(request):
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
+@csrf_exempt
+def get_user_profile(request):
+	user_name = request.POST.get('user_name')
+
+	datas = []
+	dic = dict()
+
+	user_ = User.objects.get(username=user_name)
+	user_data_ = USER_DATA.objects.get(user_id=user_)
+
+	try:
+		dic['user_img'] = user_data_.user_img.url
+	except:
+		# 지정된 프로필 사진 없는 경우 
+		dic['user_img'] = ""
+
+	datas.append(dic)
+	return HttpResponse(json.dumps(datas), content_type='application/json')
+
 
 # ------------------------------------------------------------------------------------------------------------
 # FEED
@@ -832,6 +851,7 @@ def delete_write(request):
 	try:
 		user_name = request.POST.get('user_name')
 		wf_index = request.POST.get('wf_index')
+		# 삭제 성공값 세팅 -> 실패시 1로 바뀌게 된다 
 		dic['result'] = '0'
 
 		# 라이크 노티 삭제 
@@ -839,15 +859,19 @@ def delete_write(request):
 			wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
 			do_unnoti(wf_.wf_writer, user_name, 1, wf_index)
 		except:
-			dic['라이크 노티'] = '라이크 노티 삭제'
+			# dic['라이크 노티'] = '라이크 노티 삭제'
+			dic['result'] = '1'
+			pass
 
 		# 라이크 삭제
 		try:
-			like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=wf_index)
+			like_ = USER_LIKES.objects.filter(wf_index=wf_index)
 			for l_ in like_ :
 					l_.delete()
 		except:
-			dic['라이크'] = '라이크 삭제'
+			# dic['라이크'] = '라이크 삭제'
+			dic['result'] = '1'
+			pass
 
 
 		# 댓글 리스트 받아옴
@@ -859,7 +883,8 @@ def delete_write(request):
 			wt_ = WRITE_TITLE.objects.get(wt_index=wf_.wt_index)
 
 			if len(wcm_list_) is 0:
-				dic['댓글 리스트1'] = 0
+				# dic['댓글 리스트1'] = 0
+				dic['result'] = '0'
 			else:
 				try:
 					for wcm_ in wcm_list_:
@@ -867,16 +892,22 @@ def delete_write(request):
 						try:
 							do_unnoti(wf_.wf_writer, user_name, 2, wcm_.wcm_index)
 						except:
-							dic['댓글 노티'] = '댓글 노티 삭제'
+							dic['result'] = '1'
+							# dic['댓글 노티'] = '댓글 노티 삭제'
+							pass
 						# 댓글 삭제 
 						try:
 							wcm_.delete()
 						except:
-							dic['댓글'] = '댓글 삭제'
+							dic['result'] = '1'
+							# dic['result'] = '댓글 삭제'
 				except:
-					dic['댓글 리스트2'] = wcm_.wcm_index
+					dic['result'] = '1'
+					# dic['댓글 리스트2'] = wcm_.wcm_index
+					pass
 		except:
-			dic['댓글 리스트3'] = len(wcm_list_)
+			dic['result'] = '1'
+			# dic['댓글 리스트3'] = len(wcm_list_)
 			pass
 
 		# 태그 삭제
@@ -885,7 +916,9 @@ def delete_write(request):
 			for tag_ in tag_list_:
 				tag_.delete()
 		except:
-			dic['result'] = '태그 삭제'
+			dic['result'] = '1'
+			# dic['result'] = '태그 삭제'
+			pass
 
 		# 콘텐츠 삭제
 		try:
@@ -893,21 +926,28 @@ def delete_write(request):
 			for wc_ in wc_list_:
 				wc_.delete()
 		except:
-			dic['result'] = '콘텐츠 삭제'
+			dic['result'] = '1'
+			# dic['result'] = '콘텐츠 삭제'
+			pass
 
 		# 타이틀 삭제
 		try:
 			wt_.delete()
 		except:
-			dic['result'] = '타이틀 삭제'
+			dic['result'] = '1'
+			# dic['result'] = '타이틀 삭제'
+			pass
 
 		# 프레임 삭제
 		try:
 			wf_.delete()
 		except:
-			dic['result'] = '프레임 삭제'
+			dic['result'] = '1'
+			# dic['result'] = '프레임 삭제'
+			pass
 	except:
 		dic['result'] = '1'
+		pass
 
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
