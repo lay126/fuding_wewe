@@ -127,7 +127,11 @@ class WRITE_CONTENT(models.Model):
 		verbose_name = u'WRITE_CONTENT' 
 		db_table = 'WRITE_CONTENT_DB'
 	wc_index = models.AutoField(verbose_name=u'wc_index', primary_key=True, db_index=True, )
+	################### wf_wt_index ##########################################################################################
+	# 실수... wt_index말고 wf_index여야 한다. 나중에 db갈아 엎을때 꼭 바꾸기 
 	wt_index = models.IntegerField(verbose_name=u'wt_index', null=False, default=0, )
+	# wf_index = models.IntegerField(verbose_name=u'wf_index', null=False, default=0, )
+	##########################################################################################################################
 	wc_index_num = models.IntegerField(verbose_name=u'wc_index_num', null=False, default=0, ) # 글에서 몇번째 카드인지를 명시 
 	wc_img = models.ImageField(verbose_name=u'wc_img', upload_to='fuding_dj_s/images/', blank=True, )
 	wc_text = models.CharField(verbose_name=u'wc_text', max_length=200, )

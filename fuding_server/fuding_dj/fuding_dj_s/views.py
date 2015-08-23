@@ -631,11 +631,12 @@ def do_unnoti(user_id, noti_id, noti_flag, wf_index):
 
 	return 0
 
+
 # ------------------------------------------------------------------------------------------------------------
 # WRITE
 # ------------------------------------------------------------------------------------------------------------
 @csrf_exempt
-def test_upload_write_title(request):
+def upload_write_title(request):
 	user_name = request.POST.get('user_name')
 	wt_name = request.POST.get('wt_name')
 	wt_ingre = request.POST.get('wt_ingre')
@@ -666,7 +667,7 @@ def test_upload_write_title(request):
 
 
 @csrf_exempt
-def test_upload_write_content(request):
+def upload_write_content(request):
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
 	wc_index_num = request.POST.get('wc_index_num') # 해당 카드의 순서 번호 
@@ -709,7 +710,7 @@ def test_upload_write_content(request):
 
 
 @csrf_exempt
-def test_upload_write_frame(request):
+def upload_write_frame(request):
 	user_name = request.POST.get('user_name')
 	wt_index = request.POST.get('wt_index')
 	wc_date = request.POST.get('wc_date')
@@ -764,6 +765,30 @@ def test_upload_write_frame(request):
 	json_data = json.dumps(write_frame_.wf_index)
 	return HttpResponse(json_data, content_type='application/json')
 
+
+
+@csrf_exempt
+def upload_write_comment(request):
+	user_name = request.POST.get('user_name') # wcm_writer에 들어간다.
+	wf_index = request.POST.get('wf_index')
+	wcm_text = request.POST.get('wcm_text')
+
+	################### wf_wt_index ##########################################################################################
+	comment_ = WRITE_COMMENT(	wt_index = wf_index,
+								wcm_writer = user_name,
+								wcm_text = wcm_text )
+	# comment_ = WRITE_COMMENT(	wf_index = wf_index,
+	# 							wcm_writer = user_name,
+	# 							wcm_text = wcm_text )
+	###########################################################################################################################
+	comment_.save();
+
+	return HttpResponse(json.dumps(datas), content_type='application/json')
+
+@csrf_exempt
+def delete_comment(request):
+
+	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 # ------------------------------------------------------------------------------------------------------------
 # SEARCH
