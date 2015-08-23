@@ -3,13 +3,15 @@ package wewe.fuding.widget;
 import java.util.ArrayList;
 
 import wewe.fuding.FudingAPI;
+import wewe.fuding.activity.DetailActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Content;
-import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -24,9 +26,7 @@ public class CustomAdapter_Profile extends BaseAdapter {
 	Context context;
 	LayoutInflater inflater;
 	int layout;
-	private final Integer[] mThumbIds = {};
 	private ArrayList<Content> arrList;
-	private ImageDownloader imgDownloader = new ImageDownloader();
 
 	public CustomAdapter_Profile(Context aContext) {
 		context = aContext;
@@ -40,8 +40,6 @@ public class CustomAdapter_Profile extends BaseAdapter {
 		inflater = (LayoutInflater) aContext
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		arrList = aArrList;
-
-		Log.i("customAdapter_profile", context + " " + " ");
 	}
 
 	@Override
@@ -69,33 +67,36 @@ public class CustomAdapter_Profile extends BaseAdapter {
 		final Context context = parent.getContext();
 
 		if (convertView == null) {
-			// view가 null일 경우 커스텀 레이아웃을 얻어 옴
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.grid_mycontent_item,
 					parent, false);
-
-			// // 리스트 아이템을 터치 했을 때 이벤트 발생
-			// convertView.setOnClickListener(new OnClickListener() {
-			// @Override
-			// public void onClick(View v) {
-			// }
-			// });
 		}
-
-		// image
+		
 		TextView tvMyContent = (TextView) convertView
 				.findViewById(R.id.mycontent_txtView);
 		tvMyContent.setText(arrList.get(pos).getContent());
-		
-		NetworkImageView imgFoodPhoto = (NetworkImageView) convertView.findViewById(R.id.mycontent_imgView);
-		String URL_img_address = "http://119.205.252.224:8000/get/image/"+ arrList.get(pos).getPhoto();
-		Log.i(TAG, URL_img_address);
-//		imgDownloader.download(URL_img_address, imgFoodPhoto, 0);
 
+		NetworkImageView imgFoodPhoto = (NetworkImageView) convertView
+				.findViewById(R.id.mycontent_imgView);
+		String URL_img_address = "http://119.205.252.224:8000/get/image/"
+				+ arrList.get(pos).getPhoto();
 
 		FudingAPI API = FudingAPI.getInstance(context);
 		imgFoodPhoto.setImageUrl(URL_img_address, API.getmImageLoader());
+		imgFoodPhoto.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int wf_index = arrList.get(pos).getContentId();
+				SharedPreferences pref = context.getSharedPreferences("pref",
+						context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putInt("wf_index", wf_index);
+				editor.commit();
+				context.startActivity(new Intent(context, DetailActivity.class));
+			}
+		});
+
 		return convertView;
 	}
 }

@@ -246,6 +246,6 @@ public class OthersProfileActivity extends Activity {
 					OthersProfileActivity.this, contentArr);
 		}
 		gridView.setAdapter(profileAdapter);
-
+		profileAdapter.notifyDataSetChanged();
 	}
 }
