@@ -433,7 +433,9 @@ def get_comment(request):
 		if len(comment_list_) is not 0:	
 			for comment_ in comment_list_:
 				dic['wcm_index'] = comment_.wcm_index
-				dic['wt_index'] = comment_.wt_index
+				################### wf_wt_index ##########################################################################################
+				dic['wf_index'] = comment_.wt_index
+				# dic['wf_index'] = comment_.wf_index
 				dic['wcm_writer'] = comment_.wcm_writer
 				dic['wcm_text'] = comment_.wcm_text
 				dic['result'] = '0'
