@@ -44,7 +44,7 @@ public class OthersProfileActivity extends Activity {
 	private String profileName, userName;
 	private User user;
 	private String flagMe, flagFollow;
-	
+
 	private Content pfContent;
 	private ArrayList<Content> contentArr;
 	private CustomAdapter_Profile profileAdapter;
@@ -211,12 +211,12 @@ public class OthersProfileActivity extends Activity {
 			protected Map<String, String> getParams() throws AuthFailureError {
 				Map<String, String> params = new HashMap<String, String>();
 
-				params.put("profile_name", profileName);
+				params.put("user_name", profileName);
 				return params;
 			}
 		};
 		mQueue.add(req);
-		adapterInit();
+		adapterInit(contentArr);
 	}
 
 	private void init() {
@@ -231,15 +231,21 @@ public class OthersProfileActivity extends Activity {
 		tvFollowers = (TextView) findViewById(R.id.othersprofile_txtFollowers);
 		tvFollowings = (TextView) findViewById(R.id.othersprofile_txtFollowings);
 		gridView = (GridView) findViewById(R.id.othersprofile_gridView);
+		
+		contentArr = new ArrayList<Content>();
 	}
-	
-	private void adapterInit() {
+
+	private void adapterInit(ArrayList<Content> contentArr) {
 		if (contentArr == null) {
-			profileAdapter = new CustomAdapter_Profile(OthersProfileActivity.this);
+			Log.i("othersprofile adapter", "contentArr null");
+			profileAdapter = new CustomAdapter_Profile(
+					OthersProfileActivity.this);
 		} else {
-			profileAdapter = new CustomAdapter_Profile(OthersProfileActivity.this, contentArr);
+			Log.i("othersprofile adapter", "contentArr not null");
+			profileAdapter = new CustomAdapter_Profile(
+					OthersProfileActivity.this, contentArr);
 		}
 		gridView.setAdapter(profileAdapter);
-	
+
 	}
 }
