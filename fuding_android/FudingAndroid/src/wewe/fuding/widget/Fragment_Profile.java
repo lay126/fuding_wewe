@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import wewe.fuding.activity.ProfileActivity;
+import wewe.fuding.activity.UpdateProfileActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Content;
 import android.content.Intent;
@@ -88,7 +88,7 @@ public class Fragment_Profile extends Fragment {
 		edit_profile.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(activity, ProfileActivity.class));
+				startActivity(new Intent(activity, UpdateProfileActivity.class));
 			}
 		});
 

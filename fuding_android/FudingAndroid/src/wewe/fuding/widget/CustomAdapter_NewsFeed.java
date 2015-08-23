@@ -9,7 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import wewe.fuding.activity.DetailActivity;
-import wewe.fuding.activity.ProfileActivity;
+import wewe.fuding.activity.UpdateProfileActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
 import wewe.fuding.utils.ImageDownloader;
