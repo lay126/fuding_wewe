@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import wewe.fuding.activity.AddPostingActivity.Item;
 import wewe.fuding.domain.Detail;
 import wewe.fuding.utils.ImageDownloader;
 import android.app.ListActivity;
@@ -33,8 +32,9 @@ import com.android.volley.toolbox.Volley;
 
 public class DetailActivity  extends ListActivity { 
 	
-	String quant, writer, likes, name, tag, times, ingre, total;
+	String quant, writer, likes, name, tag, times, ingre, total, user_img;
 	TextView text_quant, text_writer, text_likes, text_name, text_tag, text_times, text_ingre;
+	ImageView user_photo;
 	
 	private ArrayList<Detail> arrayDetail;
 	private ItemAdapter adapter;
@@ -52,8 +52,9 @@ public class DetailActivity  extends ListActivity {
 		text_likes = (TextView)findViewById(R.id.text_likes);
 		text_name = (TextView)findViewById(R.id.text_name);
 		text_tag = (TextView)findViewById(R.id.text_tag);
-		text_times = (TextView)findViewById(R.id.text_times);
+//		text_times = (TextView)findViewById(R.id.text_times);
 		text_ingre = (TextView)findViewById(R.id.text_ingre); 
+		user_photo = (ImageView)findViewById(R.id.user_photo); 
 		
 		
 		//ListView listView = (ListView)findViewById(R.id.listView);
@@ -99,17 +100,17 @@ public class DetailActivity  extends ListActivity {
 						times = jsonFrame.getString("wt_times");
 						ingre = jsonFrame.getString("wt_ingre"); 
 						total = jsonFrame.getString("wc_total");
+//						user_img = jsonFrame.getString("user_img");
 						
-						text_quant.setText("양 :"+quant);
-						text_writer.setText("작성자 :"+writer);
-						text_likes.setText("좋아요 :"+likes);
-						text_name.setText("음식이름 :"+name);
-						text_tag.setText("기타 태그 :"+tag);
-						text_times.setText("총 소요시간 :"+times);
-						text_ingre.setText("재료 태그 :"+ingre);
-
-						Log.d("detail", quant+writer+likes+name+tag+times+ingre+total);
-						String a = jsonFrame.getString("wc_img_"+1);
+						text_quant.setText("#"+quant+"인분 " + "#"+times+"분");
+						text_writer.setText(""+writer);
+						text_likes.setText(likes);
+						text_name.setText("#"+name);
+						text_tag.setText(tag);
+//						text_times.setText("#"+times+"분");
+						text_ingre.setText(ingre);
+						
+//						ImageDownloader.download("http://119.205.252.224:8000/get/image/"+user_img, user_photo, 2);	// 이미지 라운드 
 						
 						for (int j=1; j<=Integer.parseInt(total); j++) {
 							Detail detail = new Detail();
@@ -191,7 +192,7 @@ public class DetailActivity  extends ListActivity {
 			
 			holder.content_text.setText(detail.getContent());
 			holder.time_text.setText(detail.getTime());
-			ImageDownloader.download("http://119.205.252.224:8000/get/image/"+detail.getImage(), holder.foodImageView, 0);
+			ImageDownloader.download("http://119.205.252.224:8000/get/image/"+detail.getImage(), holder.foodImageView, 3);
 
 			return v;
 		}
