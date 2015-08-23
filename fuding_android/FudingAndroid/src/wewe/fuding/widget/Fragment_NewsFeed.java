@@ -135,13 +135,13 @@ public class Fragment_NewsFeed extends Fragment {
 						nfFrame = new Frame();
 
 						nfFrame.setUserId(jsonFrame.getString("wf_writer"));
+						nfFrame.setTag(jsonFrame.getString("wt_tag"));
 						nfFrame.setFoodName(jsonFrame.getString("wt_name"));
 						nfFrame.setWriteDate(jsonFrame.getString("wc_date"));
 						nfFrame.setLikeCnt(Integer.parseInt(jsonFrame
 								.getString("wf_likes")));
 						nfFrame.setLikeState(Integer.parseInt(jsonFrame
 								.getString("like_flag")));
-						nfFrame.setTag(jsonFrame.getString("wt_tag"));
 						nfFrame.setFoodImgURL(jsonFrame.getString("wc_img"));
 						nfFrame.setFoodIndex(Integer.parseInt(jsonFrame
 								.getString("wf_index")));

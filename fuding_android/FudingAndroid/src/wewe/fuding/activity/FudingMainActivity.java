@@ -125,17 +125,17 @@ public class FudingMainActivity extends FragmentActivity {
 		Log.d(TAG, "getIntent() : " + getIntent());
 
 		// 받아온 인텐트에 fragment항목이 있을 경우 해당 항목대로 이동
-//		String fragment = getIntent().getStringExtra("fragment");
-//		if (fragment != null) {
-//			if ("friend".equals(fragment))
-//				mViewPager.setCurrentItem(0);
-//			else if ("recent".equals(fragment))
-//				mViewPager.setCurrentItem(1);
-//			else if ("search".equals(fragment))
-//				mViewPager.setCurrentItem(2);
-//			else if ("setting".equals(fragment))
-//				mViewPager.setCurrentItem(3);
-//		}
+		String fragment = getIntent().getStringExtra("fragment");
+		if (fragment != null) {
+			if ("newsfeed".equals(fragment))
+				mViewPager.setCurrentItem(0);
+			else if ("addpost".equals(fragment))
+				mViewPager.setCurrentItem(1);
+			else if ("noti".equals(fragment))
+				mViewPager.setCurrentItem(2);
+			else if ("profile".equals(fragment))
+				mViewPager.setCurrentItem(3);
+		}
 	}
 
 	//kt.기어에 데이터를 전송하기 위한 인텐트를 브로드캐스트한다.
@@ -200,56 +200,32 @@ public class FudingMainActivity extends FragmentActivity {
 		// 버튼 눌렸을때 눌린 느낌을 주기위한 버튼바꿔주는 함수.
 		switch (pos) {
 		case 0:
-			newsfeed_layout.setBackgroundResource(R.drawable.tap01_s);
-//			newsfeed_textView.setTextColor(getResources().getColor(R.color.bridge_green));
-//			newsfeed_bottom.setVisibility(View.VISIBLE);
-//			newsfeed_btn.setImageResource(R.drawable.friend_ic_on);
+			newsfeed_layout.setBackgroundResource(R.drawable.tap01_s); 
 			break;
 		case 1:
-			addpost_layout.setBackgroundResource(R.drawable.tap02_s);
-//			addposting_textView.setTextColor(getResources().getColor(R.color.bridge_green));
-//			addposting_bottom.setVisibility(View.VISIBLE);
-//			addposting_btn.setImageResource(R.drawable.recent_ic_on);
+			addpost_layout.setBackgroundResource(R.drawable.tap02_s); 
 			break;
 		case 2:
-			alarm_layout.setBackgroundResource(R.drawable.tap03_s);
-//			alarm_textView.setTextColor(getResources().getColor(R.color.bridge_green));
-//			alarm_bottom.setVisibility(View.VISIBLE);
-//			alarm_btn.setImageResource(R.drawable.friend_keypad_ic_on);
+			alarm_layout.setBackgroundResource(R.drawable.tap03_s); 
 			break;
 		case 3:
-			profile_layout.setBackgroundResource(R.drawable.tap04_s);
-//			profile_textView.setTextColor(getResources().getColor(R.color.bridge_green));
-//			profile_bottom.setVisibility(View.VISIBLE);
-//			profile_btn.setImageResource(R.drawable.setting_ic_on);
+			profile_layout.setBackgroundResource(R.drawable.tap04_s); 
 			break;
 
 		}
 
 		switch (selected_button) {
 		case 0:
-			newsfeed_layout.setBackgroundResource(R.drawable.tap01_n);
-//			newsfeed_textView.setTextColor(getResources().getColor(R.color.main_text));
-//			newsfeed_bottom.setVisibility(View.INVISIBLE);
-//			newsfeed_btn.setImageResource(R.drawable.friend_ic_off);
+			newsfeed_layout.setBackgroundResource(R.drawable.tap01_n); 
 			break;
 		case 1:
-			addpost_layout.setBackgroundResource(R.drawable.tap02_n);
-//			addposting_textView.setTextColor(getResources().getColor(R.color.main_text));
-//			addposting_bottom.setVisibility(View.INVISIBLE);
-//			addposting_btn.setImageResource(R.drawable.recent_ic_off);
+			addpost_layout.setBackgroundResource(R.drawable.tap02_n); 
 			break;
 		case 2:
-			alarm_layout.setBackgroundResource(R.drawable.tap03_n);
-//			alarm_textView.setTextColor(getResources().getColor(R.color.main_text));
-//			alarm_bottom.setVisibility(View.INVISIBLE);
-//			alarm_btn.setImageResource(R.drawable.friend_keypad_ic_off);
+			alarm_layout.setBackgroundResource(R.drawable.tap03_n); 
 			break;
 		case 3:
-			profile_layout.setBackgroundResource(R.drawable.tap04_n);
-//			profile_textView.setTextColor(getResources().getColor(R.color.main_text));
-//			profile_bottom.setVisibility(View.INVISIBLE);
-//			profile_btn.setImageResource(R.drawable.setting_ic_off);
+			profile_layout.setBackgroundResource(R.drawable.tap04_n); 
 			break;
 
 		}

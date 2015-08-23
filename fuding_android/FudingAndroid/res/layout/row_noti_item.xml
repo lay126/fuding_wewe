@@ -34,6 +34,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/mid_layout"
             android:layout_width="166dp"
             android:layout_height="match_parent" >
 

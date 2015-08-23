@@ -4,12 +4,16 @@ import java.util.ArrayList;
 
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Noti;
+import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class CustomAdapter_Noti extends BaseAdapter {
@@ -54,20 +58,30 @@ public class CustomAdapter_Noti extends BaseAdapter {
 			convertView = inflater.inflate(R.layout.row_noti_item, parent, false);
 			
 		}
-
+		RelativeLayout mid_layout = (RelativeLayout) convertView.findViewById(R.id.mid_layout);
 		ImageView image = (ImageView) convertView.findViewById(R.id.image);
 		TextView text = (TextView) convertView.findViewById(R.id.txt_noti);
 		TextView date = (TextView) convertView.findViewById(R.id.date);
 		
-		if (arrList.get(position).getType() == "1") {
+		ImageDownloader.download(arrList.get(position).getImage(), image, 2);	// 이미지 라운드 
+
+		if ("1".equals(arrList.get(position).getType())) {
 			text.setText(arrList.get(position).getFriendId()+" 님이 회원님의 게시글을 좋아합니다.");
-		} else if (arrList.get(position).getType() == "2") {
+		} else if ("2".equals(arrList.get(position).getType())) {
 			text.setText(arrList.get(position).getFriendId()+" 님이 회원님의 게시글에 댓글을 남겼습니다.");
 		} else {
 			text.setText(arrList.get(position).getFriendId()+" 님이 회원님을 팔로우합니다.");
 		}
 		date.setText(arrList.get(position).getDate());
 
+		mid_layout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+//				Intent intent = new Intent(Content)
+//				startActivity()
+			}
+		});
+		
 		return convertView;
 
 

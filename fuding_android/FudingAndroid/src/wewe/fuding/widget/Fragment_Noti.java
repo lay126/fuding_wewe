@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import wewe.fuding.activity.R;
 import wewe.fuding.db.DbOpenHelper;
+import wewe.fuding.domain.Frame;
 import wewe.fuding.domain.Noti;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -54,7 +55,7 @@ public class Fragment_Noti extends Fragment {
 	}
 
 	public Fragment_Noti() {
-		 noti_array = new ArrayList<Noti>();
+		 
 	}
 
 	@Override
@@ -64,18 +65,15 @@ public class Fragment_Noti extends Fragment {
 		View v;
 		v = inflater.inflate(R.layout.fragment_noti, container, false);
 		Log.d("start", "oncreateView");
-		
-		
-		       
-		init(v);
-		return v;
+		noti_array = new ArrayList<Noti>();
+		updateDataList(v, noti_array);
 
+		
+		return v;
 	}
 
 	@Override
 	public void onStart() {
-		
-		updateDataList(activity);
 		super.onStart();
 	}
 	
@@ -94,15 +92,10 @@ public class Fragment_Noti extends Fragment {
 		super.onDestroyView();
 	}
 
-	private void init(View v) { 
-		Log.d("start", "init");
-		
-		Noti noti = new Noti("", "1", "2015.11.10", "yundaeun");
-		noti_array.add(noti);
-		
-		noti = new Noti("", "2", "2015.11.14", "jungyeoeun");
-		noti_array.add(noti);
-		
+	private void init(View v, ArrayList<Noti> noti_array) {  
+		if (noti_array == null) {
+			Log.d("notinoti", "noti_Array null");
+		}
 		listView  = (ListView)v.findViewById(R.id.listview_noti);
 		adapter = new CustomAdapter_Noti(activity, noti_array);
 		listView.setAdapter(adapter);
@@ -110,7 +103,7 @@ public class Fragment_Noti extends Fragment {
 	}
 	
 	// data_list를 최신으로 업데이트한다.  
-		public void updateDataList(Context context) {
+		public void updateDataList(View v, final ArrayList<Noti> noti_array) {
 			if (activity == null) return; 
 			
 			// DB에서 읽어온 최신 리스트, 데이터를 담은 후 updateData가 호출
@@ -121,7 +114,7 @@ public class Fragment_Noti extends Fragment {
 //		    mDbOpenHelper.open();
 //		    mDbOpenHelper.insertNotiColumn("yundaeun!!!", "image", "1", "2013.03.11");
 //		    mDbOpenHelper.insertNotiColumn("jungyeoeun!!!", "image", "2", "2014.01.12");
-			
+/*			
 			if (mCursor != null) {
 		    mCursor = mDbOpenHelper.getNotiAllColumns(); 
 		    Noti noti;
@@ -151,13 +144,13 @@ public class Fragment_Noti extends Fragment {
 				}
 			});
 			
-			
+	*/		
 			if (activity != null) { // 최초 로딩 등의 이유로 activity가 null일 때는 넘어가고, activity가 존재한다면 list를 불러준다. 
 				if (noti_array.size() < 2) {
-					listView.setVisibility(View.GONE);
+//					listView.setVisibility(View.GONE);
 				}
 			}
-/*			String URL_address= "http://119.205.252.224:8000/get/noti"; 
+			String URL_address= "http://119.205.252.224:8000/get/noti/"; 
 			
 			RequestQueue mQueue2;
 			mQueue2 = Volley.newRequestQueue(activity);
@@ -165,6 +158,7 @@ public class Fragment_Noti extends Fragment {
 				@Override
 				public void onResponse(String result) {
 					try {
+						
 						// to make data available
 						String arrRes = "{'response':" + result + "}";
 						Log.d(TAG, arrRes);
@@ -184,19 +178,18 @@ public class Fragment_Noti extends Fragment {
 						}
 
 						try {
-							Noti noti;
 							for (int i = 0; i < jarray.length(); i++) {
 								JSONObject jsonFrame = (JSONObject) jarray.get(i);
-
 								noti = new Noti();
-
 								noti.setType(jsonFrame.getString("noti_flag")); 
 								noti.setFriendId(jsonFrame.getString("noti_id")); 
 								noti.setWf_index(jsonFrame.getString("wf_index")); 
 								noti.setNoti_read(jsonFrame.getString("noti_read")); 
 								noti.setImage(jsonFrame.getString("noti_img")); 
 								noti.setDate(jsonFrame.getString("noti_date")); 
-										 
+								
+								Log.d("notinoti", jsonFrame.getString("noti_flag")+jsonFrame.getString("noti_id"));
+								
 								noti_array.add(noti);
 							}
 						
@@ -225,7 +218,8 @@ public class Fragment_Noti extends Fragment {
 				};
 			};
 			mQueue2.add(myReq);
-*/		}
+			init(v, noti_array);
+		}
 
 }
 
