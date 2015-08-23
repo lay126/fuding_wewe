@@ -37,7 +37,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ProfileActivity extends Activity {
+public class UpdateProfileActivity extends Activity {
 	private static final int PICK_FROM_CAMERA = 0;
 	private static final int PICK_FROM_ALBUM = 1;
 	private static final int CROP_FROM_CAMERA = 2;
@@ -67,7 +67,7 @@ public class ProfileActivity extends Activity {
 				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
 				editor.putString("login_check", "false"); //로그아웃 세션 저장 
-				startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
+				startActivity(new Intent(UpdateProfileActivity.this, LoginActivity.class));
 				finish();
 			}
 			
@@ -92,7 +92,7 @@ public class ProfileActivity extends Activity {
 		ok_btn.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
-				Toast.makeText(ProfileActivity.this, "프로필 수정을 완료했습니다.", Toast.LENGTH_LONG).show();
+				Toast.makeText(UpdateProfileActivity.this, "프로필 수정을 완료했습니다.", Toast.LENGTH_LONG).show();
 				
 				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
@@ -124,7 +124,7 @@ public class ProfileActivity extends Activity {
 		cancel_btn.setOnClickListener(new View.OnClickListener() {
 	 			@Override
 	 			public void onClick(View v) {
-	 				Toast.makeText(ProfileActivity.this, "프로필 수정을 취소했습니다.", Toast.LENGTH_LONG).show();
+	 				Toast.makeText(UpdateProfileActivity.this, "프로필 수정을 취소했습니다.", Toast.LENGTH_LONG).show();
 	 				finish();
 	 			}
 	 		});
@@ -240,7 +240,7 @@ public class ProfileActivity extends Activity {
 
 				runOnUiThread(new Runnable() {
 					public void run() {
-						Toast.makeText(ProfileActivity.this, "인터넷 연결을 확인해주세요.", Toast.LENGTH_SHORT).show();
+						Toast.makeText(UpdateProfileActivity.this, "인터넷 연결을 확인해주세요.", Toast.LENGTH_SHORT).show();
 					}
 					 
 				});
@@ -256,14 +256,14 @@ public class ProfileActivity extends Activity {
 	protected void makepicture() {
 
 
-		final LinearLayout change_picture = (LinearLayout) View.inflate(ProfileActivity.this, R.layout.dialog_move_picture, null);
+		final LinearLayout change_picture = (LinearLayout) View.inflate(UpdateProfileActivity.this, R.layout.dialog_move_picture, null);
 
 		final ArrayList<String> arrList = new ArrayList<String>();
 		arrList.add(getString(R.string.settings_profile_album));
 		arrList.add(getString(R.string.settings_profile_camera));
 		arrList.add(getString(R.string.settings_profile_delete));
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(ProfileActivity.this, android.R.layout.simple_list_item_1, arrList);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(UpdateProfileActivity.this, android.R.layout.simple_list_item_1, arrList);
 		ListView choice_piture = (ListView) change_picture.findViewById(R.id.listView1);
 		choice_piture.setAdapter(adapter);
 
