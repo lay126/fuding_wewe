@@ -412,7 +412,37 @@ def get_noti(request):
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
+# 글별 댓글 뿌려줌
+@csrf_exempt
+def get_comment(request):
+	datas = []
+	dic = dict()
 
+	try:
+		wf_index = request.POST.get('wf_index')
+
+		try:
+			################### wf_wt_index ##########################################################################################
+			comment_list_ = WRITE_COMMENT.objects.filter(wt_index=wf_index).order_by('-wcm_date')
+			# comment_list_ = WRITE_COMMENT.objects.get.filter(wf_index=wf_index).order_by('-wcm_date')
+			##########################################################################################################################
+		except:
+			dic['result'] = '1'
+			datas.append(dic)
+
+		if len(comment_list_) is not 0:	
+			for comment_ in comment_list_:
+				dic['wcm_index'] = comment_.wcm_index
+				dic['wt_index'] = comment_.wt_index
+				dic['wcm_writer'] = comment_.wcm_writer
+				dic['wcm_text'] = comment_.wcm_text
+				dic['result'] = '0'
+				datas.append(dic)
+	except:
+		dic['result'] = '1'
+		datas.append(dic)
+
+	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 # 이미지 url로 뿌림 
 def get_image(request, image_name):

@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^get/profile/', 'fuding_dj_s.views.get_profile'),
     url(r'^get/user/profile/', 'fuding_dj_s.views.get_user_profile'),
     url(r'^get/noti/', 'fuding_dj_s.views.get_noti'),
+    url(r'^get/comment/', 'fuding_dj_s.views.get_comment'),
 
     url(r'^hash/find/', 'fuding_dj_s.views.hash_find'),
 
