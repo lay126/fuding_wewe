@@ -87,9 +87,8 @@ public class CustomAdapter_Profile extends BaseAdapter {
 		imgFoodPhoto.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				int wf_index = arrList.get(pos).getContentId();
-				SharedPreferences pref = context.getSharedPreferences("pref",
-						context.MODE_PRIVATE);
+				int wf_index = arrList.get(pos).getFoodId();
+				SharedPreferences pref = context.getSharedPreferences("pref",context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
 				editor.putInt("wf_index", wf_index);
 				editor.commit();
