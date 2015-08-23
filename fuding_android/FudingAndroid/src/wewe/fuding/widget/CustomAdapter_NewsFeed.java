@@ -1,6 +1,8 @@
 package wewe.fuding.widget;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -179,6 +181,10 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 							params.put("user_name", userName);
 							params.put("wf_index", ""
 									+ arrList.get(pos).getFoodIndex());
+
+							SimpleDateFormat dateFormat = new SimpleDateFormat(
+									"yyyy/MM/dd", java.util.Locale.getDefault());
+							params.put("noti_date", dateFormat.format(new Date()));
 							return params;
 						}
 
@@ -187,15 +193,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					mQueue.add(req);
 				}
 			});
-
-			// // 리스트 아이템을 터치 했을 때 이벤트 발생
-			// convertView.setOnClickListener(new OnClickListener() {
-			// @Override
-			// public void onClick(View v) {
-			// v.getContext().startActivity(new Intent(v.getContext(),
-			// DetailActivity.class));
-			// }
-			// });
 		}
 
 		Button btnUserId = (Button) convertView
@@ -210,7 +207,8 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				SharedPreferences.Editor editor = pref.edit();
 				editor.putString("wf_writer", wfWriter);
 				editor.commit();
-				context.startActivity(new Intent(context, OthersProfileActivity.class));
+				context.startActivity(new Intent(context,
+						OthersProfileActivity.class));
 			}
 		});
 
@@ -239,12 +237,12 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				.findViewById(R.id.newsfeed_txtViewTag);
 		tvTag.setText(arrList.get(pos).getTag());
 
-		NetworkImageView imgFood = (NetworkImageView) convertView.findViewById(R.id.newsfeed_imgView);
+		NetworkImageView imgFood = (NetworkImageView) convertView
+				.findViewById(R.id.newsfeed_imgView);
 		String URL_img_address = "http://119.205.252.224:8000/get/image/"
 				+ arrList.get(pos).getFoodImgURL();
 		FudingAPI API = FudingAPI.getInstance(context);
 		imgFood.setImageUrl(URL_img_address, API.getmImageLoader());
-//		imgDownloader.download(URL_img_address, imgFood, 0);
 
 		imgFood.setOnClickListener(new OnClickListener() {
 			@Override
