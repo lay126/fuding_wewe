@@ -245,11 +245,11 @@ def get_newsfeed(request):
 		for fl in follower_list_:
 			if d.wf_writer == fl.following_id:
 				dic = dict()
-				dic = feed_list(user_name, d.wf_index, d.wt_index, d.wf_likes, d.wc_date, d.wf_writer, d.wc_total)
+				dic = feed_list(user_name, d.wf_index)
 				datas.append(dic)
 		if d.wf_writer == user_.username:
 			dic = dict()
-			dic = feed_list(user_name, d.wf_index, d.wt_index, d.wf_likes, d.wc_date, d.wf_writer, d.wc_total)
+			dic = feed_list(user_name, d.wf_index)
 			datas.append(dic)
 
 	json_data = json.dumps(datas)
@@ -274,7 +274,7 @@ def get_myfeed(request):
 			# dict
 			for d in write_list_: 
 				dic = dict()
-				dic = feed_list(user_name, d.wf_index, d.wt_index, d.wf_likes, d.wc_date, d.wf_writer, d.wc_total)
+				dic = feed_list(user_name, d.wf_index)
 				datas.append(dic)
 	except:
 		dic = dict()
@@ -424,19 +424,23 @@ def get_image(request, image_name):
 	return HttpResponse(images, content_type="image/png")
 
 # 피드 리스트를 만드는 함수 
-def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_total):
+def feed_list(user_name, wf_index):
 	dic = dict()
 
 	dic['result'] = "0"
-	dic['wf_index'] = str(wf_index)
-	dic['wt_index'] = str(wt_index)
-	dic['wf_likes'] = str(wf_likes)
-	dic['wf_writer'] = str(wf_writer)
-	dic['wc_date'] = str(wc_date)
+
+	# wf_ (in dic_)
+	wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
+	dic['wf_index'] = str(wf_.wf_index)
+	dic['wt_index'] = str(wf_.wt_index)
+	dic['wf_likes'] = str(wf_.wf_likes)
+	dic['wf_writer'] = str(wf_.wf_writer)
+	dic['wf_comments'] = str(wf_.wf_comments)
+	dic['wc_date'] = str(wf_.wc_date)
 
 	# wt_ (in dic_)
 	try : 
-		wt_ = WRITE_TITLE.objects.get(wf_index=wf_index)
+		wt_ = WRITE_TITLE.objects.get(wf_index=wf_.wf_index)
 		dic['wt_name'] = wt_.wt_name
 		dic['wt_tag'] = wt_.wt_tag
 	except :
@@ -444,13 +448,13 @@ def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_to
 		dic['wt_tag'] = 'no wt_tag'
 
 	# wc_ (in dic_)
-	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_index)
+	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wf_.wt_index)
 	for wc_ in wc_list_ :
-		if wc_.wc_index_num == wc_total :
+		if wc_.wc_index_num == wf_.wc_total :
 			dic['wc_img'] = wc_.wc_img.url
 
 	# user like state 
-	like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=wf_index)
+	like_ = USER_LIKES.objects.filter(user_id=user_name).filter(wf_index=wf_.wf_index)
 	if len(like_) is 0:
 		# 좋아요 안된경우 
 		dic['like_flag'] = '0'
@@ -459,16 +463,16 @@ def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_to
 		dic['like_flag'] = '1'
 
 	# follow_flag
-	follower_list_ = USER_FOLLOWS.objects.filter(user_id=user_name).filter(following_id=wf_writer)
+	follower_list_ = USER_FOLLOWS.objects.filter(user_id=user_name).filter(following_id=wf_.wf_writer)
 	if len(follower_list_) is 0:
-		if user_name == wf_writer:
+		if user_name == wf_.wf_writer:
 			# 나니까 팔로우 하는 중처럼 : yes
 			dic['follow_flag'] = 'yes'
 		else:
 			# 팔로우 안하는 중 : no
 			dic['follow_flag'] = 'no'
 	else:
-		if user_name == wf_writer:
+		if user_name == wf_.wf_writer:
 			# 나니까 팔로우 하는 중처럼 : yes
 			dic['follow_flag'] = 'yes'
 		else:
