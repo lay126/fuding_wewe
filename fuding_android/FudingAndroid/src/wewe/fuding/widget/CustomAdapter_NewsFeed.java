@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import wewe.fuding.activity.DetailActivity;
+import wewe.fuding.activity.OthersProfileActivity;
 import wewe.fuding.activity.UpdateProfileActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
@@ -150,27 +151,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 							} catch (JSONException e) {
 								e.printStackTrace();
 							}
-							// final String res = response;
-							// FragmentActivity con = (FragmentActivity)
-							// context;
-							//
-							// con.runOnUiThread(new Runnable() {
-							// @Override
-							// public void run() {
-							// if (res.equals("1")) {
-							// Log.i("***likeState is 1", res);
-							// btnLike.setImageResource(R.drawable.like_clicked);
-							// } else {
-							// Log.i("***likeState is 0", res);
-							// btnLike.setImageResource(R.drawable.like_unclicked);
-							// }
-							// res.trim();
-							// res.replace("\"", "");
-							// arrList.get(pos).setLikeState(
-							// Integer.parseInt(res));
-							// notifyDataSetChanged();
-							// }
-							// });
 						}
 					};
 
@@ -230,7 +210,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				SharedPreferences.Editor editor = pref.edit();
 				editor.putString("wf_writer", wfWriter);
 				editor.commit();
-				context.startActivity(new Intent(context, Fragment_Profile.class));
+				context.startActivity(new Intent(context, OthersProfileActivity.class));
 			}
 		});
 
