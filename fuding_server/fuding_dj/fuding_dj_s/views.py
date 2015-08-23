@@ -539,13 +539,28 @@ def set_like(request):
 								wf_index = wf_index, )
 		liking_.save()
 		dic['like_state'] = '1'
+
+		# 좋아요 노티 추가 
 		do_noti(wf_.wf_writer, user_name, 1, wf_index, noti_date)
+
+		# 글 디비 좋아요 필드 +1 
+		tmp = wf_.wf_likes + 1
+		wf2_ = WRITE_FRAME.objects.filter(wf_index=wf_index)
+		wf2_.update(wf_likes=tmp)
+		
 	if len(like_) is not 0:
 		# 이미 좋아요 된 경우. 없애고, return 0
 		for l_ in like_ :
 			l_.delete()
 		dic['like_state'] = '0'
+
+		# 좋아요 노티 삭제 
 		do_unnoti(wf_.wf_writer, user_name, 1, wf_index)
+
+		# 글 디비 좋아요 필드 -1
+		tmp = wf_.wf_likes -1
+		wf2_ = WRITE_FRAME.objects.filter(wf_index=wf_index)
+		wf2_.update(wf_likes=tmp)
 
 	# 0:안눌린것 1:눌린것 
 	datas.append(dic)
