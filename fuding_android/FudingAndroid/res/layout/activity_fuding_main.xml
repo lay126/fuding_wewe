@@ -24,64 +24,32 @@
             android:id="@+id/newsfeed_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="#FFFFDD"
-            android:layout_weight="1" >
-
-            <TextView
-                android:id="@+id/newsfeed_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="newsfeed" />
+            android:layout_weight="1"
+            android:background="@drawable/tap01_n"   >
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/addpost_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="#FFFFBB"
-            android:layout_weight="1" >
-
-            <TextView
-                android:id="@+id/addpost_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="Posting" />
+            android:layout_weight="1"
+            android:background="@drawable/tap02_n" >
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/alarm_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="#FFFFEE"
-            android:layout_weight="1" >
-
-            <TextView
-                android:id="@+id/alarm_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="alarm" />
+            android:layout_weight="1"
+            android:background="@drawable/tap03_n" >
         </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/profile_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="#FFFFAA"
-            android:layout_weight="1" >
-
-            <TextView
-                android:id="@+id/profile_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="profile" />
+            android:layout_weight="1"
+            android:background="@drawable/tap04_n" >
         </RelativeLayout>
     </LinearLayout>
 
