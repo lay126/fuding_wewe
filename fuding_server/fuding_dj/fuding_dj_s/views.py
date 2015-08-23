@@ -58,7 +58,6 @@ def join_user(request):
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
-
 @csrf_exempt
 def login_user(request):
 	login_id = request.POST.get('login_id')
@@ -111,7 +110,6 @@ def login_user(request):
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
-
 @csrf_exempt
 def update_user(request):
 	user_name = request.POST.get('user_name')
@@ -162,6 +160,7 @@ def update_user(request):
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
+# 유저 프로필 정보 보냄 
 @csrf_exempt
 def get_profile(request):
 	user_name = request.POST.get('user_name')
@@ -226,7 +225,7 @@ def get_user_profile(request):
 # ------------------------------------------------------------------------------------------------------------
 # FEED
 # ------------------------------------------------------------------------------------------------------------
-
+# 뉴스피드 보는 부분 
 @csrf_exempt
 def get_newsfeed(request):
 	# data box
@@ -376,7 +375,7 @@ def get_noti(request):
 
 	datas = []
 	try: 
-		noti_list_ = USER_NOTIS.objects.filter(user_id=user_name)
+		noti_list_ = USER_NOTIS.objects.filter(user_id=user_name).order_by('-noti_date_sort')
 
 		if len(noti_list_) is 0:
 			dic = dict()
@@ -411,6 +410,8 @@ def get_noti(request):
 		datas.append(dic)
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
+
+
 
 # 이미지 url로 뿌림 
 def get_image(request, image_name):
@@ -479,6 +480,7 @@ def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_to
 # ------------------------------------------------------------------------------------------------------------
 # LIKE, FOLLOW, NOTI
 # ------------------------------------------------------------------------------------------------------------
+# 좋아요 기능 
 @csrf_exempt
 def set_like(request):
 	user_name = request.POST.get('user_name')
@@ -513,6 +515,7 @@ def set_like(request):
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
+# 팔로잉 기능 
 @csrf_exempt
 def set_follow(request):
 	user_id = request.POST.get('user_id')
@@ -630,6 +633,7 @@ def do_unfollow(user_id, following_id):
 	return datas
 
 
+# 알림 기능 (noti)
 def do_noti(user_id, noti_id, noti_flag, wf_index, noti_date):
 	# noti_id : 활동을 취한 사람의 아이디 
 	try: 
@@ -674,6 +678,7 @@ def do_unnoti(user_id, noti_id, noti_flag, wf_index):
 # ------------------------------------------------------------------------------------------------------------
 # WRITE
 # ------------------------------------------------------------------------------------------------------------
+# 글 작성 
 @csrf_exempt
 def upload_write_title(request):
 	user_name = request.POST.get('user_name')
@@ -703,7 +708,6 @@ def upload_write_title(request):
 
 	json_data = json.dumps(write_title_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
-
 
 @csrf_exempt
 def upload_write_content(request):
@@ -746,7 +750,6 @@ def upload_write_content(request):
 	# 0 : success
 	json_data = json.dumps(write_content_.wt_index)
 	return HttpResponse(json_data, content_type='application/json')
-
 
 @csrf_exempt
 def upload_write_frame(request):
@@ -805,6 +808,7 @@ def upload_write_frame(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
+# 댓글 작성 
 @csrf_exempt
 def upload_write_comment(request):
 	datas = []
@@ -842,6 +846,7 @@ def upload_write_comment(request):
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
+# 글 삭제 
 @csrf_exempt
 def delete_write(request):
 	# 라이크(노티) 삭제 > 댓글(노티) 삭제 > 태그 삭제 > 콘텐츠 삭제 > 타이틀 삭제 > 프레임 삭제
@@ -952,6 +957,7 @@ def delete_write(request):
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
+# 댓글 삭제 
 @csrf_exempt
 def delete_comment(request):
 	datas = []
