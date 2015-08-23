@@ -92,17 +92,12 @@ public class UpdateProfileActivity extends Activity {
 		
 		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         String myProfile = pref.getString("myImage", "");
-//      Uri myUri = Uri.parse(myProfile);
-//      profile_image.setBackgroundColor(Color.WHITE);
-//		profile_image.setImageURI(myUri);
-//		profile_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        
-        Log.d("url_update", myProfile);
-        
         String URL_img_address = "http://119.205.252.224:8000/get/image/"+myProfile;
 		FudingAPI API = FudingAPI.getInstance(UpdateProfileActivity.this);
 		profile_image.setImageUrl(URL_img_address, API.getmImageLoader());
-        
+
+		info.setText(pref.getString("user_info", ""));
+		
 		profile_image.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
