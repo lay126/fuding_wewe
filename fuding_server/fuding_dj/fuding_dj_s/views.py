@@ -769,21 +769,30 @@ def upload_write_frame(request):
 
 @csrf_exempt
 def upload_write_comment(request):
-	user_name = request.POST.get('user_name') # wcm_writer에 들어간다.
-	wf_index = request.POST.get('wf_index')
-	wcm_text = request.POST.get('wcm_text')
+	datas = []
+	dic = dict()
 
-	################### wf_wt_index ##########################################################################################
-	comment_ = WRITE_COMMENT(	wt_index = wf_index,
-								wcm_writer = user_name,
-								wcm_text = wcm_text )
-	# comment_ = WRITE_COMMENT(	wf_index = wf_index,
-	# 							wcm_writer = user_name,
-	# 							wcm_text = wcm_text )
-	###########################################################################################################################
-	comment_.save();
+	try: 
+		user_name = request.POST.get('user_name') # wcm_writer에 들어간다.
+		wf_index = request.POST.get('wf_index')
+		wcm_text = request.POST.get('wcm_text')
 
+		################### wf_wt_index ##########################################################################################
+		comment_ = WRITE_COMMENT(	wt_index = wf_index,
+									wcm_writer = user_name,
+									wcm_text = wcm_text )
+		# comment_ = WRITE_COMMENT(	wf_index = wf_index,
+		# 							wcm_writer = user_name,
+		# 							wcm_text = wcm_text )
+		###########################################################################################################################
+		comment_.save();
+		dic['comment_state'] = '0'
+	except:
+		dic['comment_state'] = '1'
+
+	datas.append(dic8i8)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
+
 
 @csrf_exempt
 def delete_comment(request):
