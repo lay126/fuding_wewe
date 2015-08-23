@@ -35,7 +35,6 @@ public class FudingMainActivity extends FragmentActivity {
 	RelativeLayout newsfeed_layout, addpost_layout, alarm_layout, profile_layout;
 	TextView newsfeed_textView, addpost_textView, alarm_textView, profile_textView;
 
-	//
 	
 	int selected_button = 0;
 	ImageView top_menu, friend_btn, recent_btn, search_btn, setting_btn;

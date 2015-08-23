@@ -98,7 +98,7 @@ public class OthersProfileActivity extends Activity {
 					String URL_img_address = "http://119.205.252.224:8000/get/image/"
 							+ user.getUserPhoto();
 					ImageDownloader imgDownloader = new ImageDownloader();
-					imgDownloader.download(URL_img_address, imgUserPhoto, 0);
+//					imgDownloader.download(URL_img_address, imgUserPhoto, 0);
 					imgUserPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
 					tvUserId1.setText(user.getUserId());

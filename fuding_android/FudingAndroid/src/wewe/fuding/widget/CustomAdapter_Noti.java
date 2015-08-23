@@ -2,9 +2,9 @@ package wewe.fuding.widget;
 
 import java.util.ArrayList;
 
+import wewe.fuding.FudingAPI;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Noti;
-import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.SpannableString;
@@ -15,10 +15,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
+
+import com.android.volley.toolbox.NetworkImageView;
 
 public class CustomAdapter_Noti extends BaseAdapter {
 
@@ -63,12 +64,15 @@ public class CustomAdapter_Noti extends BaseAdapter {
 			
 		}
 		RelativeLayout mid_layout = (RelativeLayout) convertView.findViewById(R.id.mid_layout);
-		ImageView image = (ImageView) convertView.findViewById(R.id.image);
+		NetworkImageView image = (NetworkImageView) convertView.findViewById(R.id.image);
 		TextView text = (TextView) convertView.findViewById(R.id.txt_noti);
 		TextView date = (TextView) convertView.findViewById(R.id.date);
 		
-		ImageDownloader.download("http://119.205.252.224:8000/get/image/"+arrList.get(position).getImage(), image, 2);	// 이미지 라운드 
-
+//		ImageDownloader.download("http://119.205.252.224:8000/get/image/"+arrList.get(position).getImage(), image, 2);	// 이미지 라운드 
+		String URL_img_address = "http://119.205.252.224:8000/get/image/"+arrList.get(position).getImage();
+		FudingAPI API = FudingAPI.getInstance(context);
+		image.setImageUrl(URL_img_address, API.getmImageLoader());
+		
 		SpannableStringBuilder builder = new SpannableStringBuilder();
 		String orange = arrList.get(position).getFriendId();
 		SpannableString redSpannable= new SpannableString(orange);

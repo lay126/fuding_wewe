@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="content Title" />
 
-    <ImageView
+    <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/newsfeed_imgView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

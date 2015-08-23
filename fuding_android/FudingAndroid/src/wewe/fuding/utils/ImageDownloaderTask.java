@@ -117,7 +117,7 @@ public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
 						r = 0;
 					}
 					Bitmap bitmap = roundCornerImage(finalBitmap, r);	
-					return bitmap;
+					return bitmap ;
 				}
 
 				finally {

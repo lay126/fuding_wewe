@@ -2,18 +2,19 @@ package wewe.fuding.widget;
 
 import java.util.ArrayList;
 
-import wewe.fuding.domain.Content;
-import wewe.fuding.domain.Frame;
-import wewe.fuding.utils.ImageDownloader;
+import wewe.fuding.FudingAPI;
 import wewe.fuding.activity.R;
+import wewe.fuding.domain.Content;
+import wewe.fuding.utils.ImageDownloader;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.android.volley.toolbox.NetworkImageView;
 
 public class CustomAdapter_Profile extends BaseAdapter {
 
@@ -87,12 +88,15 @@ public class CustomAdapter_Profile extends BaseAdapter {
 				.findViewById(R.id.mycontent_txtView);
 		tvMyContent.setText(arrList.get(pos).getContent());
 		
-		ImageView imgFoodPhoto = (ImageView) convertView.findViewById(R.id.mycontent_imgView);
+		NetworkImageView imgFoodPhoto = (NetworkImageView) convertView.findViewById(R.id.mycontent_imgView);
 		String URL_img_address = "http://119.205.252.224:8000/get/image/"
 				+ arrList.get(pos).getPhoto();
 		Log.i(TAG, URL_img_address);
-		imgDownloader.download(URL_img_address, imgFoodPhoto, 0);
+//		imgDownloader.download(URL_img_address, imgFoodPhoto, 0);
 
+
+		FudingAPI API = FudingAPI.getInstance(context);
+		imgFoodPhoto.setImageUrl(URL_img_address, API.getmImageLoader());
 		return convertView;
 	}
 }
