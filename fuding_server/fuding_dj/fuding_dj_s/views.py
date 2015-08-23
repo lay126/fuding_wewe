@@ -828,6 +828,13 @@ def upload_write_comment(request):
 
 
 @csrf_exempt
+def delete_write(request):
+	datas = []
+	dic = dict()
+
+	return HttpResponse(json.dumps(datas), content_type='application/json')
+
+@csrf_exempt
 def delete_comment(request):
 	datas = []
 	dic = dict()

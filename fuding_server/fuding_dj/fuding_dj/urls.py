@@ -32,6 +32,7 @@ urlpatterns = patterns('',
     url(r'^upload/write/frame/', 'fuding_dj_s.views.upload_write_frame'),
     url(r'^upload/write/comment/', 'fuding_dj_s.views.upload_write_comment'),
 
+    url(r'^delete/write/', 'fuding_dj_s.views.delete_write'),
     url(r'^delete/comment/', 'fuding_dj_s.views.delete_comment'),
 
     # set url
