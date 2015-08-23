@@ -462,7 +462,7 @@ def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_to
 	return dic
 
 # ------------------------------------------------------------------------------------------------------------
-# LIKE, FOLLOW
+# LIKE, FOLLOW, NOTI
 # ------------------------------------------------------------------------------------------------------------
 @csrf_exempt
 def set_like(request):
@@ -539,8 +539,8 @@ def do_follow(user_id, following_id):
 			fnum_1 = user_data_.user_followings + 1
 			fnum_2 = following_data_.user_followers + 1
 
-			dic['followings'] = str(user_data_.user_followings)
-			dic['followers'] = str(following_data_.user_followers)
+			dic['followings'] = str(fnum_1)
+			dic['followers'] = str(fnum_2)
 
 			try:
 				user_data_ = USER_DATA.objects.filter(user_id = user_)
@@ -556,7 +556,7 @@ def do_follow(user_id, following_id):
 										following_id = following_id)
 				follow_.save()
 				dic['result'] = '0'
-				dic['like_flag'] = '1'
+				dic['follow_flag'] = '1'
 				
 			except:
 				dic['result'] = '1'
@@ -583,8 +583,8 @@ def do_unfollow(user_id, following_id):
 			fnum_1 = user_data_.user_followings - 1
 			fnum_2 = following_data_.user_followers - 1
 
-			dic['followings'] = str(user_data_.user_followings)
-			dic['followers'] = str(following_data_.user_followers)
+			dic['followings'] = str(fnum_1)
+			dic['followers'] = str(fnum_2)
 
 			try:
 				user_data_ = USER_DATA.objects.filter(user_id = user_)
@@ -603,7 +603,7 @@ def do_unfollow(user_id, following_id):
 					for f_ in follow_ :
 						f_.delete()
 				dic['result'] = '0'
-				dic['like_flag'] = '0'
+				dic['follow_flag'] = '0'
 			except:
 				dic['result'] = '1'
 		except:
