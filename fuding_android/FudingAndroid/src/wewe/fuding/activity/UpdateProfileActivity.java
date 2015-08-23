@@ -180,9 +180,15 @@ public class UpdateProfileActivity extends Activity {
 				dos.writeBytes(lineEnd);
 
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"profile_name\""+ lineEnd);
+				dos.writeBytes(lineEnd);
+				dos.write((user_name).getBytes("utf-8")); 
+				dos.writeBytes(lineEnd);
+				
+				dos.writeBytes(twoHyphens + boundary + lineEnd);
 				dos.writeBytes("Content-Disposition: form-data; name=\"user_info\""+ lineEnd);
 				dos.writeBytes(lineEnd);
-				dos.write((info).getBytes("utf-8")); 
+				dos.write((info+"").getBytes("utf-8")); 
 				dos.writeBytes(lineEnd);
 
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
