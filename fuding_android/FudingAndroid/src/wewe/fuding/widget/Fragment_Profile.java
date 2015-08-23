@@ -8,13 +8,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import wewe.fuding.activity.UpdateProfileActivity;
+import wewe.fuding.FudingAPI;
 import wewe.fuding.activity.R;
+import wewe.fuding.activity.UpdateProfileActivity;
 import wewe.fuding.domain.Content;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -24,7 +23,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +33,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -46,7 +45,7 @@ public class Fragment_Profile extends Fragment {
 	private static Fragment_Profile instance = null;
 	private GridView gridView;
 	private CustomAdapter_Profile profileAdapter;
-	public static ImageView photo;
+	public static NetworkImageView photo;
 
 	// ArrayList<Bitmap> picArr = new ArrayList<Bitmap>();
 	private Content pfContent; // newsfeed frame
@@ -74,15 +73,20 @@ public class Fragment_Profile extends Fragment {
 		TextView userName = (TextView) v.findViewById(R.id.profile_txtUserId);
 		SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
         String name = pref.getString("user_name", "ayoung");
-        String myProfile = pref.getString("profileImage", "default");
-        Uri myUri = Uri.parse(myProfile);
+        String myProfile = pref.getString("myImage", "");
+        Log.d("url_fragment", myProfile);
         
         userName.setText(name);
         
-        photo = (ImageView) v.findViewById(R.id.profile_imgViewProfile);
-        photo.setBackgroundColor(Color.WHITE);
-        photo.setImageURI(myUri);
-        photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        photo = (NetworkImageView) v.findViewById(R.id.profile_imgViewProfile);
+        String URL_img_address = "http://119.205.252.224:8000/get/image/"+myProfile;
+        
+		FudingAPI API = FudingAPI.getInstance(activity);
+		photo.setImageUrl(URL_img_address, API.getmImageLoader());
+		
+//        photo.setBackgroundColor(Color.WHITE);
+//        photo.setImageURI(myUri);
+//        photo.setScaleType(ImageView.ScaleType.CENTER_CROP);
         
         ImageButton edit_profile = (ImageButton) v.findViewById(R.id.profile_edit_btn);
 		edit_profile.setOnClickListener(new View.OnClickListener() {

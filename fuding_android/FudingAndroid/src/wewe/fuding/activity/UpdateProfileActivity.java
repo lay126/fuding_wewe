@@ -10,7 +10,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import wewe.fuding.FudingAPI;
 import wewe.fuding.widget.Fragment_Profile;
 import android.app.Activity;
 import android.app.Dialog;
@@ -37,13 +44,23 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.Request.Method;
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 public class UpdateProfileActivity extends Activity {
 	private static final int PICK_FROM_CAMERA = 0;
 	private static final int PICK_FROM_ALBUM = 1;
 	private static final int CROP_FROM_CAMERA = 2;
 	Uri mImageCaptureUri;
 	Dialog dialog;
-	ImageView profile_image; 
+	NetworkImageView profile_image; 
 	String upLoadServerUri;
 	int serverResponseCode = 0;
 	EditText info;
@@ -57,7 +74,7 @@ public class UpdateProfileActivity extends Activity {
         StrictMode.setThreadPolicy(policy);
         
 		info = (EditText)findViewById(R.id.edit_info);
-		profile_image = (ImageView)findViewById(R.id.profile_image);
+		profile_image = (NetworkImageView)findViewById(R.id.profile_image);
 		
 		ImageView logout_btn = (ImageView)findViewById(R.id.logout_btn);
 		logout_btn.setOnClickListener(new OnClickListener() {
@@ -74,12 +91,17 @@ public class UpdateProfileActivity extends Activity {
 		});
 		
 		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-        String myProfile = pref.getString("profileImage", "default");
-        Uri myUri = Uri.parse(myProfile);
-        profile_image.setBackgroundColor(Color.WHITE);
-		profile_image.setImageURI(myUri);
-		profile_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        String myProfile = pref.getString("myImage", "");
+//      Uri myUri = Uri.parse(myProfile);
+//      profile_image.setBackgroundColor(Color.WHITE);
+//		profile_image.setImageURI(myUri);
+//		profile_image.setScaleType(ImageView.ScaleType.CENTER_CROP);
         
+        Log.d("url_update", myProfile);
+        
+        String URL_img_address = "http://119.205.252.224:8000/get/image/"+myProfile;
+		FudingAPI API = FudingAPI.getInstance(UpdateProfileActivity.this);
+		profile_image.setImageUrl(URL_img_address, API.getmImageLoader());
         
 		profile_image.setOnClickListener(new View.OnClickListener() {
  			@Override
@@ -102,10 +124,6 @@ public class UpdateProfileActivity extends Activity {
 					Fragment_Profile.photo.setBackgroundColor(Color.WHITE);
 					Fragment_Profile.photo.setImageURI(mImageCaptureUri);
 					Fragment_Profile.photo.setScaleType(ImageView.ScaleType.CENTER_CROP);	//가운데 자름 (길쭉하게 자른 경우)
-				
-					// 이미지 파일 저장해두기 
-			        editor.putString("profileImage", mImageCaptureUri+"");
-			        editor.commit();
 				}
 
 				editor.putString("user_info", info.getText().toString());
@@ -180,12 +198,6 @@ public class UpdateProfileActivity extends Activity {
 				dos.writeBytes(lineEnd);
 
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"profile_name\""+ lineEnd);
-				dos.writeBytes(lineEnd);
-				dos.write((user_name).getBytes("utf-8")); 
-				dos.writeBytes(lineEnd);
-				
-				dos.writeBytes(twoHyphens + boundary + lineEnd);
 				dos.writeBytes("Content-Disposition: form-data; name=\"user_info\""+ lineEnd);
 				dos.writeBytes(lineEnd);
 				dos.write((info+"").getBytes("utf-8")); 
@@ -237,7 +249,9 @@ public class UpdateProfileActivity extends Activity {
 				 final String serverResponseMessage = conn.getResponseMessage();
 
 				 Log.d("multipart", "HTTP Response is : " + serverResponseMessage +": " + serverResponseCode);
- 
+				 if (serverResponseCode == 200) {
+					 getMyImage();
+				 }
 
 			} catch (Exception e) {
 
@@ -259,6 +273,81 @@ public class UpdateProfileActivity extends Activity {
 		} 
 	}
 
+	private void getMyImage() {
+		String URL_address = "http://119.205.252.224:8000/get/user/profile/";
+
+		RequestQueue mQueue;
+		mQueue = Volley.newRequestQueue(this);
+
+		Listener<String> listener = new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				// to make data available
+				String arrRes = "{'response':" + response + "}";
+				Log.d("detail_update_re", arrRes);
+
+				JSONObject jobject = null;
+				try {
+					jobject = new JSONObject(arrRes);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				JSONArray jarray = null;
+				try {
+					jarray = jobject.getJSONArray("response");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				try {
+					for (int i = 0; i < jarray.length(); i++) {
+						JSONObject jsonFrame = (JSONObject) jarray.get(i);
+						String image_url = jsonFrame.getString("user_img");
+						SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+						SharedPreferences.Editor editor = pref.edit();
+						editor.putString("myImage", image_url+"");
+				        editor.commit();
+						Log.d("url_put", image_url);
+						String URL_img_address = "http://119.205.252.224:8000/get/image/"+ image_url;
+						FudingAPI API = FudingAPI.getInstance(UpdateProfileActivity.this);
+						profile_image.setImageUrl(URL_img_address, API.getmImageLoader());
+						
+						
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+
+		ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				error.printStackTrace();
+				Toast.makeText(UpdateProfileActivity.this, "상세페이지 : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
+						Toast.LENGTH_LONG).show();
+			}
+		};
+
+		StringRequest req = new StringRequest(Method.POST, URL_address, listener, errorListener) {
+				@Override
+				protected Map<String, String> getParams()
+						throws AuthFailureError {
+					Map<String, String> params = new HashMap<String, String>();
+					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+					String index = pref.getString("user_name", "");
+					
+					params.put("user_name", index+"");
+
+					return params;
+				}
+		};
+		mQueue.add(req);
+	}
+
+	
+	
 	protected void makepicture() {
 
 

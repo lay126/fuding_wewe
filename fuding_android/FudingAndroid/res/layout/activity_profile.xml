@@ -20,7 +20,7 @@
                     android:text="프로필 수정" />
             </RelativeLayout>
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/profile_image"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
