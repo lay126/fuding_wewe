@@ -291,6 +291,14 @@ def get_recipe(request):
 	dic['wt_quant'] = str(wt_.wt_quant)
 	dic['wt_tag'] = wt_.wt_tag
 
+	# user
+	try : 
+		user_ = User.objects.get(username=wf_.wf_writer)
+		user_data_ = USER_DATA.objects.get(user_id=user_)
+		dic['user_img'] = user_data_.user_img.url
+	except:
+		dic['user_img'] = ""
+
 	# wc
 	for wc_ in wc_list_ :
 		if wf_.wc_index_1 is not 0:
@@ -339,9 +347,7 @@ def get_recipe(request):
 				dic['wc_text_9'] = wc_.wc_text
 				dic['wc_times_9'] = str(wc_.wc_times)
 
-
 	datas.append(dic)
-
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
