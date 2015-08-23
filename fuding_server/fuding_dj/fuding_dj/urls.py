@@ -27,9 +27,10 @@ urlpatterns = patterns('',
 
     # upload url
     #----------------------------------------------------------------------------
-	url(r'^upload/write/title/', 'fuding_dj_s.views.test_upload_write_title'),
-    url(r'^upload/write/content/', 'fuding_dj_s.views.test_upload_write_content'),
-    url(r'^upload/write/frame/', 'fuding_dj_s.views.test_upload_write_frame'),
+	url(r'^upload/write/title/', 'fuding_dj_s.views.upload_write_title'),
+    url(r'^upload/write/content/', 'fuding_dj_s.views.upload_write_content'),
+    url(r'^upload/write/frame/', 'fuding_dj_s.views.upload_write_frame'),
+    url(r'^upload/write/comment/', 'fuding_dj_s.views.upload_write_comment'),
 
     # set url
     #----------------------------------------------------------------------------

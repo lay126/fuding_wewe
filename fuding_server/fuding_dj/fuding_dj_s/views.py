@@ -765,8 +765,6 @@ def test_upload_write_frame(request):
 	return HttpResponse(json_data, content_type='application/json')
 
 
-<<<<<<< HEAD
-
 @csrf_exempt
 def upload_write_comment(request):
 	datas = []
@@ -790,7 +788,7 @@ def upload_write_comment(request):
 	except:
 		dic['comment_state'] = '1'
 
-	datas.append(dic8i8)
+	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
@@ -799,8 +797,7 @@ def delete_comment(request):
 
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
-=======
->>>>>>> aed6069b749fd1a5495339e57ff8f8e22335e0b0
+
 # ------------------------------------------------------------------------------------------------------------
 # SEARCH
 # ------------------------------------------------------------------------------------------------------------
