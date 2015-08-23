@@ -8,9 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import wewe.fuding.FudingAPI;
 import wewe.fuding.activity.DetailActivity;
 import wewe.fuding.activity.OthersProfileActivity;
-import wewe.fuding.activity.UpdateProfileActivity;
 import wewe.fuding.activity.R;
 import wewe.fuding.domain.Frame;
 import wewe.fuding.utils.ImageDownloader;
@@ -25,7 +25,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +34,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -239,11 +239,12 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				.findViewById(R.id.newsfeed_txtViewTag);
 		tvTag.setText(arrList.get(pos).getTag());
 
-		ImageView imgFood = (ImageView) convertView
-				.findViewById(R.id.newsfeed_imgView);
+		NetworkImageView imgFood = (NetworkImageView) convertView.findViewById(R.id.newsfeed_imgView);
 		String URL_img_address = "http://119.205.252.224:8000/get/image/"
 				+ arrList.get(pos).getFoodImgURL();
-		imgDownloader.download(URL_img_address, imgFood, 0);
+		FudingAPI API = FudingAPI.getInstance(context);
+		imgFood.setImageUrl(URL_img_address, API.getmImageLoader());
+//		imgDownloader.download(URL_img_address, imgFood, 0);
 
 		imgFood.setOnClickListener(new OnClickListener() {
 			@Override

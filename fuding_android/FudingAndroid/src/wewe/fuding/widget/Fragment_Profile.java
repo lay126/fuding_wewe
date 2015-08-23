@@ -128,8 +128,7 @@ public class Fragment_Profile extends Fragment {
 						JSONObject jsonContent = (JSONObject) jarray.get(i);
 
 						pfContent = new Content();
-						pfContent.setContent(jsonContent
-								.getString("wt_name"));
+						pfContent.setContent(jsonContent.getString("wt_name"));
 						pfContent.setPhoto(jsonContent.getString("wc_img"));
 						pfContent.setFoodId(Integer.parseInt(jsonContent.getString("wf_index")));
 

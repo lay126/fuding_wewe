@@ -8,10 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import wewe.fuding.FudingAPI;
 import wewe.fuding.domain.Detail;
 import wewe.fuding.utils.ImageDownloader;
 import android.app.ListActivity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +28,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -35,7 +36,7 @@ public class DetailActivity  extends ListActivity {
 	
 	String quant, writer, likes, name, tag, times, ingre, total, user_img;
 	TextView text_quant, text_writer, text_likes, text_name, text_tag, text_times, text_ingre;
-	ImageView user_photo;
+	NetworkImageView user_photo;
 	
 	private ArrayList<Detail> arrayDetail;
 	private ItemAdapter adapter;
@@ -55,7 +56,7 @@ public class DetailActivity  extends ListActivity {
 		text_tag = (TextView)findViewById(R.id.text_tag);
 //		text_times = (TextView)findViewById(R.id.text_times);
 		text_ingre = (TextView)findViewById(R.id.text_ingre); 
-		user_photo = (ImageView)findViewById(R.id.user_photo); 
+		user_photo = (NetworkImageView)findViewById(R.id.user_photo); 
 		
 		ImageView backBtn = (ImageView)findViewById(R.id.backBtn);
 		backBtn.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +116,10 @@ public class DetailActivity  extends ListActivity {
 //						text_times.setText("#"+times+"분");
 						text_ingre.setText(ingre);
 						
-						ImageDownloader.download("http://119.205.252.224:8000/get/image/"+user_img, user_photo, 2);	// 이미지 라운드 
+//						ImageDownloader.download("http://119.205.252.224:8000/get/image/"+user_img, user_photo, 2);	// 이미지 라운드 
+						String URL_img_address = "http://119.205.252.224:8000/get/image/"+ user_img;
+						FudingAPI API = FudingAPI.getInstance(DetailActivity.this);
+						user_photo.setImageUrl(URL_img_address, API.getmImageLoader());
 						
 						for (int j=1; j<=Integer.parseInt(total); j++) {
 							Detail detail = new Detail();
@@ -162,7 +166,7 @@ public class DetailActivity  extends ListActivity {
 	
 	private class ViewHolder {
 		public TextView quant, writer, likes, name, tag, times, ingre, total;
-		public ImageView foodImageView;
+		public NetworkImageView foodImageView;
 		public TextView content_text, time_text;
 	}
 
@@ -181,7 +185,7 @@ public class DetailActivity  extends ListActivity {
 				ViewHolder holder = new ViewHolder();
 
 
-				ImageView foodImage = (ImageView) v.findViewById(R.id.foodImageView);
+				NetworkImageView foodImage = (NetworkImageView) v.findViewById(R.id.foodImageView);
 				holder.foodImageView = foodImage;
 
 				TextView content = (TextView) v.findViewById(R.id.content_text);
@@ -197,8 +201,11 @@ public class DetailActivity  extends ListActivity {
 			
 			holder.content_text.setText(detail.getContent()+" "+detail.getTime()+"분 소요");
 //			holder.time_text.setText(detail.getTime());
-			ImageDownloader.download("http://119.205.252.224:8000/get/image/"+detail.getImage(), holder.foodImageView, 3);
-
+//			ImageDownloader.download("http://119.205.252.224:8000/get/image/"+detail.getImage(), holder.foodImageView, 3);
+			String URL_img_address = "http://119.205.252.224:8000/get/image/"
+					+ detail.getImage();
+			FudingAPI API = FudingAPI.getInstance(DetailActivity.this);
+			holder.foodImageView.setImageUrl(URL_img_address, API.getmImageLoader());
 			return v;
 		}
 
