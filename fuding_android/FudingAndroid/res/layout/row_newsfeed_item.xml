@@ -17,6 +17,12 @@
             android:layout_weight="1"
             android:text="ID" />
 
+        <Button
+            android:id="@+id/newsfeed_btnViewUserId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="글쓴이홈" />
+
         <TextView
             android:id="@+id/newsfeed_txtViewWriteDate"
             android:layout_width="wrap_content"

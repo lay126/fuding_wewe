@@ -37,8 +37,8 @@ public class HttpRequestAddPost{
 //	 글 작성 시 리턴 값 (글의 고유 아이디) 
 //	"imageURL_index", result+""
 	
-	
-	
+//	프로필 볼 사용자의 아이디
+//	"wf_writer"
 	
 	
 	
