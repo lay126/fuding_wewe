@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -49,8 +50,6 @@ public class Fragment_Profile extends Fragment {
 
 	// ArrayList<Bitmap> picArr = new ArrayList<Bitmap>();
 	private Content pfContent; // newsfeed frame
-	private CustomAdapter_NewsFeed nfAdapter;
-	private ListView nfListView;
 	private ArrayList<Content> contentArr;
 
 	public static Fragment_Profile getInstance() {
@@ -199,5 +198,6 @@ public class Fragment_Profile extends Fragment {
 			profileAdapter = new CustomAdapter_Profile(activity, contentArr);
 		}
 		gridView.setAdapter(profileAdapter);
+		profileAdapter.notifyDataSetChanged();
 	}
 }
