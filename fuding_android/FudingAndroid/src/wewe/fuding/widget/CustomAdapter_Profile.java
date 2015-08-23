@@ -89,8 +89,7 @@ public class CustomAdapter_Profile extends BaseAdapter {
 		tvMyContent.setText(arrList.get(pos).getContent());
 		
 		NetworkImageView imgFoodPhoto = (NetworkImageView) convertView.findViewById(R.id.mycontent_imgView);
-		String URL_img_address = "http://119.205.252.224:8000/get/image/"
-				+ arrList.get(pos).getPhoto();
+		String URL_img_address = "http://119.205.252.224:8000/get/image/"+ arrList.get(pos).getPhoto();
 		Log.i(TAG, URL_img_address);
 //		imgDownloader.download(URL_img_address, imgFoodPhoto, 0);
 
