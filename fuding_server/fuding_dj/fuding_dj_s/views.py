@@ -468,6 +468,10 @@ def feed_list(user_name, wf_index, wt_index, wf_likes, wc_date, wf_writer, wc_to
 def set_like(request):
 	user_name = request.POST.get('user_name')
 	wf_index = request.POST.get('wf_index')
+	try: 
+		noti_date = request.POST.get('noti_date')
+	except:
+		noti_date = 'yyyy/mm/dd'
 
 	datas = []
 	dic = dict()
@@ -481,7 +485,7 @@ def set_like(request):
 								wf_index = wf_index, )
 		liking_.save()
 		dic['like_state'] = '1'
-		do_noti(wf_.wf_writer, user_name, 1, wf_index, 'yyyy/mm/dd')
+		do_noti(wf_.wf_writer, user_name, 1, wf_index, noti_date)
 	if len(like_) is not 0:
 		# 이미 좋아요 된 경우. 없애고, return 0
 		for l_ in like_ :
@@ -498,6 +502,10 @@ def set_like(request):
 def set_follow(request):
 	user_id = request.POST.get('user_id')
 	following_id = request.POST.get('following_id')
+	try: 
+		noti_date = request.POST.get('noti_date')
+	except:
+		noti_date = 'yyyy/mm/dd'
 
 	follow_ = USER_FOLLOWS.objects.filter(user_id=user_id).filter(following_id=following_id)
 
@@ -507,7 +515,7 @@ def set_follow(request):
 		datas = do_follow(user_id, following_id)
 		# 노티 디비에 추가 
 		# 추후 날짜 넣어야 함 
-		do_noti(following_id, user_id, 3, 0, 'yyyy/mm/dd')
+		do_noti(following_id, user_id, 3, 0, noti_date)
 	if len(follow_) is not 0:
 		# 이미 좋아요 된 경우. 없애고, return 0
 		datas = do_unfollow(user_id, following_id)
@@ -608,6 +616,7 @@ def do_unfollow(user_id, following_id):
 
 
 def do_noti(user_id, noti_id, noti_flag, wf_index, noti_date):
+	# noti_id : 활동을 취한 사람의 아이디 
 	try: 
 		user_ = User.objects.get(username = user_id)
 		noti_user_ = User.objects.get(username = noti_id)
@@ -790,6 +799,10 @@ def upload_write_comment(request):
 		user_name = request.POST.get('user_name') # wcm_writer에 들어간다.
 		wf_index = request.POST.get('wf_index')
 		wcm_text = request.POST.get('wcm_text')
+		try: 
+			noti_date = request.POST.get('noti_date')
+		except:
+			noti_date = 'yyyy/mm/dd'
 
 		################### wf_wt_index ##########################################################################################
 		comment_ = WRITE_COMMENT(	wt_index = wf_index,
@@ -801,6 +814,11 @@ def upload_write_comment(request):
 		###########################################################################################################################
 		comment_.save();
 		dic['comment_state'] = '0'
+
+		# 댓글 작성 노티, 디비에 추가 
+		wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
+		# 2번째인자 : 활동을 취한 사람의 아이디 
+		do_noti(wf_.wf_writer, user_name, 2, wf_index, noti_date)
 	except:
 		dic['comment_state'] = '1'
 
