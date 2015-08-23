@@ -67,8 +67,6 @@ public class Fragment_Noti extends Fragment {
 		Log.d("start", "oncreateView");
 		noti_array = new ArrayList<Noti>();
 		updateDataList(v, noti_array);
-
-		
 		return v;
 	}
 
