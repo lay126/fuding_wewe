@@ -126,6 +126,7 @@ def update_user(request):
 		user_data_ = USER_DATA.objects.get(user_id=user_)
 	except:
 		dic['result'] = '1'
+		dic['user_img'] = ''
 		datas.append(dic)
 		return HttpResponse(json.dumps(datas), content_type='application/json')
 
@@ -139,15 +140,20 @@ def update_user(request):
  				user_data_.user_img.save(filename, File(file), save=True)	
  			except:
  				dic['result'] = '1'
+ 				dic['user_img'] = ''
 				datas.append(dic)
 				return HttpResponse(json.dumps(datas), content_type='application/json')
 
  	if user_info is not None:
  		try: 
 	 		user_data_ = USER_DATA.objects.filter(user_id=user_)
-			user_data_.update(user_info=user_info)	
+			user_data_.update(user_info=user_info)
+			# 다시 이미지 URL을 보내주기위해 .get 해온다.
+			user_data_ = USER_DATA.objects.get(user_id=user_)
+			dic['user_img'] = user_data_.user_img.url	
 		except:
 			dic['result'] = '1'
+			dic['user_img'] = ''
 			datas.append(dic)
 			return HttpResponse(json.dumps(datas), content_type='application/json')
 
