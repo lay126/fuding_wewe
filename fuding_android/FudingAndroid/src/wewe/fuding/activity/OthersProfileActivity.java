@@ -161,7 +161,7 @@ public class OthersProfileActivity extends Activity {
 			public void onResponse(String response) {
 				// to make data available
 				String arrRes = "{'response':" + response + "}";
-				Log.d("othersProfile", arrRes);
+				Log.d("othersProfile arrRes", arrRes);
 
 				JSONObject jobject = null;
 				try {
