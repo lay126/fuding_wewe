@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import wewe.fuding.domain.Detail;
 import wewe.fuding.utils.ImageDownloader;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,16 +50,20 @@ public class DetailActivity  extends ListActivity {
 		
 		text_quant = (TextView)findViewById(R.id.text_quant);
 		text_writer = (TextView)findViewById(R.id.text_writer);
-		text_likes = (TextView)findViewById(R.id.text_likes);
+		text_likes = (TextView)findViewById(R.id.text_likes);    
 		text_name = (TextView)findViewById(R.id.text_name);
 		text_tag = (TextView)findViewById(R.id.text_tag);
 //		text_times = (TextView)findViewById(R.id.text_times);
 		text_ingre = (TextView)findViewById(R.id.text_ingre); 
 		user_photo = (ImageView)findViewById(R.id.user_photo); 
 		
-		
-		//ListView listView = (ListView)findViewById(R.id.listView);
-		
+		ImageView backBtn = (ImageView)findViewById(R.id.backBtn);
+		backBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 		
 	}
 
@@ -100,7 +105,7 @@ public class DetailActivity  extends ListActivity {
 						times = jsonFrame.getString("wt_times");
 						ingre = jsonFrame.getString("wt_ingre"); 
 						total = jsonFrame.getString("wc_total");
-//						user_img = jsonFrame.getString("user_img");
+						user_img = jsonFrame.getString("user_img");
 						
 						text_quant.setText("#"+quant+"인분 " + "#"+times+"분");
 						text_writer.setText(""+writer);
@@ -110,7 +115,7 @@ public class DetailActivity  extends ListActivity {
 //						text_times.setText("#"+times+"분");
 						text_ingre.setText(ingre);
 						
-//						ImageDownloader.download("http://119.205.252.224:8000/get/image/"+user_img, user_photo, 2);	// 이미지 라운드 
+						ImageDownloader.download("http://119.205.252.224:8000/get/image/"+user_img, user_photo, 2);	// 이미지 라운드 
 						
 						for (int j=1; j<=Integer.parseInt(total); j++) {
 							Detail detail = new Detail();
@@ -190,8 +195,8 @@ public class DetailActivity  extends ListActivity {
 
 			final ViewHolder holder = (ViewHolder) v.getTag();
 			
-			holder.content_text.setText(detail.getContent());
-			holder.time_text.setText(detail.getTime());
+			holder.content_text.setText(detail.getContent()+" "+detail.getTime()+"분 소요");
+//			holder.time_text.setText(detail.getTime());
 			ImageDownloader.download("http://119.205.252.224:8000/get/image/"+detail.getImage(), holder.foodImageView, 3);
 
 			return v;
