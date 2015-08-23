@@ -1,11 +1,18 @@
 package wewe.fuding.widget;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import wewe.fuding.activity.R;
 import wewe.fuding.db.DbOpenHelper;
 import wewe.fuding.domain.Noti;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +23,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 public class Fragment_Noti extends Fragment {
 	public static final String TAG = Fragment_Noti.class.getSimpleName(); 
@@ -51,7 +66,7 @@ public class Fragment_Noti extends Fragment {
 		Log.d("start", "oncreateView");
 		
 		
-		
+		       
 		init(v);
 		return v;
 
@@ -81,11 +96,12 @@ public class Fragment_Noti extends Fragment {
 
 	private void init(View v) { 
 		Log.d("start", "init");
-		//noti_array = new ArrayList<Noti>();
+		
 		Noti noti = new Noti("", "1", "2015.11.10", "yundaeun");
 		noti_array.add(noti);
-		     noti = new Noti("", "2", "2015.11.14", "jungyeoeun");
-		     noti_array.add(noti);
+		
+		noti = new Noti("", "2", "2015.11.14", "jungyeoeun");
+		noti_array.add(noti);
 		
 		listView  = (ListView)v.findViewById(R.id.listview_noti);
 		adapter = new CustomAdapter_Noti(activity, noti_array);
@@ -141,7 +157,75 @@ public class Fragment_Noti extends Fragment {
 					listView.setVisibility(View.GONE);
 				}
 			}
-		}
+/*			String URL_address= "http://119.205.252.224:8000/get/noti"; 
+			
+			RequestQueue mQueue2;
+			mQueue2 = Volley.newRequestQueue(activity);
+			Listener<String> listener = new Listener<String>() {
+				@Override
+				public void onResponse(String result) {
+					try {
+						// to make data available
+						String arrRes = "{'response':" + result + "}";
+						Log.d(TAG, arrRes);
+
+						JSONObject jobject = null;
+						try {
+							jobject = new JSONObject(arrRes);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+						JSONArray jarray = null;
+						try {
+							jarray = jobject.getJSONArray("response");
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+						try {
+							Noti noti;
+							for (int i = 0; i < jarray.length(); i++) {
+								JSONObject jsonFrame = (JSONObject) jarray.get(i);
+
+								noti = new Noti();
+
+								noti.setType(jsonFrame.getString("noti_flag")); 
+								noti.setFriendId(jsonFrame.getString("noti_id")); 
+								noti.setWf_index(jsonFrame.getString("wf_index")); 
+								noti.setNoti_read(jsonFrame.getString("noti_read")); 
+								noti.setImage(jsonFrame.getString("noti_img")); 
+								noti.setDate(jsonFrame.getString("noti_date")); 
+										 
+								noti_array.add(noti);
+							}
+						
+						} catch (Exception e){}
+					} catch (Exception e){}
+				}
+			};
+
+			com.android.volley.Response.ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
+				@Override
+				public void onErrorResponse(VolleyError error) {
+					Toast.makeText(activity, "noti : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.", Toast.LENGTH_LONG).show();
+					}
+			};
+			
+			StringRequest myReq = new StringRequest(Method.POST, URL_address, listener, errorListener) {
+				@Override
+				protected Map<String, String> getParams()
+						throws com.android.volley.AuthFailureError {
+					Map<String, String> params = new HashMap<String, String>();
+					
+					SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
+			        String username = pref.getString("user_name", "1");
+			        params.put("user_name", username);  
+					return params;
+				};
+			};
+			mQueue2.add(myReq);
+*/		}
 
 }
 

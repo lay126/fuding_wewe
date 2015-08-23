@@ -63,6 +63,8 @@ public class CustomAdapter_Noti extends BaseAdapter {
 			text.setText(arrList.get(position).getFriendId()+" 님이 회원님의 게시글을 좋아합니다.");
 		} else if (arrList.get(position).getType() == "2") {
 			text.setText(arrList.get(position).getFriendId()+" 님이 회원님의 게시글에 댓글을 남겼습니다.");
+		} else {
+			text.setText(arrList.get(position).getFriendId()+" 님이 회원님을 팔로우합니다.");
 		}
 		date.setText(arrList.get(position).getDate());
 
