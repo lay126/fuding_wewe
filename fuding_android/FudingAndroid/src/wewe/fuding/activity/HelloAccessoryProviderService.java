@@ -256,6 +256,7 @@ public class HelloAccessoryProviderService extends SAAgent {
             if (uHandler == null) {
                 return;
             }
+            /*
             new Thread(new Runnable() {
                 public void run() {
                     try {
@@ -265,6 +266,7 @@ public class HelloAccessoryProviderService extends SAAgent {
                     }
                 }
             }).start();
+            */
         }
         
         // 기어에 data를 전송하기 위한 브로드캐스트리시버
