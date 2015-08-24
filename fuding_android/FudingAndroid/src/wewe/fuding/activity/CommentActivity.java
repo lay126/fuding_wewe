@@ -63,7 +63,8 @@ public class CommentActivity extends Activity {
 				int wf_index =  pref.getInt("wf_index", 1);
 
 				// 추가된 댓글 서버로 전송 
-				sendAddComment(wf_index, user_name, ed.getText().toString());
+				String context = ed.getText().toString();
+				sendAddComment(wf_index, user_name, context);
 				ed.setText("");
 				Cadapter.notifyDataSetChanged();
 			}
@@ -116,6 +117,7 @@ public class CommentActivity extends Activity {
 							cm.setFoodIndex(jsonFrame.getString("wf_index"));
 							cm.setCommentWriter(jsonFrame.getString("wcm_writer"));
 							cm.setContentText(jsonFrame.getString("wcm_text"));
+							Log.d("comment_get", jsonFrame.getString("wcm_text"));
 							
 							arrayComment.add(cm); 
 						}
@@ -208,7 +210,8 @@ private class CommentAdapter extends ArrayAdapter<Comment> {
 			SpannableString redSpannable= new SpannableString(orange);
 			redSpannable.setSpan(new ForegroundColorSpan(Color.rgb(255,127,0)), 0, orange.length(), 0);
 			builder.append(redSpannable);
-			builder.append(comment.getContentText());
+			builder.append("_"+comment.getContentText());
+			Log.d("comment builder", comment.getContentText());
 			holder.comment_text.setText(builder, BufferType.SPANNABLE);
 
 			holder.delete_btn.setOnClickListener(new OnClickListener() {
@@ -262,7 +265,7 @@ private class CommentAdapter extends ArrayAdapter<Comment> {
 						for (int i = 0; i < jarray.length(); i++) {
 							JSONObject jsonFrame = (JSONObject) jarray.get(i);
 							String wcm_index = jsonFrame.getString("comment_state"); 
-							
+							Log.d("comment_wcm_index", wcm_index+"");
 							if ("no".equals(wcm_index)) {
 								Log.d("delete comment", "fail");
 							} else {
@@ -279,8 +282,6 @@ private class CommentAdapter extends ArrayAdapter<Comment> {
 								cm.setContentText(comment);// ("wcm_text")
 								
 								arrayComment.add(cm);
-								
-
 							}
 						}	
 				} catch (Exception e) {}
@@ -311,6 +312,9 @@ private class CommentAdapter extends ArrayAdapter<Comment> {
 				params.put("wf_index", wf_index+"");
 				params.put("user_name", user_name);
 				params.put("wcm_text", comment);
+				
+				Log.d("comment_add server", comment+", "+wf_index);
+				
 				params.put("noti_date", strDate);
 				
 //				쓸때 ->이름, 프레임 번호, 내용

@@ -282,18 +282,18 @@ public class AddPostingActivity extends ListActivity {
 			}
 		});
 
-		ImageView btn_edit = (ImageView) findViewById(R.id.btn_edit);
-		btn_edit.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (flag) {
-					flag = false;
-				} else {
-					flag = true;
-				}
-				adapter.notifyDataSetChanged();
-			}
-		});
+//		ImageView btn_edit = (ImageView) findViewById(R.id.btn_edit);
+//		btn_edit.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				if (flag) {
+//					flag = false;
+//				} else {
+//					flag = true;
+//				}
+//				adapter.notifyDataSetChanged();
+//			}
+//		});
 
 		// 처음 리스트뷰 불러오기
 		// DataManager dbManager = new DataManager(getApplicationContext());
