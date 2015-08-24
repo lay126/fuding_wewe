@@ -1,9 +1,10 @@
 ﻿package wewe.fuding.activity;
 
 import wewe.fuding.widget.Fragment_AddPost;
-import wewe.fuding.widget.Fragment_Noti;
 import wewe.fuding.widget.Fragment_NewsFeed;
+import wewe.fuding.widget.Fragment_Noti;
 import wewe.fuding.widget.Fragment_Profile;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,7 +32,9 @@ public class FudingMainActivity extends FragmentActivity {
 	Fragment_AddPost frag_addpost = null;
 	Fragment_Noti frag_alarm = null;
 	Fragment_Profile frag_profile = null;
-
+	
+	public static Activity FudingMainActivity;
+	
 	RelativeLayout newsfeed_layout, addpost_layout, alarm_layout, profile_layout;
 	TextView newsfeed_textView, addpost_textView, alarm_textView, profile_textView;
 
@@ -58,7 +61,7 @@ public class FudingMainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_fuding_main);
-
+		FudingMainActivity = FudingMainActivity.this;
 		me = this;
 		Log.d(TAG, "onCreate");
 

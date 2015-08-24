@@ -45,11 +45,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
 import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -86,6 +86,8 @@ public class UpdateProfileActivity extends Activity {
 				editor.putString("login_check", "false"); //로그아웃 세션 저장 
 				editor.commit();
 				startActivity(new Intent(UpdateProfileActivity.this, LoginActivity.class));
+				FudingMainActivity aActivity = (FudingMainActivity)FudingMainActivity.FudingMainActivity;
+				aActivity.finish();
 				finish();
 			}
 			

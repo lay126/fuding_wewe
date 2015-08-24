@@ -43,8 +43,8 @@
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/newsfeed_imgView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="450dp"
+            android:layout_height="450dp"
             android:src="@drawable/ic_launcher" />
 
         <ImageButton
