@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,7 @@ import com.android.volley.toolbox.Volley;
 
 public class SignUpActivity  extends Activity { 
 	
-	EditText id, pwd, email, content;
+	EditText id, pwd, email, content, pwd_check;
 	ImageView ok_btn, cancel_btn;
 	
 	@Override
@@ -37,10 +38,16 @@ public class SignUpActivity  extends Activity {
 		
 		id = (EditText) findViewById(R.id.edit_id);
 		pwd = (EditText) findViewById(R.id.edit_pwd);
+		pwd_check = (EditText) findViewById(R.id.edit_pwd_check);
 		email = (EditText) findViewById(R.id.edit_email); 
-
+		
+		id.setBackgroundColor(Color.TRANSPARENT);
+		pwd.setBackgroundColor(Color.TRANSPARENT);
+		pwd_check.setBackgroundColor(Color.TRANSPARENT);
+		email.setBackgroundColor(Color.TRANSPARENT);
+		
 		ok_btn = (ImageView) findViewById(R.id.ok_btn);
-		cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
+		///cancel_btn = (ImageView) findViewById(R.id.cancel_btn);
 		
 		ok_btn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -54,12 +61,12 @@ public class SignUpActivity  extends Activity {
 			}
 		});
 		
-		cancel_btn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+//		cancel_btn.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				finish();
+//			}
+//		});
 	}
 
 	private void signupRequest(final String id, final String pwd, final String email) {
