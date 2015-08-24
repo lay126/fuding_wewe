@@ -1110,6 +1110,8 @@ def hash_find(request):
 	user_name = request.POST.get('user_name')
 	search_text = request.POST.get('search_text')
 
+	search_text = search_text.replace('#', ' #')
+
 	hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
 	hashs = hash_w.findall(search_text)
 
@@ -1132,7 +1134,7 @@ def hash_find(request):
 						wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wf_.wt_index)
 
 						dic = dict()
-						dic = feed_list(user_name, wf_.wf_index, wf_.wt_index, wf_.wf_likes, wf_.wc_date, wf_.wf_writer, wf_.wc_total)
+						dic = feed_list(user_name, wf_.wf_index)
 						datas.append(dic)
 
 						# 출력했으니 리스트에 넣어야지!
@@ -1140,8 +1142,7 @@ def hash_find(request):
 					except :
 						pass
 
-	json_data = json.dumps(datas)
-	return HttpResponse(json_data, content_type='application/json')
+	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
 
