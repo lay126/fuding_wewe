@@ -16,7 +16,7 @@
     <string name="settings_profile_album">앨범</string>
     <string name="settings_profile_camera">카메라</string>
     <string name="settings_profile_delete">삭제</string>
+    <string name="app_id">385002195026831</string>
+    <string name="title_activity_others_profile">OthersProfileActivity</string>
 
-    
-    <string name="app_id">385002195026831</string> 
 </resources>
