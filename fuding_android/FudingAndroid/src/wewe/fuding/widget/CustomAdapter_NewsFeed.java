@@ -98,103 +98,9 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.row_newsfeed_item, parent,
 					false);
-
-			// 좋아요 버튼을 터치 했을 때 이벤트 발생
-			btnLike = (ImageButton) convertView
-					.findViewById(R.id.newsfeed_imgBtnLike);
-			btnLike.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					clickLikeBtn(v);
-				}
-
-				private void clickLikeBtn(View v) {
-					String URL_address = "http://119.205.252.224:8000/set/like/";
-
-					RequestQueue mQueue;
-					mQueue = Volley.newRequestQueue(context);
-
-					Listener<String> listener = new Listener<String>() {
-						@Override
-						public void onResponse(String response) {
-							Log.i("**likeState", response);
-							String res = "{'response':" + response + "}";
-							Log.d(TAG, res);
-
-							JSONObject jobject = null;
-							try {
-								jobject = new JSONObject(res);
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
-
-							JSONArray jarray = null;
-							try {
-								jarray = jobject.getJSONArray("response");
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
-
-							try {
-								JSONObject jsonContent = (JSONObject) jarray
-										.get(0);
-								int state = Integer.parseInt(jsonContent
-										.getString("like_state"));
-
-								if (state == 1) {
-									Log.i("***likeState is 1", "" + state);
-									btnLike.setImageResource(R.drawable.like_clicked);
-								} else {
-									Log.i("***likeState is 0", "" + state);
-									btnLike.setImageResource(R.drawable.like_unclicked);
-								}
-								arrList.get(pos).setLikeState(state);
-								notifyDataSetChanged();
-							} catch (JSONException e) {
-								e.printStackTrace();
-							}
-						}
-					};
-
-					ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
-						@Override
-						public void onErrorResponse(VolleyError error) {
-							error.printStackTrace();
-							Toast.makeText(context,
-									"좋아요클릭 : 네트워크상태가좋지 않습니다. 잠시만 기다려주세요.",
-									Toast.LENGTH_LONG).show();
-						}
-					};
-
-					StringRequest req = new StringRequest(Method.POST,
-							URL_address, listener, errorListener) {
-						@Override
-						protected Map<String, String> getParams()
-								throws AuthFailureError {
-							Map<String, String> params = new HashMap<String, String>();
-							// 사용자아이디, 글넘버
-							SharedPreferences pref = context
-									.getSharedPreferences("pref",
-											context.MODE_PRIVATE);
-							String userName = pref.getString("user_name",
-									"ayoung");
-							params.put("user_name", userName);
-							params.put("wf_index", ""
-									+ arrList.get(pos).getFoodIndex());
-
-							SimpleDateFormat dateFormat = new SimpleDateFormat(
-									"yyyy/MM/dd", java.util.Locale.getDefault());
-							params.put("noti_date", dateFormat.format(new Date()));
-							return params;
-						}
-
-					};
-
-					mQueue.add(req);
-				}
-			});
 		}
 
+		// 글쓴이 아이디 클릭시 프로필 액티비티로
 		Button btnUserId = (Button) convertView
 				.findViewById(R.id.newsfeed_btnViewUserId);
 		final String wfWriter = arrList.get(pos).getUserId();
@@ -212,31 +118,17 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 			}
 		});
 
+		// 날짜
 		TextView tvDate = (TextView) convertView
 				.findViewById(R.id.newsfeed_txtViewWriteDate);
 		tvDate.setText(arrList.get(pos).getWriteDate());
 
+		// 글제목
 		TextView tvContentTitle = (TextView) convertView
 				.findViewById(R.id.newsfeed_txtViewContentTitle);
 		tvContentTitle.setText("" + arrList.get(pos).getFoodName());
 
-		ImageButton btnLike = (ImageButton) convertView
-				.findViewById(R.id.newsfeed_imgBtnLike);
-		if (arrList.get(pos).getLikeState() == 0) {
-			// unclicked
-			btnLike.setImageResource(R.drawable.like_unclicked);
-		} else {
-			btnLike.setImageResource(R.drawable.like_clicked);
-		}
-
-		TextView tvLikeCnt = (TextView) convertView
-				.findViewById(R.id.newsfeed_txtViewLikeCnt);
-		tvLikeCnt.setText("" + arrList.get(pos).getLikeCnt());
-
-		TextView tvTag = (TextView) convertView
-				.findViewById(R.id.newsfeed_txtViewTag);
-		tvTag.setText(arrList.get(pos).getTag());
-
+		// 이미지
 		NetworkImageView imgFood = (NetworkImageView) convertView
 				.findViewById(R.id.newsfeed_imgView);
 		String URL_img_address = "http://119.205.252.224:8000/get/image/"
@@ -257,8 +149,133 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 			}
 		});
 
-		// userId // foodName; // ingre
-		// amount // totalTime // tag // likeCnt
+		// 좋아요 버튼 상태
+		btnLike = (ImageButton) convertView
+				.findViewById(R.id.newsfeed_imgBtnLike);
+		if (arrList.get(pos).getLikeState() == 0) {
+			// unclicked
+			btnLike.setImageResource(R.drawable.like_unclicked);
+		} else {
+			btnLike.setImageResource(R.drawable.like_clicked);
+		}
+
+		// 좋아요 버튼을 터치 했을 때 이벤트 발생
+		btnLike = (ImageButton) convertView
+				.findViewById(R.id.newsfeed_imgBtnLike);
+		btnLike.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				clickLikeBtn(v);
+			}
+
+			private void clickLikeBtn(View v) {
+				String URL_address = "http://119.205.252.224:8000/set/like/";
+
+				RequestQueue mQueue;
+				mQueue = Volley.newRequestQueue(context);
+
+				Listener<String> listener = new Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						Log.i("**likeState", response);
+						String res = "{'response':" + response + "}";
+						Log.d(TAG, res);
+
+						JSONObject jobject = null;
+						try {
+							jobject = new JSONObject(res);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+						JSONArray jarray = null;
+						try {
+							jarray = jobject.getJSONArray("response");
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+
+						try {
+							JSONObject jsonContent = (JSONObject) jarray.get(0);
+							int state = Integer.parseInt(jsonContent
+									.getString("like_state"));
+
+							if (state == 1) {
+								Log.i("***likeState is 1", "" + state);
+								btnLike.setImageResource(R.drawable.like_clicked);
+							} else {
+								Log.i("***likeState is 0", "" + state);
+								btnLike.setImageResource(R.drawable.like_unclicked);
+							}
+							arrList.get(pos).setLikeState(state);
+							notifyDataSetChanged();
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+				};
+
+				ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						error.printStackTrace();
+						Toast.makeText(context,
+								"좋아요클릭 : 네트워크상태가좋지 않습니다. 잠시만 기다려주세요.",
+								Toast.LENGTH_LONG).show();
+					}
+				};
+
+				StringRequest req = new StringRequest(Method.POST, URL_address,
+						listener, errorListener) {
+					@Override
+					protected Map<String, String> getParams()
+							throws AuthFailureError {
+						Map<String, String> params = new HashMap<String, String>();
+						// 사용자아이디, 글넘버
+						SharedPreferences pref = context.getSharedPreferences(
+								"pref", context.MODE_PRIVATE);
+						String userName = pref.getString("user_name", "ayoung");
+						params.put("user_name", userName);
+						params.put("wf_index", ""
+								+ arrList.get(pos).getFoodIndex());
+
+						SimpleDateFormat dateFormat = new SimpleDateFormat(
+								"yyyy/MM/dd", java.util.Locale.getDefault());
+						params.put("noti_date", dateFormat.format(new Date()));
+						return params;
+					}
+
+				};
+
+				mQueue.add(req);
+			}
+		});
+
+		// 좋아요 수
+		TextView tvLikeCnt = (TextView) convertView
+				.findViewById(R.id.newsfeed_txtViewLikeCnt);
+		tvLikeCnt.setText("" + arrList.get(pos).getLikeCnt());
+		
+		// 댓글 버튼 클릭 시 댓글 액티비티 
+		ImageButton imgComment = (ImageButton) convertView.findViewById(R.id.newsfeed_imgBtnComment);
+		imgComment.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+		// 댓글 수
+		TextView tvCommentCnt = (TextView) convertView
+				.findViewById(R.id.newsfeed_txtCommentsCnt);
+		tvCommentCnt.setText("" + arrList.get(pos).getCommentCnt());
+
+		// 태그
+		TextView tvTag = (TextView) convertView
+				.findViewById(R.id.newsfeed_txtViewTag);
+		tvTag.setText(arrList.get(pos).getTag());
+
 		return convertView;
 	}
 }

@@ -145,6 +145,8 @@ public class Fragment_NewsFeed extends Fragment {
 						nfFrame.setFoodImgURL(jsonFrame.getString("wc_img"));
 						nfFrame.setFoodIndex(Integer.parseInt(jsonFrame
 								.getString("wf_index")));
+						nfFrame.setCommentCnt(Integer.parseInt(jsonFrame
+								.getString("wf_comments")));
 
 						frameArr.add(nfFrame);
 					}
