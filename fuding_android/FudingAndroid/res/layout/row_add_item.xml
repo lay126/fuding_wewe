@@ -3,16 +3,16 @@
     android:id="@+id/rowdetail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"   >
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/btnImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
@@ -29,41 +29,67 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="20dp"
-                android:text="설명" />
+                android:text="설명"
+                android:textSize="18sp"
+                android:textColor="#5A5B5D" />
 
             <EditText
                 android:id="@+id/stepEditText"
                 android:layout_width="161dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:ems="10"
-                android:inputType="text" > 
+                android:textColor="#5A5B5D"
+                android:inputType="text"
+                android:textSize="16sp" >
+ 
             </EditText>
+
+            <View
+                android:layout_width="142dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="18dp"
+                android:background="#5A5B5D" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp" 
-                android:text="소요시간 " />
+                android:layout_marginTop="20dp"
+                android:text="소요시간 "
+                android:textSize="18sp"
+                android:textColor="#5A5B5D" />
 
             <EditText
                 android:id="@+id/time_edit"
                 android:layout_width="41dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textColor="#5A5B5D"
+                android:textSize="16sp" />
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:layout_marginTop="18dp"
+    android:background="#5A5B5D" />
 
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"  >
+            android:layout_height="match_parent" >
 
             <ImageButton
                 android:id="@+id/btnRemove"
@@ -71,10 +97,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/btnRemove"
-                android:src="@android:drawable/ic_delete" />
-
+                android:src="@android:drawable/ic_delete"
+                android:visibility="gone" />
         </RelativeLayout>
-
     </LinearLayout>
 
 </LinearLayout>

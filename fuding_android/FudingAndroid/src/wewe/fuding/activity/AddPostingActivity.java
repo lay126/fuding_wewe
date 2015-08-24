@@ -218,14 +218,16 @@ public class AddPostingActivity extends ListActivity {
 						new ColorDrawable(android.graphics.Color.TRANSPARENT));
 				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-				View dialogView = (RelativeLayout) vi.inflate(
-						R.layout.dialog_detail_setting, null);
+				View dialogView = (LinearLayout) vi.inflate(R.layout.dialog_detail_setting, null);
 
 				final EditText edit_step = (EditText) dialogView.findViewById(R.id.ed_step);
+				edit_step.setBackgroundColor(Color.TRANSPARENT);
 				final EditText edit_time = (EditText) dialogView.findViewById(R.id.ed_time);
+				edit_time.setBackgroundColor(Color.TRANSPARENT);
+				
 				dialog_image = (ImageView) dialogView.findViewById(R.id.image);
-				Button btn_add_ok = (Button) dialogView.findViewById(R.id.btn_ok);
-				Button btn_add_cancel = (Button) dialogView.findViewById(R.id.btn_cancel);
+				ImageView btn_add_ok = (ImageView) dialogView.findViewById(R.id.btn_ok);
+				ImageView btn_add_cancel = (ImageView) dialogView.findViewById(R.id.btn_cancel);
 
 				btn_add_ok.setOnClickListener(new OnClickListener() {
 					@Override
@@ -369,9 +371,13 @@ public class AddPostingActivity extends ListActivity {
 
 				EditText stepView = (EditText) v
 						.findViewById(R.id.stepEditText);
+				stepView.setBackgroundColor(Color.TRANSPARENT);
+				
 				holder.stepView = stepView;
 
 				EditText timeView = (EditText) v.findViewById(R.id.time_edit);
+				timeView.setBackgroundColor(Color.TRANSPARENT);
+				
 				holder.timeView = timeView;
 
 //				ImageView btn_holder = (ImageView) v.findViewById(R.id.drag_handle);
