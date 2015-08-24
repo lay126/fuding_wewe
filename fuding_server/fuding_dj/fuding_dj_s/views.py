@@ -539,13 +539,28 @@ def set_like(request):
 								wf_index = wf_index, )
 		liking_.save()
 		dic['like_state'] = '1'
+
+		# 좋아요 노티 추가 
 		do_noti(wf_.wf_writer, user_name, 1, wf_index, noti_date)
+
+		# 글 디비 좋아요 필드 +1 
+		tmp = wf_.wf_likes + 1
+		wf2_ = WRITE_FRAME.objects.filter(wf_index=wf_index)
+		wf2_.update(wf_likes=tmp)
+
 	if len(like_) is not 0:
 		# 이미 좋아요 된 경우. 없애고, return 0
 		for l_ in like_ :
 			l_.delete()
 		dic['like_state'] = '0'
+
+		# 좋아요 노티 삭제 
 		do_unnoti(wf_.wf_writer, user_name, 1, wf_index)
+
+		# 글 디비 좋아요 필드 -1
+		tmp = wf_.wf_likes -1
+		wf2_ = WRITE_FRAME.objects.filter(wf_index=wf_index)
+		wf2_.update(wf_likes=tmp)
 
 	# 0:안눌린것 1:눌린것 
 	datas.append(dic)
@@ -841,6 +856,13 @@ def upload_write_frame(request):
 
 	wf_.update(wc_date=wc_date)
 
+	# 글 작성자, 작성글 수 +1
+	user_ = User.objects.get(username=user_name)
+	user_data_ = USER_DATA.objects.get(user_id=user_)
+	tmp = user_data_.user_writes + 1
+	user_data_ = USER_DATA.objects.filter(user_id=user_)
+	user_data_.update(user_writes=tmp)
+
 	json_data = json.dumps(write_frame_.wf_index)
 	return HttpResponse(json_data, content_type='application/json')
 
@@ -876,6 +898,11 @@ def upload_write_comment(request):
 		# 2번째인자 : 활동을 취한 사람의 아이디 
 		### wf_index: 댓글 노티의 경우는, 글번호가 아닌 댓글 번호를 넘겨주어야 한다
 		do_noti(wf_.wf_writer, user_name, 2, comment_.wcm_index, noti_date)
+
+		# 글 디비 댓글 필드 +1 
+		tmp = wf_.wf_comments + 1
+		wf2_ = WRITE_FRAME.objects.filter(wf_index=wf_index)
+		wf2_.update(wf_comments=tmp)
 	except:
 		dic['comment_state'] = '1'
 
@@ -987,9 +1014,16 @@ def delete_write(request):
 			dic['result'] = '1'
 			# dic['result'] = '프레임 삭제'
 			pass
+		# 글 작성자, 작성글 수 +1
+		user_ = User.objects.get(username=user_name)
+		user_data_ = USER_DATA.objects.get(user_id=user_)
+		tmp = user_data_.user_writes - 1
+		user_data_ = USER_DATA.objects.filter(user_id=user_)
+		user_data_.update(user_writes=tmp)
 	except:
 		dic['result'] = '1'
 		pass
+
 
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
@@ -1016,6 +1050,11 @@ def delete_comment(request):
 		if user_name == wcm_.wcm_writer:
 			wcm_.delete();
 			dic['comment_state'] = '0'
+
+		# 글 디비 댓글 필드 -1 
+		tmp = wf_.wf_comments -1
+		wf2_ = WRITE_FRAME.objects.filter(wf_index=wf_index)
+		wf2_.update(wf_comments=tmp)
 	except:
 		dic['comment_state'] = '1'
 

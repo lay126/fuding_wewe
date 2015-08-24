@@ -15,9 +15,11 @@ import wewe.fuding.domain.User;
 import wewe.fuding.utils.ImageDownloader;
 import wewe.fuding.widget.CustomAdapter_Profile;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -86,8 +88,7 @@ public class OthersProfileActivity extends Activity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				// int userNum, String userEmail, String userPwd, String userId,
-				// String userName, String userPhoto
+
 				try {
 					JSONObject json = (JSONObject) jarray.get(0);
 
@@ -105,6 +106,9 @@ public class OthersProfileActivity extends Activity {
 							.getString("user_writes")));
 					Log.i("otherProfile",
 							user.getUserName() + ", " + user.getFollowers());
+					
+					flagMe = json.getString("me_flag");
+					flagFollow = json.getString("follow_flag");
 
 					String URL_img_address = "http://119.205.252.224:8000/get/image/"
 							+ user.getUserPhoto();
@@ -119,6 +123,8 @@ public class OthersProfileActivity extends Activity {
 					tvWrites.setText("" + user.getWrites());
 					tvFollowers.setText("" + user.getFollowers());
 					tvFollowings.setText("" + user.getFollowings());
+					
+					setFollowBtn(flagMe, flagFollow);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -218,6 +224,25 @@ public class OthersProfileActivity extends Activity {
 		mQueue.add(req);
 		adapterInit(contentArr);
 	}
+	
+	private void setFollowBtn(String fMe, String fFollow) {
+		if (fMe.equals("yes")) { // 나 인 경우 
+			btnFollow.setImageResource(R.drawable.ic_launcher);
+			btnFollow.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startActivity(new Intent(OthersProfileActivity.this, UpdateProfileActivity.class));
+				}
+			});
+		} else {
+			if (fFollow.equals("yes")) { // 팔로우 하고 있는 경우 
+				btnFollow.setImageResource(R.drawable.like_clicked);
+			} else { // 팔로우 하고 있지 않는 경우 
+				btnFollow.setImageResource(R.drawable.like_unclicked);				
+			}
+		}
+		
+	}
 
 	private void init() {
 		SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
@@ -231,6 +256,7 @@ public class OthersProfileActivity extends Activity {
 		tvFollowers = (TextView) findViewById(R.id.othersprofile_txtFollowers);
 		tvFollowings = (TextView) findViewById(R.id.othersprofile_txtFollowings);
 		gridView = (GridView) findViewById(R.id.othersprofile_gridView);
+		btnFollow = (ImageButton) findViewById(R.id.othersprofile_follow_btn);
 		
 		contentArr = new ArrayList<Content>();
 	}
