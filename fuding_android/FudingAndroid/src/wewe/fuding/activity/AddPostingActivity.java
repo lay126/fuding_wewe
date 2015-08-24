@@ -581,7 +581,7 @@ public class AddPostingActivity extends ListActivity {
 
 				Log.d("multipart", "HTTP Response is : " + serverResponseMessage + ": " + serverResponseCode);
 				if (serverResponseCode == 200) {
-					getServerImgeURL(step_num, imageId, step);
+					getServerImgeURL(step_num, imageId, step, time);
 				}
 				
 			} catch (Exception e) {
@@ -603,7 +603,7 @@ public class AddPostingActivity extends ListActivity {
 
 	}
 		
-	private void getServerImgeURL(final int step_num2, final String imageId, final String content) {
+	private void getServerImgeURL(final int step_num2, final String imageId, final String content, final String time) {
 		String URL_address = "http://119.205.252.224:8000/get/content/url/";
 
 		RequestQueue mQueue2;
@@ -614,8 +614,8 @@ public class AddPostingActivity extends ListActivity {
 				try {
 					Log.d("volley", "content!!! result    : " + result);
 					 
-					mItem.add(new Item(result, content+"", imageId));
-					Log.d("volley", result+", "+content+", "+imageId);
+					mItem.add(new Item(result, content+"", time));
+					Log.d("volley", result+", "+content+", "+time);
 					adapter.notifyDataSetChanged();
 					
 					
