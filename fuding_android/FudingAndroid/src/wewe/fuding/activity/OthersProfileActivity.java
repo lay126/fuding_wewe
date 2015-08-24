@@ -81,7 +81,7 @@ public class OthersProfileActivity extends Activity {
 				// to make data available
 				String arrRes = "{'response':" + response + "}";
 				Log.i("othersprofile", arrRes);
-				
+
 				JSONObject jobject = null;
 				try {
 					jobject = new JSONObject(arrRes);
@@ -113,8 +113,9 @@ public class OthersProfileActivity extends Activity {
 
 					flagMe = json.getString("me_flag");
 					flagFollow = json.getString("follow_flag");
-					Log.i("othersProfile", "1 me : " + flagMe + ", follow : " + flagFollow);
-					if (!flagMe.equals(null) && !flagFollow.equals(null)){
+					Log.i("othersProfile", "1 me : " + flagMe + ", follow : "
+							+ flagFollow);
+					if (!flagMe.equals(null) && !flagFollow.equals(null)) {
 						setFollowBtn(flagMe, flagFollow);
 					}
 
@@ -233,13 +234,13 @@ public class OthersProfileActivity extends Activity {
 	private void setFollowBtn(String fMe, String fFollow) {
 		Log.i("setFollowBtn", fMe + ", " + fFollow); /**/
 		if (fMe.equals("yes")) { // 나 인 경우
-			btnFollow.setImageResource(R.drawable.ic_launcher);
+			btnFollow.setImageResource(R.drawable.profile_edit_profile_btn);
 			btnFollow.setOnClickListener(setClickLisntener("fMe", fMe));
 		} else {
 			if (fFollow.equals("yes")) { // 팔로우 하고 있는 경우
-				btnFollow.setImageResource(R.drawable.like_clicked);
+				btnFollow.setImageResource(R.drawable.profile_now_follow_btn);
 			} else { // 팔로우 하고 있지 않는 경우
-				btnFollow.setImageResource(R.drawable.like_unclicked);
+				btnFollow.setImageResource(R.drawable.profile_plus_follow_btn);
 			}
 			btnFollow.setOnClickListener(setClickLisntener("fFollow", fFollow));
 		}
