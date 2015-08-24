@@ -81,6 +81,10 @@ public class DetailActivity  extends Activity {
 				 // 확인 버튼 클릭시 설정
 					public void onClick(DialogInterface dialog, int whichButton){
 						deleteContent();
+						
+						// 리스트뷰 갱신
+						//frameArr
+						
 						finish();
 						dialog.cancel();
 					}

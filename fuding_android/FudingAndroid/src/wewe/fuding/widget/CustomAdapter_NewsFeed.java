@@ -89,7 +89,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		final int pos = position;
 		// final Context context = parent.getContext();
 
@@ -153,6 +153,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 						context.MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
 				editor.putInt("wf_index", wf_index);
+				editor.putInt("newsFeed_position", position);
 				editor.commit();
 				context.startActivity(new Intent(context, DetailActivity.class));
 			}

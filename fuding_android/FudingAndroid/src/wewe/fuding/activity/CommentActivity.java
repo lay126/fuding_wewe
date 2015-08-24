@@ -76,8 +76,10 @@ public class CommentActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// 댓글 갯수 제어 
+				try {
 				comment_count = arrayComment.size(); 
 				DetailActivity.text_comment_cnt.setText(comment_count+"");
+				} catch (Exception e) {}
 				finish();
 			}
 		});
@@ -87,8 +89,11 @@ public class CommentActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		//super.onBackPressed(); 
+		try {
 		comment_count = arrayComment.size(); 
 		DetailActivity.text_comment_cnt.setText(comment_count+"");
+		} catch (Exception e) {}
+		
 		finish();
 	}
 	private void getAllComment() {
