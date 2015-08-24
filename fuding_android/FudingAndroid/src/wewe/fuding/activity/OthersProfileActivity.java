@@ -1,6 +1,8 @@
 package wewe.fuding.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,13 +15,16 @@ import wewe.fuding.domain.Content;
 import wewe.fuding.domain.Detail;
 import wewe.fuding.domain.User;
 import wewe.fuding.utils.ImageDownloader;
+import wewe.fuding.widget.CustomAdapter_NewsFeed;
 import wewe.fuding.widget.CustomAdapter_Profile;
+import android.R.string;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,6 +42,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 public class OthersProfileActivity extends Activity {
+	public static final String TAG = OthersProfileActivity.class
+			.getSimpleName();
+
 	private NetworkImageView imgUserPhoto;
 	private TextView tvUserId1, tvUserId2;
 	private TextView tvWrites, tvFollowers, tvFollowings;
@@ -55,7 +63,6 @@ public class OthersProfileActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_others_profile);
-
 		init();
 		getProfile();
 		getOtherFeed();
@@ -73,8 +80,8 @@ public class OthersProfileActivity extends Activity {
 			public void onResponse(String response) {
 				// to make data available
 				String arrRes = "{'response':" + response + "}";
-				Log.d("othersProfile", arrRes);
-
+				Log.i("othersprofile", arrRes);
+				
 				JSONObject jobject = null;
 				try {
 					jobject = new JSONObject(arrRes);
@@ -92,9 +99,6 @@ public class OthersProfileActivity extends Activity {
 				try {
 					JSONObject json = (JSONObject) jarray.get(0);
 
-					flagMe = json.getString("me_flag");
-					flagFollow = json.getString("follow_flag");
-
 					user = new User();
 					user.setUserName(json.getString("user_name"));
 					user.setUserPhoto(json.getString("user_img"));
@@ -106,9 +110,13 @@ public class OthersProfileActivity extends Activity {
 							.getString("user_writes")));
 					Log.i("otherProfile",
 							user.getUserName() + ", " + user.getFollowers());
-					
+
 					flagMe = json.getString("me_flag");
 					flagFollow = json.getString("follow_flag");
+					Log.i("othersProfile", "1 me : " + flagMe + ", follow : " + flagFollow);
+					if (!flagMe.equals(null) && !flagFollow.equals(null)){
+						setFollowBtn(flagMe, flagFollow);
+					}
 
 					String URL_img_address = "http://119.205.252.224:8000/get/image/"
 							+ user.getUserPhoto();
@@ -123,8 +131,6 @@ public class OthersProfileActivity extends Activity {
 					tvWrites.setText("" + user.getWrites());
 					tvFollowers.setText("" + user.getFollowers());
 					tvFollowings.setText("" + user.getFollowings());
-					
-					setFollowBtn(flagMe, flagFollow);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -167,7 +173,7 @@ public class OthersProfileActivity extends Activity {
 			public void onResponse(String response) {
 				// to make data available
 				String arrRes = "{'response':" + response + "}";
-				Log.d("othersProfile arrRes", arrRes);
+				Log.i("othersProfile arrRes", arrRes);
 
 				JSONObject jobject = null;
 				try {
@@ -224,24 +230,91 @@ public class OthersProfileActivity extends Activity {
 		mQueue.add(req);
 		adapterInit(contentArr);
 	}
-	
+
 	private void setFollowBtn(String fMe, String fFollow) {
-		if (fMe.equals("yes")) { // 나 인 경우 
+		Log.i("setFollowBtn", fMe + ", " + fFollow); /**/
+		if (fMe.equals("yes")) { // 나 인 경우
 			btnFollow.setImageResource(R.drawable.ic_launcher);
-			btnFollow.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					startActivity(new Intent(OthersProfileActivity.this, UpdateProfileActivity.class));
-				}
-			});
+			btnFollow.setOnClickListener(setClickLisntener("fMe", fMe));
 		} else {
-			if (fFollow.equals("yes")) { // 팔로우 하고 있는 경우 
+			if (fFollow.equals("yes")) { // 팔로우 하고 있는 경우
 				btnFollow.setImageResource(R.drawable.like_clicked);
-			} else { // 팔로우 하고 있지 않는 경우 
-				btnFollow.setImageResource(R.drawable.like_unclicked);				
+			} else { // 팔로우 하고 있지 않는 경우
+				btnFollow.setImageResource(R.drawable.like_unclicked);
 			}
+			btnFollow.setOnClickListener(setClickLisntener("fFollow", fFollow));
 		}
-		
+	}
+
+	private OnClickListener setClickLisntener(final String flag,
+			final String value) {
+		Log.i("setClickLisntener", flag + ", " + value); /**/
+		OnClickListener clickListener = new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (flag.equals("fMe")) {
+					Log.i("followClickListener", "fMe");
+					startActivity(new Intent(OthersProfileActivity.this,
+							UpdateProfileActivity.class));
+				} else if (flag.equals("fFollow")) {
+					requestFollow();
+					if (value.equals("yes")) {
+						Log.i("followClickListener", "fFollow yes");
+						btnFollow.setImageResource(R.drawable.like_unclicked);
+					} else {
+						Log.i("followClickListener", "fFollow no");
+						btnFollow.setImageResource(R.drawable.like_clicked);
+					}
+				} else {
+
+				}
+			}
+		};
+		return clickListener;
+	}
+
+	private void requestFollow() {
+		String URL_address = "http://119.205.252.224:8000/set/follow/";
+
+		RequestQueue mQueue;
+		mQueue = Volley.newRequestQueue(this);
+
+		Listener<String> listener = new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				String res = "{'response':" + response + "}";
+				Log.d("requestFollow()", res);
+			}
+		};
+
+		ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				error.printStackTrace();
+				Toast.makeText(OthersProfileActivity.this,
+						"좋아요클릭 : 네트워크상태가좋지 않습니다. 잠시만 기다려주세요.",
+						Toast.LENGTH_LONG).show();
+			}
+		};
+
+		StringRequest req = new StringRequest(Method.POST, URL_address,
+				listener, errorListener) {
+			@Override
+			protected Map<String, String> getParams() throws AuthFailureError {
+				Map<String, String> params = new HashMap<String, String>();
+
+				params.put("user_id", userName);
+				params.put("following_id", profileName);
+				SimpleDateFormat dateFormat = new SimpleDateFormat(
+						"yyyy/MM/dd", java.util.Locale.getDefault());
+				params.put("noti_date", dateFormat.format(new Date()));
+
+				return params;
+			}
+
+		};
+
+		mQueue.add(req);
 	}
 
 	private void init() {
@@ -257,7 +330,7 @@ public class OthersProfileActivity extends Activity {
 		tvFollowings = (TextView) findViewById(R.id.othersprofile_txtFollowings);
 		gridView = (GridView) findViewById(R.id.othersprofile_gridView);
 		btnFollow = (ImageButton) findViewById(R.id.othersprofile_follow_btn);
-		
+
 		contentArr = new ArrayList<Content>();
 	}
 
