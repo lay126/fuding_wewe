@@ -147,10 +147,6 @@ public class Fragment_Profile extends Fragment {
 						FudingAPI API = FudingAPI.getInstance(activity);
 						photo.setImageUrl(URL_img_address,
 								API.getmImageLoader());
-
-						tvWrites.setText("" + jsonFrame.getString("user_writes"));
-						tvFollowers.setText("" + jsonFrame.getString("user_followers"));
-						tvFollowings.setText("" + jsonFrame.getString("user_followings"));
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();
