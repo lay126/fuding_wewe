@@ -98,26 +98,26 @@ public class Fragment_AddPost extends Fragment {
 
 		});
 		//kt.기어에 레시피를 전송하기 위한 임시 테스트 버튼
-		Button btn2 = (Button) v.findViewById(R.id.button2);
-		btn2.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				String str = edit_title.getText().toString() + ":"
-						+ edit_ingredient.getText().toString() + ":"
-						+ edit_time.getText().toString() + ":"
-						+ edit_amount.getText().toString() + ":"
-						+ edit_tag.getText().toString();
-				// str.concat(edit_title.getText().toString()+":");
-				// str.concat(edit_ingredient.getText().toString()+":");
-				// str.concat(edit_time.getText().toString()+":");
-				// str.concat(edit_amount.getText().toString()+":");
-				// str.concat(edit_tag.getText().toString());
-				Log.d(TAG, str);
-				sendDataToGear(str);
-
-			}
-		});
+//		Button btn2 = (Button) v.findViewById(R.id.button2);
+//		btn2.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				String str = edit_title.getText().toString() + ":"
+//						+ edit_ingredient.getText().toString() + ":"
+//						+ edit_time.getText().toString() + ":"
+//						+ edit_amount.getText().toString() + ":"
+//						+ edit_tag.getText().toString();
+//				// str.concat(edit_title.getText().toString()+":");
+//				// str.concat(edit_ingredient.getText().toString()+":");
+//				// str.concat(edit_time.getText().toString()+":");
+//				// str.concat(edit_amount.getText().toString()+":");
+//				// str.concat(edit_tag.getText().toString());
+//				Log.d(TAG, str);
+//				sendDataToGear(str);
+//
+//			}
+//		});
 
 		
 		init(v);
