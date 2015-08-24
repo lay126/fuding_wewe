@@ -54,7 +54,7 @@
         android:id="@+id/listViewNewsfeed"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:padding="10dp" >
+        android:padding="5dp" >
     </ListView>
 
 </LinearLayout>

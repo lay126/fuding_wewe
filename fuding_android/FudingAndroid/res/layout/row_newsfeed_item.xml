@@ -2,17 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="10dp"
     android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:padding="10dp" >
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/newsfeed_profileImgView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher" />
 
         <Button
@@ -20,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:background="#00ff0000"
             android:padding="5dp"
             android:text="글쓴이홈"
@@ -43,26 +48,30 @@
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/newsfeed_imgView"
-            android:layout_width="450dp"
-            android:layout_height="450dp"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:cropToPadding="true"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher" />
 
         <ImageButton
             android:id="@+id/newsfeed_imgBtnLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/newsfeed_imgView"
+            android:layout_marginTop="-60dp"
             android:background="#00ff0000"
             android:padding="5dp"
             android:src="@drawable/like_n" />
 
         <LinearLayout
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/newsfeed_imgView"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:padding="10dp" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -124,6 +133,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal" >
