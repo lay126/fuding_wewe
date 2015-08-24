@@ -93,6 +93,12 @@ public class Fragment_AddPost extends Fragment {
  		        } else {
  		        	sendFoodInfo(food);
  		        	startActivity(new Intent(activity, AddPostingActivity.class));
+ 		        	
+ 		        	edit_title.setText("");
+ 		        	edit_ingredient.setText("");
+ 		        	edit_time.setText("");
+ 		        	edit_amount.setText("");
+ 		        	edit_tag.setText("");
  		        }
  			}
 
@@ -170,6 +176,8 @@ public class Fragment_AddPost extends Fragment {
 					
 				//} catch (JSONException e) { 
 				//	e.printStackTrace();
+			        
+			        
 				} catch (Exception e){
 					
 				}

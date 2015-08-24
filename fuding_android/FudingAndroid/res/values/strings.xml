@@ -18,5 +18,6 @@
     <string name="settings_profile_delete">삭제</string>
     <string name="app_id">385002195026831</string>
     <string name="title_activity_others_profile">OthersProfileActivity</string>
+    <string name="title_activity_follower_list">FollowerListActivity</string>
 
 </resources>
