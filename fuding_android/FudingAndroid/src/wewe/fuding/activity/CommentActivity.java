@@ -57,22 +57,13 @@ public class CommentActivity extends Activity {
 		add_btn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				Comment cm = new Comment();
-
-				cm.setCommentIndex("");// ("wcm_index")
-				cm.setFoodIndex("");// ("wf_index")
 
 				SharedPreferences pref = getSharedPreferences("pref",MODE_PRIVATE);
 				String user_name = pref.getString("user_name", "");
 				int wf_index =  pref.getInt("wf_index", 1);
-				cm.setCommentWriter(user_name);// ("wcm_writer")
-
-				cm.setContentText(ed.getText().toString());// ("wcm_text")
 
 				// 추가된 댓글 서버로 전송 
 				sendAddComment(wf_index, user_name, ed.getText().toString());
-				
-				arrayComment.add(cm);
 				ed.setText("");
 				Cadapter.notifyDataSetChanged();
 			}
@@ -249,11 +240,54 @@ private class CommentAdapter extends ArrayAdapter<Comment> {
 			public void onResponse(String result) {
 				try {
 					Log.d("volley", "add comment result    : " + result);
+					// to make data available
+					String arrRes = "{'response':" + result + "}";
+					Log.d("comment", arrRes);
+
+					JSONObject jobject = null;
+					try {
+						jobject = new JSONObject(arrRes);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
+					JSONArray jarray = null;
+					try {
+						jarray = jobject.getJSONArray("response");
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+
+					try {
+						for (int i = 0; i < jarray.length(); i++) {
+							JSONObject jsonFrame = (JSONObject) jarray.get(i);
+							String wcm_index = jsonFrame.getString("comment_state"); 
+							
+							if ("no".equals(wcm_index)) {
+								Log.d("delete comment", "fail");
+							} else {
+								Comment cm = new Comment();
+
+
+								SharedPreferences pref = getSharedPreferences("pref",MODE_PRIVATE);
+								String user_name = pref.getString("user_name", "");
+								int wf_index =  pref.getInt("wf_index", 1);
+
+								cm.setCommentIndex(wcm_index);// ("wcm_index")
+								cm.setFoodIndex(wf_index+"");// ("wf_index")
+								cm.setCommentWriter(user_name);// ("wcm_writer")
+								cm.setContentText(comment);// ("wcm_text")
+								
+								arrayComment.add(cm);
+								
+
+							}
+						}	
+				} catch (Exception e) {}
 				} catch (Exception e) {
 				}
 			}
 		};
-
 		com.android.volley.Response.ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
