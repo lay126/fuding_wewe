@@ -210,7 +210,7 @@ private class CommentAdapter extends ArrayAdapter<Comment> {
 			SpannableString redSpannable= new SpannableString(orange);
 			redSpannable.setSpan(new ForegroundColorSpan(Color.rgb(255,127,0)), 0, orange.length(), 0);
 			builder.append(redSpannable);
-			builder.append(comment.getContentText());
+			builder.append("_"+comment.getContentText());
 			Log.d("comment builder", comment.getContentText());
 			holder.comment_text.setText(builder, BufferType.SPANNABLE);
 
