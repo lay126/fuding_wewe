@@ -24,6 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/backBtn"
+            android:textSize="20sp"
             android:textColor="#ffffff" />
 
     </RelativeLayout>

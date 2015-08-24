@@ -25,6 +25,7 @@
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/backBtn"
             android:textColor="#ffffff"
+            android:textSize="20sp"
             android:text="댓글보기" />
 
     </RelativeLayout>
