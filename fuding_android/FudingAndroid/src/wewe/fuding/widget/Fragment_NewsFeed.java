@@ -177,7 +177,7 @@ public class Fragment_NewsFeed extends Fragment {
 				params.put("user_name", userName);
 
 				if (nfType == 1) { // 검색일경우
-					tag.replace("#", " #");
+//					tag.replace("#", " #");
 					Log.i(TAG, tag);
 					params.put("search_text", tag);
 				}
