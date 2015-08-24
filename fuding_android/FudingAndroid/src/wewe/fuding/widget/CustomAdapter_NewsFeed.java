@@ -102,6 +102,14 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 					false);
 		}
 
+		// 글쓴이 프로필 이미지
+		NetworkImageView writerImg = (NetworkImageView) convertView
+				.findViewById(R.id.newsfeed_profileImgView);
+		String URL_user_img_address = "http://119.205.252.224:8000/get/image/"
+				+ arrList.get(pos).getUserImgURL();
+		FudingAPI API = FudingAPI.getInstance(context);
+		writerImg.setImageUrl(URL_user_img_address, API.getmImageLoader());
+
 		// 글쓴이 아이디 클릭시 프로필 액티비티로
 		Button btnUserId = (Button) convertView
 				.findViewById(R.id.newsfeed_btnViewUserId);
@@ -130,13 +138,12 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				.findViewById(R.id.newsfeed_txtViewContentTitle);
 		tvContentTitle.setText("" + arrList.get(pos).getFoodName());
 
-		// 이미지
+		// 음식 이미지
 		NetworkImageView imgFood = (NetworkImageView) convertView
 				.findViewById(R.id.newsfeed_imgView);
-		String URL_img_address = "http://119.205.252.224:8000/get/image/"
+		String URL_food_img_address = "http://119.205.252.224:8000/get/image/"
 				+ arrList.get(pos).getFoodImgURL();
-		FudingAPI API = FudingAPI.getInstance(context);
-		imgFood.setImageUrl(URL_img_address, API.getmImageLoader());
+		imgFood.setImageUrl(URL_food_img_address, API.getmImageLoader());
 
 		imgFood.setOnClickListener(new OnClickListener() {
 			@Override
@@ -165,7 +172,7 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 		tvLikeCnt = (TextView) convertView
 				.findViewById(R.id.newsfeed_txtViewLikeCnt);
 		tvLikeCnt.setText("" + arrList.get(pos).getLikeCnt());
-		
+
 		// 좋아요 버튼을 터치 했을 때 이벤트 발생
 		btnLike = (ImageButton) convertView
 				.findViewById(R.id.newsfeed_imgBtnLike);
@@ -208,13 +215,16 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 
 							if (state == 1) {
 								btnLike.setImageResource(R.drawable.like_s);
-								arrList.get(pos).setLikeCnt(arrList.get(pos).getLikeCnt() + 1);
+								arrList.get(pos).setLikeCnt(
+										arrList.get(pos).getLikeCnt() + 1);
 							} else {
 								btnLike.setImageResource(R.drawable.like_n);
-								arrList.get(pos).setLikeCnt(arrList.get(pos).getLikeCnt() - 1);
+								arrList.get(pos).setLikeCnt(
+										arrList.get(pos).getLikeCnt() - 1);
 							}
 							arrList.get(pos).setLikeState(state);
-							tvLikeCnt.setText("" + arrList.get(pos).getLikeCnt());
+							tvLikeCnt.setText(""
+									+ arrList.get(pos).getLikeCnt());
 							notifyDataSetChanged();
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -257,7 +267,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				mQueue.add(req);
 			}
 		});
-
 
 		// 댓글 버튼 클릭 시 댓글 액티비티
 		ImageButton imgComment = (ImageButton) convertView

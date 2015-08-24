@@ -6,12 +6,14 @@
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/mycontent_imgView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 

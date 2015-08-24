@@ -135,6 +135,7 @@ public class Fragment_NewsFeed extends Fragment {
 						nfFrame = new Frame();
 
 						nfFrame.setUserId(jsonFrame.getString("wf_writer"));
+						nfFrame.setUserImgURL(jsonFrame.getString("user_img"));
 						nfFrame.setTag(jsonFrame.getString("wt_tag"));
 						nfFrame.setFoodName(jsonFrame.getString("wt_name"));
 						nfFrame.setWriteDate(jsonFrame.getString("wc_date"));

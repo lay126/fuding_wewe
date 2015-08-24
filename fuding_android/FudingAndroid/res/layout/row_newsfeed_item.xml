@@ -91,7 +91,10 @@
                     android:layout_marginLeft="10dp"
                     android:background="#00ff0000"
                     android:gravity="right"
-                    android:padding="3dp"
+                    android:paddingBottom="0dp"
+                    android:paddingLeft="3dp"
+                    android:paddingRight="3dp"
+                    android:paddingTop="5dp"
                     android:src="@drawable/comment_icon" />
 
                 <TextView
@@ -116,8 +119,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="content Title"
-            android:textSize="15sp"
-                    android:textColor="#F6921E" />
+                    android:textColor="#F6921E"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
