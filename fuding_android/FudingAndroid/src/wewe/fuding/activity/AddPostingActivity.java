@@ -18,12 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import wewe.fuding.FudingAPI; 
-import wewe.fuding.domain.Detail;
+import wewe.fuding.FudingAPI;
 
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -59,11 +54,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
-import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -78,19 +72,18 @@ public class AddPostingActivity extends ListActivity {
 	private static final int CROP_FROM_CAMERA = 2;
 	private ItemAdapter adapter;
 	private ArrayList<Item> mItem;
-	private ArrayList<Item> mItem_re;
-	private String[] mItemName;
-	private String[] mItemTime;
 	ImageView btn_ok;
 	ImageView btn_add;
 	Dialog dialog;
 
+	int step_num = 0;
+	
+	
 	Bitmap image;
 	Uri mImageCaptureUri;
 	Uri uri_copy;
 	Uri imageList[] = { null, null, null, null, null, null, null, null, null };
-	String contentList[] = { null, null, null, null, null, null, null, null,
-			null };
+	String contentList[] = { null, null, null, null, null, null, null, null, null };
 
 	File copy_file;
 	ImageView btnImage;
@@ -166,28 +159,28 @@ public class AddPostingActivity extends ListActivity {
 					// }
 					new Thread(new Runnable() {
 						public void run() {
-							for (int i = 0; i < mItem.size(); i++) {
-								int finish_flag = 0;
-								int step_num = i + 1;
-								content_index = i + 1;
-								upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
-								if (i + 1 == mItem.size()) {
-									finish_flag = 1;
-									uploadFile(mItem.get(i).image.getPath(),
-											mItem.get(i).step,
-											mItem.get(i).time, step_num,
-											finish_flag);
-									finishContent(step_num);
-								} else {
-									uploadFile(mItem.get(i).image.getPath(),
-											mItem.get(i).step,
-											mItem.get(i).time, step_num,
-											finish_flag);
-								}
-							}
+//							for (int i = 0; i < mItem.size(); i++) {
+//								int finish_flag = 0;
+//								int step_num = i + 1;
+//								content_index = i + 1;
+//								upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
+//								if (i + 1 == mItem.size()) {
+//									finish_flag = 1;
+//									uploadFile(mItem.get(i).image.getPath(),mItem.get(i).step,mItem.get(i).time, step_num, finish_flag);
+//									finishContent(step_num);
+//								} else {
+//									uploadFile(mItem.get(i).image.getPath(),mItem.get(i).step, mItem.get(i).time, step_num, finish_flag);
+//								}
+//							}
+							
+							// 마지막 글쓰기시 전송
+							int total_content_cnt = mItem.size();
+							finishContent(total_content_cnt);
+							
+							
 						}
 					}).start();
-					Log.d("url", "url :" + mImageCaptureUri.getPath());
+//					Log.d("url", "url :" + mImageCaptureUri.getPath());
 				} else {
 					Toast.makeText(AddPostingActivity.this, "업로드에 실패했습니다.",
 							Toast.LENGTH_LONG).show();
@@ -228,34 +221,38 @@ public class AddPostingActivity extends ListActivity {
 				View dialogView = (RelativeLayout) vi.inflate(
 						R.layout.dialog_detail_setting, null);
 
-				final EditText edit_step = (EditText) dialogView
-						.findViewById(R.id.ed_step);
-				final EditText edit_time = (EditText) dialogView
-						.findViewById(R.id.ed_time);
+				final EditText edit_step = (EditText) dialogView.findViewById(R.id.ed_step);
+				final EditText edit_time = (EditText) dialogView.findViewById(R.id.ed_time);
 				dialog_image = (ImageView) dialogView.findViewById(R.id.image);
-				Button btn_add_ok = (Button) dialogView
-						.findViewById(R.id.btn_ok);
-				Button btn_add_cancel = (Button) dialogView
-						.findViewById(R.id.btn_cancel);
+				Button btn_add_ok = (Button) dialogView.findViewById(R.id.btn_ok);
+				Button btn_add_cancel = (Button) dialogView.findViewById(R.id.btn_cancel);
 
 				btn_add_ok.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View arg0) {
 						if (edit_step.length() > 0 && edit_time.length() > 0) {
-							Toast.makeText(AddPostingActivity.this, "추가되었습니다.",
-									Toast.LENGTH_LONG).show();
+							Toast.makeText(AddPostingActivity.this, "추가되었습니다.", Toast.LENGTH_LONG).show();
 
 							InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-							imm.hideSoftInputFromWindow(
-									edit_time.getWindowToken(), 0);
-							mItem.add(new Item(uri_copy, edit_step.getText()
-									.toString(), edit_time.getText().toString()));
-							adapter.notifyDataSetChanged();
+							imm.hideSoftInputFromWindow(edit_time.getWindowToken(), 0);
+//							mItem.add(new Item(uri_copy, edit_step.getText().toString(), edit_time.getText().toString()));
+//							adapter.notifyDataSetChanged();
 							dialog.cancel();
 
+							
+						//==================================================================================================//	
+//							new Thread(new Runnable() {
+//							public void run() {
+							step_num += 1;
+							content_index += 1;
+							upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
+							uploadFile(uri_copy.getPath(), edit_step.getText().toString() , edit_time.getText().toString() , step_num, 0);
+//							}
+//						}).start();
+//						Log.d("url", "url :" + mImageCaptureUri.getPath());
+							
 						} else {
-							Toast.makeText(AddPostingActivity.this,
-									"빈칸을 모두 채워주세요.", Toast.LENGTH_LONG).show();
+							Toast.makeText(AddPostingActivity.this,"빈칸을 모두 채워주세요.", Toast.LENGTH_LONG).show();
 						}
 					}
 				});
@@ -329,11 +326,11 @@ public class AddPostingActivity extends ListActivity {
 
 	class Item {
 
-		private Uri image;
+		private String image;
 		private String step;
 		private String time;
 
-		public Item(Uri image, String step, String time) {
+		public Item(String image, String step, String time) {
 			this.image = image;
 			this.step = step;
 			this.time = time;
@@ -347,16 +344,16 @@ public class AddPostingActivity extends ListActivity {
 
 	private class ViewHolder {
 		public EditText stepView;
-		public ImageView imageView, holderBtn, deleteBtn;
+		public ImageView deleteBtn; //holderBtn
 		public EditText timeView;
+		public NetworkImageView imageView;
 	}
 
 	private class ItemAdapter extends ArrayAdapter<Item> {
 
 		public ItemAdapter(List<Item> objects) {
 
-			super(AddPostingActivity.this, R.layout.row_add_item,
-					R.id.stepEditText, objects);
+			super(AddPostingActivity.this, R.layout.row_add_item, R.id.stepEditText, objects);
 		}
 
 		@Override
@@ -367,7 +364,7 @@ public class AddPostingActivity extends ListActivity {
 			if (v != convertView && v != null) {
 				ViewHolder holder = new ViewHolder();
 
-				ImageView image = (ImageView) v.findViewById(R.id.btnImage);
+				NetworkImageView image = (NetworkImageView) v.findViewById(R.id.btnImage);
 				holder.imageView = image;
 
 				EditText stepView = (EditText) v
@@ -377,11 +374,9 @@ public class AddPostingActivity extends ListActivity {
 				EditText timeView = (EditText) v.findViewById(R.id.time_edit);
 				holder.timeView = timeView;
 
-				ImageView btn_holder = (ImageView) v
-						.findViewById(R.id.drag_handle);
-				ImageView btn_delete = (ImageView) v
-						.findViewById(R.id.btnRemove);
-				holder.holderBtn = btn_holder;
+//				ImageView btn_holder = (ImageView) v.findViewById(R.id.drag_handle);
+				ImageView btn_delete = (ImageView) v.findViewById(R.id.btnRemove);
+//				holder.holderBtn = btn_holder;
 				holder.deleteBtn = btn_delete;
 
 				v.setTag(holder);
@@ -395,14 +390,23 @@ public class AddPostingActivity extends ListActivity {
 			ed_step = holder.stepView;
 			ed_time = holder.timeView;
 
-			holder.imageView.setBackgroundColor(Color.WHITE);
-			holder.imageView.setImageURI(getItem(position).image);
+			//holder.imageView.setBackgroundColor(Color.WHITE);
+			//.setImageURI(getItem(position).image);
+			
+			int end = getItem(position).image.length();
+			String result = getItem(position).image.substring(1,end-1);
+			Log.d("resultresultresultresultresultresultresult", result);
 
+			String URL_img_address = "http://119.205.252.224:8000/get/image/" + result;
+			
+			FudingAPI API = FudingAPI.getInstance(AddPostingActivity.this);
+			holder.imageView.setImageUrl(URL_img_address, API.getmImageLoader());
+			
 			if (flag) {
-				holder.holderBtn.setVisibility(View.VISIBLE);
+//				holder.holderBtn.setVisibility(View.VISIBLE);
 				holder.deleteBtn.setVisibility(View.VISIBLE);
 			} else {
-				holder.holderBtn.setVisibility(View.GONE);
+//				holder.holderBtn.setVisibility(View.GONE);
 				holder.deleteBtn.setVisibility(View.GONE);
 			}
 			return v;
@@ -493,21 +497,11 @@ public class AddPostingActivity extends ListActivity {
 				dos.writeBytes(lineEnd);
 				dos.write((finish_flag + "").getBytes("utf-8"));
 				Log.d("image upload wc_finish_index", "" + finish_flag);
-				dos.writeBytes(lineEnd);
-				// } else {
-				// dos.writeBytes(twoHyphens + boundary + lineEnd);
-				// dos.writeBytes("Content-Disposition: form-data; name=\"wc_total\""
-				// + lineEnd);
-				// dos.writeBytes(lineEnd);
-				// dos.write((step_num+"").getBytes("utf-8"));
-				// Log.d("image upload wc_total", "" + finish_flag);
-				// dos.writeBytes(lineEnd);
-				// }
+				dos.writeBytes(lineEnd); 
 
 				dos.writeBytes(lineEnd);
 				dos.writeBytes(twoHyphens + boundary + lineEnd);
-				dos.writeBytes("Content-Disposition: form-data; name=\"user_name\""
-						+ lineEnd);
+				dos.writeBytes("Content-Disposition: form-data; name=\"user_name\"" + lineEnd);
 				dos.writeBytes(lineEnd);
 				SharedPreferences pref = getSharedPreferences("pref",
 						MODE_PRIVATE);
@@ -586,6 +580,10 @@ public class AddPostingActivity extends ListActivity {
 				}
 
 				Log.d("multipart", "HTTP Response is : " + serverResponseMessage + ": " + serverResponseCode);
+				if (serverResponseCode == 200) {
+					getServerImgeURL(step_num, imageId, step);
+				}
+				
 			} catch (Exception e) {
 
 				// dialog.dismiss();
@@ -593,13 +591,10 @@ public class AddPostingActivity extends ListActivity {
 
 				runOnUiThread(new Runnable() {
 					public void run() {
-						Toast.makeText(AddPostingActivity.this,
-								"인터넷 연결을 확인해주세요.", Toast.LENGTH_SHORT).show();
+						Toast.makeText(AddPostingActivity.this, "인터넷 연결을 확인해주세요.", Toast.LENGTH_SHORT).show();
 					}
-
 				});
-				Log.e("Upload file to server Exception",
-						"Exception : " + e.getMessage(), e);
+				Log.e("Upload file to server Exception", "Exception : " + e.getMessage(), e);
 			}
 			// dialog.dismiss();
 			return serverResponseCode;
@@ -607,13 +602,61 @@ public class AddPostingActivity extends ListActivity {
 		} // End else block
 
 	}
-
-	
 		
-	
-	
-	
-	
+	private void getServerImgeURL(final int step_num2, final String imageId, final String content) {
+		String URL_address = "http://119.205.252.224:8000/get/content/url/";
+
+		RequestQueue mQueue2;
+		mQueue2 = Volley.newRequestQueue(this);
+		Listener<String> listener = new Listener<String>() {
+			@Override
+			public void onResponse(String result) {
+				try {
+					Log.d("volley", "content!!! result    : " + result);
+					 
+					mItem.add(new Item(result, content+"", imageId));
+					Log.d("volley", result+", "+content+", "+imageId);
+					adapter.notifyDataSetChanged();
+					
+					
+				} catch (Exception e) {
+				}
+			}
+		};
+
+		com.android.volley.Response.ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				Toast.makeText(AddPostingActivity.this,
+						"네트워크상태가좋지 않습니다.잠시만 기다려주세요.", Toast.LENGTH_LONG).show();
+			}
+		};
+
+		StringRequest myReq = new StringRequest(Method.POST, URL_address,
+				listener, errorListener) {
+			@Override
+			protected Map<String, String> getParams()
+					throws com.android.volley.AuthFailureError {
+				Map<String, String> params = new HashMap<String, String>();
+
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+				String imageId = pref.getString("imageURL_index", "1"); 
+
+				params.put("wc_index_num", step_num2+"");
+				params.put("wt_index", imageId); 
+				return params;
+			};
+		};
+		mQueue2.add(myReq);
+
+	}
+
+
+
+
+
+
+
 	private void finishContent(final int step_num) {
 
 		String URL_address = "http://119.205.252.224:8000/upload/write/frame/";
@@ -645,8 +688,7 @@ public class AddPostingActivity extends ListActivity {
 					throws com.android.volley.AuthFailureError {
 				Map<String, String> params = new HashMap<String, String>();
 
-				SharedPreferences pref = getSharedPreferences("pref",
-						MODE_PRIVATE);
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 				String imageId = pref.getString("imageURL_index", "1");
 				String username = pref.getString("user_name", "1");
 
@@ -789,11 +831,7 @@ public class AddPostingActivity extends ListActivity {
 			dialog_image.setBackgroundColor(Color.WHITE);
 			dialog_image.setImageURI(mImageCaptureUri);
 			uri_copy = mImageCaptureUri;
-			dialog_image.setScaleType(ImageView.ScaleType.CENTER_CROP); // 가운데
-																		// 자름
-																		// (길쭉하게
-																		// 자른
-																		// 경우)
+			dialog_image.setScaleType(ImageView.ScaleType.CENTER_CROP); 
 
 			// 각 url값을 배열에 저장
 			Log.d("url", "content_position : " + content_position);
