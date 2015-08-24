@@ -10,8 +10,9 @@ public class Frame {
 	private String amount; // 요리 양
 	private String totalTime; // 소요 시간
 	private String tag; //  기타 태그
-	private int likeCnt; // 좋아요 수
+	private int likeCnt; // 좋아요 
 	private int likeState; // 내가 좋아요를 눌렀는지 아닌지
+	private int commentCnt;
 	private String writeDate; // 글작성 날짜
 	private String foodImgURL; // image url
 	private int foodIndex; // 글번호
@@ -21,7 +22,8 @@ public class Frame {
 
 	public Frame(String userId, String foodName, String ingre, String amount,
 			String totalTime, String tag, int likeCnt, int likeState,
-			String writeDate, String foodImgURL, int foodIndex) {
+			int commentCnt, String writeDate, String foodImgURL, int foodIndex) {
+		super();
 		this.userId = userId;
 		this.foodName = foodName;
 		this.ingre = ingre;
@@ -30,6 +32,7 @@ public class Frame {
 		this.tag = tag;
 		this.likeCnt = likeCnt;
 		this.likeState = likeState;
+		this.commentCnt = commentCnt;
 		this.writeDate = writeDate;
 		this.foodImgURL = foodImgURL;
 		this.foodIndex = foodIndex;
@@ -99,6 +102,14 @@ public class Frame {
 		this.likeState = likeState;
 	}
 
+	public int getCommentCnt() {
+		return commentCnt;
+	}
+
+	public void setCommentCnt(int commentCnt) {
+		this.commentCnt = commentCnt;
+	}
+
 	public String getWriteDate() {
 		return writeDate;
 	}
@@ -128,7 +139,7 @@ public class Frame {
 				object.getString("foodName"), object.getString("ingre"),
 				object.getString("amount"), object.getString("totalTime"),
 				object.getString("tag"), object.getInt("likeCnt"),
-				object.getInt("likeState"), object.getString("writeDate"),
+				object.getInt("likeState"), object.getInt("commentCnt"), object.getString("writeDate"),
 				object.getString("foodImgURL"), object.getInt("foodIndex"));
 	}
 
