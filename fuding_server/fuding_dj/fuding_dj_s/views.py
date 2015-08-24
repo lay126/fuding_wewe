@@ -423,7 +423,7 @@ def get_comment(request):
 
 		try:
 			################### wf_wt_index ##########################################################################################
-			comment_list_ = WRITE_COMMENT.objects.filter(wt_index=wf_index).order_by('-wcm_date')
+			comment_list_ = WRITE_COMMENT.objects.filter(wt_index=wf_index)
 			# comment_list_ = WRITE_COMMENT.objects.get.filter(wf_index=wf_index).order_by('-wcm_date')
 			##########################################################################################################################
 
@@ -1072,33 +1072,15 @@ def delete_comment(request):
 # ------------------------------------------------------------------------------------------------------------
 # 해쉬태그들을 tagDB에 저장하는 함수 (공통사용)
 def hash_tag_make(hash_text, wt_index):
-	# 한글 가능 : 해시태그 작성시에 띄어쓰기 해주세요 ㅠㅠ
-	# hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
-	# hashs = hash_w.findall(hash_text)
-	# 
-	# try : 
-	# 	for h in hashs:
-	# 		hash_ = WRITE_TAG(	wtg_value = h,
-	# 							wt_index = wt_index )
-	# 		hash_.save()
-	# except : 
-	# 	hashs = hash_w.findall(wc_text)
+	# ISSUE 33
+	# 해쉬태그 한글, 영어, 띄어쓰기 모두 다 가능!
+	hash_text = hash_text.replace('#', ' #')
 
-
-	# ISSUE #33 
-	hash_w = re.compile('#\w+')
+	# hash_w = re.compile('#\w+')	
+	# hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
+	hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
 	hashs = hash_w.findall(hash_text)
-	try : 
-		for h in hashs:
-			hash_ = WRITE_TAG(	wtg_value = h,
-								wt_index = wt_index )
-			hash_.save()
-	except : 
-		hashs = hash_w.findall(wc_text)
-
-	hash_w = re.compile('#([\u3131-\u3163*\uac00-\ud7a3*]*)')
-	hash_w = re.compile('#([가-힣]*)')
-	hashs = hash_w.findall(hash_text)
+	
 	try : 
 		for h in hashs:
 			hash_ = WRITE_TAG(	wtg_value = h,
