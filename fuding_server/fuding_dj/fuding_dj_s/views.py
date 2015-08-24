@@ -405,7 +405,7 @@ def feed_list(user_name, wf_index):
 
 	# USER IMG
 	try:
-		user_ = User.objects.get(username=user_name)
+		user_ = User.objects.get(username=wf_.wf_writer)
 		user_data_ = USER_DATA.objects.get(user_id=user_)
 		dic['user_img'] = user_data_.user_img.url
 	except:
