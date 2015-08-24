@@ -235,14 +235,39 @@ public class OthersProfileActivity extends Activity {
 		Log.i("setFollowBtn", fMe + ", " + fFollow); /**/
 		if (fMe.equals("yes")) { // 나 인 경우
 			btnFollow.setImageResource(R.drawable.profile_edit_profile_btn);
-			btnFollow.setOnClickListener(setClickLisntener("fMe", fMe));
+//			btnFollow.setOnClickListener(setClickLisntener("fMe", fMe));
+			btnFollow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startActivity(new Intent(OthersProfileActivity.this,
+							UpdateProfileActivity.class));
+				}
+			});
 		} else {
 			if (fFollow.equals("yes")) { // 팔로우 하고 있는 경우
 				btnFollow.setImageResource(R.drawable.profile_now_follow_btn);
 			} else { // 팔로우 하고 있지 않는 경우
 				btnFollow.setImageResource(R.drawable.profile_plus_follow_btn);
 			}
-			btnFollow.setOnClickListener(setClickLisntener("fFollow", fFollow));
+			
+//			btnFollow.setOnClickListener(setClickLisntener("fFollow", fFollow));
+			btnFollow.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if (flagFollow.equals("yes")) {
+						btnFollow
+								.setImageResource(R.drawable.profile_plus_follow_btn);
+						user.setFollowers(user.getFollowers() - 1);
+						flagFollow = "no";
+					} else {
+						btnFollow
+								.setImageResource(R.drawable.profile_now_follow_btn);
+						user.setFollowers(user.getFollowers() + 1);
+						flagFollow = "yes";
+					}
+					tvFollowers.setText("" + user.getFollowers());
+				}
+			});
 		}
 	}
 
@@ -253,18 +278,22 @@ public class OthersProfileActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (flag.equals("fMe")) {
-					Log.i("followClickListener", "fMe");
 					startActivity(new Intent(OthersProfileActivity.this,
 							UpdateProfileActivity.class));
 				} else if (flag.equals("fFollow")) {
 					requestFollow();
 					if (value.equals("yes")) {
-						Log.i("followClickListener", "fFollow yes");
-						btnFollow.setImageResource(R.drawable.like_unclicked);
+						btnFollow
+								.setImageResource(R.drawable.profile_plus_follow_btn);
+						user.setFollowers(user.getFollowers() - 1);
+						flagFollow = "no";
 					} else {
-						Log.i("followClickListener", "fFollow no");
-						btnFollow.setImageResource(R.drawable.like_clicked);
+						btnFollow
+								.setImageResource(R.drawable.profile_now_follow_btn);
+						user.setFollowers(user.getFollowers() + 1);
+						flagFollow = "yes";
 					}
+					tvFollowers.setText("" + user.getFollowers());
 				} else {
 
 				}

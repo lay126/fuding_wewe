@@ -60,7 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/newsfeed_imgView"
-            android:layout_marginTop="-60dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="-35dp"
             android:background="#00ff0000"
             android:padding="5dp"
             android:src="@drawable/like_n" />
