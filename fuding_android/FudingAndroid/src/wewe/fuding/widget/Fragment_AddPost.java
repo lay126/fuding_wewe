@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request.Method;
@@ -65,12 +66,14 @@ public class Fragment_AddPost extends Fragment {
 		final EditText edit_amount = (EditText)v.findViewById(R.id.edit_amount);
 		final EditText edit_tag = (EditText)v.findViewById(R.id.edit_tag); 
 		
-		Button btn = (Button) v.findViewById(R.id.button1);
+		ImageView btn = (ImageView) v.findViewById(R.id.next_btn);
 		btn.setOnClickListener(new View.OnClickListener() {
  			@Override
  			public void onClick(View v) {
+ 				SharedPreferences pref = activity.getSharedPreferences("pref", activity.MODE_PRIVATE);
+ 				String user_name = pref.getString("user_name", "");
  				
- 				food.setUserId("noUserId");
+ 				food.setUserId(user_name);
  				food.setFoodName(edit_title.getText().toString());
  				food.setIngre(edit_ingredient.getText().toString());
  				food.setTotalTime(edit_time.getText().toString());
@@ -83,9 +86,14 @@ public class Fragment_AddPost extends Fragment {
  		        mDbOpenHelper.insertFrameColumn(food);
 
  		        // 서버 http 전송 
- 		        sendFoodInfo(food);
- 		        
- 		        startActivity(new Intent(activity, AddPostingActivity.class));
+ 		        if ("".equals(edit_title.getText().toString())|| "".equals(edit_ingredient.getText().toString())||
+ 		        		"".equals(edit_time.getText().toString())|| "".equals(edit_amount.getText().toString())||
+ 		        		"".equals(edit_tag.getText().toString())) {
+ 		        	Toast.makeText(activity, "빈칸을 모두 입력해주세요.", Toast.LENGTH_LONG).show();
+ 		        } else {
+ 		        	sendFoodInfo(food);
+ 		        	startActivity(new Intent(activity, AddPostingActivity.class));
+ 		        }
  			}
 
 		});
