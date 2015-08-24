@@ -59,7 +59,6 @@
             android:layout_marginRight="30dp"
             android:text="10"/>
         
-        
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
@@ -67,6 +66,25 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@id/text_likes"
+            android:src="@drawable/like_clicked" />
+
+        <TextView
+            android:id="@+id/comment_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/imageView2"
+            android:text="10" />
+
+        <ImageView
+            android:id="@+id/comment_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="-5dp"
+            android:layout_toLeftOf="@+id/comment_cnt"
+            android:padding="10dp"
             android:src="@drawable/like_clicked" />
 
     </RelativeLayout>
@@ -92,11 +110,16 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp" />
 
-    <ListView
-        android:id="@android:id/list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="match_parent" >
 
-    </ListView>
- 
+        <ListView
+            android:id="@+id/detail_listview"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" >
+
+        </ListView>
+    </RelativeLayout>
+
 </LinearLayout>
