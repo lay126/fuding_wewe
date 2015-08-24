@@ -46,7 +46,7 @@ public class OthersProfileActivity extends Activity {
 			.getSimpleName();
 
 	private NetworkImageView imgUserPhoto;
-	private TextView tvUserId1, tvUserId2;
+	private TextView tvUserId;
 	private TextView tvWrites, tvFollowers, tvFollowings;
 	private ImageButton btnFollow;
 	private GridView gridView;
@@ -126,8 +126,7 @@ public class OthersProfileActivity extends Activity {
 							API.getmImageLoader());
 					imgUserPhoto.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-					tvUserId1.setText(user.getUserName());
-					tvUserId2.setText(user.getUserName());
+					tvUserId.setText(user.getUserName());
 					tvWrites.setText("" + user.getWrites());
 					tvFollowers.setText("" + user.getFollowers());
 					tvFollowings.setText("" + user.getFollowings());
@@ -323,8 +322,7 @@ public class OthersProfileActivity extends Activity {
 		userName = pref.getString("user_name", "");
 
 		imgUserPhoto = (NetworkImageView) findViewById(R.id.othersprofile_imgViewothersprofile);
-		tvUserId1 = (TextView) findViewById(R.id.othersprofile_txtUserId1);
-		tvUserId2 = (TextView) findViewById(R.id.othersprofile_txtUserId2);
+		tvUserId = (TextView) findViewById(R.id.othersprofile_txtUserId);
 		tvWrites = (TextView) findViewById(R.id.othersprofile_txtWrites);
 		tvFollowers = (TextView) findViewById(R.id.othersprofile_txtFollowers);
 		tvFollowings = (TextView) findViewById(R.id.othersprofile_txtFollowings);
