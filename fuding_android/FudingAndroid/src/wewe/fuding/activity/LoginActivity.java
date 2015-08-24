@@ -7,18 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import wewe.fuding.domain.Frame;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.Request.Method;
-import com.android.volley.Response.Listener;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +18,13 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.android.volley.Request.Method;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 // http://shary1012.tistory.com/78
 public class LoginActivity extends Activity { 
@@ -42,6 +41,9 @@ public class LoginActivity extends Activity {
 		sign_up_btn = (ImageView) findViewById(R.id.sign_up_btn);
 		edit_id = (EditText) findViewById(R.id.id_text);
 		edit_password = (EditText) findViewById(R.id.password_text);
+		edit_id.setBackgroundColor(Color.TRANSPARENT);
+		edit_password.setBackgroundColor(Color.TRANSPARENT);
+		
 		
 		login_btn.setOnClickListener(new OnClickListener() {
 			@Override
