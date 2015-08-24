@@ -268,9 +268,7 @@ public class AddPostingActivity extends ListActivity {
 				
 				holder.timeView = timeView;
 
-//				ImageView btn_holder = (ImageView) v.findViewById(R.id.drag_handle);
 				ImageView btn_delete = (ImageView) v.findViewById(R.id.btnRemove);
-//				holder.holderBtn = btn_holder;
 				holder.deleteBtn = btn_delete;
 
 				v.setTag(holder);
@@ -535,12 +533,6 @@ public class AddPostingActivity extends ListActivity {
 
 	}
 
-
-
-
-
-
-
 	private void finishContent(final int step_num) {
 
 		String URL_address = "http://119.205.252.224:8000/upload/write/frame/";
@@ -556,7 +548,6 @@ public class AddPostingActivity extends ListActivity {
 					SharedPreferences.Editor editor = pref.edit();
 					editor.putInt("wf_index", Integer.parseInt(result));
 					editor.commit();
-					Log.d("================================", result);
 					startActivity(new Intent(AddPostingActivity.this, DetailActivity.class));
 					finish();
 				} catch (Exception e) {
