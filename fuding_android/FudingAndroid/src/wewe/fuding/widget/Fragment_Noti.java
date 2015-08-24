@@ -91,63 +91,29 @@ public class Fragment_Noti extends Fragment {
 	}
 
 	private void init(View v, ArrayList<Noti> noti_array) {  
+		listView  = (ListView)v.findViewById(R.id.listview_noti);
+
 		if (noti_array == null) {
 			Log.d("notinoti", "noti_Array null");
-		}
-		listView  = (ListView)v.findViewById(R.id.listview_noti);
-		adapter = new CustomAdapter_Noti(activity, noti_array);
-		listView.setAdapter(adapter);
+			adapter = new CustomAdapter_Noti(activity);
+		} else {
 		
+			adapter = new CustomAdapter_Noti(activity, noti_array);
+		}
+		
+		adapter.notifyDataSetChanged();
+		listView.setAdapter(adapter); 
 	}
 	
 	// data_list를 최신으로 업데이트한다.  
 		public void updateDataList(View v, final ArrayList<Noti> noti_array) {
 			if (activity == null) return; 
 			
-			// DB에서 읽어온 최신 리스트, 데이터를 담은 후 updateData가 호출
-//			Data_user.getInstance().refreshDataList(activity); // 탭 이동할 때 마다 실시간으로 증가하는 count를 적용하기 위해 db를 refresh 시켜줘야한다.
-//			ArrayList<Noti> infoList = Data_user.getInstance().getDataList();
-
-//			mDbOpenHelper = new DbOpenHelper(activity);
-//		    mDbOpenHelper.open();
-//		    mDbOpenHelper.insertNotiColumn("yundaeun!!!", "image", "1", "2013.03.11");
-//		    mDbOpenHelper.insertNotiColumn("jungyeoeun!!!", "image", "2", "2014.01.12");
-/*			
-			if (mCursor != null) {
-		    mCursor = mDbOpenHelper.getNotiAllColumns(); 
-		    Noti noti;
-		    Log.d("start", "start");
-			//noti_array = new ArrayList<Noti>();
-
-		    while (mCursor.moveToNext()) {
-	        	
-		    	noti = new Noti(
-						mCursor.getString(mCursor.getColumnIndex("friendId")),
-						mCursor.getString(mCursor.getColumnIndex("friendImage")),
-						mCursor.getString(mCursor.getColumnIndex("type")),
-						mCursor.getString(mCursor.getColumnIndex("date"))
-						);
-				Log.d("noti", mCursor.getString(mCursor.getColumnIndex("type")));
-		    	noti_array.add(noti);
-			}
-			
-			mCursor.close();
-			}
-//			알람이 있는지 확인! broadcast??? 해야하는 건지 아영이랑 상의 
-//			실시간 뷰 변경 
-			mHandler.post(new Runnable() {
-				@Override
-				public void run() {
-					adapter.notifyDataSetChanged();
-				}
-			});
-			
-	*/		
-			if (activity != null) { // 최초 로딩 등의 이유로 activity가 null일 때는 넘어가고, activity가 존재한다면 list를 불러준다. 
-				if (noti_array.size() < 2) {
-//					listView.setVisibility(View.GONE);
-				}
-			}
+//			if (activity != null) { // 최초 로딩 등의 이유로 activity가 null일 때는 넘어가고, activity가 존재한다면 list를 불러준다. 
+//				if (noti_array.size() < 2) {
+////					listView.setVisibility(View.GONE);
+//				}
+//			}
 			String URL_address= "http://119.205.252.224:8000/get/noti/"; 
 			
 			RequestQueue mQueue2;

@@ -175,7 +175,7 @@ public class DetailActivity  extends Activity {
 					Map<String, String> params = new HashMap<String, String>();
 					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 					int index = pref.getInt("wf_index", 1);
-					
+					Log.d("===============", index+"s");
 					params.put("wf_index", index+"");
 
 					return params;
