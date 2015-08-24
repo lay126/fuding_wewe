@@ -80,14 +80,17 @@
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name="wewe.fuding.activity.ProfileActivity"
+            android:name="wewe.fuding.activity.UpdateProfileActivity"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
             android:name="wewe.fuding.activity.SignUpActivity"
             android:label="@string/title_activity_login" >
         </activity>
-        
+        <activity
+            android:name="wewe.fuding.activity.CommentActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
         
         
         
