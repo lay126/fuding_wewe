@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import wewe.fuding.FudingAPI;
 import wewe.fuding.domain.Detail;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,9 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,10 +41,14 @@ public class DetailActivity  extends Activity {
 	TextView text_quant, text_writer, text_likes, text_name, text_tag, text_times, text_ingre;
 	public static TextView text_comment_cnt;
 	NetworkImageView user_photo;
-	
+	TextView del_btn;
 	private ArrayList<Detail> arrayDetail;
 	private DetailAdapter Dadapter;
 	ListView detailList;
+	
+	
+	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,37 @@ public class DetailActivity  extends Activity {
 		text_ingre = (TextView)findViewById(R.id.text_ingre); 
 		user_photo = (NetworkImageView)findViewById(R.id.user_photo); 
 		text_comment_cnt = (TextView)findViewById(R.id.comment_cnt);
-				
+		del_btn = (TextView)findViewById(R.id.del_btn);	
+		
+		
+		del_btn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(DetailActivity.this);     // 여기서 this는 Activity의 this
+
+				// 여기서 부터는 알림창의 속성 설정
+				builder.setMessage("해당 게시물을 삭제하시겠습니까?")        // 메세지 설정
+				.setCancelable(false)        // 뒤로 버튼 클릭시 취소 가능 설정
+				.setPositiveButton("확인", new DialogInterface.OnClickListener(){       
+				 // 확인 버튼 클릭시 설정
+					public void onClick(DialogInterface dialog, int whichButton){
+						deleteContent();
+						finish();
+						dialog.cancel();
+					}
+				})
+				.setNegativeButton("취소", new DialogInterface.OnClickListener(){      
+				     // 취소 버튼 클릭시 설정
+					public void onClick(DialogInterface dialog, int whichButton){
+						dialog.cancel();
+					}
+				});
+
+				AlertDialog dialog = builder.create();    // 알림창 객체 생성
+				dialog.show();    // 알림창 띄우기
+			}
+		});
+		
 		ImageView comment_btn = (ImageView)findViewById(R.id.comment_btn);
 		comment_btn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -83,9 +117,85 @@ public class DetailActivity  extends Activity {
 				finish();
 			}
 		});
+		ImageView gear = (ImageView)findViewById(R.id.gear);
+		gear.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+//				1번째 : 요리이름
+//				2번째 : 요리재료
+//				3번째 : 요리시간
+//				4번째 : 단계갯수
+//				5번째 : 단계,,로 구분 
+				
+				
+				String head = name+":"+ingre+":"+times+":"+total+":";
+				String tail = "";
+				for (int i=0; i<Integer.parseInt(total); i++) {
+					if (i==0) {
+						tail = arrayDetail.get(i).getContent();
+					} else {
+						tail += ","+arrayDetail.get(i).getContent();
+					}
+				}
+				Log.d("================", head+tail);
+//				sendDataToGear(head+tail);
+			}
+		});
+		
+		
 		
 	}
 
+	// kt.기어에 데이터를 전송하기 위한 인텐트를 브로드캐스트한다.
+	public void sendDataToGear(String str) {
+		Intent intent = new Intent("myData");
+		intent.putExtra("data", "" + str);
+		sendBroadcast(intent);
+	}
+			
+	private void deleteContent() 
+	{
+		String URL_address = "http://119.205.252.224:8000/delete/write/";
+
+		RequestQueue mQueue;
+		mQueue = Volley.newRequestQueue(this);
+
+		Listener<String> listener = new Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				// to make data available
+				String arrRes = "{'response':" + response + "}";
+				Log.d("detail", arrRes);
+				//arrayDetail.remove();
+			}
+		};
+
+		ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				error.printStackTrace();
+				Toast.makeText(DetailActivity.this, "상세페이지 : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
+						Toast.LENGTH_LONG).show();
+			}
+		};
+
+		StringRequest req = new StringRequest(Method.POST, URL_address, listener, errorListener) {
+			@Override
+			protected Map<String, String> getParams()
+					throws AuthFailureError {
+				Map<String, String> params = new HashMap<String, String>();
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+				int index = pref.getInt("wf_index", 1);
+				String name =  pref.getString("user_name", "");
+				Log.d("===============", index+"s");
+				params.put("wf_index", index+"");
+				params.put("user_name", name);
+				return params;
+			}
+		};
+		mQueue.add(req);
+	}
+	
 	private void getAllContent() {
 		String URL_address = "http://119.205.252.224:8000/get/recipe/";
 

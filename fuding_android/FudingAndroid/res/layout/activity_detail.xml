@@ -52,64 +52,85 @@
             android:textColor="#FF6F00" />
 
         <TextView
-            android:id="@+id/text_likes"
+            android:id="@+id/del_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="30dp"
-            android:text="10"/>
-        
+            android:padding="10dp"
+            android:text="DEL"
+            android:textColor="#F6921E" />
+
+        <TextView
+            android:id="@+id/comment_cnt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/del_btn"
+            android:layout_alignBottom="@+id/del_btn"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/del_btn"
+            android:text="0" />
+
+        <TextView
+            android:id="@+id/text_likes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/comment_btn"
+            android:text="10" />
+
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/text_likes"
-            android:src="@drawable/like_clicked" />
-
-        <TextView
-            android:id="@+id/comment_cnt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_toLeftOf="@+id/imageView2"
-            android:text="0" />
+            android:layout_toLeftOf="@+id/text_likes"
+            android:src="@drawable/heart_icon" />
 
         <ImageView
             android:id="@+id/comment_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_alignBottom="@+id/user_photo"
             android:layout_marginRight="-5dp"
             android:layout_toLeftOf="@+id/comment_cnt"
             android:padding="10dp"
-            android:src="@drawable/like_clicked" />
+            android:src="@drawable/comment_icon" />
 
     </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/gear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="95dp"
+        android:src="@drawable/gear" />
     
     <TextView
         android:id="@+id/text_quant"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:text="" />
+        android:text="text" />
     
     <TextView
         android:id="@+id/text_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp" />
+        android:layout_marginRight="30dp" 
+        android:text="text"/>
     
     <TextView
         android:id="@+id/text_ingre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp" />
+        android:layout_marginRight="30dp"
+        android:text="text" />
 
     <RelativeLayout
         android:layout_width="match_parent"
