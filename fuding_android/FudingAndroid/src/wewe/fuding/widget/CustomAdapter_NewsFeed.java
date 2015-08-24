@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import wewe.fuding.FudingAPI;
+import wewe.fuding.activity.CommentActivity;
 import wewe.fuding.activity.DetailActivity;
 import wewe.fuding.activity.OthersProfileActivity;
 import wewe.fuding.activity.R;
@@ -177,7 +178,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				Listener<String> listener = new Listener<String>() {
 					@Override
 					public void onResponse(String response) {
-						Log.i("**likeState", response);
 						String res = "{'response':" + response + "}";
 						Log.d(TAG, res);
 
@@ -255,14 +255,20 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 		TextView tvLikeCnt = (TextView) convertView
 				.findViewById(R.id.newsfeed_txtViewLikeCnt);
 		tvLikeCnt.setText("" + arrList.get(pos).getLikeCnt());
-		
-		// 댓글 버튼 클릭 시 댓글 액티비티 
-		ImageButton imgComment = (ImageButton) convertView.findViewById(R.id.newsfeed_imgBtnComment);
+
+		// 댓글 버튼 클릭 시 댓글 액티비티
+		ImageButton imgComment = (ImageButton) convertView
+				.findViewById(R.id.newsfeed_imgBtnComment);
 		imgComment.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+				int wf_index = arrList.get(pos).getFoodIndex();
+				SharedPreferences pref = context.getSharedPreferences("pref",
+						context.MODE_PRIVATE);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putInt("wf_index", wf_index);
+				editor.commit();
+				context.startActivity(new Intent(context, CommentActivity.class));
 			}
 		});
 
