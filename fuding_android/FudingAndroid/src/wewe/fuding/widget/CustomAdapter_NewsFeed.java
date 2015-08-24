@@ -51,7 +51,8 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 	private ArrayList<Frame> arrList;
 	private ImageDownloader imgDownloader = new ImageDownloader();
 	private String imgDownURL;
-	ImageButton btnLike;
+	private ImageButton btnLike;
+	private TextView tvLikeCnt;
 
 	public CustomAdapter_NewsFeed(Context aContext) {
 		context = aContext;
@@ -160,6 +161,11 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 			btnLike.setImageResource(R.drawable.like_clicked);
 		}
 
+		// 좋아요 수
+		tvLikeCnt = (TextView) convertView
+				.findViewById(R.id.newsfeed_txtViewLikeCnt);
+		tvLikeCnt.setText("" + arrList.get(pos).getLikeCnt());
+		
 		// 좋아요 버튼을 터치 했을 때 이벤트 발생
 		btnLike = (ImageButton) convertView
 				.findViewById(R.id.newsfeed_imgBtnLike);
@@ -201,13 +207,14 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 									.getString("like_state"));
 
 							if (state == 1) {
-								Log.i("***likeState is 1", "" + state);
 								btnLike.setImageResource(R.drawable.like_clicked);
+								arrList.get(pos).setLikeCnt(arrList.get(pos).getLikeCnt() + 1);
 							} else {
-								Log.i("***likeState is 0", "" + state);
 								btnLike.setImageResource(R.drawable.like_unclicked);
+								arrList.get(pos).setLikeCnt(arrList.get(pos).getLikeCnt() - 1);
 							}
 							arrList.get(pos).setLikeState(state);
+							tvLikeCnt.setText("" + arrList.get(pos).getLikeCnt());
 							notifyDataSetChanged();
 						} catch (JSONException e) {
 							e.printStackTrace();
@@ -251,10 +258,6 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 			}
 		});
 
-		// 좋아요 수
-		TextView tvLikeCnt = (TextView) convertView
-				.findViewById(R.id.newsfeed_txtViewLikeCnt);
-		tvLikeCnt.setText("" + arrList.get(pos).getLikeCnt());
 
 		// 댓글 버튼 클릭 시 댓글 액티비티
 		ImageButton imgComment = (ImageButton) convertView
