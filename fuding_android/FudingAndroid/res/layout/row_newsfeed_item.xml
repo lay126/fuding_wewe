@@ -69,12 +69,12 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal" >
 
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="♥"
-                    android:textColor="#F6921E" />
+                    android:padding="3dp"
+                    android:src="@drawable/heart_icon" />
 
                 <TextView
                     android:id="@+id/newsfeed_txtViewLikeCnt"
@@ -116,6 +116,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="content Title"
+            android:textSize="15sp"
                     android:textColor="#F6921E" />
             </LinearLayout>
 
