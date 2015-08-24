@@ -296,91 +296,6 @@ def get_myfeed(request):
 	json_data = json.dumps(datas)
 	return HttpResponse(json_data, content_type='application/json')
 
-# 레시피 상세 페이지 
-@csrf_exempt
-def get_recipe(request):
-	wf_index = request.POST.get('wf_index')
-
-	datas = []
-	dic = dict()
-	
-	wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
-	wt_ = WRITE_TITLE.objects.get(wf_index=wf_index)
-	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_.wt_index)
-
-	# wf
-	dic['wf_index'] = str(wf_index)
-	dic['wf_writer'] = str(wf_.wf_writer)
-	dic['wf_likes'] = str(wf_.wf_likes)
-	dic['wf_comments'] = str(wf_.wf_comments)
-	dic['wc_total'] = str(wf_.wc_total)
-
-	# wt
-	dic['wt_name'] = wt_.wt_name
-	dic['wt_ingre'] = wt_.wt_ingre
-	dic['wt_times'] = str(wt_.wt_times)
-	dic['wt_quant'] = str(wt_.wt_quant)
-	dic['wt_tag'] = wt_.wt_tag
-
-	# user
-	try : 
-		user_ = User.objects.get(username=wf_.wf_writer)
-		user_data_ = USER_DATA.objects.get(user_id=user_)
-		dic['user_img'] = user_data_.user_img.url
-	except:
-		dic['user_img'] = ""
-
-	# wc
-	for wc_ in wc_list_ :
-		if wf_.wc_index_1 is not 0:
-			if int(wc_.wc_index_num) == 1:
-				dic['wc_img_1'] = wc_.wc_img.url
-				dic['wc_text_1'] = wc_.wc_text
-				dic['wc_times_1'] = str(wc_.wc_times)
-		if wf_.wc_index_2 is not 0:
-			if int(wc_.wc_index_num) == 2:
-				dic['wc_img_2'] = wc_.wc_img.url
-				dic['wc_text_2'] = wc_.wc_text
-				dic['wc_times_2'] = str(wc_.wc_times)
-		if wf_.wc_index_3 is not 0:
-			if int(wc_.wc_index_num) == 3:
-				dic['wc_img_3'] = wc_.wc_img.url
-				dic['wc_text_3'] = wc_.wc_text
-				dic['wc_times_3'] = str(wc_.wc_times)
-		if wf_.wc_index_4 is not 0:
-			if int(wc_.wc_index_num) == 4:
-				dic['wc_img_4'] = wc_.wc_img.url
-				dic['wc_text_4'] = wc_.wc_text
-				dic['wc_times_4'] = str(wc_.wc_times)
-		if wf_.wc_index_5 is not 0:
-			if int(wc_.wc_index_num) == 5:
-				dic['wc_img_5'] = wc_.wc_img.url
-				dic['wc_text_5'] = wc_.wc_text
-				dic['wc_times_5'] = str(wc_.wc_times)
-		if wf_.wc_index_6 is not 0:
-			if int(wc_.wc_index_num) == 6:
-				dic['wc_img_6'] = wc_.wc_img.url
-				dic['wc_text_6'] = wc_.wc_text
-				dic['wc_times_6'] = str(wc_.wc_times)
-		if wf_.wc_index_7 is not 0:
-			if int(wc_.wc_index_num) == 7:
-				dic['wc_img_7'] = wc_.wc_img.url
-				dic['wc_text_7'] = wc_.wc_text
-				dic['wc_times_7'] = str(wc_.wc_times)
-		if wf_.wc_index_8 is not 0:
-			if int(wc_.wc_index_num) == 8:
-				dic['wc_img_8'] = wc_.wc_img.url
-				dic['wc_text_8'] = wc_.wc_text
-				dic['wc_times_8'] = str(wc_.wc_times)
-		if wf_.wc_index_9 is not 0:
-			if int(wc_.wc_index_num) == 9:
-				dic['wc_img_9'] = wc_.wc_img.url
-				dic['wc_text_9'] = wc_.wc_text
-				dic['wc_times_9'] = str(wc_.wc_times)
-
-	datas.append(dic)
-	return HttpResponse(json.dumps(datas), content_type='application/json')
-
 # 사용자별 노티 뿌려줌
 @csrf_exempt
 def get_noti(request):
@@ -1112,7 +1027,6 @@ def hash_tag_make(hash_text, wt_index):
 
 	return 0
 
-
 # 해쉬태그 검색 함수 
 @csrf_exempt
 def hash_find(request):
@@ -1151,6 +1065,93 @@ def hash_find(request):
 					except :
 						pass
 
+	return HttpResponse(json.dumps(datas), content_type='application/json')
+
+
+
+# 레시피 상세 페이지 
+@csrf_exempt
+def get_recipe(request):
+	wf_index = request.POST.get('wf_index')
+
+	datas = []
+	dic = dict()
+	
+	wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
+	wt_ = WRITE_TITLE.objects.get(wf_index=wf_index)
+	wc_list_ = WRITE_CONTENT.objects.filter(wt_index=wt_.wt_index)
+
+	# wf
+	dic['wf_index'] = str(wf_index)
+	dic['wf_writer'] = str(wf_.wf_writer)
+	dic['wf_likes'] = str(wf_.wf_likes)
+	dic['wf_comments'] = str(wf_.wf_comments)
+	dic['wc_total'] = str(wf_.wc_total)
+
+	# wt
+	dic['wt_name'] = wt_.wt_name
+	dic['wt_ingre'] = wt_.wt_ingre
+	dic['wt_times'] = str(wt_.wt_times)
+	dic['wt_quant'] = str(wt_.wt_quant)
+	dic['wt_tag'] = wt_.wt_tag
+
+	# user
+	try : 
+		user_ = User.objects.get(username=wf_.wf_writer)
+		user_data_ = USER_DATA.objects.get(user_id=user_)
+		dic['user_img'] = user_data_.user_img.url
+	except:
+		dic['user_img'] = ""
+
+	# wc
+	for wc_ in wc_list_ :
+		if wf_.wc_index_1 is not 0:
+			if int(wc_.wc_index_num) == 1:
+				dic['wc_img_1'] = wc_.wc_img.url
+				dic['wc_text_1'] = wc_.wc_text
+				dic['wc_times_1'] = str(wc_.wc_times)
+		if wf_.wc_index_2 is not 0:
+			if int(wc_.wc_index_num) == 2:
+				dic['wc_img_2'] = wc_.wc_img.url
+				dic['wc_text_2'] = wc_.wc_text
+				dic['wc_times_2'] = str(wc_.wc_times)
+		if wf_.wc_index_3 is not 0:
+			if int(wc_.wc_index_num) == 3:
+				dic['wc_img_3'] = wc_.wc_img.url
+				dic['wc_text_3'] = wc_.wc_text
+				dic['wc_times_3'] = str(wc_.wc_times)
+		if wf_.wc_index_4 is not 0:
+			if int(wc_.wc_index_num) == 4:
+				dic['wc_img_4'] = wc_.wc_img.url
+				dic['wc_text_4'] = wc_.wc_text
+				dic['wc_times_4'] = str(wc_.wc_times)
+		if wf_.wc_index_5 is not 0:
+			if int(wc_.wc_index_num) == 5:
+				dic['wc_img_5'] = wc_.wc_img.url
+				dic['wc_text_5'] = wc_.wc_text
+				dic['wc_times_5'] = str(wc_.wc_times)
+		if wf_.wc_index_6 is not 0:
+			if int(wc_.wc_index_num) == 6:
+				dic['wc_img_6'] = wc_.wc_img.url
+				dic['wc_text_6'] = wc_.wc_text
+				dic['wc_times_6'] = str(wc_.wc_times)
+		if wf_.wc_index_7 is not 0:
+			if int(wc_.wc_index_num) == 7:
+				dic['wc_img_7'] = wc_.wc_img.url
+				dic['wc_text_7'] = wc_.wc_text
+				dic['wc_times_7'] = str(wc_.wc_times)
+		if wf_.wc_index_8 is not 0:
+			if int(wc_.wc_index_num) == 8:
+				dic['wc_img_8'] = wc_.wc_img.url
+				dic['wc_text_8'] = wc_.wc_text
+				dic['wc_times_8'] = str(wc_.wc_times)
+		if wf_.wc_index_9 is not 0:
+			if int(wc_.wc_index_num) == 9:
+				dic['wc_img_9'] = wc_.wc_img.url
+				dic['wc_text_9'] = wc_.wc_text
+				dic['wc_times_9'] = str(wc_.wc_times)
+
+	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
 
