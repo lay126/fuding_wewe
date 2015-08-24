@@ -135,7 +135,6 @@ public class CommentActivity extends Activity {
 						}
 						
 					}
-		
 					Cadapter = new CommentAdapter(arrayComment);
 					commentList = (ListView)findViewById(R.id.comment_listview);
 					commentList.setAdapter(Cadapter);
