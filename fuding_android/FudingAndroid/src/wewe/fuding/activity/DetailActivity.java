@@ -38,7 +38,8 @@ import com.android.volley.toolbox.Volley;
 public class DetailActivity  extends Activity { 
 	
 	String quant, writer, likes, name, tag, times, ingre, total, user_img, comment_cnt;
-	TextView text_quant, text_writer, text_likes, text_name, text_tag, text_times, text_ingre, text_comment_cnt;
+	TextView text_quant, text_writer, text_likes, text_name, text_tag, text_times, text_ingre;
+	public static TextView text_comment_cnt;
 	NetworkImageView user_photo;
 	
 	private ArrayList<Detail> arrayDetail;
