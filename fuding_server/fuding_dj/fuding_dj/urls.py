@@ -22,6 +22,7 @@ urlpatterns = patterns('',
     url(r'^get/recipe/', 'fuding_dj_s.views.get_recipe'),
     url(r'^get/profile/', 'fuding_dj_s.views.get_profile'),
     url(r'^get/user/profile/', 'fuding_dj_s.views.get_user_profile'),
+    url(r'^get/content/url/', 'fuding_dj_s.views.get_content_url'),
     url(r'^get/noti/', 'fuding_dj_s.views.get_noti'),
     url(r'^get/comment/', 'fuding_dj_s.views.get_comment'),
 

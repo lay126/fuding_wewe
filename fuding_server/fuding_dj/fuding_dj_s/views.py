@@ -202,6 +202,7 @@ def get_profile(request):
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
+# 댜으니를 위하여어어ㅓ어어어ㅓㅓ
 @csrf_exempt
 def get_user_profile(request):
 	user_name = request.POST.get('user_name')
@@ -221,6 +222,17 @@ def get_user_profile(request):
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
 
+@csrf_exempt
+def get_content_url(request):
+	wt_index = request.POST.get('wt_index')
+	wc_index_num = request.POST.get('wc_index_num') 
+
+	wc_ = WRITE_CONTENT.objects.filter(wt_index=wt_index).filter(wc_index_num=wc_index_num)
+
+	for w in wc_:
+		result = w.wc_img.url
+
+	return HttpResponse(json.dumps(result), content_type='application/json')
 
 # ------------------------------------------------------------------------------------------------------------
 # FEED
