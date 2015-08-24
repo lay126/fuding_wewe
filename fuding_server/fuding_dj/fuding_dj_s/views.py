@@ -914,7 +914,8 @@ def upload_write_comment(request):
 		wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
 		# 2번째인자 : 활동을 취한 사람의 아이디 
 		### wf_index: 댓글 노티의 경우는, 글번호가 아닌 댓글 번호를 넘겨주어야 한다
-		do_noti(wf_.wf_writer, user_name, 2, comment_.wcm_index, noti_date)
+		do_noti(wf_.wf_writer, user_name, 2, wf_index, noti_date)
+		# do_noti(wf_.wf_writer, user_name, 2, comment_.wcm_index, noti_date)
 
 		# 글 디비 댓글 필드 +1 
 		tmp = wf_.wf_comments + 1
@@ -1060,7 +1061,7 @@ def delete_comment(request):
 		wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
 		# 2번째인자 : 활동을 취한 사람의 아이디 
 		### wf_index: 댓글 노티의 경우는, 글번호가 아닌 댓글 번호를 넘겨주어야 한다
-		do_unnoti(wf_.wf_writer, user_name, 2, wcm_index)
+		do_unnoti(wf_.wf_writer, user_name, 2, wf_index)
 
 		# 댓글 삭제 
 		wcm_ = WRITE_COMMENT.objects.get(wcm_index=wcm_index)
