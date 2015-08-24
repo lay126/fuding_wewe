@@ -83,7 +83,7 @@ public class DetailActivity  extends Activity {
 						deleteContent();
 						
 						// 리스트뷰 갱신
-						//frameArr
+//						Fragment
 						
 						finish();
 						dialog.cancel();
