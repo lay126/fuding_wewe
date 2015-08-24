@@ -426,20 +426,25 @@ def get_comment(request):
 			comment_list_ = WRITE_COMMENT.objects.filter(wt_index=wf_index).order_by('-wcm_date')
 			# comment_list_ = WRITE_COMMENT.objects.get.filter(wf_index=wf_index).order_by('-wcm_date')
 			##########################################################################################################################
+
+			if len(comment_list_) is 0:	
+				dic['result'] = '1'
+				datas.append(dic)
+			else : 
+				for comment_ in comment_list_:
+					dic = dict()
+					dic['wcm_index'] = str(comment_.wcm_index)
+					################### wf_wt_index ##########################################################################################
+					dic['wf_index'] = str(comment_.wt_index)
+					# dic['wf_index'] = comment_.wf_index
+					dic['wcm_writer'] = comment_.wcm_writer
+					dic['wcm_text'] = comment_.wcm_text
+					dic['result'] = '0'
+					datas.append(dic)
 		except:
 			dic['result'] = '1'
 			datas.append(dic)
 
-		if len(comment_list_) is not 0:	
-			for comment_ in comment_list_:
-				dic['wcm_index'] = comment_.wcm_index
-				################### wf_wt_index ##########################################################################################
-				dic['wf_index'] = comment_.wt_index
-				# dic['wf_index'] = comment_.wf_index
-				dic['wcm_writer'] = comment_.wcm_writer
-				dic['wcm_text'] = comment_.wcm_text
-				dic['result'] = '0'
-				datas.append(dic)
 	except:
 		dic['result'] = '1'
 		datas.append(dic)
@@ -1068,9 +1073,32 @@ def delete_comment(request):
 # 해쉬태그들을 tagDB에 저장하는 함수 (공통사용)
 def hash_tag_make(hash_text, wt_index):
 	# 한글 가능 : 해시태그 작성시에 띄어쓰기 해주세요 ㅠㅠ
-	hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
-	hashs = hash_w.findall(hash_text)
+	# hash_w = re.compile('#\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*\w*[^ \u3131-\u3163*\uac00-\ud7a3*]*')
+	# hashs = hash_w.findall(hash_text)
+	# 
+	# try : 
+	# 	for h in hashs:
+	# 		hash_ = WRITE_TAG(	wtg_value = h,
+	# 							wt_index = wt_index )
+	# 		hash_.save()
+	# except : 
+	# 	hashs = hash_w.findall(wc_text)
 
+
+	# ISSUE #33 
+	hash_w = re.compile('#\w+')
+	hashs = hash_w.findall(hash_text)
+	try : 
+		for h in hashs:
+			hash_ = WRITE_TAG(	wtg_value = h,
+								wt_index = wt_index )
+			hash_.save()
+	except : 
+		hashs = hash_w.findall(wc_text)
+
+	hash_w = re.compile('#([\u3131-\u3163*\uac00-\ud7a3*]*)')
+	hash_w = re.compile('#([가-힣]*)')
+	hashs = hash_w.findall(hash_text)
 	try : 
 		for h in hashs:
 			hash_ = WRITE_TAG(	wtg_value = h,
