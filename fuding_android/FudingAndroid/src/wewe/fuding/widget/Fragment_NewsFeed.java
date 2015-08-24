@@ -65,7 +65,7 @@ public class Fragment_NewsFeed extends Fragment {
 		v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
 		frameArr = new ArrayList<Frame>();
 
-		showNewsfeed(v, frameArr, 0, null);
+		showNewsfeed(v, 0, null);
 
 		final EditText searchEditText = (EditText) v
 				.findViewById(R.id.newsfeed_search_edit);
@@ -78,13 +78,17 @@ public class Fragment_NewsFeed extends Fragment {
 				String strSearchTag = searchEditText.getText().toString();
 				if (!strSearchTag.equals("")) {
 					frameArr = new ArrayList<Frame>();
-					showNewsfeed(v, frameArr, 1, strSearchTag);
-
+					showNewsfeed(v, 1, strSearchTag);
+					nfAdapter.notifyDataSetChanged();
 					// keyboard hide
-					// InputMethodManager imm = (InputMethodManager)
-					// activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-					// imm.hideSoftInputFromWindow(searchEditText.getWindowToken(),
-					// 0);
+					InputMethodManager imm = (InputMethodManager) activity
+							.getSystemService(Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(
+							searchEditText.getWindowToken(), 0);
+				} else {
+					frameArr = new ArrayList<Frame>();
+					showNewsfeed(v, 0, strSearchTag);
+					nfAdapter.notifyDataSetChanged();
 				}
 			}
 		});
@@ -92,7 +96,7 @@ public class Fragment_NewsFeed extends Fragment {
 		return v;
 	}
 
-	private void showNewsfeed(View v, final ArrayList<Frame> frameArr,
+	private void showNewsfeed(View v, 
 			int type, final String tag) {
 		// if type is 1, it means that user clicked search btn
 		String URL_address;
@@ -150,6 +154,7 @@ public class Fragment_NewsFeed extends Fragment {
 								.getString("wf_comments")));
 
 						frameArr.add(nfFrame);
+						nfAdapter.notifyDataSetChanged();
 					}
 				} catch (JSONException e) {
 					e.printStackTrace();

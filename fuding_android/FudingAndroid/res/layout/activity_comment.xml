@@ -55,7 +55,7 @@
 
         <ImageView
             android:id="@+id/add_btn"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/ed"
             android:layout_alignParentRight="true"
