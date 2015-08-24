@@ -6,8 +6,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffae5a"
+        android:layout_height="50dp"
+        android:background="#F6921E"
         android:orientation="vertical"
         android:padding="13dp" >
 
@@ -19,6 +19,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/search_icon" />
 
@@ -44,15 +45,16 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/search_line" />
+            android:layout_height="2dp"
+            android:src="@drawable/search_line"  />
+       
     </LinearLayout>
 
     <ListView
         android:id="@+id/listViewNewsfeed"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent"
+        android:padding="10dp" >
     </ListView>
 
 </LinearLayout>
