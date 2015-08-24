@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 public class Frame {
 	private String userId; // 글쓴이 아이디
+	private String userImgURL;
 	private String foodName; // 요리 이름
 	private String ingre; // 재료 태그
 	private String amount; // 요리 양
@@ -20,11 +21,12 @@ public class Frame {
 	public Frame() {
 	}
 
-	public Frame(String userId, String foodName, String ingre, String amount,
+	public Frame(String userId, String userImgURL, String foodName, String ingre, String amount,
 			String totalTime, String tag, int likeCnt, int likeState,
 			int commentCnt, String writeDate, String foodImgURL, int foodIndex) {
 		super();
 		this.userId = userId;
+		this.userImgURL = userImgURL;
 		this.foodName = foodName;
 		this.ingre = ingre;
 		this.amount = amount;
@@ -44,6 +46,14 @@ public class Frame {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public String getUserImgURL() {
+		return userImgURL;
+	}
+
+	public void setUserImgURL(String userImgURL) {
+		this.userImgURL = userImgURL;
 	}
 
 	public String getFoodName() {
@@ -135,7 +145,7 @@ public class Frame {
 	}
 
 	public static Frame fromJson(JSONObject object) throws JSONException {
-		return new Frame(object.getString("userId"),
+		return new Frame(object.getString("userId"), object.getString("userImgURL"),
 				object.getString("foodName"), object.getString("ingre"),
 				object.getString("amount"), object.getString("totalTime"),
 				object.getString("tag"), object.getInt("likeCnt"),
