@@ -84,6 +84,7 @@ public class UpdateProfileActivity extends Activity {
 				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
 				SharedPreferences.Editor editor = pref.edit();
 				editor.putString("login_check", "false"); //로그아웃 세션 저장 
+				editor.commit();
 				startActivity(new Intent(UpdateProfileActivity.this, LoginActivity.class));
 				finish();
 			}
