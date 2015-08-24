@@ -27,8 +27,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TextView.BufferType;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request.Method;
@@ -44,6 +44,7 @@ public class CommentActivity extends Activity {
 	private ArrayList<Comment> arrayComment;
 	private CommentAdapter Cadapter;
 	ListView commentList;
+	int comment_count;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,7 +67,7 @@ public class CommentActivity extends Activity {
 				String context = ed.getText().toString();
 				sendAddComment(wf_index, user_name, context);
 				ed.setText("");
-				Cadapter.notifyDataSetChanged();
+//				Cadapter.notifyDataSetChanged();
 			}
 		});
 		
@@ -74,11 +75,22 @@ public class CommentActivity extends Activity {
 		backBtn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
+				// 댓글 갯수 제어 
+				comment_count = arrayComment.size(); 
+				DetailActivity.text_comment_cnt.setText(comment_count+"");
 				finish();
 			}
 		});
 	}	
 	
+	// 댓글 갯수 제어 
+	@Override
+	public void onBackPressed() {
+		//super.onBackPressed(); 
+		comment_count = arrayComment.size(); 
+		DetailActivity.text_comment_cnt.setText(comment_count+"");
+		finish();
+	}
 	private void getAllComment() {
 		String URL_address = "http://119.205.252.224:8000/get/comment/";
 
@@ -282,6 +294,7 @@ private class CommentAdapter extends ArrayAdapter<Comment> {
 								cm.setContentText(comment);// ("wcm_text")
 								
 								arrayComment.add(cm);
+								Cadapter.notifyDataSetChanged();
 							}
 						}	
 				} catch (Exception e) {}
