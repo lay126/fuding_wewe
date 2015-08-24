@@ -10,7 +10,6 @@ import org.json.JSONObject;
 
 import wewe.fuding.FudingAPI;
 import wewe.fuding.domain.Detail;
-import wewe.fuding.utils.ImageDownloader;
 import android.app.ListActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +48,7 @@ public class DetailActivity  extends ListActivity {
 		arrayDetail = new ArrayList<Detail>();
 		// 서버로부터 값 받아오기 
 		getAllContent();
+		getAllComment();
 		
 		text_quant = (TextView)findViewById(R.id.text_quant);
 		text_writer = (TextView)findViewById(R.id.text_writer);
@@ -113,10 +114,8 @@ public class DetailActivity  extends ListActivity {
 						text_likes.setText(likes);
 						text_name.setText("#"+name);
 						text_tag.setText(tag);
-//						text_times.setText("#"+times+"분");
 						text_ingre.setText(ingre);
 						
-//						ImageDownloader.download("http://119.205.252.224:8000/get/image/"+user_img, user_photo, 2);	// 이미지 라운드 
 						String URL_img_address = "http://119.205.252.224:8000/get/image/"+ user_img;
 						FudingAPI API = FudingAPI.getInstance(DetailActivity.this);
 						user_photo.setImageUrl(URL_img_address, API.getmImageLoader());
@@ -128,7 +127,8 @@ public class DetailActivity  extends ListActivity {
 							detail.setTime(jsonFrame.getString("wc_times_"+j));
 							
 							arrayDetail.add(detail);
-						}
+						} 
+
 						adapter = new ItemAdapter(arrayDetail);
 						setListAdapter(adapter);
 					}
@@ -163,11 +163,82 @@ public class DetailActivity  extends ListActivity {
 		mQueue.add(req);
 	}
 	
+	private void getAllComment() {
+	String URL_address = "http://119.205.252.224:8000/get/comment/";
+
+	RequestQueue mQueue;
+	mQueue = Volley.newRequestQueue(this);
+
+	Listener<String> listener = new Listener<String>() {
+		@Override
+		public void onResponse(String response) {
+			// to make data available
+			String arrRes = "{'response':" + response + "}";
+			Log.d("detail", arrRes);
+
+			JSONObject jobject = null;
+			try {
+				jobject = new JSONObject(arrRes);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			JSONArray jarray = null;
+			try {
+				jarray = jobject.getJSONArray("response");
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			try {
+				for (int i = 0; i < jarray.length(); i++) {
+					JSONObject jsonFrame = (JSONObject) jarray.get(i);
+					quant = jsonFrame.getString("wt_quant");
+					Detail detail = new Detail();
+//					detail.setImage(jsonFrame.getString("wc_img_"+j));
+//					detail.setContent(jsonFrame.getString("wc_text_"+j));
+//					detail.setTime(jsonFrame.getString("wc_times_"+j));
+					
+					arrayDetail.add(detail); 
+				}
+				adapter = new ItemAdapter(arrayDetail);
+				setListAdapter(adapter);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+	};
+
+	ErrorListener errorListener = new com.android.volley.Response.ErrorListener() {
+		@Override
+		public void onErrorResponse(VolleyError error) {
+			error.printStackTrace();
+			Toast.makeText(DetailActivity.this, "상세페이지 : 네트워크상태가좋지 않습니다.잠시만 기다려주세요.",
+					Toast.LENGTH_LONG).show();
+		}
+	};
+
+	StringRequest req = new StringRequest(Method.POST, URL_address, listener, errorListener) {
+			@Override
+			protected Map<String, String> getParams()
+					throws AuthFailureError {
+				Map<String, String> params = new HashMap<String, String>();
+				SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+				int index = pref.getInt("wf_index", 1);
+				
+				params.put("wf_index", index+"");
+
+				return params;
+			}
+	};
+	mQueue.add(req);
+}
 	
 	private class ViewHolder {
 		public TextView quant, writer, likes, name, tag, times, ingre, total;
 		public NetworkImageView foodImageView;
 		public TextView content_text, time_text;
+		public LinearLayout visible_layout;
 	}
 
 	private class ItemAdapter extends ArrayAdapter<Detail> {
@@ -184,7 +255,9 @@ public class DetailActivity  extends ListActivity {
 			if (v != convertView && v != null) {
 				ViewHolder holder = new ViewHolder();
 
-
+				LinearLayout layout = (LinearLayout) v.findViewById(R.id.visible_layout);
+				holder.visible_layout = layout;
+				
 				NetworkImageView foodImage = (NetworkImageView) v.findViewById(R.id.foodImageView);
 				holder.foodImageView = foodImage;
 
@@ -200,12 +273,16 @@ public class DetailActivity  extends ListActivity {
 			final ViewHolder holder = (ViewHolder) v.getTag();
 			
 			holder.content_text.setText(detail.getContent()+" "+detail.getTime()+"분 소요");
-//			holder.time_text.setText(detail.getTime());
-//			ImageDownloader.download("http://119.205.252.224:8000/get/image/"+detail.getImage(), holder.foodImageView, 3);
-			String URL_img_address = "http://119.205.252.224:8000/get/image/"
-					+ detail.getImage();
+			String URL_img_address = "http://119.205.252.224:8000/get/image/" + detail.getImage();
 			FudingAPI API = FudingAPI.getInstance(DetailActivity.this);
 			holder.foodImageView.setImageUrl(URL_img_address, API.getmImageLoader());
+			
+			if (position == Integer.parseInt(total)-1) {
+				holder.visible_layout.setVisibility(View.VISIBLE);
+			} else {
+				holder.visible_layout.setVisibility(View.GONE);
+			}
+			
 			return v;
 		}
 
@@ -215,11 +292,4 @@ public class DetailActivity  extends ListActivity {
 		}
 
 	}
-
-	
-	
-	
-	
-	
-	
 }	

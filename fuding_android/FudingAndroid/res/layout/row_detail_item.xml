@@ -27,7 +27,49 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:textSize="17sp"
-        android:text="설명" />
+        android:text="설명"
+        android:textSize="17sp" />
+
+    <LinearLayout
+        android:id="@+id/visible_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.17"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="108dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="0.90" >
+
+        </ListView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" >
+
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_width="wrap_content"
+                android:layout_height="47dp"
+                android:layout_marginBottom="10dp"
+                android:ems="10" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="72dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:src="@drawable/ok_btn" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
