@@ -96,25 +96,6 @@ public class AddPostingActivity extends ListActivity {
 	ImageView dialog_image;
 	int httpFlag = 0;
 
-	// private DragSortListView.DropListener onDrop = new
-	// DragSortListView.DropListener() {
-	// @Override
-	// public void drop(int from, int to) {
-	// Item item = adapter.getItem(from);
-	//
-	// adapter.remove(item);
-	// adapter.insert(item, to);
-	// }
-	// };
-	//
-	// private DragSortListView.RemoveListener onRemove = new
-	// DragSortListView.RemoveListener() {
-	// @Override
-	// public void remove(int which) {
-	// adapter.remove(adapter.getItem(which));
-	// }
-	// };
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -123,10 +104,6 @@ public class AddPostingActivity extends ListActivity {
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 		StrictMode.setThreadPolicy(policy);
-		// DragSortListView lv = (DragSortListView) getListView();
-		//
-		// lv.setDropListener(onDrop);
-		// lv.setRemoveListener(onRemove);
 
 		// 글 올리기 최종 확인 버튼
 		btn_ok = (ImageView) findViewById(R.id.btn_ok);
@@ -134,69 +111,30 @@ public class AddPostingActivity extends ListActivity {
 			@Override
 			public void onClick(View v) {
 
-				// ArrayList<Content> containArrayList = new
-				// ArrayList<Content>();
-
-				// adapter.notifyDataSetChanged();
-				// for (int i = 0; i < mItem.size(); i++) {
-				// Content temp = new Content();
-				// temp.setContent(mItem.get(i).step);
-				// temp.setPhoto(mItem.get(i).image);
-				// Log.d("tag", "mItem.get(i).step"+mItem.get(i).step);
-				// Log.d("tag", "mItem.get(i).image"+mItem.get(i).image);
-				// containArrayList.add(temp);
-				// Item item = new Item("",ed_step.getText().toString(),
-				// ed_time.getText().toString() );
-				// mItem_re.add(item);
-				//
-				// }
-				// mItem = mItem_re;
-
 				if (mImageCaptureUri != null) {
-					// if (dialog==null) {
-					// dialog = ProgressDialog.show(AddPostingActivity.this, "",
-					// "Uploading file...", true);
-					// }
 					new Thread(new Runnable() {
-						public void run() {
-//							for (int i = 0; i < mItem.size(); i++) {
-//								int finish_flag = 0;
-//								int step_num = i + 1;
-//								content_index = i + 1;
-//								upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
-//								if (i + 1 == mItem.size()) {
-//									finish_flag = 1;
-//									uploadFile(mItem.get(i).image.getPath(),mItem.get(i).step,mItem.get(i).time, step_num, finish_flag);
-//									finishContent(step_num);
-//								} else {
-//									uploadFile(mItem.get(i).image.getPath(),mItem.get(i).step, mItem.get(i).time, step_num, finish_flag);
-//								}
-//							}
+						public void run() { 
 							
 							// 마지막 글쓰기시 전송
 							int total_content_cnt = mItem.size();
 							finishContent(total_content_cnt);
 							
-							
+							finish();
 						}
 					}).start();
-//					Log.d("url", "url :" + mImageCaptureUri.getPath());
+
 				} else {
-					Toast.makeText(AddPostingActivity.this, "업로드에 실패했습니다.",
-							Toast.LENGTH_LONG).show();
+					Toast.makeText(AddPostingActivity.this, "업로드에 실패했습니다.",Toast.LENGTH_LONG).show();
 				}
-				finish();
 			}
 		});
 
-		btn_add = (ImageView) findViewById(R.id.btn_add);
 		// 단계 추가 버튼
+		btn_add = (ImageView) findViewById(R.id.btn_add);
 		btn_add.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// mItem.add(new Item("", "", ""));
-				// adapter.notifyDataSetChanged();
 
 				Rect displayRectangle = new Rect();
 				if (dialog != null) {
@@ -237,22 +175,12 @@ public class AddPostingActivity extends ListActivity {
 
 							InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 							imm.hideSoftInputFromWindow(edit_time.getWindowToken(), 0);
-//							mItem.add(new Item(uri_copy, edit_step.getText().toString(), edit_time.getText().toString()));
-//							adapter.notifyDataSetChanged();
 							dialog.cancel();
 
-							
-						//==================================================================================================//	
-//							new Thread(new Runnable() {
-//							public void run() {
 							step_num += 1;
 							content_index += 1;
 							upLoadServerUri = "http://119.205.252.224:8000/upload/write/content/";
 							uploadFile(uri_copy.getPath(), edit_step.getText().toString() , edit_time.getText().toString() , step_num, 0);
-//							}
-//						}).start();
-//						Log.d("url", "url :" + mImageCaptureUri.getPath());
-							
 						} else {
 							Toast.makeText(AddPostingActivity.this,"빈칸을 모두 채워주세요.", Toast.LENGTH_LONG).show();
 						}
@@ -281,47 +209,7 @@ public class AddPostingActivity extends ListActivity {
 			}
 		});
 
-//		ImageView btn_edit = (ImageView) findViewById(R.id.btn_edit);
-//		btn_edit.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				if (flag) {
-//					flag = false;
-//				} else {
-//					flag = true;
-//				}
-//				adapter.notifyDataSetChanged();
-//			}
-//		});
-
-		// 처음 리스트뷰 불러오기
-		// DataManager dbManager = new DataManager(getApplicationContext());
-		// getArrayList = dbManager.getItem(null);
-		// ArrayList<Content> arrayList = new ArrayList<Content>();
 		mItem = new ArrayList<Item>();
-		//
-		// for (int i = 1; i < arrayList.size(); ++i) {
-		// mItem.add(new Item(String.valueOf(arrayList.get(i).getFoodId()),
-		// arrayList.get(i).getContent()));
-		// }
-
-		// adapter = new ItemAdapter(this, R.layout.row_add_item, mItem);
-		// listView.setAdapter(adapter);
-		// listView.setDropListener(onDrop);
-		// listView.setRemoveListener(onRemove);
-		//
-		// DragSortController controller = new DragSortController(listView);
-		// controller.setDragHandleId(R.id.menu);
-		// //controller.setClickRemoveId(R.id.);
-		// controller.setRemoveEnabled(false);
-		// controller.setSortEnabled(true);
-		// controller.setDragInitMode(1);
-		// //controller.setRemoveMode(removeMode);
-		//
-		// listView.setFloatViewManager(controller);
-		// listView.setOnTouchListener(controller);
-		// listView.setDragEnabled(true);
-
 		adapter = new ItemAdapter(mItem);
 		setListAdapter(adapter);
 	}
@@ -396,9 +284,6 @@ public class AddPostingActivity extends ListActivity {
 			ed_step = holder.stepView;
 			ed_time = holder.timeView;
 
-			//holder.imageView.setBackgroundColor(Color.WHITE);
-			//.setImageURI(getItem(position).image);
-			
 			int end = getItem(position).image.length();
 			String result = getItem(position).image.substring(1,end-1);
 			Log.d("resultresultresultresultresultresultresult", result);
@@ -408,13 +293,6 @@ public class AddPostingActivity extends ListActivity {
 			FudingAPI API = FudingAPI.getInstance(AddPostingActivity.this);
 			holder.imageView.setImageUrl(URL_img_address, API.getmImageLoader());
 			
-			if (flag) {
-//				holder.holderBtn.setVisibility(View.VISIBLE);
-				holder.deleteBtn.setVisibility(View.VISIBLE);
-			} else {
-//				holder.holderBtn.setVisibility(View.GONE);
-				holder.deleteBtn.setVisibility(View.GONE);
-			}
 			return v;
 		}
 

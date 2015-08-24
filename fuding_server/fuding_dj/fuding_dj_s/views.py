@@ -488,6 +488,14 @@ def feed_list(user_name, wf_index):
 	dic['wf_comments'] = str(wf_.wf_comments)
 	dic['wc_date'] = str(wf_.wc_date)
 
+	# USER IMG
+	try:
+		user_ = User.objects.get(username=user_name)
+		user_data_ = USER_DATA.objects.get(user_id=user_)
+		dic['user_img'] = user_data_.user_img.url
+	except:
+		dic['user_img'] = ""
+
 	# wt_ (in dic_)
 	try : 
 		wt_ = WRITE_TITLE.objects.get(wf_index=wf_.wf_index)
@@ -745,7 +753,7 @@ def do_unnoti(user_id, noti_id, noti_flag, wf_index):
 
 
 # ------------------------------------------------------------------------------------------------------------
-# WRITE
+# WRITE 
 # ------------------------------------------------------------------------------------------------------------
 # 글 작성 
 @csrf_exempt
