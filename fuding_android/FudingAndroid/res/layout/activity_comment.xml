@@ -60,9 +60,9 @@
             android:layout_alignBottom="@+id/ed"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="10dp"
+            android:layout_margin="10dp"
             android:layout_toRightOf="@+id/ed"
-            android:src="@drawable/com_facebook_button_like_background" />
+            android:src="@drawable/dialog_ok" />
 
     </RelativeLayout>
 

@@ -552,6 +552,13 @@ public class AddPostingActivity extends ListActivity {
 			public void onResponse(String result) {
 				try {
 					Log.d("volley", "step1 result    : " + result);
+					SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+					SharedPreferences.Editor editor = pref.edit();
+					editor.putInt("wf_index", Integer.parseInt(result));
+					editor.commit();
+					Log.d("================================", result);
+					startActivity(new Intent(AddPostingActivity.this, DetailActivity.class));
+					finish();
 				} catch (Exception e) {
 				}
 			}

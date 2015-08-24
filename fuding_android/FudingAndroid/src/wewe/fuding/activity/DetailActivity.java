@@ -46,10 +46,6 @@ public class DetailActivity  extends Activity {
 	private DetailAdapter Dadapter;
 	ListView detailList;
 	
-	
-	
-	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -117,6 +113,7 @@ public class DetailActivity  extends Activity {
 				finish();
 			}
 		});
+		
 		ImageView gear = (ImageView)findViewById(R.id.gear);
 		gear.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -322,15 +319,15 @@ public class DetailActivity  extends Activity {
 				TextView content = (TextView) v.findViewById(R.id.content_text);
 				holder.content_text = content;
 				 
-				TextView time = (TextView) v.findViewById(R.id.time_text);
-				holder.time_text = time;
+//				TextView time = (TextView) v.findViewById(R.id.time_text);
+//				holder.time_text = time;
  				
 				v.setTag(holder);
 			}
 
 			final ViewHolder holder = (ViewHolder) v.getTag();
 			
-			holder.content_text.setText(detail.getContent()+" "+detail.getTime()+"분 소요");
+			holder.content_text.setText(detail.getContent()+" #"+detail.getTime()+"분");
 			String URL_img_address = "http://119.205.252.224:8000/get/image/" + detail.getImage();
 			FudingAPI API = FudingAPI.getInstance(DetailActivity.this);
 			holder.foodImageView.setImageUrl(URL_img_address, API.getmImageLoader());

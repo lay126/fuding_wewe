@@ -7,27 +7,21 @@
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/foodImageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:id="@+id/time_text"
-        android:layout_width="41dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:ems="10"
-        android:inputType="number"
-        android:text="" />
+        android:layout_width="380dp"
+        android:layout_height="380dp" 
+        android:src="@drawable/ic_launcher"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/content_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
         android:text="설명"
         android:textSize="17sp" />
-
+	
 </LinearLayout>

@@ -53,7 +53,7 @@
             android:layout_marginRight="40dp"
             android:layout_weight="0.15"
             android:contentDescription="@string/btnAdd"
-            android:src="@drawable/like_s" />
+            android:src="@drawable/add" />
 
     </RelativeLayout>
 

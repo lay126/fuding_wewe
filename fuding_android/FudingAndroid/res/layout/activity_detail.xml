@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#F6921E">
+        android:background="#F6921E" >
 
         <ImageView
             android:id="@+id/backBtn"
@@ -24,14 +24,13 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/backBtn"
-            android:textSize="20sp"
-            android:textColor="#ffffff" />
-
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp" >
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/user_photo"
@@ -57,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
+            android:layout_marginRight="20dp"
             android:padding="10dp"
             android:text="DEL"
             android:textColor="#F6921E" />
@@ -99,49 +98,66 @@
             android:layout_toLeftOf="@+id/comment_cnt"
             android:padding="10dp"
             android:src="@drawable/comment_icon" />
-
     </RelativeLayout>
-
-    <ImageView
-        android:id="@+id/gear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="95dp"
-        android:src="@drawable/gear" />
-    
-    <TextView
-        android:id="@+id/text_quant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:text="text" />
-    
-    <TextView
-        android:id="@+id/text_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp" 
-        android:text="text"/>
-    
-    <TextView
-        android:id="@+id/text_ingre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:text="text" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/text_quant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="text" />
+
+            <TextView
+                android:id="@+id/text_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:text="text" />
+
+            <TextView
+                android:id="@+id/text_ingre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:text="text" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/gear"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/linearLayout1"
+            android:layout_marginRight="18dp"
+            android:src="@drawable/gear" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="410dp" >
 
         <ListView
             android:id="@+id/detail_listview"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent" >
+            android:layout_height="fill_parent"
+            android:layout_marginTop="10dp" >
 
         </ListView>
     </RelativeLayout>
-
 </LinearLayout>
