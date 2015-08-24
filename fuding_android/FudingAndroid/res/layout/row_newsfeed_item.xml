@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffae5a"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -10,78 +9,129 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/newsfeed_profileImgView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
+
         <Button
             android:id="@+id/newsfeed_btnViewUserId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:background="#00ff0000"
             android:padding="5dp"
             android:text="글쓴이홈"
+            android:textColor="#F6921E"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/newsfeed_txtViewWriteDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="date" />
-
+            android:text="date"
+            android:textColor="#5A5B5D" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/newsfeed_txtViewContentTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="content Title" />
-
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/newsfeed_imgView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_launcher" />
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/newsfeed_imgView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher" />
 
         <ImageButton
             android:id="@+id/newsfeed_imgBtnLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
             android:background="#00ff0000"
             android:padding="5dp"
-            android:src="@drawable/like_unclicked" />
+            android:src="@drawable/like_n" />
 
-        <TextView
-            android:id="@+id/newsfeed_txtViewLikeCnt"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="LikesCnt" />
+            android:layout_below="@id/newsfeed_imgView"
+            android:orientation="vertical" >
 
-        <ImageButton
-            android:id="@+id/newsfeed_imgBtnComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="#00ff0000"
-            android:gravity="right"
-            android:src="@drawable/next_btn" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/newsfeed_txtCommentsCnt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:gravity="right"
-            android:text="CommentsCnt" />
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="♥"
+                    android:textColor="#F6921E" />
 
-    <TextView
-        android:id="@+id/newsfeed_txtViewTag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="hashTag" />
+                <TextView
+                    android:id="@+id/newsfeed_txtViewLikeCnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="LikesCnt"
+                    android:textColor="#F6921E" />
+
+                <ImageButton
+                    android:id="@+id/newsfeed_imgBtnComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="#00ff0000"
+                    android:gravity="right"
+                    android:padding="3dp"
+                    android:src="@drawable/comment_icon" />
+
+                <TextView
+                    android:id="@+id/newsfeed_txtCommentsCnt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right"
+                    android:text="CommentsCnt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="#"
+                    android:textColor="#F6921E" />
+
+                <TextView
+                    android:id="@+id/newsfeed_txtViewContentTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="content Title"
+                    android:textColor="#F6921E" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/newsfeed_txtViewTag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hashTag"
+                    android:textColor="#5A5B5D" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

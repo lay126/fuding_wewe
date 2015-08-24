@@ -156,9 +156,9 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 				.findViewById(R.id.newsfeed_imgBtnLike);
 		if (arrList.get(pos).getLikeState() == 0) {
 			// unclicked
-			btnLike.setImageResource(R.drawable.like_unclicked);
+			btnLike.setImageResource(R.drawable.like_n);
 		} else {
-			btnLike.setImageResource(R.drawable.like_clicked);
+			btnLike.setImageResource(R.drawable.like_s);
 		}
 
 		// 좋아요 수
@@ -207,10 +207,10 @@ public class CustomAdapter_NewsFeed extends BaseAdapter {
 									.getString("like_state"));
 
 							if (state == 1) {
-								btnLike.setImageResource(R.drawable.like_clicked);
+								btnLike.setImageResource(R.drawable.like_s);
 								arrList.get(pos).setLikeCnt(arrList.get(pos).getLikeCnt() + 1);
 							} else {
-								btnLike.setImageResource(R.drawable.like_unclicked);
+								btnLike.setImageResource(R.drawable.like_n);
 								arrList.get(pos).setLikeCnt(arrList.get(pos).getLikeCnt() - 1);
 							}
 							arrList.get(pos).setLikeState(state);
