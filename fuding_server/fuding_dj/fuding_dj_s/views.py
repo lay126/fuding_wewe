@@ -891,7 +891,7 @@ def upload_write_comment(request):
 		# 							wcm_text = wcm_text )
 		###########################################################################################################################
 		comment_.save();
-		dic['comment_state'] = '0'
+		dic['comment_state'] = comment_.wcm_index
 
 		# 댓글 작성 노티, 디비에 추가 
 		wf_ = WRITE_FRAME.objects.get(wf_index=wf_index)
@@ -904,7 +904,7 @@ def upload_write_comment(request):
 		wf2_ = WRITE_FRAME.objects.filter(wf_index=wf_index)
 		wf2_.update(wf_comments=tmp)
 	except:
-		dic['comment_state'] = '1'
+		dic['comment_state'] = 'no'
 
 	datas.append(dic)
 	return HttpResponse(json.dumps(datas), content_type='application/json')
