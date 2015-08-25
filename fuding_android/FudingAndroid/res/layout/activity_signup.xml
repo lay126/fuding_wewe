@@ -34,7 +34,7 @@
         android:layout_alignLeft="@+id/ok_btn"
         android:layout_alignRight="@+id/ok_btn"
         android:layout_marginBottom="30dp"
-        android:src="@drawable/signup" />
+        android:src="@drawable/signup_" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="80dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             android:ems="10"
             android:inputType="textPassword" />
 
@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="110dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:ems="10"
             android:inputType="textPassword" > 
         </EditText>
@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="70dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:ems="10" />
 
     </LinearLayout>
