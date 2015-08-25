@@ -135,11 +135,11 @@ public class DetailActivity  extends Activity {
 					if (i==0) {
 						tail = arrayDetail.get(i).getContent();
 					} else {
-						tail += ","+arrayDetail.get(i).getContent();
+						tail += "단계"+arrayDetail.get(i).getContent();
 					}
 				}
 				Log.d("================", head+tail);
-//				sendDataToGear(head+tail);
+				sendDataToGear(head+tail);
 			}
 		});
 		
