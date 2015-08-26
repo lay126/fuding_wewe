@@ -1,0 +1,8 @@
+INDEX VERSION 1.122+C:\Users\kt\Documents\fuding_wewe_2\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+671716211.index
+3570440243.index
+458106375.index
+2305556539.index
+2304417976.index
+1905673690.index
+3035094403.index

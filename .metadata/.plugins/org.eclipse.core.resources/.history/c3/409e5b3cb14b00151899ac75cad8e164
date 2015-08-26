@@ -217,7 +217,9 @@ function fetch() {
 	function testSection() {
 		var curSection = sectionChanger.getActiveSectionIndex();
 		localStorage.setItem("currentIndex", curSection);
-
+//		alert("cursection=" + curSection);
+//		document.querySelector("#addSectionchangerPage").style.display = "none";
+//		document.querySelector("#recipePage").style.display = "block";
 		var recipeContent = document.getElementById("recipe");
 		var fuddingstr = localStorage.getItem("fudingobj" + curSection);
 		var fuddingstr2 = fuddingstr.split(",", 5);
@@ -227,7 +229,12 @@ function fetch() {
 		for (var i=0;i<stepCnt;i++)
 		alert(stepStr[i]);
 		var stepContent = createElement("DIV");
-
+//		for ( var i = 0; i < stepCnt; i++) {
+//			stepContent.innerHTML = '<h3>' + i + '단계<br>' + stepStr[i]
+//					+ '</h3><br>'
+//
+//		}
+//		recipeContent.appendChild(stepContent.firstChild)
 
 	}
 
