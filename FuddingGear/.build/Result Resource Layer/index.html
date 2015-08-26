@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,user-scalable=no" />
+<title>Wearable UI</title>
+<link rel="stylesheet" href="lib/tau/wearable/theme/default/tau.css">
+<!-- load theme file for your application -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div id="addSectionchangerPage" class="ui-page">
+		<link rel="stylesheet" href="./css/sectionchanger.css">
+		<header class="ui-header">
+			<h2 class="ui-title">푸딩레시피</h2>
+		</header>
+		<div id="addSectionchanger" class="ui-content">
+			<!-- section changer has only one child. -->
+			<div id="addSectionWrap">
+				<section class="ui-section-active" style="text-align: center">
+					<h3>
+						<button id=fbutton>푸딩</button>
+					</h3>
+					<!--<a href="add_:" onClick="fsection2();">푸딩</a>  -->
+				</section>
+
+			</div>
+		</div>
+		<footer class="ui-footer ui-grid-col-2">
+			<button id="testBtn" class="ui-btn">상세보기</button>
+			<button id="removeBtn" class="ui-btn">삭제</button>
+
+		</footer>
+		<script src="js/main.js"></script>
+	</div>
+
+	<div id="recipePage">
+		<header class="ui-header">
+			<button id=FuddingBtn>fudding</button>
+
+		</header>
+		<div id=recipe class="ui-content"></div>
+		<script src="js/recipe.js"></script>
+	</div>
+</body>
+<script type="text/javascript" src="lib/tau/wearable/js/tau.js"></script>
+
+<!-- load javascript file for your application -->
+<script src="js/lowBatteryCheck.js"></script>
+</html>
